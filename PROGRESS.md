@@ -19,3 +19,4 @@ Local only under `/workspace/nba-league/`. No GitHub repo, no push, no writes to
 ## 2026-11-10sh9
 - Paul's bug fixes: Games bet number opens that exact bet on Bets (right view and filter, scroll, highlight). Frozen Bets sub-tab row and frozen Games Upcoming/Past and filter rows (desktop and mobile). Draft room recap: removed the Redraft countdown line.
 - Verified with synthetic labeled bets (mock store); screenshots in screens-sh9/ (not committed). test_nba_* pass, e2e_stoopids_copy 35/35, e2e_nba_mock 18/18.
+- sh9b: no redraft anywhere in Hoops. The room "What's next", recap messages, help and Rules now say teams are held all season. Tests are unchanged: test_nba_* pass, 35/35, 18/18.

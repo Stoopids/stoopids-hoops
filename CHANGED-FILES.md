@@ -815,3 +815,11 @@ Test-only (not shipped): tests/e2e_picksheet_clock_s28.js, e2e_beep_s28.js, e2e_
 - js/recap.js: removed the "N days to go until the Redraft <date>" countdown lines (hero and first card). This was STOOPIDS/NCAA leftover text.
 - js/version.js: FBN_BUILD 2026-11-10sh9. sw.js: line 1 comment; the cache name follows FBN_BUILD.
 - STOOPIDS-TEMPLATE.md, PROGRESS.md updated; MD5SUMS.txt regenerated.
+
+## 2026-11-10sh9b — sh9 batch: NBA has no redraft (Paul)
+- Paul: NBA teams are drafted once and held all season. There are no drops, adds or swaps, and no redraft.
+- js/room.js: "What's next" line 3 now says "Teams are held all season" instead of the Redraft date/countdown. Removed the "Redraft · <date>" room link from the final banner.
+- js/recap.js: the end-of-draft message ("See you … for the Redraft!") and the ended-early message now say teams are held all season.
+- help.html: Redraft paragraph replaced with "Teams are held all season"; removed Redraft from the league-site tab list.
+- tools/build_league_from_stoopids.py, league.html: Rules > House interpretations gains "Teams are held all season" first. The STOOPIDS redraft tab was already never shown in Hoops.
+- js/version.js: FBN_BUILD 2026-11-10sh9b. sw.js: line 1 comment. MD5SUMS.txt regenerated.

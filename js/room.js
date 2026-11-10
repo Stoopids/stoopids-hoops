@@ -574,7 +574,7 @@ function boardTable(){const cur=F.onClock(S);const O=S.order;const L2=O.length;i
     for(let c=0;c<L2;c++){const n=r*L2+(rev?L2-1-c:c)+1;const p=S.picks[n-1];const isCur=cur&&cur.n===n;const sk=p?!!p.skip:(F.redraftLive(M)&&F.redraftSkip(M,{round:r+1,owner:O[c]}));h+=`<td data-n="${n}" class="${isCur?'cur':''}${p&&p.owner===mm?' mine':''}${sk?' skip':''}"><span class="pn">${n}</span>${sk?'<span class="dim" title="no drop, no pick">–</span>':p?(p.auto?'<span class="au" title="auto-pick">A</span>':'')+lchip(p.tid,{sm:true,abbr:true,lcls:'bcl'}):`<span class="dim">${isCur?'•':'·'}</span>`}</td>`}h+='</tr>'}
   return h+'</tbody></table></div>'}
 function whatsNext(){const cd=F.redraftCountdown(Date.now(),TZ);const rl=M.redraft&&M.redraft.phase==='live';
-  const l3=rl?(S.status==='complete'?'The Redraft is complete.':'The Redraft is under way.'):'<b>Redraft, '+esc(F.REDRAFT.asOfLabel)+'</b> · '+esc(cd.text)+(cd.state==='past'?'. Open it from the league site.':'. Each owner may drop up to 2 teams first.');
+  const l3='<b>Teams are held all season.</b> Every team is drafted once and stays with its owner for the whole season (no drops, adds or swaps).';   /* sh9 (Paul): NBA has no redraft */
   return `<div class="card" id="nextcard"><h3 style="margin:0 0 4px">What’s next</h3><ol class="nextlist small"><li id="nx1">${esc(F.NEXT.season)}</li><li id="nx2">${esc(F.NEXT.points)}</li><li id="nx3">${l3}</li></ol></div>`}
 function inviteWatchCard(){const u=UI.pageUrl('room.html',{l:LID,watch:1});return `<div class="card" id="watchcard"><h3 style="margin:0 0 4px">Invite friends to watch</h3><div class="small mut">Anyone with this link can watch. They cannot pick.</div><div class="row" style="margin-top:8px"><button class="btn pri grow" data-a="shareu" data-u="${esc(u)}" id="sharewatch">Share</button><button class="btn grow" data-a="copy" data-u="${esc(u)}" id="copywatch">Copy link</button></div></div>`}
 const homeTip=()=>`<div class="card small" id="hometip"><b>Save to your home screen.</b> iPhone: tap Share, then Add to Home Screen. Android: open the menu, then Install app.</div>`;
@@ -584,7 +584,7 @@ function maybeCheer(){if(!S||!M||S.status!=='complete'||S.endedEarly)return;cons
 const cheerBtn=()=>UI.cheerBtn();
 /* s26c9 (Paul): the Board's end-of-draft card is merged into the FINAL banner (#finalbanner > #donecard): Export CSV / JSON and Redraft join
    See my team / Draft recap / League site in one wrapping row. The extras (.dcx) and the cheer toggle only show on the Board tab (CSS body[data-tab=board]). */
-function dcExtra(){return `<button class="btn dcx" data-a="csv" id="csvbtn">Export CSV</button><button class="btn dcx" data-a="json" id="jsonbtn">Export JSON</button>${S.endedEarly||isMock()?'':`<a class="btn dcx" id="redraftroomlink" href="${esc(UI.pageUrl('redraft.html',{l:LID}))}">Redraft · ${esc(F.REDRAFT.asOfLabel)}</a>`}`}
+function dcExtra(){return `<button class="btn dcx" data-a="csv" id="csvbtn">Export CSV</button><button class="btn dcx" data-a="json" id="jsonbtn">Export JSON</button>${''/* sh9 (Paul): NBA has no redraft, so no Redraft room link */}`}
 function completeCard(){return isMock()?'':'<div class="pdbx">'+whatsNext()+inviteWatchCard()+homeTip()+'</div>'}
 function viewBoard(){if(!S)return'';if(S.status==='lobby')return lobbyView();return(S.status==='complete'?completeCard():'')+boardTable()}
 /* ---- teams ---- */
