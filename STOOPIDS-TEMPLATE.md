@@ -1,7 +1,13 @@
 # STOOPIDS template: how Stoopids Hoops maps to the master site
 
 **Master:** `Stoopids/stoopids` (live: https://stoopids.github.io/stoopids/). It is read-only: clone it to a separate folder, never push to it, never touch its textdb keys.
-**This site:** `Stoopids/stoopids-hoops`, build `2026-11-10sh8`. It uses textdb keys with the `shoops1-` prefix only.
+**This site:** `Stoopids/stoopids-hoops`, build `2026-11-10sh9`. It uses textdb keys with the `shoops1-` prefix only.
+
+## sh9: fixes block (Paul), drop when STOOPIDS ships the same fixes
+STOOPIDS `main` did not have these fixes yet, so the build appends `tools/hoops_sh9_fixes.html` (one `<!--<HOOPS-SH9>-->` block) before `</body>`. The STOOPIDS markup above it is unchanged.
+- Bet numbers on Games cards (`gOpenBet`): open bets open on All Bets with the status filter set to that bet. Settled and wash bets open on Tally > Settled bets. If a person, date or search filter hides the bet, those filters are cleared. The page scrolls the card to just under the frozen rows and adds the `.dl-hl` highlight for 2.6 s.
+- Frozen rows: on Games, the Upcoming/Past row and the filter/search row stick under the main tab row. On Bets, the visible sub-tab row sticks the same way. Each row's `top` is set from the nav height. `--hk-frz` holds the frozen height and drives `scroll-padding-top`, so date headings land right below. `obAlign` measures the sub-tab row where it sits in the page, so each sub-tab's heading box lands just under the frozen rows.
+When STOOPIDS ships its own version, delete that `rep(...)` in the build script and the file, then rebuild.
 
 ## sh8: the league site IS the STOOPIDS page (Paul)
 `league.html` is the STOOPIDS `index.html` copied verbatim by `tools/build_league_from_stoopids.py`

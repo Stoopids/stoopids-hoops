@@ -15,3 +15,7 @@ Local only under `/workspace/nba-league/`. No GitHub repo, no push, no writes to
 ## 2026-11-10sh8
 - League site is now the STOOPIDS page copied verbatim (tools/build_league_from_stoopids.py) with the NBA data layer (js/hoops-stoopids.js). One page for every league (?l=<code>); landing without a code.
 - e2e_stoopids_copy.js: handoff from a real room draft, heading, one-line chips (5/6 managers), commish new link, two leagues + landing.
+
+## 2026-11-10sh9
+- Paul's bug fixes: Games bet number opens that exact bet on Bets (right view and filter, scroll, highlight). Frozen Bets sub-tab row and frozen Games Upcoming/Past and filter rows (desktop and mobile). Draft room recap: removed the Redraft countdown line.
+- Verified with synthetic labeled bets (mock store); screenshots in screens-sh9/ (not committed). test_nba_* pass, e2e_stoopids_copy 35/35, e2e_nba_mock 18/18.

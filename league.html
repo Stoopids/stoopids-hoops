@@ -4834,5 +4834,51 @@ function s29eCopyText(b){if(!b)return '';if(b.status==='open'&&b.kind!=='pool')r
  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
 })();
 </script>
+<!--<HOOPS-SH9> Paul-approved bug fixes (sh9), mirroring the fixes going live on STOOPIDS. Appended by tools/build_league_from_stoopids.py;
+     drop this block once the STOOPIDS index.html ships its own version of these fixes and the build is re-run against it.
+     1) Games card bet number (#45) opens that exact bet on Bets: right sub-tab + status filter, scrolled just below the frozen rows, brief highlight.
+     2) Bets: main tab row + Bets sub-tab row frozen at the top; a sub-tab opens with its heading box right below them.
+     3) Games: main tabs + Upcoming/Past row + filter/search row frozen; the date heading sits right below. -->
+<style>
+html body #main>.tabs.ob-seg.hk-frz,html body #main>.segrow.hk-frz,html body #main>.gfone.hk-frz{position:sticky!important;z-index:38!important;background:var(--bg,#10131a)!important;box-shadow:0 0 0 100vmax var(--bg,#10131a)!important;clip-path:inset(0 -100vmax)!important}
+html body #main>.segrow.hk-frz{z-index:39!important}
+html.hk-frz-on{scroll-padding-top:calc(var(--hk-frz,64px) + 8px)!important}
+</style>
+<script>
+(function(){
+  /* frozen rows: measure, then stack them right under the main tab row (heights differ on phones / when filters wrap) */
+  function rows(){const m=document.getElementById('main');if(!m)return[];const out=[];
+    if(tab==='games'){const s=m.querySelector(':scope>.segrow'),f=m.querySelector(':scope>.gfone');if(s)out.push(s);if(f)out.push(f)}
+    else if(tab==='bets27'){m.querySelectorAll(':scope>.tabs.ob-seg').forEach(e=>{if(e.getBoundingClientRect().height)out.push(e)})}
+    return out}
+  function navH(){const n=document.getElementById('nav');return n?Math.round(n.getBoundingClientRect().height):0}
+  function stick(){try{const R=rows();document.querySelectorAll('#main>.hk-frz').forEach(e=>{if(R.indexOf(e)<0){e.classList.remove('hk-frz');e.style.removeProperty('top')}});
+    let y=navH();R.forEach(e=>{e.classList.add('hk-frz');e.style.setProperty('top',y+'px','important');y+=Math.round(e.getBoundingClientRect().height)});
+    document.documentElement.style.setProperty('--hk-frz',y+'px');document.documentElement.classList.toggle('hk-frz-on',R.length>0);return y}catch(e){return 0}}
+  window.hkFrozenBottom=stick;
+  const r0=render;render=function(){const x=r0.apply(this,arguments);stick();return x};
+  addEventListener('resize',stick,{passive:true});let q=0;addEventListener('scroll',()=>{if(q)return;q=requestAnimationFrame(()=>{q=0;stick()})},{passive:true});
+  /* Bets sub-tab landing: the sub-tab row sits right under the main tab row, so the view's heading box is right below both frozen rows */
+  const oa=obAlign;obAlign=function(){document.querySelectorAll('#main>.hk-frz').forEach(e=>{e.classList.remove('hk-frz');e.style.removeProperty('top')});oa.apply(this,arguments);stick()};   // measure the row where it sits in the page (not where it is stuck)
+  /* 1) bet number on a Games card -> that bet on Bets */
+  const stOf=b=>b.status==='open'?'open':b.status==='push'?'wash':b.status==='void'?'void':'settled';
+  gOpenBet=function(id){id=String(id||'');const bets=(U&&U.doc&&U.doc.bets)||[];const b=bets.find(x=>x.id===id);
+    if(window.S26W)S26W.user=true;tab='bets27';try{S24.sub=null}catch(e){}
+    /* open bets live on All Bets (status filter = that bet's status); settled / wash bets live in Tally > Settled bets */
+    const views=b&&b.status!=='open'?['tally','all']:['all','tally'];let el=null;
+    const tryIn=v=>{OB_VIEW=v;render();return document.getElementById('bet-'+id)};
+    if(b){lsSet(S24FSK,stOf(b));lsSet(S24FAK,'any')}
+    for(const v of views){el=tryIn(v);if(el)break}
+    if(!el&&b){lsSet(S24FPK,'all');lsSet(S24FWK,'any');lsSet(S24FSK,'all');s24Q='';for(const v of views){el=tryIn(v);if(el)break}}   // hidden by a person / when / search filter: clear them
+    if(window.hdrSync)try{hdrSync()}catch(e){}
+    if(!el){OB_VIEW=views[0];render();return false}
+    const go=()=>{const e=document.getElementById('bet-'+id);if(!e)return;const top=stick();const y=Math.round(e.getBoundingClientRect().top+window.scrollY-top-8);window.scrollTo(0,Math.max(0,y));};
+    go();requestAnimationFrame(()=>requestAnimationFrame(go));setTimeout(go,120);setTimeout(go,400);
+    document.querySelectorAll('.dl-hl').forEach(e=>e.classList.remove('dl-hl'));el.classList.add('dl-hl');clearTimeout(window._hkHl);
+    window._hkHl=setTimeout(()=>{const e=document.getElementById('bet-'+id);if(e)e.classList.remove('dl-hl')},2600);
+    try{s24Put(true)}catch(e){}return false};
+})();
+</script>
+<!--</HOOPS-SH9>-->
 </body>
 </html>

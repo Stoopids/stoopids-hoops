@@ -147,6 +147,8 @@ import subprocess
 T = json.loads(subprocess.check_output(['node', '-e', "global.window=global;require(process.argv[1]);process.stdout.write(JSON.stringify(window.TEAMS_DATA))", os.path.join(ROOT, 'assets', 'teams.js')]))
 rows = [{'school': r[1], 'tid': r[0], 'net': (T['meta'].get(r[0]) or {}).get('wr'), 'conf': ((T['meta'].get(r[0]) or {}).get('c', '') + ' · ' + (T['meta'].get(r[0]) or {}).get('d', '')).strip(' ·')} for r in T['teams']]
 json.dump({'format': 1, 'season': 'Last season win rank (25-26)', 'as_of': T.get('built', ''), 'rows': [x for x in rows if isinstance(x['net'], int)]}, open(os.path.join(ROOT, 'data', 'hoops-net.json'), 'w'), indent=0)
+# sh9 (Paul): bet-number jump, frozen Bets / Games rows. Kept in tools/hoops_sh9_fixes.html until STOOPIDS ships its own fixes.
+rep('</script>\n</body>', '</script>\n' + open(os.path.join(ROOT, 'tools', 'hoops_sh9_fixes.html'), encoding='utf-8').read() + '</body>', why='sh9 fixes: bet-number jump + frozen Bets / Games rows')
 open(os.path.join(ROOT, 'league.html'), 'w', encoding='utf-8').write(s)
 # shared/ui.js + ui.css: STOOPIDS' own shared module, copied verbatim except the rankings footnote link (NBA BPI instead of the college AP poll)
 os.makedirs(os.path.join(ROOT, 'shared'), exist_ok=True)

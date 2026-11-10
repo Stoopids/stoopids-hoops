@@ -1,8 +1,8 @@
 d41d8cd98f00b204e9800998ecf8427e  .nojekyll
-4cfcd82f0c79ce046dd7898b734677d5  CHANGED-FILES.md
+55955349784822275f7f85cc3e992f50  CHANGED-FILES.md
 fc4c2520be569d292be962f8ba4efdeb  LICENSE-third-party.txt
 8b5625f976836aad6af5f60e27144a46  README.md
-d34f88b3f27f4eed33a6a2aa79063203  STOOPIDS-TEMPLATE.md
+5bb76f6056d16eb55ab63b2c7408238b  STOOPIDS-TEMPLATE.md
 d64b4a5bc83d7d701430bd795594d5bf  assets/cheer.mp3
 1efdefd1fb1432448a983cf69fd1f268  assets/hero-banner.jpg
 81f9e4f98c15e35eecbf220190fc0b0a  assets/hoops-hero-mobile.jpg
@@ -52,7 +52,7 @@ b5cf08848cc12e086cac3c55f476e74b  js/mock.js
 0d90fdc20e22c89dfdcc5c0997fdeb62  js/power-gen.js
 c63658ec67c5b8f02bd44a2f65fa068f  js/power-render.js
 ade6fadbb2f4be5a575390360ff3af5b  js/qr.min.js
-e36dc93c731732284437ab759082882b  js/recap.js
+6dc9fd082892b2246799a58ffa435ffd  js/recap.js
 757c3c165a79010c4b592f2eeffcb64c  js/redraft.js
 44d2034267f38b5cbdc22c1b39f096ef  js/room.js
 851d0fe9a76e4a846bba43d504a94264  js/rules.js
@@ -62,8 +62,8 @@ e36dc93c731732284437ab759082882b  js/recap.js
 4c6278d218b3092ecb311378e48f9cbb  js/store.js
 b31b8d130f47a378f2358995614b9470  js/time.js
 4d504bf1ee1831973176394e76f994f6  js/ui.js
-6b9c0455e03e9f5c5f3491f584d8b515  js/version.js
-16cc494dc01399fde44b764250249c88  league.html
+c04a74bac9f5967edc9cf9d2d0fd70bf  js/version.js
+0afe52e7fc9f8ff20c85b90cba6b3fc0  league.html
 bfecc7dd0f1bda7d2eba6a98a31acf30  manifest.webmanifest
 3b25eb7bcd546e190180401ab0cd8833  mock.html
 4aa29b791ef8afea1136539675db73df  recap.html
@@ -72,8 +72,9 @@ bfecc7dd0f1bda7d2eba6a98a31acf30  manifest.webmanifest
 0abcaa0775f7e3d21e6561e1b07ccc36  setup.html
 441fdaab0f155a04edca55cc8191e07c  shared/ui.css
 20e521bd045d8ff49ead0a01e6bfef7a  shared/ui.js
-3d624bfdeceb851384e5e75514df28b4  sw.js
+3801e1bdb7842b99a3d695b6ec076607  sw.js
 dbc1acbbc855aa2997faf2d9331135b5  time.html
-a0c02a4fe53024ffd32ff196c88d9062  tools/build_league_from_stoopids.py
+1bd8494272848871ecbd4f41b71b12cc  tools/build_league_from_stoopids.py
+eee8a26eb834ea3667a3220d21d9c65d  tools/hoops_sh9_fixes.html
 564a76fc93bd657cffacd255c20ebb3e  tools/mock_textdb.js
 636d0753d17ce3c75551ccacb706f1c2  tools/refresh_nba.py

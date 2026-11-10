@@ -804,3 +804,14 @@ Test-only (not shipped): tests/e2e_picksheet_clock_s28.js, e2e_beep_s28.js, e2e_
 - sw.js: precache the new files. js/version.js: FBN_BUILD 2026-11-10sh8.
 - tests: new e2e_stoopids_copy.js; test_core (SW list ignores template/data URLs and ?v=; PWA head check skips the verbatim league.html), test_xss_static (league.html exempt as the verbatim STOOPIDS page).
 - STOOPIDS-TEMPLATE.md rewritten; MD5SUMS.txt regenerated.
+
+## 2026-11-10sh9 — bug fixes (Paul): bet-number jump, frozen Bets/Games rows, no Redraft countdown
+- tools/hoops_sh9_fixes.html (new): appended to league.html by the build. It does four things:
+  - gOpenBet opens the exact bet (open bets on All Bets, settled and wash bets on Tally > Settled bets), clears any filter hiding it, scrolls it to just under the frozen rows and highlights it.
+  - The Games Upcoming/Past row and the filter/search row are sticky.
+  - The Bets sub-tab row is sticky.
+  - obAlign and scroll-padding account for the frozen rows.
+- tools/build_league_from_stoopids.py: one counted swap that inserts the block. league.html rebuilt. The STOOPIDS source is unchanged; its upstream has no such fixes yet.
+- js/recap.js: removed the "N days to go until the Redraft <date>" countdown lines (hero and first card). This was STOOPIDS/NCAA leftover text.
+- js/version.js: FBN_BUILD 2026-11-10sh9. sw.js: line 1 comment; the cache name follows FBN_BUILD.
+- STOOPIDS-TEMPLATE.md, PROGRESS.md updated; MD5SUMS.txt regenerated.
