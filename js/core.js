@@ -517,5 +517,12 @@ F.heroWritable=cmOk=>cmOk===true;
 F.fitHero=(encode)=>F.fitPhoto(encode,{maxBytes:F.HERO.maxBytes,edges:F.HERO.edges,qualities:F.HERO.qualities});
 /* school name -> ESPN team page (outbound link only). Only a numeric-string id (assets/teams.js element 0) gives a URL; anything else is null, so the caller shows plain text. */
 F.espnUrl=id=>(typeof id==='string'&&/^\d{1,8}$/.test(id))?'https://www.espn.com/nba/team/_/id/'+id:null;
+/* Header tagline: same wording, manager count is 5 or 6. */
+F.leagueTagline=function(n){n=+n;n=(n===6)?6:5;return n+" managers. One season. Let's play."};
+/* Games tab list order: upcoming chronological by day+start; past newest day first, then later start first. */
+F.sortGamesList=function(list,o){o=o||{};list=(list||[]).slice();const key=o.key||(g=>g.day||'');const start=o.start||(g=>g.start||'');const tbd=o.tbd||(()=>false);
+  if(o.mode==='upcoming'){const sk=g=>key(g)+(tbd(g)?'~':' ')+start(g);list.sort((a,b)=>sk(a).localeCompare(sk(b)))}
+  else{const sk=g=>key(g)+' '+start(g);list.sort((a,b)=>sk(b).localeCompare(sk(a)))}
+  return list};
 if(typeof module!=='undefined'&&module.exports)module.exports=F;else root.FBN=F;
 })(typeof window!=='undefined'?window:globalThis);

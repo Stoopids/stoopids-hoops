@@ -1,3 +1,6 @@
+# sh5 (build 2026-11-10sh5): post-draft league-site bug fixes
+Base: sh4. Header tagline uses the actual manager count (5 or 6) in the same "N managers. One season. Let's play." style. Recap power rankings generate for 5- or 6-manager drafts (no longer require 8). Past games group and sort by day, newest first. NCAA AP rankings request removed; recap (and league) ESPN team links use nba/team URLs.
+
 # sh4 (build 2026-11-10sh4): Win rank is 2025-26
 Base: sh3. Draft-room Win rank now sorts by last season's final regular-season records (ESPN standings season=2026), stored in data/last_season.json. Cards show e.g. "64-18 (2025-26)". Legend: "record = 2025-26 season". Power Ranking remains the default sort. Current 2026-27 standings stay in scores.json for the league site. The static 2024-25 list in meta.f is not used for Win rank.
 

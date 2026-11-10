@@ -106,7 +106,7 @@ async function getJ(p){const r=await fetch(p+'?b='+encodeURIComponent(window.FBN
 function initials(n){n=String(n||'').replace(/\(.*?\)/g,' ').replace(/[^A-Za-z0-9 ]/g,' ').trim();if(!n||/^\d+$/.test(n))return '?';const w=n.split(/\s+/);return (w.length>1?w[0][0]+w[1][0]:n.slice(0,2)).toUpperCase()}
 const hexOk=v=>{v=String(v==null?'':v).replace('#','');return /^[0-9a-f]{6}$/i.test(v)?'#'+v:/^[0-9a-f]{3}$/i.test(v)?'#'+v:null};
 /* every school name links to its ESPN team page (outbound link only: no ESPN images are loaded for the link). Uses Draft Room's F.espnUrl(id); a team without a numeric id is shown as plain text, never as a link. */
-const espnUrl=id=>F.espnUrl?F.espnUrl(id==null?null:String(id)):(/^\d{1,8}$/.test(String(id==null?'':id))?'https://www.espn.com/mens-college-basketball/team/_/id/'+id:null);
+const espnUrl=id=>F.espnUrl?F.espnUrl(id==null?null:String(id)):(/^\d{1,8}$/.test(String(id==null?'':id))?'https://www.espn.com/nba/team/_/id/'+id:null);
 const teamHref=tid=>{const t=T.TEAMS[tid];return t?espnUrl(t.espn_id):null};
 function tlink(tid,txt,cls){const u=teamHref(tid),t=T.TEAMS[tid]||{};return u?`<a class="tl${cls?' '+cls:''}" href="${esc(u)}" target="_blank" rel="noopener noreferrer" title="Open ${esc(t.name||txt)} on ESPN">${esc(txt)}</a>`:esc(txt)}
 function chip(tid,o){o=o||{};const t=T.TEAMS[tid]||{};const nm=t.short||t.name||o.name||String(tid);const bg=hexOk(t.color)||'#3a4256',alt=hexOk(t.alt)||'#ffffff';const fg=U.textOn(bg);const ini=esc(initials(nm));
@@ -133,7 +133,8 @@ function stampLocal(){const d=genDate();if(!d)return '';const p={};FSTAMP.format
 /* ---------- s25: rotating tagline in the header slot: index = floor(days since 2026-11-01 / 2) mod list length, by the viewer's LOCAL date (s25),
    so everyone sees the same line on the same date and it changes every 2 days. The list is ONE data array; the shared list is not approved yet,
    so it holds a single neutral placeholder line (add approved lines here only). ---------- */
-const TAGLINES=["Eight managers. One season. Let's play."];
+function mgrCount(){const n=(D&&D.owners&&D.owners.length)||(L&&L.meta&&L.meta.settings&&+L.meta.settings.managers)||(window.FBN&&FBN.MANAGERS)||5;return n===6?6:5}
+const TAGLINES=null;   /* line is built by F.leagueTagline from the actual 5 or 6 manager count */
 const TAG_EPOCH=Date.UTC(2026,10,1);   /* 2026-11-01, counted in the viewer's local calendar days */
 function tagIdx(ms,n){const d=LTIME.daysSince('2026-11-01',ms);return((Math.floor(d/2)%n)+n)%n}
 /* s25c upset line (js/shared-s25.js: upsets read from ESPN's public scoreboard, GET only, cached 1 h in sessionStorage): every S25.UPSET_EVERY-th 2-day slot,
@@ -144,7 +145,7 @@ function upLine(ms){const X=window.S25;if(!UPSET||!X||!Array.isArray(X.UPSET_TEM
   const t=X.UPSET_TEMPLATES[X.upsetTemplateAt(Math.floor(k/E))]||'';const u=UPSET;return t.replace(/\{Winner\}/g,u.winner).replace(/\{Loser\}/g,u.loser).replace(/\{WS\}/g,String(u.ws)).replace(/\{LS\}/g,String(u.ls))||null}
 function upLoad(){if(UPL||DEMO||!window.S25||typeof S25.loadUpset!=='function')return;UPL=true;let c=null;try{c=sessionStorage}catch(e){}
   S25.loadUpset({cache:c}).then(u=>{if(u&&u.winner&&u.loser){UPSET=u;const el=document.getElementById('tag');if(el)keepPos(()=>{el.textContent=tagFor()})}}).catch(()=>{})}
-function tagFor(ms){ms=ms==null?Date.now():ms;return upLine(ms)||TAGLINES[tagIdx(ms,TAGLINES.length)]}
+function tagFor(ms){ms=ms==null?Date.now():ms;return upLine(ms)||F.leagueTagline(mgrCount())}
 /* ---------- freshness line + live scores (ESPN overlay on games already in the data; in memory only, GET only) ---------- */
 function relAgo(ms){if(typeof ms!=='number'||!isFinite(ms))return null;const m=Math.floor(Math.max(0,ms)/60000);if(m<1)return 'just now';if(m<60)return m+' min ago';const h=Math.floor(m/60);if(h<24)return h+(h===1?' hour':' hours')+' ago';const d=Math.floor(h/24);return d+(d===1?' day':' days')+' ago'}
 const FR={exact:false,timer:null,vis:false};
@@ -314,13 +315,13 @@ function quick(g){try{return window.LBETS&&LBETS.quickHtml?LBETS.quickHtml(g,{na
 const liveRow=()=>'<div id="live" class="lv" hidden><span id="lvT" aria-live="polite"></span><button id="lvB" type="button" data-a="lvrefresh" aria-label="Refresh live games">&#8635; Refresh Live Games</button><span id="lvU" class="lvU" hidden></span></div>';
 function vGames(){const every=D.games||[],nHidden=every.filter(g=>!gOwned(g)).length;if(!nHidden)gAll=false;const all=gAll?every:every.filter(gOwned);
   const ups=all.filter(g=>g.status!=='final'),fin=all.filter(g=>g.status==='final');if(!gMode)gMode=ups.length?'upcoming':'scores';
-  let list=(gMode==='upcoming'?ups:fin.slice().reverse());if(gOwner!=='all')list=list.filter(g=>g.home.owners.includes(gOwner)||g.away.owners.includes(gOwner));if(gH2H)list=list.filter(g=>g.h2h||g.civil);
+  let list=(gMode==='upcoming'?ups.slice():fin.slice());if(gOwner!=='all')list=list.filter(g=>g.home.owners.includes(gOwner)||g.away.owners.includes(gOwner));if(gH2H)list=list.filter(g=>g.h2h||g.civil);
   /* s28g Games filters = STOOPIDS s29d (/workspace/s29d/games_filters_snippet.md, S29D-GF): row 1 = the plain .rkseg/.rkseg-b Upcoming | Past games toggle (no overrides);
      row 2 .gf2 (no card) = Owner, Month (jump to the first game day of that month), Day, + on Upcoming only League's 'Owner vs owner' pill (League has no Pool-only filter). */
   if(gMode!=='upcoming')gH2H=false;
+  list=F.sortGamesList(list,{mode:gMode,key:etKey,start:g=>g.start||'',tbd:isTBD});
   const days=[...new Set(list.map(etKey))];if(gDay!=='all'&&!days.includes(gDay))gDay='all';if(gDay!=='all')list=list.filter(g=>etKey(g)===gDay);
   let gCapped=0;if(gDay==='all'&&gMode==='upcoming'){const ns=new Set(days.slice().sort().slice(0,12)),n0=list.length;list=list.filter(g=>ns.has(etKey(g)));gCapped=n0-list.length}   /* = the reference site S26U-MONTH-JUMP: All days = next 12 game days */
-  if(gMode==='upcoming'){const sk=g=>etKey(g)+(isTBD(g)?'~':' ')+(g.start||'');list.sort((a,b)=>sk(a).localeCompare(sk(b)))}
   const firstDay={};days.slice().sort().forEach(k=>{const m=String(k).slice(5,7);if(!firstDay[m])firstDay[m]=k});const curM=gDay!=='all'?String(gDay).slice(5,7):'';
   const monSel=`<select class="gf2-s gmon-sel${curM?' on':''}" id="gMonthSel" aria-label="Jump to month"><option value="">Month</option>${[['11','Nov'],['12','Dec'],['01','Jan'],['02','Feb'],['03','Mar'],['04','Apr']].map(([m,l])=>firstDay[m]?`<option value="${esc(firstDay[m])}" data-mon="${m}"${m===curM?' selected':''}>${l}</option>`:`<option value="" data-mon="${m}" disabled>${l}</option>`).join('')}</select>`;
   const daySel=`<select class="gf2-s${gDay!=='all'?' on':''}" id="gDaySel" aria-label="Day"><option value="all">All days</option>${days.map(k=>`<option value="${esc(k)}"${k===gDay?' selected':''}>${esc(etLabel(k))}</option>`).join('')}</select>`;
