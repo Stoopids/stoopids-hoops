@@ -62,7 +62,7 @@ Bots.PERSONALITIES.forEach(p=>{
   t('NBA '+p.label+' choose() always returns a pool team',missed.length===0,missed);
 });
 {const taken=new Set([POOL[0],POOL[1]]);const avail=POOL.filter(t=>!taken.has(t));
- const c=Bots.choose({key:'balanced',avail,meta:META,round:1,mine:[],rng:()=>0.5,mockId:'x',mid:'y'});
+ const c=Bots.choose({key:'power',avail,meta:META,round:1,mine:[],rng:()=>0.5,mockId:'x',mid:'y'});
  t('choose skips already-taken teams',c&&!taken.has(c.tid),c);
 }
 

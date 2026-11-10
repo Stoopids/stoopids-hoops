@@ -49,8 +49,8 @@ async function boardNames(page){return page.evaluate(()=>[...document.querySelec
     const blob=names.map(x=>x.html||x.name).join(' | ');
     ok('practice bots are computer seats, not Ken/Kurt/Mark/Murf names',
       /Bot \d| bot/i.test(blob)&&!/Kentut|Kurmoji|Dirty Draymond|Cockchalkrock/.test(blob),blob);
-    ok('bot team labels use a personality (e.g. Balanced bot)',
-      /Chalk bot|Big conference bot|Value hunter bot|Upside bot|Homer bot|Balanced bot/.test(blob),blob);
+    ok('bot team labels use a personality (e.g. Division spread bot)',
+      /Power bot|Points bot|Proven bot|Division spread bot|Upside bot|Conference stack bot/.test(blob),blob);
 
     // human pick #1 from the Teams tab, then return to the Board to count chips
     await page.evaluate(()=>{const tab=document.querySelector('[data-a=tab][data-t=teams],[data-t=teams]');if(tab)tab.click()});

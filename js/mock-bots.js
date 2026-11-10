@@ -10,13 +10,16 @@ function powerConfs(meta){if(!isNba(meta))return POWER;const ids=Object.keys(met
   const top=ids.slice().sort((a,b)=>(+meta[a].o||+meta[a].p||99)-(+meta[b].o||+meta[b].p||99)).slice(0,10);
   const n={};top.forEach(t=>{const c=meta[t].c;if(c)n[c]=(n[c]||0)+1});
   const best=Object.keys(n).sort((a,b)=>n[b]-n[a]||a.localeCompare(b))[0];return best?[best]:['West']}
+/* sh6f (Paul): NBA practice-bot strategies, dealt at random per mock draft (distinct per bot), each with a little random noise.
+   score = lower is better; noise = up to NOISE score units; o = Power Ranking (BPI), sp = Stoopids projected points, wr = last-season win rank, pp = P(make playoffs). */
+const NOISE=2.5;
 const PERSONALITIES=[
- {key:'chalk',   label:'Chalk',          win:[3,0.5],temp:1.0,wo:0.5},
- {key:'bigconf', label:'Big conference', win:[6,1],  temp:2.5,confs:POWER,inConf:2.5,outConf:0.5,wo:0.4},
- {key:'value',   label:'Value hunter',   win:[6,1],  temp:2.5,valuePer10:1.0,wo:0.7},   /* lean per 10 places NET is better than power rank */
- {key:'upside',  label:'Upside',         win:[7,1.5],temp:3.5,midMajor:2.5,midMajorRounds:5,wo:0.6},
- {key:'homer',   label:'Homer',          win:[6,1],  temp:2.5,homer:4,wo:0.3},
- {key:'balanced',label:'Balanced',       win:[6,1],  temp:2.5,repeat:0.35,wo:0.5}
+ {key:'power',    label:'Power'},            /* best BPI left */
+ {key:'points',   label:'Points'},           /* best Stoopids projected points (league scoring) */
+ {key:'proven',   label:'Proven'},           /* best last-season record */
+ {key:'divspread',label:'Division spread'},  /* divisions it does not own yet first, then BPI */
+ {key:'upside',   label:'Upside'},           /* leans to BPI ranks ~11-20 that still have a playoff chance */
+ {key:'confstack',label:'Conference stack'}  /* leans East or West (seeded per bot) */
 ];
 const BY={};PERSONALITIES.forEach(p=>BY[p.key]=p);
 let NET=null;/* tid -> NET rank (data/net.json), loaded by mock.js on mock rooms only */
@@ -37,17 +40,17 @@ function consensus(avail,meta,wo){if(wo!=null){const r=blendRank(meta,+wo);retur
 let ERANK=null;function eRank(meta){if(!ERANK){ERANK={};Object.keys(meta).filter(t=>meta[t].e!=null).sort((a,b)=>meta[b].e-meta[a].e).forEach((t,i)=>ERANK[t]=i+1)}return ERANK}
 function homerConf(mockId,mid,meta){const c=[...new Set(Object.keys(meta).filter(t=>+meta[t].p>0&&+meta[t].p<=60).map(t=>meta[t].c))].sort();return c[hash32('homer:'+mockId+':'+mid)%c.length]}
 /* o: {key, avail, meta, round, mine:[tid], rng, mockId, mid} -> {tid, pos, n} */
-function choose(o){const P=BY[o.key]||BY.chalk,meta=o.meta||{};const ord=consensus(o.avail,meta,P.wo);if(!ord.length)return null;
-  const n=Math.min(WIN_MAX,ord.length,Math.max(1,Math.round(P.win[0]+P.win[1]*((o.round||1)-1))));const win=ord.slice(0,n);
-  const conf=t=>(meta[t]||{}).c||'';const hc=P.homer?homerConf(o.mockId,o.mid,meta):null;const cnt={};(o.mine||[]).forEach(t=>{cnt[conf(t)]=(cnt[conf(t)]||0)+1});
-  const confs=P.confs?powerConfs(meta):null;
-  const w=win.map((t,i)=>{let x=Math.exp(-i/P.temp);const m=meta[t]||{};
-    if(confs)x*=confs.indexOf(m.c)>=0?P.inConf:P.outConf;
-    if(P.valuePer10){const pr=+m.o||+m.p||0;const nr=NET&&NET[t]?NET[t]:(+m.wr||eRank(meta)[t]||0);if(pr&&nr&&pr>nr)x*=1+P.valuePer10*Math.min(3,(pr-nr)/10)}
-    if(P.midMajor&&(o.round||1)<=P.midMajorRounds){if(isNba(meta)?((+m.o||+m.p||99)>10):P5.indexOf(m.c)<0)x*=P.midMajor;}
-    if(hc&&m.c===hc)x*=P.homer;
-    if(P.repeat!=null)x*=Math.pow(P.repeat,cnt[m.c]||0);return x});
-  const tot=w.reduce((a,b)=>a+b,0);let r=o.rng()*tot;for(let i=0;i<win.length;i++){r-=w[i];if(r<=0)return{tid:win[i],pos:i,n}}return{tid:win[win.length-1],pos:win.length-1,n}}
-const api={PERSONALITIES,BY,deal,forBot,choose,consensus,blendRank,setNet,hash32,mul,label:k=>(BY[k]||{}).label||'',homerConf,_net:()=>NET,isNba,powerConfs};
+function stackConf(mockId,mid){return hash32('stack:'+mockId+':'+mid)%2?'East':'West'}
+function score(key,t,meta,mine,o){const m=meta[t]||{};const O=+m.o||+m.p||31;
+  if(key==='points')return m.sp!=null?-(+m.sp)/2:O;                       /* ~2 points ≈ 1 rank */
+  if(key==='proven')return +m.wr||O;
+  if(key==='divspread'){const own=new Set((mine||[]).map(x=>(meta[x]||{}).d).filter(Boolean));return(m.d&&own.has(m.d)?12:0)+O}
+  if(key==='upside'){const pp=m.pp!=null?+m.pp:(O<=20?0.5:0.1);return(O<=10?O+8:O<=20?O-4:O+4)-4*pp}
+  if(key==='confstack')return O+(m.c&&m.c!==stackConf(o.mockId,o.mid)?6:0);
+  return O}
+function choose(o){const meta=o.meta||{};const key=BY[o.key]?o.key:'power';const av=(o.avail||[]).slice().sort();if(!av.length)return null;const rng=o.rng||Math.random;
+  const sc=av.map(t=>({t,s:score(key,t,meta,o.mine,o)+rng()*NOISE}));sc.sort((a,b)=>a.s-b.s||(a.t<b.t?-1:1));
+  const base=av.slice().sort((a,b)=>(+((meta[a]||{}).o)||99)-(+((meta[b]||{}).o)||99));return{tid:sc[0].t,pos:base.indexOf(sc[0].t),n:av.length,key}}
+const api={PERSONALITIES,BY,deal,forBot,choose,consensus,blendRank,setNet,hash32,mul,label:k=>(BY[k]||{}).label||'',homerConf,stackConf,score,NOISE,_net:()=>NET,isNba,powerConfs};
 root.FBNBots=api;if(typeof module!=='undefined'&&module.exports)module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);

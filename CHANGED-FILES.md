@@ -365,6 +365,12 @@ League: Games cards (aligned pills, one-line owner row, no empty score box befor
 | tests/mock10_s26c11.js (not in bundle) | - | Release | 10 solo mocks + league.html Games/Breakdown/All teams check |
 | CHANGED-FILES.md / MD5SUMS.txt | (this file) | Release | s26c11 section; regenerated |
 
+## 2026-11-10sh6f — practice-bot strategies
+- js/mock-bots.js: practice bots now use six strategies, dealt at random per mock draft (distinct per bot), each with a little random noise: Power (best BPI left), Points (best Stoopids projected points), Proven (last season's record), Division spread (divisions it doesn't own yet, then BPI), Upside (BPI ~11-20 with a playoff chance), Conference stack (leans East or West). The bot's label shows its strategy (e.g. "Division spread bot"). Human auto-pick is unchanged: queue, then Power Ranking.
+- js/power-apply.js: keeps each team's playoff chance (p_playoff from data/stoopids.json) for the Upside bot.
+- tests: new test_nba_botstrats.js; test_nba_sh6.js and e2e_nba_bots.js use the new labels.
+- js/version.js, sw.js: build 2026-11-10sh6f.
+
 ## s26c8 (update): js/leaguehome.js 59adf7e0 from League s26c10-league (SUB declared before topNow; fixes league.html init error)
 
 # s26mo3 (build 2026-10-31s26mo3): queue drag-to-reorder fix + Show picked toggle + 'Draft order updated' toast, on s26c7s + s26mo2

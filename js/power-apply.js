@@ -60,6 +60,7 @@ function applyStoopids(data){
     if(pts[id]!=null)META[id].sp=+pts[id];
     n++;
   });
+  ((data&&data.teams)||[]).forEach(x=>{if(x&&META[x.id]&&x.p_playoff!=null)META[x.id].pp=+x.p_playoff});/* sh6f: playoff chance for the Upside bot */
   if(data&&window.FBN){
     if(data.note)FBN.STOOP_NOTE=data.note;
   }
