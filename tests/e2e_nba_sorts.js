@@ -120,7 +120,7 @@ function ok(name,cond,extra){n++;if(cond)console.log('  ok  '+name);else{bad++;f
     await p.evaluate(()=>{const b=document.querySelector('[data-a="tconfopen"]');if(b)b.click()});
     await sleep(200);
     const confBtns=await p.evaluate(()=>[...document.querySelectorAll('#tconf [data-a="tconf"]')].map(b=>b.innerText.trim()));
-    ok('All conf. menu is All conf., East, West',confBtns.join()==='All conf.,East,West',confBtns);
+    ok('All conf. menu is All conf., East, West, then the 6 divisions',confBtns.join()==='All conf.,East,West,Atlantic,Central,Southeast,Northwest,Pacific,Southwest',confBtns);
     await p.evaluate(()=>{const b=[...document.querySelectorAll('#tconf [data-a="tconf"]')].find(x=>x.dataset.c==='East');if(b)b.click()});
     await sleep(300);
     const east=await p.evaluate(()=>({n:document.querySelectorAll('#tlist .trow').length,note:(document.querySelector('.tnote2')||{}).innerText,subs:[...document.querySelectorAll('#tlist .cf')].map(s=>s.innerText)}));

@@ -1,5 +1,5 @@
 d41d8cd98f00b204e9800998ecf8427e  .nojekyll
-2eb213d774d41d597c3b5bafdda83b8a  CHANGED-FILES.md
+2fbfd4d906a1a77c4cd1ce543abdc768  CHANGED-FILES.md
 fc4c2520be569d292be962f8ba4efdeb  LICENSE-third-party.txt
 8b5625f976836aad6af5f60e27144a46  README.md
 d64b4a5bc83d7d701430bd795594d5bf  assets/cheer.mp3
@@ -31,7 +31,7 @@ ae88bc7ecfa154a0a37c491ff8a794c8  data/power.json
 cb2f334310b363a0e1c6d957ba52bc4e  import/stoopids-draft-results.json
 28b67dfe7414ede2784be6d5fac92197  index.html
 7b5dbb270fa200d81d936dc9c0ae4332  join.html
-13a224bd63c40286377d048f0f6db8bc  js/core.js
+ca4d112343a3e65da480e266048e1cf3  js/core.js
 919176badbe78c5adc6fb7ce260cf723  js/help.js
 3f97b1de38b57f850f848cf3a1199f36  js/index.js
 f0f6c0bb1eeee96cb5d20105b231a9a7  js/join.js
@@ -49,7 +49,7 @@ c63658ec67c5b8f02bd44a2f65fa068f  js/power-render.js
 ade6fadbb2f4be5a575390360ff3af5b  js/qr.min.js
 e36dc93c731732284437ab759082882b  js/recap.js
 757c3c165a79010c4b592f2eeffcb64c  js/redraft.js
-8cd30a98e7229a73ffc89be3498743c8  js/room.js
+0d3bd76a900663b77f4987ad0292d617  js/room.js
 851d0fe9a76e4a846bba43d504a94264  js/rules.js
 228545c76e5c2efff4be1285b6df723e  js/scoring.js
 58166255c63f584f4101bb91da6a6ace  js/setup.js
@@ -57,7 +57,7 @@ e36dc93c731732284437ab759082882b  js/recap.js
 4c6278d218b3092ecb311378e48f9cbb  js/store.js
 b31b8d130f47a378f2358995614b9470  js/time.js
 9cb2ba429a4d95bc75b732f5aa9332bd  js/ui.js
-7aceac3840191ff0eccd95798b65e3b6  js/version.js
+dda6f4e43b9c4f67c50d17878c49f40b  js/version.js
 ee6fe7ee92a0c5908fd60ec71b6a1886  league.html
 bfecc7dd0f1bda7d2eba6a98a31acf30  manifest.webmanifest
 3b25eb7bcd546e190180401ab0cd8833  mock.html
@@ -65,7 +65,7 @@ bfecc7dd0f1bda7d2eba6a98a31acf30  manifest.webmanifest
 3790444b833d3fa1343329aa5d731b65  redraft.html
 07c9e11fbb07df7b11e44948ea7b2797  room.html
 0abcaa0775f7e3d21e6561e1b07ccc36  setup.html
-bc57eb8a57d12be25a0f67cf0988d986  sw.js
+76cf55a01c5b9371e37d97d7edd7fec2  sw.js
 dbc1acbbc855aa2997faf2d9331135b5  time.html
 564a76fc93bd657cffacd255c20ebb3e  tools/mock_textdb.js
 636d0753d17ce3c75551ccacb706f1c2  tools/refresh_nba.py

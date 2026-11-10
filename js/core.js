@@ -454,6 +454,12 @@ F.REC_SRC='2025-26';
 F.seasonShort=function(s){s=String(s==null?'':s);const m=/(\d{2,4})\s*[-–]\s*(\d{2,4})/.exec(s);return m?m[1].slice(-2)+'-'+m[2].slice(-2):s};
 F.recLabel=function(rec,src){rec=String(rec||'').trim();return rec?rec+' ('+F.seasonShort(src||F.REC_SRC||'')+')':'—'};
 F.STOOP_NOTE='Expected points = proj. regular-season wins + 2×P(make playoffs) + 2×E[playoff wins] + 4×P(champion). NBA Cup points omitted: ESPN BPI has no Cup odds.';
+/* sh6f (Paul): NBA divisions in the Teams filter (meta.d) and in each team card subtitle */
+F.DIVISIONS=['Atlantic','Central','Southeast','Northwest','Pacific','Southwest'];
+F.confFilterList=function(meta,pool){const c={},d={};(pool||Object.keys(meta||{})).forEach(t=>{const m=(meta||{})[t]||{};if(m.c)c[m.c]=1;if(m.d)d[m.d]=1});
+  return ['East','West'].filter(x=>c[x]).concat(Object.keys(c).filter(x=>x!=='East'&&x!=='West').sort()).concat(F.DIVISIONS.filter(x=>d[x])).concat(Object.keys(d).filter(x=>F.DIVISIONS.indexOf(x)<0).sort())};
+F.confMatch=(m,f)=>!f||(!!m&&(m.c===f||m.d===f));
+F.confSub=m=>m?[m.c||'',m.d||''].filter(Boolean).join(' · '):'';
 F.TMODES=[['kenpom','Power Ranking'],['stoopid','Stoopids Rank'],['power','Win rank'],['alpha','A–Z'],['conf','Conference'],['tiers','Tiers']];
 F.teamView=function(o){const TEAMS=o.teams,META=o.meta||{},pool=o.pool,taken=o.taken||{},watch=o.watch||new Set(),q=o.q||'',mode=o.mode||'kenpom';
   const nm=t=>TEAMS[t].name||TEAMS[t].short;const alpha=(a,b)=>nm(a).localeCompare(nm(b));const P=t=>(META[t]&&META[t].p)||0;const O=t=>(META[t]&&META[t].o)||0;const WR=t=>(META[t]&&META[t].wr)||0;const SR=t=>(META[t]&&META[t].sr)||0;const SP=t=>{const v=META[t]&&META[t].sp;return(v==null||v==='')?null:+v};const dir=o.desc?-1:1;const rk=(f,a,b)=>{const x=f(a),y=f(b);return(!x||!y)?(x?-1:y?1:0):dir*(x-y)};

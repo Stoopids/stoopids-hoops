@@ -1,7 +1,7 @@
 /* sh6c: queue add / reorder (▲) / remove (✕) in the Teams tab, saved to the manager's pref doc, and used by auto-pick (top queued team still available). Local mock_textdb only. */
 let puppeteer;try{puppeteer=require('puppeteer-core')}catch(e){puppeteer=require('/tmp/nba-e2e-deps/node_modules/puppeteer-core')}
 const {spawn}=require('child_process');const path=require('path');const DC=require('./nba_draftcheck.js');
-const ROOT=path.resolve(__dirname,'..');const PORT=+process.env.PORT||8862;const APP='http://127.0.0.1:'+PORT;const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const ROOT=path.resolve(__dirname,'..');const PORT=+process.env.PORT||8890;const APP='http://127.0.0.1:'+PORT;const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 let n=0,bad=0;const fails=[];const ok=(t,c,x)=>{n++;if(c)console.log('  ok  '+t);else{bad++;fails.push(t);console.log('FAIL  '+t,x===undefined?'':String(x).slice(0,400))}};
 function startMock(){return new Promise((res,rej)=>{const c=spawn(process.execPath,[path.join(ROOT,'tools/mock_textdb.js'),String(PORT),ROOT],{stdio:['ignore','pipe','pipe']});let b='';const on=d=>{b+=d;if(/mock app origin on/.test(b))res(c)};c.stdout.on('data',on);c.stderr.on('data',on);setTimeout(()=>rej(new Error(b)),8000)})}
 (async()=>{const mock=await startMock();const browser=await puppeteer.launch({executablePath:'/usr/bin/google-chrome',headless:'new',args:['--no-sandbox']});
@@ -24,8 +24,8 @@ function startMock(){return new Promise((res,rej)=>{const c=spawn(process.execPa
   ok('queue saved to the store in the new order',JSON.stringify((sq||[]).map(String))===JSON.stringify([C,B]),JSON.stringify(sq));
   await p.evaluate(()=>{const e=document.querySelector('#autotog');if(e&&!e.checked)e.click()});
   await p.waitForFunction(()=>document.querySelectorAll('.board .chip').length>=5||true,{timeout:1000});
-  let d=null;for(let i=0;i<60;i++){d=await DC.readDraft(p);if(d.picks&&d.picks[4])break;await sleep(1000)}
-  ok('auto-pick at pick #5 took the top queued team (after reorder/remove)',d.picks[4]&&d.picks[4].tid===C&&d.picks[4].by==='auto',JSON.stringify(d.picks[4])+' want '+C);
+  let d=null;for(let i=0;i<60;i++){d=await DC.readDraft(p);if(d.picks&&d.picks[4])break;await sleep(1000)}const banner=await p.evaluate(()=>((document.querySelector('#banner')||{}).innerText||'').replace(/\s+/g,' ').slice(0,200));
+  ok('auto-pick at pick #5 took the top queued team (after reorder/remove)',d.picks[4]&&d.picks[4].tid===C&&d.picks[4].by==='auto',JSON.stringify(d.picks.slice(0,6).map(x=>x&&[x.n,x.by,x.tid]))+' want '+C+' status '+d.status+' banner '+banner);
   for(let i=0;i<30;i++){d=await DC.readDraft(p);if(d.picks&&d.picks[5])break;await sleep(1000)}
   ok('next auto-pick (#6, snake) took the next queued team',d.picks[5]&&d.picks[5].tid===B,JSON.stringify(d.picks[5])+' want '+B);
  }finally{await browser.close();mock.kill()}

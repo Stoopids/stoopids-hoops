@@ -13,7 +13,7 @@ const DESK={width:1280,height:860},MOB={width:390,height:844,isMobile:true,hasTo
 const RUNS={
  D1:{kind:'mock',managers:5,order:'snake',seat:1,clock:30,vp:DESK,human:['manual','queue+auto','expire','auto']},
  D2:{kind:'mock',managers:6,order:'straight',seat:6,clock:30,vp:MOB,human:['queue+expire','manual','auto']},
- D3:{kind:'mock',managers:5,order:'straight',seat:3,clock:60,vp:DESK,human:['auto']},
+ D3:{kind:'mock',managers:5,order:'straight',seat:3,clock:30,vp:DESK,human:['auto']},
  D4:{kind:'league',managers:5,type:'snake',orderMode:'manual',clock:30,seats:[['manual','auto'],['auto'],['expire','auto'],['queue+auto'],['manual']],vps:[DESK,DESK,DESK,DESK,MOB]},
  D5:{kind:'league',managers:6,type:'linear',orderMode:'random',clock:30,seats:[['auto'],['queue+expire','auto'],['manual','expire','auto'],['auto'],['expire','manual','auto'],['queue+auto']],vps:[MOB,DESK,DESK,MOB,DESK,DESK]}};
 let tot=0,bad=0;const fails=[];function ok(name,c,x){tot++;if(c)console.log('  ok  '+name);else{bad++;fails.push(name);console.log('FAIL  '+name,x!==undefined?String(x).slice(0,700):'')}}
