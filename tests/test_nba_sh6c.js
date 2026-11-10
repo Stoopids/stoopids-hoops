@@ -27,4 +27,5 @@ let n=0,bad=0;const ok=(t,c,x)=>{n++;if(c)console.log('ok   '+t);else{bad++;cons
  ok('Pick a team opens the Teams tab (no pop-up is built)',/function openPick\(\)\{[^\n]*setTab\('teams'\)/.test(room)&&!/el\.id='pickov'/.test(room));
  ok('Teams sort starts on Power Ranking every visit',/mode:'kenpom'\/\*/.test(room));
  ok('human auto-pick freezes only on a real store stall (health timer wraps Store.fetchT)',/const f0=Store\.fetchT;Store\.fetchT=function/.test(room));
+ ok('a failing pick-slot key (…-e1-p22 / -a1) is not counted as a store-wide stall by the room health timer',/const slotKey=u=>/.test(room)&&/if\(ok\|\|!sk\)ev\.push/.test(room)&&/if\(!sk\)fly\.set/.test(room));
  console.log(bad?bad+' failed':n+' passed, 0 failed');process.exit(bad?1:0)})();

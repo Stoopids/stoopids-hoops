@@ -51,9 +51,9 @@ async function blankLeague(id,N){const K=F.Keys(id);const keys=[K.meta,K.chat,K.
   for(let e=1;e<=ep;e++)for(let n=1;n<=N*F.roundsFor(N)+2;n++){keys.push(K.pick(e,n));for(let a=1;a<=3;a++)keys.push(K.pick(e,n)+'-a'+a)}
   let cleaned=0;for(const k of keys){try{const v=await (await fetch(API+encodeURIComponent(k))).text();if(v){await fetch(API+encodeURIComponent(k),{method:'POST',headers:{'content-type':'text/plain'},body:''});cleaned++}}catch(e){}}return{checked:keys.length,cleaned}}
 async function drive(pages,policyOf,label,maxMs){/* pages: [{p,mid}]; loop until the draft is complete */
-  const t0=Date.now();let lastN=0,lastAt=Date.now(),stall=0;const acts={};const ref=pages[0].p;let info=null;
+  const t0=Date.now();const PG=PROG;const acts=PG.acts;const ref=pages[0].p;let info=null;
   while(Date.now()-t0<maxMs){info=await onClock(ref);if(!info||info.status!=='live'){if(info&&info.status==='complete')break;await sleep(1500);continue}
-    if(info.n!==lastN){lastN=info.n;lastAt=Date.now()}else if(Date.now()-lastAt>(+process.env.STALL||75000)){stall++;console.log('   STALL at #'+info.n);lastAt=Date.now();if(stall>2)break}
+    if(info.n!==PG.n){PG.n=info.n;PG.at=Date.now()}else if(Date.now()-PG.at>(+process.env.STALL||75000)){PG.stall++;console.log('   STALL at #'+info.n+' ('+Math.round((Date.now()-PG.at)/1000)+'s no pick)');PG.at=Date.now();PG.stalls.push(info.n);if(PG.stall>2){PG.dead=true;return{status:'stalled',n:info.n}}}
     const owner=info.owner;const pg=pages.find(x=>x.mid===owner);
     for(const x of pages){/* every human sets the switch for ITS next turn ahead of time */const pol=policyOf(x.mid,nextRound(info,x.mid));if(!pol)continue;const wantAuto=/auto$/.test(pol);await setAuto(x.p,wantAuto)}
     if(pg){const pol=policyOf(owner,info.round)||'';const key=owner+':'+info.n;if(pol==='manual'&&!acts[key]){acts[key]=1;try{const r=await manualPick(pg.p,SHOTS&&!acts.shot?SHOTS+'-'+label+'-teams-on-clock.png':'');acts.shot=1;
@@ -61,7 +61,7 @@ async function drive(pages,policyOf,label,maxMs){/* pages: [{p,mid}]; loop until
     await sleep(1200)}
   return info}
 function nextRound(info,mid){/* round of this manager's next turn at or after pick info.n */for(let n=info.n;n<=info.tot;n++){const s=F.slotAt(info.order,n,info.type||'snake',1e9);if(s&&s.owner===mid)return Math.floor((n-1)/info.order.length)+1}return null}
-async function runMock(browser,name,o){console.log('\n'+name+': practice, '+o.managers+' managers, '+o.order+', seat '+o.seat+', clock '+o.clock+'s, '+(o.vp.isMobile?'mobile 390':'desktop 1280')+', human: '+o.human.join(' / '));
+async function runMock(browser,name,o){resetProg();console.log('\n'+name+': practice, '+o.managers+' managers, '+o.order+', seat '+o.seat+', clock '+o.clock+'s, '+(o.vp.isMobile?'mobile 390':'desktop 1280')+', human: '+o.human.join(' / '));
   const {ctx,p}=await newPage(browser,o.vp);const t0=Date.now();
   await p.goto(APP+'/mock.html?managers='+o.managers+'&clock='+o.clock+'&seat='+o.seat+'&order='+o.order,{waitUntil:'domcontentloaded'});await p.waitForSelector('#startmock',{timeout:30000});await p.click('#startmock');
   await p.waitForFunction(()=>/room\.html\?l=/.test(location.href),{timeout:40000});await p.waitForSelector('.board',{timeout:40000});
@@ -74,23 +74,23 @@ async function runMock(browser,name,o){console.log('\n'+name+': practice, '+o.ma
   const policyOf=(mid,round)=>pol(mid,round);
   const wrapped=async()=>{const t=Date.now();let inf=null;while(Date.now()-t<15*60000){inf=await onClock(p);if(inf&&inf.status==='complete')break;
       if(inf&&inf.status==='live'){inf.type=type;const nr=nextRound(inf,me);if(!doneQ&&qrounds.includes(nr)&&inf.owner!==me){queued=await queueTeam(p,20);doneQ=true;console.log('   queued '+queued+' before round '+nr)}}
-      const r=await drive(pages,policyOf,name,4000);if(r&&r.status==='complete'){inf=r;break}}return inf};
+      const r=await drive(pages,policyOf,name,4000);if(r&&r.status==='complete'){inf=r;break}if(PROG.dead)break}return inf};
   info=await wrapped();
-  const d=await DC.readDraft(p);const r=DC.check(d,new Set([me]),null);report(name,d,r,t0,{});if(SHOTS)await p.screenshot({path:SHOTS+'-'+name+'-end.png'}).catch(()=>{});await ctx.close();return r}
-function report(name,d,r,t0,extra){const got=d.picks?d.picks.filter(Boolean).length:0;
+  const d=await DC.readDraft(p);const r=DC.check(d,new Set([me]),null);report(name,d,r,t0,{});if(SHOTS)await p.screenshot({path:SHOTS+'-'+name+'-end.png'}).catch(()=>{});if(d.lid){const b=await blankLeague(d.lid,o.managers).catch(e=>({err:String(e)}));console.log('   cleanup: blanked '+b.cleaned+' of '+b.checked+' shoops1-'+String(d.lid).slice(0,4)+'… practice keys');RES[RES.length-1].cleanup=b}await ctx.close();return r}
+function report(name,d,r,t0,extra){try{fs.appendFileSync('/tmp/live_ids.txt',name+' '+d.lid+'\n')}catch(e){}ok(name+': no stall (no 75 s without a pick)',PROG.stalls.length===0,JSON.stringify(PROG.stalls));const got=d.picks?d.picks.filter(Boolean).length:0;
   ok(name+': draft complete, '+got+'/'+d.tot+' picks',d.status==='complete'&&got===d.tot,d.status+' '+got+'/'+d.tot);
   ok(name+': right owner for every pick ('+d.type+'), no duplicate team',r.errs.filter(e=>!/human auto-pick/.test(e)).length===0,r.errs.join('; '));
   ok(name+': human auto-picks = queue first, else best BPI available',r.errs.filter(e=>/human auto-pick/.test(e)).length===0,r.errs.join('; '));
   console.log('   human picks: '+r.human.map(h=>'#'+h.n+' '+h.by+' '+h.tid+'(BPI '+h.bpi+')'+(h.expected?' exp '+h.expected+'/'+h.why:'')).join(' | '));
   console.log('   time '+Math.round((Date.now()-t0)/1000)+'s; league '+(d.lid||'').slice(0,4)+'…');
   RES.push({name,complete:d.status==='complete'&&got===d.tot,picks:got+'/'+d.tot,errs:r.errs,human:r.human,secs:Math.round((Date.now()-t0)/1000)})}
-const RES=[];
+const RES=[];let PROG={n:0,at:Date.now(),stall:0,stalls:[],acts:{}};const resetProg=()=>{PROG={n:0,at:Date.now(),stall:0,stalls:[],acts:{}}};
 /* qlog for real-league / mock: the queue lists in the store prefs (queues are only ever set before that manager's auto turn here) */
 const _check=DC.check;DC.check=function(d,humans,q){if(!q&&d.prefs){q={};d.picks.forEach((e,i)=>{if(e&&d.prefs[e.owner]&&Array.isArray(d.prefs[e.owner].queue))q[i+1]=d.prefs[e.owner].queue.map(String)})}return _check(d,humans,q)};
-async function runLeague(browser,name,o){console.log('\n'+name+': REAL league (TEST), '+o.managers+' managers, '+(o.type==='linear'?'straight':'snake')+', order '+(o.orderMode==='manual'?'set (join order)':'random')+', clock '+o.clock+'s, seats: '+o.seats.map((s,i)=>(i+1)+'='+s.join('/')+(o.vps[i].isMobile?'@390':'')).join(' '));
+async function runLeague(browser,name,o){resetProg();console.log('\n'+name+': REAL league (TEST), '+o.managers+' managers, '+(o.type==='linear'?'straight':'snake')+', order '+(o.orderMode==='manual'?'set (join order)':'random')+', clock '+o.clock+'s, seats: '+o.seats.map((s,i)=>(i+1)+'='+s.join('/')+(o.vps[i].isMobile?'@390':'')).join(' '));
   const t0=Date.now();const pg=[];for(let i=0;i<o.managers;i++)pg.push(await newPage(browser,o.vps[i]));
   const L=await wizard(pg[0].p,{name:'TEST sh6c '+name,managers:o.managers,type:o.type,orderMode:o.orderMode,clock:o.clock});const id=F.parseCode(String(L.code||'').replace(/[^0-9A-Z]/g,''))||(/[?&]l=([^&#]+)/.exec(L.room||'')||[])[1];
-  console.log('   league TEST sh6c '+name+' code '+String(id).slice(0,4)+'…');let r=null,d=null;
+  console.log('   league TEST sh6c '+name+' code '+String(id).slice(0,4)+'…');try{fs.appendFileSync('/tmp/live_ids.txt',name+' '+id+' league\n')}catch(e){}let r=null,d=null;
   try{for(let i=1;i<o.managers;i++){const p=pg[i].p;await p.goto(L.invite,{waitUntil:'domcontentloaded'});await p.waitForSelector('#jform',{timeout:40000});
       await p.$eval('#f_name',e=>e.value='');await p.type('#f_name','TEST Seat '+(i+1));await p.$eval('#f_team',e=>e.value='');await p.type('#f_team','TEST Team '+(i+1));await p.click('#joinbtn');await p.waitForSelector('#joined',{timeout:90000})}
     for(let i=0;i<o.managers;i++)await pg[i].p.goto(APP+'/room.html?l='+id,{waitUntil:'domcontentloaded'});
@@ -102,7 +102,7 @@ async function runLeague(browser,name,o){console.log('\n'+name+': REAL league (T
     await c.evaluate(()=>{const t=document.querySelector('[data-t=board]');if(t)t.click()});await c.waitForSelector('#startbtn',{visible:true,timeout:30000});await c.click('#startbtn');await c.waitForSelector('#cfyes',{timeout:10000});await c.click('#cfyes');
     await c.waitForFunction(()=>!document.querySelector('#startbtn'),{timeout:60000}).catch(()=>{});
     const pages=mids.map((m,i)=>({p:pg[i].p,mid:m}));let info=null;const tt=Date.now();
-    while(Date.now()-tt<25*60000){info=await onClock(c);if(info&&info.status==='complete')break;if(info&&info.status==='live'){info.type=o.type}const x=await drive(pages.map(z=>z),policyOf,name,5000);if(x&&x.status==='complete'){info=x;break}}
+    while(Date.now()-tt<25*60000){info=await onClock(c);if(info&&info.status==='complete')break;if(info&&info.status==='live'){info.type=o.type}const x=await drive(pages.map(z=>z),policyOf,name,5000);if(x&&x.status==='complete'){info=x;break}if(PROG.dead)break}
     d=await DC.readDraft(c);ok(name+': order is '+(o.orderMode==='manual'?'the set (join) order':'a random order of all seats'),o.orderMode==='manual'?JSON.stringify(d.order)===JSON.stringify(mids):d.order.slice().sort().join()===mids.slice().sort().join(),JSON.stringify({order:d.order,mids}));
     r=DC.check(d,new Set(mids),null);report(name,d,r,t0);if(SHOTS)await c.screenshot({path:SHOTS+'-'+name+'-end.png'}).catch(()=>{});
   }finally{if(id){const b=await blankLeague(id,o.managers).catch(e=>({err:String(e)}));console.log('   cleanup: blanked '+b.cleaned+' of '+b.checked+' shoops1-'+String(id).slice(0,4)+'… keys');RES.length&&(RES[RES.length-1].cleanup=b)}for(const x of pg)await x.ctx.close().catch(()=>{})}return r}

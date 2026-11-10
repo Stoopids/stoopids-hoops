@@ -266,7 +266,10 @@ let autoPlan={n:0,at:0},autoBusy=false;
    Healthy again only after 20 s with 4+ successes and p90 < 2.5 s (enter fast, leave slow). Test hook (localhost only): localStorage shoops.healthOff=1 turns the guard off. */
 const HL=(function(){const ev=[],fly=new Map();let seq=0,lastOk=Date.now(),stallOn=false,stallSince=0,quietFrom=0,recUntil=0;const REC_MS=5000;
   const off=()=>{try{return /^(localhost|127\.0\.0\.1)$/.test(location.hostname)&&localStorage.getItem('shoops.healthOff')==='1'}catch(e){return false}};const on=()=>{try{return /^(localhost|127\.0\.0\.1)$/.test(location.hostname)&&localStorage.getItem('shoops.healthOn')==='1'}catch(e){return false}};/* sh6c test hook (localhost only): run the health check against the local mock store too */
-  try{const f0=Store.fetchT;Store.fetchT=function(url,opt,ms){const id=++seq,t=Date.now();fly.set(id,t);const done=ok=>{fly.delete(id);const now=Date.now();ev.push({ok,ms:now-t,at:now});if(ok)lastOk=now;while(ev.length&&now-ev[0].at>60000)ev.shift()};
+  /* sh6c: a pick-slot key (…-e<epoch>-p<n>[-aN]) that keeps failing is handled by the backup-spot rules in store.js (and Store.stuck()); its failures and hangs are not a store-wide stall.
+     Counting them froze every human auto-pick for good when textdb kept failing one pick key (live TEST draft, pick #22 went to -a1, #23 stuck at 0:00 AUTO-PICKING). Successes still count. */
+  const slotKey=u=>{try{return /-e\d+-p\d+(-a\d)?$/.test(decodeURIComponent(String(u).split('?')[0].split('/').pop()))}catch(e){return false}};
+  try{const f0=Store.fetchT;Store.fetchT=function(url,opt,ms){const id=++seq,t=Date.now(),sk=slotKey(url);if(!sk)fly.set(id,t);const done=ok=>{fly.delete(id);const now=Date.now();if(ok||!sk)ev.push({ok,ms:now-t,at:now});if(ok)lastOk=now;while(ev.length&&now-ev[0].at>60000)ev.shift()};
     return f0.call(this,url,opt,ms).then(r=>{done(true);return r},e=>{done(false);throw e})}}catch(e){}
   function bad(now){if(typeof navigator!=='undefined'&&navigator.onLine===false)return true;for(const t of fly.values())if(now-t>8000)return true;
     const fin=ev.slice(-2);if(fin.length===2&&fin.every(e=>!e.ok||e.ms>8000))return true;if(ev.filter(e=>!e.ok&&now-e.at<20000).length>=3)return true;
