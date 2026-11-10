@@ -21,3 +21,16 @@ Local only under `/workspace/nba-league/`. No GitHub repo, no push, no writes to
 - Verified with synthetic labeled bets (mock store); screenshots in screens-sh9/ (not committed). test_nba_* pass, e2e_stoopids_copy 35/35, e2e_nba_mock 18/18.
 - sh9b: no redraft anywhere in Hoops. The room "What's next", recap messages, help and Rules now say teams are held all season. Tests are unchanged: test_nba_* pass, 35/35, 18/18.
 - sh9c: NBA wording in the recap, room and help (team, not school; playoff, not NCAA tournament). Tests are unchanged.
+
+## 2026-11-10 live test drafts on sh9c (tests/live_drafts_sh9c.js, TEST sh9c Dn leagues, shoops1- keys only)
+| Run | Setup | Picks | Wall time | Longest gap between picks | Auto/queue | Handoff (rosters, one-line chips, heading, errors) | Code |
+|---|---|---|---|---|---|---|---|
+| D1 | 5 snake random | first try: test-script click error before the start (GG5V9QKZAZPAZ195, blanked). Rerun: 30/30 PASS | 273 s (draft 108 s) | 7 s | best BPI PASS, 1 manual pick | PASS desktop + Android | X8SJZN613J7R7CWD |
+| D2 | 6 snake set order, 1 manual pick | 30/30 PASS | 289 s (draft 110 s) | 8 s | all auto = best BPI PASS | PASS desktop + Android | 479HQ0G6E23D3CE2 |
+| D3 | 5 straight random, seat 3 clock-out | 30/30 PASS | 305 s (draft 132 s) | 35 s (clock-out) | PASS | PASS | FF0486H7HVAPDTMS |
+| D4 | 6 snake random, seat 1 queue 3 + clock-out | 30/30 PASS | 436 s (draft 222 s) | 36 s (clock-out) | queue: #1, #12, #13 = queued teams in order, then BPI PASS | PASS | AZBB73MQB35QSPHM |
+| D5 | 6 snake set, seat 1 empty queue + auto | 30/30 PASS | 280 s (draft 96 s) | 4 s | best BPI PASS | PASS | MPFBG0B25V02EQDB |
+The 1-minute start countdown is by design and not counted as a gap.
+| D6 (try 1) | 5 snake, NO clock; seat 1 on the clock closes the page | waited 421 s at pick #1: PASS (no auto-pick for the absent seat). Reopen step failed because the test script built the private link wrong (query instead of #), so it was rerun | - | - | - | - | 90PYV7KVC1X6DTJR (blanked) |
+| D6 (rerun) | 5 snake, NO clock; seat 1 on the clock closes its page | waited 344 s at pick #1 (no auto-pick for the absent seat) PASS; reopened with the private link in a fresh browser as seat 1 PASS; pick #1 by hand PASS; then 30/30 PASS | 774 s total (draft after pick #1: 247 s) | 134 s before #3 (auto-on seats whose pages sat idle while waiting; no clock, so nothing forces it) | best BPI PASS | PASS (rosters, one line, heading, no errors) | FCDHBXZJY1VZ67GK |
+All TEST sh9c leagues were blanked afterwards (shoops1- keys only). The real league CABMTCKF3H94Y8SA was not touched.

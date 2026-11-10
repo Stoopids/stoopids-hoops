@@ -89,7 +89,7 @@ function lphotoFile(f){lphotoErr('');if(!f)return;
   im.onerror=()=>{URL.revokeObjectURL(url);lphotoErr('Sorry, that photo could not be opened. Please try a different one.')};im.src=url}
 document.addEventListener('change',e=>{if(e.target.id==='f_lphoto'){lphotoFile(e.target.files&&e.target.files[0]);e.target.value=''}});
 function render(){const app=$('app');$('top').innerHTML=UI.header({sub:'Create a league',right:''});
-  if(created){app.innerHTML=linksView();LinksCard.mount(lcOf(created),()=>{if(created.used)return;created.used=true;['toRoom','toPhoto'].forEach(i=>{const a=$(i);if(a){a.classList.remove('locked');a.setAttribute('aria-disabled','false')}});const n=$('lc_need');if(n)n.textContent='Saved. You can continue.'});return}
+  if(created){app.innerHTML=linksView();LinksCard.mount(lcOf(created),unlockLinks);return}
   const body=VIEWS[step]();
   app.innerHTML=progress()+'<div id="body">'+body+'</div>'+(step==='confirm'?`<div class="wnav"><button class="btn" data-a="back" id="back">Back</button><button class="btn pri" data-a="create" id="create">Create league</button></div>`:nav())+UI.buildTag();
   bannerApply();save();const first=app.querySelector('input:not([type=password])')||app.querySelector('input');if(first&&step!=='when'&&step!=='confirm'&&matchMedia('(pointer:fine)').matches)first.focus({preventScroll:true})}
@@ -113,7 +113,9 @@ const ACT={
  dec(el){readInputs();const g=el.dataset.g;W[g]=Math.max(F.LIMITS.roundsMin,W[g]-1);bump(g)},
  edit(el){fromConfirm=true;go(el.dataset.s)},
  create:doCreate,
- copy(el){UI.copy(el.dataset.u,'Copied')},share:shareLink,copyreminder(){UI.copy(reminder(),'Reminder message copied')},sharereminder(){UI.share({title:W.name,text:reminder()})},
+ copy(el){UI.copy(el.dataset.u,'Copied')},
+ copypriv(el){UI.copy(created.links.both,'Private link copied').then(()=>{const b=el;b.textContent='Copied';unlockLinks()})},
+ sendinvite(){UI.share({title:W.name+' draft',text:reminder()})},share:shareLink,copyreminder(){UI.copy(reminder(),'Reminder message copied')},sharereminder(){UI.share({title:W.name,text:reminder()})},
  qr(){const u=created.links.invite;UI.openSheet(`<h2>Invite QR</h2><div style="text-align:center;margin:10px 0"><div class="qr">${UI.qrSvg(u)}</div></div><div class="small mut" style="text-align:center">Scan with a phone camera to open the join page.</div><button class="btn block" style="margin-top:12px" data-a="sheetbg">Close</button>`)},
  rmlphoto(){readInputs();W.photo='';W.photoInfo='';render()},
  noop(){}
@@ -139,27 +141,36 @@ async function doCreate(){if(busy)return;readInputs();const s=settingsOf();const
     if(!j.ok)throw new Error(j.msg||'Could not claim your manager slot.');
     await Store.set(Kz.mgr(mid),F.makeProfile({mid,name:s.mgrName,team:s.teamName,pv:0}));
     UI.setMe(id,{mid,k:secret});UI.lsSet('cm.'+id,cmSecret);UI.rememberLeague(id,meta.name,'commissioner');sessionStorage.removeItem(SS);
-    const L={invite:UI.pageUrl('join.html',{l:id}),room:UI.pageUrl('room.html',{l:id}),watch:UI.pageUrl('room.html',{l:id,watch:1}),mine:UI.pageUrl('room.html',{l:id},{as:mid,k:secret}),commish:UI.pageUrl('room.html',{l:id},{cm:cmSecret}),
+    const L={invite:UI.pageUrl('join.html',{l:id}),room:UI.pageUrl('room.html',{l:id}),watch:UI.pageUrl('room.html',{l:id,watch:1}),mine:UI.pageUrl('room.html',{l:id},{as:mid,k:secret}),commish:UI.pageUrl('room.html',{l:id},{cm:cmSecret}),both:UI.pageUrl('room.html',{l:id},{as:mid,k:secret,cm:cmSecret}),   /* sh10: one private link = your seat + commissioner tools */
       time:UI.pageUrl('time.html',{t:ns.startAt||'',n:meta.name})};
     created={id,mid,secret,cmSecret,settings:Object.assign({name:meta.name},ns),links:L};render();window.scrollTo(0,0)
   }catch(e){ce.textContent=String(e.message||e);$('create').disabled=false;$('create').textContent='Create league'}finally{busy=false}}
-const lcOf=c=>({id:c.id,name:c.settings.name,startAt:c.settings.startAt,links:c.links});
-document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a.locked');if(a){e.preventDefault();const n=$('lc_need');if(n){n.textContent='Save your links first: Share, Copy all, Download file or Email.';n.classList.add('err')}}},true);
+const lcOf=c=>({id:c.id,name:c.settings.name,startAt:c.settings.startAt,links:{invite:c.links.invite,room:c.links.room,watch:c.links.watch,both:c.links.both}});
+function unlockLinks(){if(!created||created.used)return;created.used=true;['toRoom','toPhoto'].forEach(i=>{const a=$(i);if(a){a.classList.remove('locked');a.setAttribute('aria-disabled','false')}});const n=$('lc_need');if(n){n.textContent='Saved. You can open your league.';n.classList.remove('err')}}
+document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('a.locked');if(a){e.preventDefault();const n=$('lc_need');if(n){n.textContent='Save your private link first: tap Save my links (or Copy).';n.classList.add('err')}}},true);
 function linksView(){const c=created,L=c.links,s=c.settings;const when=s.startAt!=null?F.startsLine(s.startAt,TZ,TZ):null;
-  const lk=(k,title,tag,why,extra)=>`<div class="lnk" id="lnk_${k}"><h3>${title} ${tag}</h3><div class="why">${why}</div><a class="url" href="${esc(L[k])}" target="_blank" rel="noopener">${esc(L[k].indexOf('#')>0?L[k].split('#')[0]+'#••••••••••••••••':L[k])}</a>${(k==='mine'||k==='commish')?`<div class="row"><button class="btn sm" data-a="copy" data-u="${esc(L[k])}">Copy</button>${extra||''}</div>`:UI.shareRow({url:L[k],text:k==='invite'?'Join '+W.name+' (draft invite)':k==='watch'?'Watch '+W.name+' live':W.name+' draft room',subject:W.name,id:'sr_'+k,shareLabel:'Share…'})+(extra?`<div class="row">${extra}</div>`:'')}</div>`;
+  /* sh10 (Paul): one screen, no repeated links. 1-2-3 directions, a red IMPORTANT box with the one private link, one Send to managers block, the rest under More links */
+  const mask=u=>esc(u.indexOf('#')>0?u.split('#')[0]+'#••••••••••••••••':u);
+  const small=(k,title,why,text)=>`<div class="lnk" id="lnk_${k}"><h3>${title}</h3><div class="why">${why}</div><a class="url" href="${esc(L[k])}" target="_blank" rel="noopener">${esc(L[k])}</a>${UI.shareRow({url:L[k],text,subject:W.name,id:'sr_'+k,shareLabel:'Share…'})}</div>`;
   return `<div class="prog"><div class="bar"><i style="width:100%"></i></div><div class="lbl"><span>League created</span><span></span></div></div>
   <h1 class="q" id="made">${esc(s.name)} is ready</h1>
-  <div class="card"><div class="k mut small">League code</div><div class="code" id="code">${esc(F.formatCode(c.id))}</div><div class="hint">Managers can also type this code on the home page. Keep the code private: anyone with it can read the league.</div>
+  <div class="card"><div class="k mut small">League code</div><div class="code" id="code">${esc(F.formatCode(c.id))}</div><div class="hint">Managers can also type this code on the home page. Keep it private: anyone with it can read the league.</div>
   ${when?`<div class="hint" style="margin-top:8px"><b style="color:var(--tx)">${esc(when.you)}</b> · ${esc(when.utc)}</div>`:''}</div>
-  <div class="note" id="saveNote"><b>Save these links now.</b> They are stored on this phone only. The commissioner link cannot be recovered: if every copy is lost, nobody can get the commissioner tools back.</div>
-  ${LinksCard.html(lcOf(c))}<div class="hint" id="lc_need" style="margin:6px 0 12px">${c.used?'Saved. You can continue.':'Save your links with one of these before you continue.'}</div>
-  <div class="card">${lk('invite','Invite link','<span class="tag ok">SHARE</span>','Send this to your managers. It opens the join page with the code filled in.','<button class="btn sm" data-a="qr">Show QR</button>')}
-  ${lk('room','Draft room link','<span class="tag ok">SHARE</span>','Where everyone drafts. People who already joined open this one.')}
-  ${lk('watch','Spectator link','<span class="tag mut">READ-ONLY</span>','Friends and family can watch live. They cannot pick or chat.')}
-  ${lk('mine','Your manager link','<span class="tag pri">PRIVATE</span>','Opens your team on another phone. Do not share it.')}
-  ${lk('commish','Commissioner link','<span class="tag pri">PRIVATE</span>','Gives the commissioner tools (start, pause, undo, order) on the phone that opens it. Keep it to yourself: anyone who has it controls the draft. The secret sits after the # so it is never sent to a server.')}</div>
-  <div class="card"><h3>Invite reminder</h3><div class="hint" style="margin:0 0 8px">A ready-to-send message for your group chat: league name, draft time in UTC, a link that shows each person’s local time, and the invite link.</div>
-   <textarea id="rem" readonly rows="6" style="font-size:16px">${esc(reminder())}</textarea><div class="row" style="margin-top:8px"><button class="btn sm pri" data-a="copyreminder">Copy draft reminder</button></div>${UI.shareRow({text:reminder(),subject:W.name+' draft',id:'sr_rem',shareLabel:'Share reminder…',copyLabel:'Copy message'})}</div>
-  <div class="row" style="margin:6px 0 14px"><a class="btn pri grow${c.used?'':' locked'}" id="toRoom" aria-disabled="${!c.used}" href="${esc(L.mine)}">Open my league</a><a class="btn grow${c.used?'':' locked'}" aria-disabled="${!c.used}" id="toPhoto" href="${esc(UI.pageUrl('join.html',{l:c.id,edit:1}))}">Add team photo</a></div>${UI.buildTag()}`}
+  <ol class="steps3" id="steps3"><li><b>Copy your private link</b></li><li><b>Send the invite to managers</b></li><li><b>Open your league</b></li></ol>
+  <div class="imp" id="saveNote" role="region" aria-label="Important: copy these now"><div class="imph"><span class="impn">1</span>IMPORTANT: copy these now</div>
+   <div class="lnk" id="lnk_both"><h3>Your private link <span class="tag pri">MANAGER + COMMISH</span></h3><div class="why">Signs you in as your team and unlocks the commissioner tools (start, pause, undo, order) on any phone or computer. Don’t share it.</div>
+    <a class="url" href="${esc(L.both)}" target="_blank" rel="noopener">${mask(L.both)}</a><div class="row"><button class="btn sm" data-a="copypriv" id="copypriv">Copy</button></div></div>
+   <div class="impw">It is saved on this phone only and <b>cannot be recovered</b> if every copy is lost. As commissioner you can make a new manager link for any manager who loses theirs.</div>
+   ${LinksCard.saveBox(lcOf(c))}</div>
+  <div class="hint" id="lc_need" style="margin:6px 0 12px">${c.used?'Saved. You can open your league.':'Save your private link before you open your league.'}</div>
+  <div class="card" id="sendmgr"><h3><span class="impn ok">2</span>Send to managers</h3><div class="why">One message with the invite link, the draft time in UTC and a link that shows each person’s local time.</div>
+   <div class="lnk" id="lnk_invite" style="margin:8px 0"><a class="url" href="${esc(L.invite)}" target="_blank" rel="noopener">${esc(L.invite)}</a></div>
+   <button class="btn pri block" data-a="sendinvite" id="sendinvite">Share invite</button>
+   <details class="remd" id="remd"><summary>See the message</summary><textarea id="rem" readonly rows="7" style="font-size:16px;margin-top:8px">${esc(reminder())}</textarea></details></div>
+  <details class="card morel" id="morelinks"><summary><b>More links</b> <span class="small mut">draft room, spectators</span></summary>
+   ${small('room','Draft room link','Everyone who already joined can open this one.',W.name+' draft room')}
+   ${small('watch','Spectator link <span class="tag mut">READ-ONLY</span>','Friends and family can watch live. They cannot pick or chat.','Watch '+W.name+' live')}</details>
+  <div style="margin:14px 0 6px"><a class="btn pri block lcbig${c.used?'':' locked'}" id="toRoom" aria-disabled="${!c.used}" href="${esc(L.both)}"><span class="impn ok">3</span> Open my league</a></div>
+  <div style="text-align:center;margin:0 0 12px"><a class="lnkbtn${c.used?'':' locked'}" aria-disabled="${!c.used}" id="toPhoto" href="${esc(UI.pageUrl('join.html',{l:c.id,edit:1}))}">Add a team photo</a></div>${UI.buildTag()}`}
 UI.registerSW();render();
 })();

@@ -819,3 +819,14 @@ html body .sh-hdr.sh-compact a.sh-title{font-size:clamp(22px,5.5vw,32px)}
 #ownbox .impw{color:#fff;font-size:15px;margin:0 0 8px}#ownbox .urlbox{margin:8px 0;word-break:break-all}
 #ownbox .lcbig{font-size:18px;padding:14px;width:100%;margin:4px 0 6px}#ownbox .hint{margin:0}
 #ownbox.impflash{box-shadow:0 0 0 4px rgba(255,77,79,.6)}
+/* sh10 (Paul): setup "League is ready" screen: 1-2-3 directions, red IMPORTANT box, Send to managers, More links */
+.steps3{list-style:none;counter-reset:s3;margin:12px 0;padding:0;display:flex;flex-wrap:wrap;gap:6px 14px;font-size:14px}
+.steps3 li{counter-increment:s3;display:flex;align-items:center;gap:6px}.steps3 li::before{content:counter(s3);display:inline-grid;place-items:center;width:22px;height:22px;border-radius:50%;background:var(--acc,#ffd400);color:#111;font-weight:800;font-size:12px}
+.imp{border:2px solid #ff4d4f;background:#2b1012;border-radius:14px;padding:12px 14px;margin:12px 0}
+.imph{color:#ff6b6e;font-weight:900;font-size:18px;letter-spacing:.02em;text-transform:uppercase;margin:0 0 10px;display:flex;align-items:center;gap:8px}
+.imp .lnk{margin:0 0 10px}.imp .url{word-break:break-all}.impw{color:#ffd6d6;font-size:14px;margin:4px 0 10px}
+.impn{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#ff4d4f;color:#fff;font-weight:800;font-size:13px;margin-right:6px;flex:0 0 auto}.impn.ok{background:var(--acc,#ffd400);color:#111}
+.lcbig{font-size:18px;padding:14px;margin:0 0 8px;width:100%}
+.lcsmall{grid-template-columns:repeat(4,1fr)!important;gap:6px}.lcsmall .btn{padding:8px 4px;font-size:13px;min-height:40px}
+.remd summary,.morel summary{cursor:pointer;min-height:40px;display:flex;align-items:center;gap:8px}.remd{margin-top:8px}
+.morel{padding:10px 14px}.morel[open] summary{margin-bottom:8px}

@@ -1,7 +1,7 @@
 # STOOPIDS template: how Stoopids Hoops maps to the master site
 
 **Master:** `Stoopids/stoopids` (live: https://stoopids.github.io/stoopids/). It is read-only: clone it to a separate folder, never push to it, never touch its textdb keys.
-**This site:** `Stoopids/stoopids-hoops`, build `2026-11-10sh9d`. It uses textdb keys with the `shoops1-` prefix only.
+**This site:** `Stoopids/stoopids-hoops`, build `2026-11-10sh10`. It uses textdb keys with the `shoops1-` prefix only.
 
 ## sh9: fixes block (Paul), drop when STOOPIDS ships the same fixes
 STOOPIDS `main` did not have these fixes yet, so the build appends `tools/hoops_sh9_fixes.html` (one `<!--<HOOPS-SH9>-->` block) before `</body>`. The STOOPIDS markup above it is unchanged.

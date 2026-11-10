@@ -837,3 +837,18 @@ Test-only (not shipped): tests/e2e_picksheet_clock_s28.js, e2e_beep_s28.js, e2e_
 - The flag is JOIN_IMP in join.js; false restores the old card. The old separate private-link card (with Share) is hidden.
 - css/app.css: #ownbox styles. Joining, ?l= invite links, ?c= code links and private manager links are unchanged.
 - js/version.js: FBN_BUILD 2026-11-10sh9d. sw.js: line 1 comment. MD5SUMS.txt regenerated.
+## 2026-11-10sh10 — setup "League is ready" screen simplified; one combined private link; Give commish to someone else (Paul)
+- js/setup.js: the ready screen now reads, top to bottom:
+  - League code.
+  - 1-2-3 directions: copy your private link, send the invite, open your league.
+  - A red "IMPORTANT: copy these now" box with ONE private link, "Your private link (manager + commish)". It is room.html?l=<code>#as=<mid>&k=<seat secret>&cm=<commish secret>, so one link signs you in as your team and unlocks the commissioner tools. The box says the link cannot be recovered and that the commish can make new manager links. It has one big "Save my links" (native Share, else Copy all) plus small Copy all / Share / Download / Email, and a Copy for the link itself.
+  - One "Send to managers" block: the invite link, a single Share invite button that sends the reminder message (invite link + UTC time + local-time link), and the message folded under "See the message".
+  - "More links" (draft room, spectator) collapsed.
+  - "Open my league" at the bottom, locked until the private link is saved or copied.
+  - Removed: the duplicate top invite share row, the separate manager and commissioner link rows, the separate reminder card and the QR button.
+- js/links-card.js: new LinksCard.saveBox() for that box, plus a "save" action. text() lists the combined link when there is one. fromDevice() builds the combined link when this device holds both secrets. html() is unchanged, so room "Your links" still works.
+- js/room.js (More tab, commish only) and js/hoops-stoopids.js (league site commissioner tools): new "Give commish to someone else". It shows a commissioner-only link (#cm=…) with Copy / Share and the warning "Whoever has this link can run the league…". It does not sign anyone in as your team.
+- css/app.css: styles for the box, the directions, the small buttons and the folded sections.
+- Old links keep working: separate #as=&k= manager links and #cm= commissioner links are read exactly as before (the room already read all three keys from one fragment).
+- tests/live_drafts_sh9c.js (new): live TEST-league drafts D1–D6 (D6 = no pick clock, close and come back with the private link).
+- js/version.js: FBN_BUILD 2026-11-10sh10. sw.js: line 1 comment. MD5SUMS.txt regenerated.
