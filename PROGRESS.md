@@ -11,3 +11,7 @@ Local only under `/workspace/nba-league/`. No GitHub repo, no push, no writes to
 - `node tests/test_nba_scoring.js` — **9/9 passed**.
 - `NODE_PATH=/tmp/nba-e2e-deps/node_modules node tests/e2e_nba_mock.js` — **18/18 passed** (5- and 6-manager mocks through recap "Go to League" into `league.html`; no requests to textdb.dev).
 - MD5SUMS.txt regenerated for build `2026-11-10sh2`.
+
+## 2026-11-10sh8
+- League site is now the STOOPIDS page copied verbatim (tools/build_league_from_stoopids.py) with the NBA data layer (js/hoops-stoopids.js). One page for every league (?l=<code>); landing without a code.
+- e2e_stoopids_copy.js: handoff from a real room draft, heading, one-line chips (5/6 managers), commish new link, two leagues + landing.

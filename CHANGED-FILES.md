@@ -794,3 +794,13 @@ Test-only (not shipped): tests/e2e_picksheet_clock_s28.js, e2e_beep_s28.js, e2e_
 - js/room.js (Draft Room, QA beep_s28 freeze): root cause: s28c's startGate() compares server time (Date.now()+srvOff) with max(startedAt,resumeAt), and remaining() returned the full clock whenever it was true. A stale, failed or wrong server offset (e.g. a Date header hours behind) keeps nowSrv() before startedAt, so the display was frozen at full time until the first pick, and the 30 s / countdown beeps never fired. Fix: the clock display is held only while the start instant is still ahead by this device's own clock too (dispHold); with no start time, or once it has passed locally, the display counts down, using local time when the server offset says 'before start' but the local clock says 'after' (dispNow). Auto-pick, clock-out and their save still use startGate() (server time), so early-pick protection is unchanged.
 - js/version.js: FBN_BUILD 2026-11-02s28d. sw.js: cache fbnc-2026-11-02s28d (follows FBN_BUILD), line 3 comment updated.
 - MD5SUMS.txt regenerated (excludes tests/ node_modules shots/ __pycache__ .git; keeps empty .nojekyll).
+
+## 2026-11-10sh8 — League site = STOOPIDS index.html copied verbatim (Paul)
+- league.html: now generated from STOOPIDS index.html by tools/build_league_from_stoopids.py (new) with counted NBA / data-layer swaps only (see STOOPIDS-TEMPLATE.md). Replaces the old Hoops league page and the rb2 restyle.
+- js/hoops-stoopids.js (new): builds STOOPIDS' D from the Hoops league (?l=<code>, shoops1- keys, managers from joins, rosters from picks), link-verified identity, commish passcode + "Make a new link for [manager]", landing card without a code, heading "STOOPIDS PRESENTS <league name>".
+- shared/ui.js, shared/ui.css (new): STOOPIDS shared module (ui.js footnote link -> ESPN NBA BPI; ui.css verbatim).
+- data/hoops-net.json (new, built from assets/teams.js), assets/hoops-hero-wide.jpg, assets/hoops-hero-mobile.jpg (new, from the Hoops banner).
+- js/room.js: commish "Make a new link for [manager]" label + Share button.
+- sw.js: precache the new files. js/version.js: FBN_BUILD 2026-11-10sh8.
+- tests: new e2e_stoopids_copy.js; test_core (SW list ignores template/data URLs and ?v=; PWA head check skips the verbatim league.html), test_xss_static (league.html exempt as the verbatim STOOPIDS page).
+- STOOPIDS-TEMPLATE.md rewritten; MD5SUMS.txt regenerated.

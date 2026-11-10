@@ -1,0 +1,187 @@
+{
+"format": 1,
+"season": "Last season win rank (25-26)",
+"as_of": "2026-11-10",
+"rows": [
+{
+"school": "Atlanta Hawks",
+"tid": "1",
+"net": 11,
+"conf": "East \u00b7 Southeast"
+},
+{
+"school": "Boston Celtics",
+"tid": "2",
+"net": 4,
+"conf": "East \u00b7 Atlantic"
+},
+{
+"school": "New Orleans Pelicans",
+"tid": "3",
+"net": 23,
+"conf": "West \u00b7 Southwest"
+},
+{
+"school": "Chicago Bulls",
+"tid": "4",
+"net": 22,
+"conf": "East \u00b7 Central"
+},
+{
+"school": "Cleveland Cavaliers",
+"tid": "5",
+"net": 9,
+"conf": "East \u00b7 Central"
+},
+{
+"school": "Dallas Mavericks",
+"tid": "6",
+"net": 24,
+"conf": "West \u00b7 Southwest"
+},
+{
+"school": "Denver Nuggets",
+"tid": "7",
+"net": 5,
+"conf": "West \u00b7 Northwest"
+},
+{
+"school": "Detroit Pistons",
+"tid": "8",
+"net": 3,
+"conf": "East \u00b7 Central"
+},
+{
+"school": "Golden State Warriors",
+"tid": "9",
+"net": 20,
+"conf": "West \u00b7 Pacific"
+},
+{
+"school": "Houston Rockets",
+"tid": "10",
+"net": 8,
+"conf": "West \u00b7 Southwest"
+},
+{
+"school": "Indiana Pacers",
+"tid": "11",
+"net": 29,
+"conf": "East \u00b7 Central"
+},
+{
+"school": "LA Clippers",
+"tid": "12",
+"net": 18,
+"conf": "West \u00b7 Pacific"
+},
+{
+"school": "Los Angeles Lakers",
+"tid": "13",
+"net": 6,
+"conf": "West \u00b7 Pacific"
+},
+{
+"school": "Miami Heat",
+"tid": "14",
+"net": 17,
+"conf": "East \u00b7 Southeast"
+},
+{
+"school": "Milwaukee Bucks",
+"tid": "15",
+"net": 21,
+"conf": "East \u00b7 Central"
+},
+{
+"school": "Minnesota Timberwolves",
+"tid": "16",
+"net": 10,
+"conf": "West \u00b7 Northwest"
+},
+{
+"school": "Brooklyn Nets",
+"tid": "17",
+"net": 28,
+"conf": "East \u00b7 Atlantic"
+},
+{
+"school": "New York Knicks",
+"tid": "18",
+"net": 7,
+"conf": "East \u00b7 Atlantic"
+},
+{
+"school": "Orlando Magic",
+"tid": "19",
+"net": 13,
+"conf": "East \u00b7 Southeast"
+},
+{
+"school": "Philadelphia 76ers",
+"tid": "20",
+"net": 14,
+"conf": "East \u00b7 Atlantic"
+},
+{
+"school": "Phoenix Suns",
+"tid": "21",
+"net": 15,
+"conf": "West \u00b7 Pacific"
+},
+{
+"school": "Portland Trail Blazers",
+"tid": "22",
+"net": 19,
+"conf": "West \u00b7 Northwest"
+},
+{
+"school": "Sacramento Kings",
+"tid": "23",
+"net": 26,
+"conf": "West \u00b7 Pacific"
+},
+{
+"school": "San Antonio Spurs",
+"tid": "24",
+"net": 2,
+"conf": "West \u00b7 Southwest"
+},
+{
+"school": "Oklahoma City Thunder",
+"tid": "25",
+"net": 1,
+"conf": "West \u00b7 Northwest"
+},
+{
+"school": "Utah Jazz",
+"tid": "26",
+"net": 27,
+"conf": "West \u00b7 Northwest"
+},
+{
+"school": "Memphis Grizzlies",
+"tid": "29",
+"net": 25,
+"conf": "West \u00b7 Southwest"
+},
+{
+"school": "Washington Wizards",
+"tid": "27",
+"net": 30,
+"conf": "East \u00b7 Southeast"
+},
+{
+"school": "Charlotte Hornets",
+"tid": "30",
+"net": 16,
+"conf": "East \u00b7 Southeast"
+},
+{
+"school": "Toronto Raptors",
+"tid": "28",
+"net": 12,
+"conf": "East \u00b7 Atlantic"
+}
+]
+}

@@ -25,7 +25,7 @@ for(const f of files){const src=fs.readFileSync(path.join(root,f),'utf8');
   ok(f+': no inline handlers / javascript: / eval / document.write',!/[\s"'`]on[a-z]+\s*=\s*["'`$]/i.test(src)&&!/javascript:/i.test(src.replace(/\/\^javascript:[^\n]*/g,''))&&!/\beval\(|document\.write|new Function\(/.test(src));
   ok(f+': no console.* calls',!/\bconsole\.(log|warn|error|info|debug)/.test(src))}
 ok('store.js: the test hook only works on localhost as a same-origin path',(()=>{const s=fs.readFileSync(path.join(root,'js/store.js'),'utf8');return /localhost|127\.0\.0\.1/.test(s)&&/startsWith\('\/'\)|\[0\]==='\/'|indexOf\('\/'\)===0|\^\\\//.test(s)})());
-for(const h of fs.readdirSync(root).filter(f=>f.endsWith('.html'))){const s=fs.readFileSync(path.join(root,h),'utf8');
+for(const h of fs.readdirSync(root).filter(f=>f.endsWith('.html')&&f!=='league.html')){/* sh8 (Paul): league.html is the STOOPIDS index.html copied verbatim (inline handlers, no CSP, as on the STOOPIDS site); its Hoops data layer js/hoops-stoopids.js is still checked above */const s=fs.readFileSync(path.join(root,h),'utf8');
   const csp=/<meta http-equiv="Content-Security-Policy" content="([^"]+)"/.exec(s);ok(h+': Content-Security-Policy meta present, script-src is self only',!!csp&&/script-src 'self'(;|$)/.test(csp[1])&&!/unsafe-inline[^;]*script|script-src[^;]*unsafe/.test(csp[1]),csp&&csp[1]);
   ok(h+': no inline script or handler attributes',!/<script(?![^>]*\bsrc=)[^>]*>[^<]/.test(s)&&!/\son[a-z]+=/i.test(s))}
 console.log('\n'+(n-bad)+' / '+n+' checks passed'+(bad?' — FAILED':''));process.exit(bad?1:0)
