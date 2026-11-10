@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Refresh Stoopids Hoops data/*.json from ESPN's public NBA JSON.
 
-Writes scores.json (games + standings/playoffSeed), tournament.json (official
+Writes scores.json (games + current standings/playoffSeed), last_season.json (final 2025-26 records for Win rank), tournament.json (official
 seeds once the play-in is done), and data/power.json (ESPN BPI ranks, mapped by
 numeric ESPN team id). On a BPI fetch failure the existing power.json / teams.js
 fallback ranks are left in place. Does NOT write SYNTHETIC/demo files.
@@ -155,15 +155,26 @@ def fetch_days(start: date, end: date, pool: set[str]) -> list[dict]:
         d += timedelta(days=1)
     return games
 
-def fetch_standings() -> dict:
+LAST_SEASON = "2025-26"
+LAST_SEASON_YEAR = 2026  # ESPN season year = year the season ends
+
+
+def fetch_standings(season: int | None = None) -> dict:
+    """Current NBA standings, or a past season when `season` is the ESPN ending year."""
     out = {}
+    url = STAND if not season else f"{STAND}?season={season}&region=us&lang=en"
     try:
-        js = get(STAND)
+        js = get(url)
     except Exception as e:
         print("warn standings:", e, file=sys.stderr)
         return out
-    def walk(node):
+    def walk(node, conf=None):
         if isinstance(node, dict):
+            name = node.get("abbreviation") or node.get("name") or ""
+            if "East" in str(name):
+                conf = "East"
+            elif "West" in str(name):
+                conf = "West"
             entries = node.get("entries") or node.get("standings", {}).get("entries") or []
             for e in entries:
                 t = (e.get("team") or {})
@@ -177,21 +188,53 @@ def fetch_standings() -> dict:
                     try:
                         return int(v)
                     except (TypeError, ValueError):
-                        return None
+                        try:
+                            return int(float(v))
+                        except (TypeError, ValueError):
+                            return None
                 seed = n("playoffSeed")
                 out[tid] = {
                     "w": n("wins") or 0,
                     "l": n("losses") or 0,
                     "playoffSeed": seed,
-                    "conference": (t.get("displayName") and None) or None,
+                    "conference": conf,
                 }
             for v in node.values():
-                walk(v)
+                walk(v, conf)
         elif isinstance(node, list):
             for v in node:
-                walk(v)
+                walk(v, conf)
     walk(js)
     return out
+
+
+def last_season_doc(standings: dict) -> dict:
+    """Static 2025-26 final regular-season records for draft-room Win rank."""
+    rows = []
+    for tid, s in standings.items():
+        w = int(s.get("w") or 0)
+        l = int(s.get("l") or 0)
+        pct = (w / (w + l)) if (w + l) else 0
+        rows.append((tid, w, pct, l, s))
+    rows.sort(key=lambda x: (-x[1], -x[2], x[3], x[0]))
+    ranks, st = {}, {}
+    for i, (tid, w, pct, l, s) in enumerate(rows, 1):
+        ranks[tid] = i
+        rec = {"w": w, "l": l, "pct": round(pct, 6), "rank": i}
+        if s.get("conference") in ("East", "West"):
+            rec["conference"] = s["conference"]
+        st[tid] = rec
+    return {
+        "format": 1,
+        "source": "espn",
+        "season": LAST_SEASON,
+        "seasonYear": LAST_SEASON_YEAR,
+        "url": f"{STAND}?season={LAST_SEASON_YEAR}&region=us&lang=en",
+        "sample": False,
+        "note": "Final 2025-26 regular-season records. Draft-room Win rank uses this list (most wins, then win percentage).",
+        "standings": st,
+        "ranks": ranks,
+    }
 
 def seed_lock(games: list[dict], standings: dict) -> bool:
     # After any play-in final exists, treat seeds as official if 16 teams have seeds 1-8.
@@ -424,7 +467,7 @@ def fetch_bpi_from_raw(raw, pool: set[str]):
     }
 
 def apply_bpi_to_teams_js(teams_js: Path, power: dict, stoopids: dict | None = None, standings: dict | None = None) -> None:
-    """Bake BPI ranks, Stoopids Rank, and current-season records into assets/teams.js meta."""
+    """Bake BPI ranks, Stoopids Rank, and last-season (2025-26) records into assets/teams.js meta."""
     txt = teams_js.read_text()
     m = re.search(r"window\.TEAMS_DATA=(.*);\s*$", txt, re.S)
     if not m:
@@ -475,7 +518,7 @@ def apply_bpi_to_teams_js(teams_js: Path, power: dict, stoopids: dict | None = N
         rows.sort(key=lambda x: (-x[1], -x[2], x[3], x[0]))
         for i, (tid, *_rest) in enumerate(rows, 1):
             meta[tid]["wr"] = i
-        data["rec_source"] = "2026-27"
+        data["rec_source"] = LAST_SEASON
     head = txt[:txt.find("window.TEAMS_DATA=")]
     teams_js.write_text(head + "window.TEAMS_DATA=" + json.dumps(data, separators=(",", ":")) + ";\n")
     print(f"baked BPI={n} stoopids={ns} records={nr} into {teams_js}")
@@ -503,7 +546,15 @@ def main():
     if stoopids:
         (outdir / "stoopids.json").write_text(json.dumps(stoopids, indent=2) + "\n")
         print(f"wrote Stoopids Rank for {len(stoopids.get('ranks') or {})} teams -> {outdir / 'stoopids.json'}")
-    apply_bpi_to_teams_js(root / "assets/teams.js", power or {}, stoopids=stoopids)
+    last_raw = fetch_standings(season=LAST_SEASON_YEAR)
+    last_doc = last_season_doc(last_raw) if last_raw else None
+    if last_doc and last_doc.get("standings"):
+        (outdir / "last_season.json").write_text(json.dumps(last_doc, indent=2) + "\n")
+        print(f"wrote last-season records for {len(last_doc['standings'])} teams -> {outdir / 'last_season.json'}")
+    elif (outdir / "last_season.json").exists():
+        last_doc = json.loads((outdir / "last_season.json").read_text())
+        print("last-season fetch failed; keeping existing data/last_season.json")
+    apply_bpi_to_teams_js(root / "assets/teams.js", power or {}, stoopids=stoopids, standings=(last_doc or {}).get("standings"))
     if args.power_only:
         return
     today = date.today()
@@ -550,8 +601,8 @@ def main():
     }
     (outdir / "scores.json").write_text(json.dumps(scores, indent=2) + "\n")
     (outdir / "tournament.json").write_text(json.dumps(tour, indent=2) + "\n")
-    apply_bpi_to_teams_js(root / "assets/teams.js", power or {}, stoopids=stoopids, standings=standings)
-    print(f"wrote {len(games)} games, {len(standings)} standings, seed_lock={locked} -> {outdir}")
+    apply_bpi_to_teams_js(root / "assets/teams.js", power or {}, stoopids=stoopids, standings=(last_doc or {}).get("standings"))
+    print(f"wrote {len(games)} games, {len(standings)} current standings, seed_lock={locked} -> {outdir}")
 
 if __name__ == "__main__":
     main()

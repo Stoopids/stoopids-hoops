@@ -446,9 +446,9 @@ F.tierOf=p=>{if(!p)return{k:'unranked',label:'Unranked',note:'No BPI rank'};for(
 F.seedNum=m=>{const s=m&&m.s;return(s==null||!isFinite(+s))?null:+s};
 F.recParse=r=>{const x=/^(\d+)-(\d+)$/.exec(r||'');if(!x)return null;const w=+x[1],l=+x[2];return(w+l)?{w,l,pct:w/(w+l)}:null};
 F.searchMatch=(t,m,q)=>{q=(q||'').trim().toLowerCase();if(!q)return true;return[t.name,t.short,t.abbr,t.mascot,m&&m.c].filter(Boolean).join(' ').toLowerCase().indexOf(q)>=0};
-/* Power Ranking (meta.o) is ESPN BPI 2026-27; auto-pick uses it after the queue. Stoopids Rank (meta.sr / meta.sp) is expected fantasy points from BPI projections. Win rank (meta.wr) is this season's record. */
+/* Power Ranking (meta.o) is ESPN BPI 2026-27; auto-pick uses it after the queue. Stoopids Rank (meta.sr / meta.sp) is expected fantasy points from BPI projections. Win rank (meta.wr) is last season's (2025-26) regular-season record. */
 F.RANK_SRC='ESPN BPI (2026-27)';
-F.REC_SRC='2026-27';
+F.REC_SRC='2025-26';
 F.STOOP_NOTE='Expected points = proj. regular-season wins + 2×P(make playoffs) + 2×E[playoff wins] + 4×P(champion). NBA Cup points omitted: ESPN BPI has no Cup odds.';
 F.TMODES=[['kenpom','Power Ranking'],['stoopid','Stoopids Rank'],['power','Win rank'],['alpha','A–Z'],['conf','Conference'],['tiers','Tiers']];
 F.teamView=function(o){const TEAMS=o.teams,META=o.meta||{},pool=o.pool,taken=o.taken||{},watch=o.watch||new Set(),q=o.q||'',mode=o.mode||'kenpom';

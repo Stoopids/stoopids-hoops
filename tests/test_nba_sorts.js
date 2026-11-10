@@ -20,6 +20,8 @@ t('tierOf(1)=Elite, tierOf(25)=Longshot, tierOf(0)=Unranked',
   F.tierOf(1).label==='Elite'&&F.tierOf(7).label==='Contender'&&F.tierOf(25).label==='Longshot'&&F.tierOf(0).label==='Unranked');
 
 const ids=mode=>F.teamView({teams:TEAMS,meta:META,pool:POOL,mode}).flatMap(g=>g.tids);
+t('REC_SRC is 2025-26 last season, not current or 2024-25',F.REC_SRC==='2025-26');
+
 t('every mode lists each of 30 once',F.TMODES.every(([m])=>{const a=ids(m);return a.length===30&&new Set(a).size===30}));
 
 const pr=ids('kenpom');
@@ -27,7 +29,7 @@ t('Power Ranking is ascending BPI / meta.o',pr.every((id,i,a)=>!i||(META[a[i-1]]
 
 const wr=ids('power');
 if(Object.values(META).some(m=>m.wr)){
-  t('Win rank is ascending meta.wr (current season)',wr.every((id,i,a)=>!i||(META[a[i-1]].wr||99)<=(META[id].wr||99)),wr.slice(0,5).map(id=>[TEAMS[id].abbr,META[id].wr,META[id].r]));
+  t('Win rank is last season 2025-26 (most wins, then win %)',wr.every((id,i,a)=>!i||(META[a[i-1]].wr||99)<=(META[id].wr||99))&&META[wr[0]].r==='64-18'&&['OKC','Oklahoma City Thunder'].includes(TEAMS[wr[0]].abbr||TEAMS[wr[0]].name)&&META[wr[1]].r==='62-20'&&META[wr[2]].r==='60-22',wr.slice(0,5).map(id=>[TEAMS[id].abbr,META[id].wr,META[id].r]));
 }else t('Win rank present after standings bake (wr missing — refresh not applied yet?)',false);
 
 const sr=ids('stoopid');

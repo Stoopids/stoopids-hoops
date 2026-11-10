@@ -72,3 +72,21 @@ Expected Stoopids fantasy points from ESPN BPI projections, written by `python3 
 E[playoff wins] = P(reach conf. semis) + P(reach conf. finals) + P(reach NBA Finals) + P(champion). ESPN "make playoffs" odds include play-in winners who become the 7 or 8 seed. **NBA Cup points are omitted** (ESPN BPI has no Cup odds).
 
 `js/power-apply.js` overlays `ranks` onto `meta.sr` and `pts` onto `meta.sp`. The Teams list default sort is Power Ranking (BPI); Stoopids Rank is a separate button. If projections are missing, Stoopids Rank falls back to Power Ranking.
+
+
+## `data/last_season.json`
+
+Final 2025-26 regular-season records from ESPN standings (`season=2026`). Static snapshot used by the draft-room **Win rank** button (most wins, then win percentage). The 2024-25 win-rank list in `meta.f` is only a Power Ranking fallback when BPI is missing — it is not Win rank.
+
+```json
+{
+  "format": 1,
+  "source": "espn",
+  "season": "2025-26",
+  "seasonYear": 2026,
+  "standings": { "25": { "w": 64, "l": 18, "pct": 0.780488, "rank": 1, "conference": "West" } },
+  "ranks": { "25": 1 }
+}
+```
+
+`js/power-apply.js` overlays these onto `meta.r` / `meta.wr`. Cards show the record as `64-18 (2025-26)`. The legend reads `record = 2025-26 season`. Current 2026-27 standings stay in `data/scores.json` for the league site.

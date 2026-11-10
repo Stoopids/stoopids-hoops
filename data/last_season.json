@@ -1,0 +1,253 @@
+{
+  "format": 1,
+  "source": "espn",
+  "season": "2025-26",
+  "seasonYear": 2026,
+  "url": "https://site.api.espn.com/apis/v2/sports/basketball/nba/standings?season=2026&region=us&lang=en",
+  "sample": false,
+  "note": "Final 2025-26 regular-season records. Draft-room Win rank uses this list (most wins, then win percentage).",
+  "standings": {
+    "25": {
+      "w": 64,
+      "l": 18,
+      "pct": 0.780488,
+      "rank": 1,
+      "conference": "West"
+    },
+    "24": {
+      "w": 62,
+      "l": 20,
+      "pct": 0.756098,
+      "rank": 2,
+      "conference": "West"
+    },
+    "8": {
+      "w": 60,
+      "l": 22,
+      "pct": 0.731707,
+      "rank": 3,
+      "conference": "East"
+    },
+    "2": {
+      "w": 56,
+      "l": 26,
+      "pct": 0.682927,
+      "rank": 4,
+      "conference": "East"
+    },
+    "7": {
+      "w": 54,
+      "l": 28,
+      "pct": 0.658537,
+      "rank": 5,
+      "conference": "West"
+    },
+    "13": {
+      "w": 53,
+      "l": 29,
+      "pct": 0.646341,
+      "rank": 6,
+      "conference": "West"
+    },
+    "18": {
+      "w": 53,
+      "l": 29,
+      "pct": 0.646341,
+      "rank": 7,
+      "conference": "East"
+    },
+    "10": {
+      "w": 52,
+      "l": 30,
+      "pct": 0.634146,
+      "rank": 8,
+      "conference": "West"
+    },
+    "5": {
+      "w": 52,
+      "l": 30,
+      "pct": 0.634146,
+      "rank": 9,
+      "conference": "East"
+    },
+    "16": {
+      "w": 49,
+      "l": 33,
+      "pct": 0.597561,
+      "rank": 10,
+      "conference": "West"
+    },
+    "1": {
+      "w": 46,
+      "l": 36,
+      "pct": 0.560976,
+      "rank": 11,
+      "conference": "East"
+    },
+    "28": {
+      "w": 46,
+      "l": 36,
+      "pct": 0.560976,
+      "rank": 12,
+      "conference": "East"
+    },
+    "19": {
+      "w": 45,
+      "l": 37,
+      "pct": 0.54878,
+      "rank": 13,
+      "conference": "East"
+    },
+    "20": {
+      "w": 45,
+      "l": 37,
+      "pct": 0.54878,
+      "rank": 14,
+      "conference": "East"
+    },
+    "21": {
+      "w": 45,
+      "l": 37,
+      "pct": 0.54878,
+      "rank": 15,
+      "conference": "West"
+    },
+    "30": {
+      "w": 44,
+      "l": 38,
+      "pct": 0.536585,
+      "rank": 16,
+      "conference": "East"
+    },
+    "14": {
+      "w": 43,
+      "l": 39,
+      "pct": 0.52439,
+      "rank": 17,
+      "conference": "East"
+    },
+    "12": {
+      "w": 42,
+      "l": 40,
+      "pct": 0.512195,
+      "rank": 18,
+      "conference": "West"
+    },
+    "22": {
+      "w": 42,
+      "l": 40,
+      "pct": 0.512195,
+      "rank": 19,
+      "conference": "West"
+    },
+    "9": {
+      "w": 37,
+      "l": 45,
+      "pct": 0.45122,
+      "rank": 20,
+      "conference": "West"
+    },
+    "15": {
+      "w": 32,
+      "l": 50,
+      "pct": 0.390244,
+      "rank": 21,
+      "conference": "East"
+    },
+    "4": {
+      "w": 31,
+      "l": 51,
+      "pct": 0.378049,
+      "rank": 22,
+      "conference": "East"
+    },
+    "3": {
+      "w": 26,
+      "l": 56,
+      "pct": 0.317073,
+      "rank": 23,
+      "conference": "West"
+    },
+    "6": {
+      "w": 26,
+      "l": 56,
+      "pct": 0.317073,
+      "rank": 24,
+      "conference": "West"
+    },
+    "29": {
+      "w": 25,
+      "l": 57,
+      "pct": 0.304878,
+      "rank": 25,
+      "conference": "West"
+    },
+    "23": {
+      "w": 22,
+      "l": 60,
+      "pct": 0.268293,
+      "rank": 26,
+      "conference": "West"
+    },
+    "26": {
+      "w": 22,
+      "l": 60,
+      "pct": 0.268293,
+      "rank": 27,
+      "conference": "West"
+    },
+    "17": {
+      "w": 20,
+      "l": 62,
+      "pct": 0.243902,
+      "rank": 28,
+      "conference": "East"
+    },
+    "11": {
+      "w": 19,
+      "l": 63,
+      "pct": 0.231707,
+      "rank": 29,
+      "conference": "East"
+    },
+    "27": {
+      "w": 17,
+      "l": 65,
+      "pct": 0.207317,
+      "rank": 30,
+      "conference": "East"
+    }
+  },
+  "ranks": {
+    "25": 1,
+    "24": 2,
+    "8": 3,
+    "2": 4,
+    "7": 5,
+    "13": 6,
+    "18": 7,
+    "10": 8,
+    "5": 9,
+    "16": 10,
+    "1": 11,
+    "28": 12,
+    "19": 13,
+    "20": 14,
+    "21": 15,
+    "30": 16,
+    "14": 17,
+    "12": 18,
+    "22": 19,
+    "9": 20,
+    "15": 21,
+    "4": 22,
+    "3": 23,
+    "6": 24,
+    "29": 25,
+    "23": 26,
+    "26": 27,
+    "17": 28,
+    "11": 29,
+    "27": 30
+  }
+}

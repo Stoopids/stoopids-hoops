@@ -1,6 +1,6 @@
 /* Overlay ESPN BPI ranks, current-season records, and Stoopids Rank onto TEAMS_DATA.meta.
    Power Ranking = meta.o / meta.p from data/power.json (BPI).
-   Win rank / record = data/scores.json standings (2026-27).
+   Win rank / record = data/last_season.json (final 2025-26 regular-season records).
    Stoopids Rank = data/stoopids.json expected fantasy points.
    If a fetch fails, baked values in teams.js are kept. */
 (function(){
@@ -45,7 +45,7 @@ function applyStandings(data){
   });
   rows.sort((a,b)=>b.w-a.w||b.pct-a.pct||a.l-b.l||String(a.id).localeCompare(String(b.id),undefined,{numeric:true}));
   rows.forEach((row,i)=>META[row.id].wr=i+1);
-  if(rows.length&&window.FBN)FBN.REC_SRC=(data&&data.season)||'2026-27';
+  if(rows.length&&window.FBN)FBN.REC_SRC=(data&&data.season)||'2025-26';
   return rows.length;
 }
 function applyStoopids(data){
@@ -77,7 +77,7 @@ const q='?b='+encodeURIComponent(b);
 function get(url){return fetch(url+q,{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null)}
 Promise.all([
   get('data/power.json').then(d=>{if(d)applyPower(d);else fallbackNote()}),
-  get('data/scores.json').then(d=>{if(d)applyStandings(d)}),
+  get('data/last_season.json').then(d=>{if(d)applyStandings(d)}),
   get('data/stoopids.json').then(d=>{if(d)applyStoopids(d)})
 ]).then(ping);
 })();

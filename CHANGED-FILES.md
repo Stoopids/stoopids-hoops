@@ -1,3 +1,6 @@
+# sh4 (build 2026-11-10sh4): Win rank is 2025-26
+Base: sh3. Draft-room Win rank now sorts by last season's final regular-season records (ESPN standings season=2026), stored in data/last_season.json. Cards show e.g. "64-18 (2025-26)". Legend: "record = 2025-26 season". Power Ranking remains the default sort. Current 2026-27 standings stay in scores.json for the league site. The static 2024-25 list in meta.f is not used for Win rank.
+
 # sh3 (build 2026-11-10sh3): draft-room NBA sorts
 Base: sh2. Draft room Teams tab: default sort is Power Ranking (ESPN BPI). Stoopids Rank is an extra button (projected fantasy points from ESPN BPI; Cup omitted, no ESPN Cup odds). Win rank uses 2026-27 standings. Win % button removed. Search placeholder "Search team or city". Record note is 2026-27. Conference filter is East/West. Tiers are five groups of six by BPI. Auto-pick rank renamed Power Ranking. data/stoopids.json written by tools/refresh_nba.py.
 
