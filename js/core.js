@@ -206,9 +206,11 @@ F.mClock=function(m,secs,now){if(F.CLOCKS.indexOf(+secs)<0)return{error:'Not a v
 F.mFlags=function(m,f){const n=clone(m);if('warn15' in f)n.settings.warn15=!!f.warn15;if('autoPick' in f)n.settings.autoPick=!!f.autoPick;if('notes' in f)n.notes=!!f.notes;return{state:n}};
 /* edit league settings: only before the draft starts (clock/auto flags have their own live actions) */
 F.mSettings=function(m,patch,joined,poolSize,now){if(m.status!=='lobby')return{error:'Locked: the draft has started.'};
-  /* commish may switch 5 <-> 6 in the lobby (empty 6th seat). Rounds auto-fill the 30-team pool when the count changes. */
+  /* commish may switch 5 <-> 6 in the lobby (empty 6th seat). When the count changes, Teams each defaults to filling the 30-team pool (6 or 5), but a valid choice the commish picked in the same save is kept. Cannot go below the number already joined. */
   const n=clone(m);patch=Object.assign({},patch);
-  if(patch.managers!=null){const nm=+patch.managers;if(nm!==5&&nm!==6)return{error:'Choose 5 or 6 managers.'};if(nm!==n.settings.managers){patch.rounds=F.roundsFor(nm)}}
+  if(patch.managers!=null){const nm=+patch.managers;if(nm!==5&&nm!==6)return{error:'Choose 5 or 6 managers.'};
+    const have=Array.isArray(joined)?joined.length:0;if(nm<have)return{error:have+' managers have already joined. Remove someone first, or keep '+n.settings.managers+'.'};
+    if(nm!==n.settings.managers){const max=F.maxRounds(nm,poolSize||F.POOL_SIZE||30);if(patch.rounds==null||!(+patch.rounds>=1&&+patch.rounds<=max))patch.rounds=F.roundsFor(nm)}}
   const s=Object.assign({},n.settings,patch);if(patch.name!=null)n.name=clean(patch.name);
   const v=F.validateSettings(Object.assign({name:n.name},s),{poolSize,now:now||Date.now(),legacyCount:n.settings.managers});
   const e=Object.assign({},v.errors);if(patch.startAt==null&&'startAt' in patch)delete e.startAt;if(!('startAt' in patch)&&n.settings.startAt!=null&&n.settings.startAt<(now||Date.now()))delete e.startAt;
