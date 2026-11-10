@@ -512,6 +512,9 @@ function tallyHtml(T){const ow=owners(),per=m=>T.per[m]||{net:0,bets:0},Lo=m=>T.
   const Ls=[];ow.forEach((a,x)=>ow.slice(x+1).forEach(b=>{const d=round2(M(a.mid,b.mid)-M(b.mid,a.mid));if(d>0)Ls.push([a,b,d]);else if(d<0)Ls.push([b,a,-d])}));
   if(Ls.length)h+=`<div class="card" id="b27Settle" data-tally-settle>${Ls.map(([a,b,d])=>`<div class="tset">${esc(nick(a))} owes ${esc(nick(b))} ${num(d)}</div>`).join('')}</div>`;
   return h}
+/* rb1 (Paul: STOOPIDS parity): Tally is its own top-level tab (same tally math and table as the Bets > Tally view) */
+function tallyView(){if(!H)return'';if(H.demo)return'<div class="card" id="b27Tally"><b>🧮 Tally · 26-27</b><div class="note">Bets are switched off in the demo, so the tally is empty here.</div></div><div class="card note" id="b27TallyEmpty" data-tally-empty>No 26-27 bets with amounts yet.</div>';
+  if(S.state==='init')return'<div class="card note" id="b27TallyLoad">Loading the tally…</div>';const bets=compute();return tallyHtml(tally(bets))}
 function copyText(t,ok){const fall=()=>{try{const ta=document.createElement('textarea');ta.value=t;ta.setAttribute('readonly','');ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();const r=document.execCommand&&document.execCommand('copy');ta.remove();if(r){ok();return}}catch(e){}};
   try{if(navigator.clipboard&&navigator.clipboard.writeText&&window.isSecureContext){navigator.clipboard.writeText(t).then(ok,fall);return}}catch(e){}fall()}
 /* ----- the page (partner vB27 order): Write it Up / Tally + Copy link, message, New bet (or the watcher card), Bets (n) + mute, filter row, cards, the intro card with the live line last ----- */
@@ -815,5 +818,5 @@ function init(h){H=h;if(!S.started){S.started=true;bind()}}
 function start(){if(!H||H.demo)return;poll(false)}
 let modalWas=false;
 function afterRender(){try{mountRx()}catch(e){}try{const m=document.querySelector('.s26k-m');document.body.classList.toggle('s26k-lock',!!m);if(m&&!modalWas){const b=m.querySelector('.b27-act .btn');if(b)b.focus({preventScroll:true})}modalWas=!!m}catch(e){}}
-window.LBETS={after:afterRender,_t:{propose,S,stampText,poolEntries,poolCheck,poolParse,greedy,POOL_TXT,DISCLAIMER,placedFx,mountRx,clampFix,RX,settlePop,readBet,claimText,judge,autoGame,AUTO_NOTE,settleSound,soundFor,sndMuted},init,start,view,badge,poll,reduce,tally,parseLog,win,filterHash:()=>{try{return fHashOut()}catch(e){return''}},setFilterHash:(f,q)=>{try{fFromHash(f,q)}catch(e){}},reveal:id=>{try{return reveal(id)}catch(e){return false}},quickHtml:(g,ctx)=>{QCTX=ctx||null;try{return quickHtml(g,ctx)}catch(e){return''}},_state:S};
+window.LBETS={tallyView,after:afterRender,_t:{propose,S,stampText,poolEntries,poolCheck,poolParse,greedy,POOL_TXT,DISCLAIMER,placedFx,mountRx,clampFix,RX,settlePop,readBet,claimText,judge,autoGame,AUTO_NOTE,settleSound,soundFor,sndMuted},init,start,view,badge,poll,reduce,tally,parseLog,win,filterHash:()=>{try{return fHashOut()}catch(e){return''}},setFilterHash:(f,q)=>{try{fFromHash(f,q)}catch(e){}},reveal:id=>{try{return reveal(id)}catch(e){return false}},quickHtml:(g,ctx)=>{QCTX=ctx||null;try{return quickHtml(g,ctx)}catch(e){return''}},_state:S};
 })();

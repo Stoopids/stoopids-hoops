@@ -960,3 +960,70 @@ body.lsite #lbody .ggrid:not(:has(>.gfin))>.gm{display:grid;grid-row:span 9;grid
 body.lsite #lbody table{width:100%}
 body.lsite #lbody .card:has(>table),body.lsite #lbody .sc,body.lsite #lbody .swipe{max-width:100%;overflow-x:auto}
 body.lsite #lbody th,body.lsite #lbody td{min-width:2.5em}
+
+/* ===== rb1 (Paul, Nov 10 2026): STOOPIDS look and navigation (values copied from the live STOOPIDS site) ===== */
+html body nav#ltabs{display:flex!important;flex-wrap:wrap;gap:6px;justify-content:center;position:sticky;top:0;z-index:40;background:var(--bg,#10131a);padding:6px 16px!important;margin-top:8px}
+html body nav#ltabs>a.tb{flex:1 1 0;min-width:0;display:inline-flex!important;flex-direction:row;align-items:center;justify-content:center;gap:6px;height:48px!important;min-height:48px!important;padding:0 8px!important;border-radius:8px!important;background:var(--card,#1a1f2b);border:1px solid var(--line,#2d3548);color:var(--tx,#eef1f7);font-size:15px!important;font-weight:700!important;text-decoration:none;box-sizing:border-box;position:relative}
+html body nav#ltabs>a.tb .nl{font-size:15px!important;font-weight:700!important;white-space:nowrap}
+html body nav#ltabs>a.tb .ni{font-size:18px!important}
+html body nav#ltabs>a.tb .nl.s,html body nav#ltabs>a.tb .nl.m{display:none!important}
+html body nav#ltabs>a.tb .nl.f{display:inline!important}
+html body nav#ltabs>a.tb.on{background:var(--acc,#ffd23f)!important;color:#111!important;border-color:var(--acc,#ffd23f)!important}
+html body nav#ltabs>a.tb:hover{border-color:var(--acc,#ffd23f)}
+html body nav#ltabs>a.tb .nb{position:absolute;top:1px;right:2px;min-width:15px;background:#ffd400;color:#111;border-radius:99px;font-size:9px;font-weight:900;line-height:1;padding:2px 4px;text-align:center}
+.nm-b{display:none;position:relative;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-width:0;min-height:46px;padding:4px;background:var(--card,#1b2030);color:var(--tx,#eee);border:1px solid var(--line,#333);border-radius:10px;font:inherit;font-size:12px;font-weight:700;cursor:pointer}
+.nm-b .ni{font-size:15px;line-height:1}
+.nm-b.on,.nm-b[aria-expanded="true"]{background:var(--acc,#FFD400);color:#111;border-color:var(--acc,#FFD400)}
+@media (max-width:700px){
+ html body nav#ltabs.nm5{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:4px;padding:4px 8px!important;position:static}
+ html body nav#ltabs.nm5>.nm-x{display:none!important}
+ html body nav#ltabs.nm5>.nm-b{display:flex}
+ html body nav#ltabs.nm5>a.tb,html body nav#ltabs.nm5>.nm-b{height:50px!important;min-height:50px!important;padding:4px!important;flex-direction:column;gap:2px;border-radius:10px!important}
+ html body nav#ltabs.nm5>a.tb .nl.f{display:none!important}
+ html body nav#ltabs.nm5>a.tb .nl.s{display:inline!important;font-size:13px!important}
+ html body nav#ltabs.nm5>a.tb .ni{font-size:17px!important}
+ html body nav#ltabs.nm5>.nm-b>span:last-child{font-size:13px}
+}
+.nm-bd{position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,.55);display:flex;align-items:flex-end;justify-content:center}
+.nm-sh{width:100%;max-width:520px;max-height:70vh;overflow-y:auto;overscroll-behavior:contain;background:var(--card,#1b2030);border:1px solid var(--line,#333);border-radius:16px 16px 0 0;padding:10px 12px calc(14px + env(safe-area-inset-bottom));box-sizing:border-box}
+.nm-h{display:flex;justify-content:space-between;align-items:center;font-weight:800;margin:2px 2px 8px}
+.nm-h button{background:none;border:0;color:var(--tx,#eee);font-size:18px;cursor:pointer;padding:4px 8px}
+.nm-i{position:relative;display:flex;align-items:center;gap:10px;width:100%;text-align:left;background:transparent;color:var(--tx,#eee);border:1px solid var(--line,#333);border-radius:10px;padding:12px;margin:0 0 6px;font:inherit;font-size:15px;font-weight:700;cursor:pointer}
+.nm-i.on{background:var(--acc,#FFD400);color:#111;border-color:var(--acc,#FFD400)}
+/* Share pill beside the title */
+html body .titlebar{position:relative}
+.s12-share{flex:0 0 auto;display:inline-flex;align-items:center;gap:4px;min-height:36px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:var(--card2,#222939);color:var(--tx,#eef1f7);font:inherit;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
+.s12-share:hover{border-color:var(--acc)}
+.s12-share.on{background:var(--acc);color:#111;border-color:var(--acc)}
+html body .s12-hd .s12-share{position:absolute;top:6px;right:12px;z-index:20}
+@media (max-width:480px){.s12-share{padding:0 9px;font-size:12px}}
+/* Online / Last seen strip (bottom left) + floating yellow Chat pill (bottom right) */
+.onl{max-width:100%;padding:6px 8px;display:flex;flex-wrap:nowrap;gap:8px;align-items:center;overflow-x:auto;overflow-y:hidden;border:1px solid var(--line,#2d3548);border-radius:12px;background:var(--card,#1b2130);font-size:14px;line-height:1.2;box-sizing:border-box}
+.onl-g{display:inline-flex;align-items:center;gap:6px;flex:0 0 auto}
+.onl-h{font-weight:800;font-size:14px;margin-right:2px}
+.onl-now .onl-h{color:#86efac}.onl-was .onl-h{color:var(--mut,#9aa)}
+.onl-none{color:var(--mut,#9aa)}
+.onl-p{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:999px;background:rgba(127,127,127,.12);white-space:nowrap}
+.onl-p .pd{width:8px;height:8px;border-radius:50%;background:#22c55e;display:inline-block;box-shadow:0 0 0 2px rgba(34,197,94,.25)}
+.onl-p .pd.off{background:#6b7280;box-shadow:none}
+.onl-p small{opacity:.85;font-size:13px}
+html body #onlStrip.onl-fixed{position:fixed;z-index:29;left:12px;right:160px;bottom:max(12px,env(safe-area-inset-bottom,0px));margin:0;width:auto;height:44px;max-width:860px}
+@media (max-width:700px){html body #onlStrip.onl-fixed{left:8px;right:132px;bottom:max(8px,env(safe-area-inset-bottom,0px));padding:0 8px}}
+body.lsite:has(#chat:not(.chat-off)) #onlStrip{display:none}
+html body .chat.chat-off{position:fixed!important;left:auto!important;right:max(12px,env(safe-area-inset-right,0px))!important;bottom:max(12px,env(safe-area-inset-bottom,0px))!important;width:max-content!important;max-width:min(240px,calc(100vw - 24px))!important;padding:0!important;background:transparent!important;border:0!important;box-shadow:none!important;overflow:visible!important;height:44px!important;z-index:31!important}
+html body .chat.chat-off>.chat-t{width:auto!important;height:44px!important;min-height:44px!important;border-radius:999px!important;padding:0 14px!important;background:#FFD400!important;color:#111!important;border:1px solid #FFD400!important;display:inline-flex!important;align-items:center;gap:6px}
+html body .chat.chat-off>.chat-t .cbm,html body .chat.chat-off>.chat-t .ca{display:none!important}
+html body .chat.chat-off>.chat-t::before{content:'\1F4AC  Chat';font-weight:800}
+html body .chat.chat-off .chat-b{display:none!important}
+body.lsite main{padding-bottom:72px}
+/* 'Who are you?' picker */
+.pwho{position:fixed;inset:0;z-index:50;background:rgba(5,7,12,.78);display:flex;align-items:center;justify-content:center;padding:14px}
+.pwho .box{width:100%;max-width:360px;max-height:100%;overflow:auto;background:var(--card);border:2px solid var(--acc);border-radius:18px;padding:16px 14px 14px;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.55)}
+.pwho h2{margin:0;color:var(--acc);font-size:24px;font-weight:900}
+.pwho p{margin:6px 0 12px;color:var(--mut);font-size:13.5px}
+.pwho .grid{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.pwho button{font:inherit;font-weight:800;font-size:14px;color:var(--tx);background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:10px 6px;cursor:pointer;min-width:0;line-height:1.15}
+.pwho button:hover{border-color:var(--acc);color:var(--acc)}
+.pwho button.guest{display:block;width:100%;margin:2px 0 0;background:#2f6fde;border:2px solid #2f6fde;color:#fff;font-size:19px;font-weight:900;padding:15px 10px;border-radius:14px;box-shadow:0 4px 14px rgba(47,111,222,.35)}
+.pwho .gsep{display:flex;align-items:center;gap:8px;margin:14px 0 10px;color:var(--mut);font-size:12.5px;font-weight:700}
+.pwho .gsep::before,.pwho .gsep::after{content:'';flex:1;border-top:1px solid var(--line)}

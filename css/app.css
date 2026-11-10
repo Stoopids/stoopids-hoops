@@ -780,3 +780,36 @@ body.pdmore #rulescard{padding:8px 12px}body.pdmore #rulescard h3{margin:0 0 6px
 #pickov .ctl{top:var(--pheadh,60px)}#pickov .tqwrap .qpanel{top:calc(var(--pheadh,60px) + 8px)}
 /* s28 (b): at 390 the top-bar pill shows only the team name */
 @media(max-width:520px){#who .whosub{display:none}}
+
+/* ===== rb1 (Paul, Nov 10 2026): STOOPIDS look for the app pages (home, setup, join, mock, draft room, recap, help) ===== */
+.sh-hdr{display:block;max-width:1080px;margin:0 auto;padding:0;text-align:center}
+.sh-hdr.top{display:block;padding:0}
+.sh-hero{height:clamp(110px,16vw,190px);background:url("../assets/hero-banner.jpg") center 45%/cover no-repeat,#17224a;border-radius:0 0 18px 18px;margin:0 max(0px,env(safe-area-inset-right))}
+@media (min-width:700px){.sh-hero{margin:0 10px}}
+.sh-tb{position:relative;display:flex;flex-direction:column;align-items:center;padding:8px 14px 2px}
+.sh-pres{font-size:clamp(15px,4.4vw,30px);font-weight:900;letter-spacing:.08em;line-height:1.1;font-variant:small-caps;text-transform:lowercase;margin:0;color:var(--mut)}
+.sh-title{display:block;font-size:clamp(34px,10vw,68px);font-weight:900;letter-spacing:.04em;line-height:1.05;color:var(--acc)!important;text-decoration:none;white-space:nowrap}
+.sh-title span{color:var(--acc)}
+.sh-tag{margin:2px 0 0;color:#e7ecf6;font-size:15px;font-weight:600}
+.sh-hdr .s12-hd{position:relative;width:100%;display:flex;justify-content:center}
+.sh-right{position:absolute;top:-2px;right:0;display:flex;gap:6px}
+@media (max-width:640px){.sh-right{position:static;justify-content:center;margin:6px 0 0}.sh-hdr .s12-hd{flex-direction:column;align-items:center}}
+.sh-compact .sh-tb{flex-direction:row;flex-wrap:wrap;justify-content:center;align-items:baseline;gap:4px 10px;padding:6px 12px 2px}
+.sh-compact .sh-pres{font-size:15px}
+.sh-compact .sh-title{font-size:clamp(22px,5.5vw,32px)}
+.sh-compact .sh-tag{flex-basis:100%;font-size:13px;margin:0;color:var(--mut)}
+/* STOOPIDS buttons: rounded rectangles, bold, yellow primary */
+.btn{border-radius:10px;min-height:44px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;gap:6px}
+.btn.block{display:flex;width:100%;min-height:52px;font-size:17px}
+.btn.pri{box-shadow:0 4px 14px rgba(255,210,63,.18)}
+.btn.sm{min-height:34px;border-radius:999px;padding:0 12px;font-weight:700}
+.pill{border-radius:999px}
+/* draft room tabs: STOOPIDS rounded-rect tabs, yellow when open */
+body.room .tabs{gap:6px;padding-top:4px;padding-bottom:4px;background:var(--bg);border-bottom:1px solid var(--line)}
+body.room .tabs button,body.room .tabs a{min-height:46px;border-radius:10px;background:var(--card);border:1px solid var(--line);color:var(--tx);font-weight:700}
+body.room .tabs button.on,body.room .tabs a.on{background:var(--acc);color:#111;border-color:var(--acc);box-shadow:none}
+body.room .tabs button:hover,body.room .tabs a:hover{border-color:var(--acc)}
+@media (max-width:899px){body.room .tabs{gap:4px;padding-left:6px;padding-right:6px}body.room .tabs button,body.room .tabs a{min-height:46px}}
+@media (min-width:900px){body.room .tabs button,body.room .tabs a{min-height:48px}}
+html body .sh-hdr a.sh-title{display:block;flex:none;font-size:clamp(34px,10vw,68px);font-weight:900;letter-spacing:.04em;line-height:1.05;color:var(--acc);white-space:nowrap;margin:0}
+html body .sh-hdr.sh-compact a.sh-title{font-size:clamp(22px,5.5vw,32px)}

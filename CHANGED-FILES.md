@@ -365,6 +365,13 @@ League: Games cards (aligned pills, one-line owner row, no empty score box befor
 | tests/mock10_s26c11.js (not in bundle) | - | Release | 10 solo mocks + league.html Games/Breakdown/All teams check |
 | CHANGED-FILES.md / MD5SUMS.txt | (this file) | Release | s26c11 section; regenerated |
 
+## 2026-11-10sh7 — STOOPIDS look and navigation (rb1)
+- League site (js/leaguehome.js, js/league-bets.js, css/league-app.css): STOOPIDS rounded-rect tabs; Tally and Archive tabs; mobile 4 tabs + More sheet; Share pill; Online / Last seen strip; floating yellow Chat pill; "Who are you?" picker (real leagues only, device-only, no sign-in).
+- App pages (js/ui.js U.header, js/index.js, css/app.css): STOOPIDS header (banner, Stoopids presents, big yellow STOOPIDS HOOPS), rounded-rect buttons; draft room gets a compact header and rounded-rect tabs. Draft engine unchanged (sh6f).
+- STOOPIDS-TEMPLATE.md: what maps to what, what changed for NBA, remaining gaps.
+- tests/rb_shots.js: local full mock + league pages with SYNTHETIC labeled data (31 checks).
+- js/version.js, sw.js: build 2026-11-10sh7.
+
 ## 2026-11-10sh6f — practice-bot strategies
 - js/mock-bots.js: practice bots now use six strategies, dealt at random per mock draft (distinct per bot), each with a little random noise: Power (best BPI left), Points (best Stoopids projected points), Proven (last season's record), Division spread (divisions it doesn't own yet, then BPI), Upside (BPI ~11-20 with a playoff chance), Conference stack (leans East or West). The bot's label shows its strategy (e.g. "Division spread bot"). Human auto-pick is unchanged: queue, then Power Ranking.
 - js/power-apply.js: keeps each team's playoff chance (p_playoff from data/stoopids.json) for the Upside bot.
