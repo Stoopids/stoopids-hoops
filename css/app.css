@@ -813,3 +813,9 @@ body.room .tabs button:hover,body.room .tabs a:hover{border-color:var(--acc)}
 @media (min-width:900px){body.room .tabs button,body.room .tabs a{min-height:48px}}
 html body .sh-hdr a.sh-title{display:block;flex:none;font-size:clamp(34px,10vw,68px);font-weight:900;letter-spacing:.04em;line-height:1.05;color:var(--acc);white-space:nowrap;margin:0}
 html body .sh-hdr.sh-compact a.sh-title{font-size:clamp(22px,5.5vw,32px)}
+/* sh9d (Paul): join "You're in!" private manager link: big red IMPORTANT box */
+#ownbox{border:2px solid #ff4d4f;background:#2b1012;border-radius:14px;padding:12px 14px;margin:12px 0 4px}
+#ownbox .imph{color:#ff6b6e;font-weight:900;font-size:18px;letter-spacing:.02em;text-transform:uppercase;margin:0 0 8px}
+#ownbox .impw{color:#fff;font-size:15px;margin:0 0 8px}#ownbox .urlbox{margin:8px 0;word-break:break-all}
+#ownbox .lcbig{font-size:18px;padding:14px;width:100%;margin:4px 0 6px}#ownbox .hint{margin:0}
+#ownbox.impflash{box-shadow:0 0 0 4px rgba(255,77,79,.6)}

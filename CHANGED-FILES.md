@@ -830,3 +830,10 @@ Test-only (not shipped): tests/e2e_picksheet_clock_s28.js, e2e_beep_s28.js, e2e_
 - js/room.js: the page title and the join share text say "Stoopids Hoops" (was "Fantasy BBALL NCAA"); the seed sort hint says "playoff seed".
 - A rendered scan of the room, recap, help and league tabs found no school, NCAA, AP, March Madness, bracket or KenPom words. The one exception is the verbatim STOOPIDS how-to example "season-long tournament pool".
 - js/version.js: FBN_BUILD 2026-11-10sh9c. sw.js: line 1 comment. MD5SUMS.txt regenerated.
+
+## 2026-11-10sh9d — join "You're in!": big red IMPORTANT box for the private manager link (Paul)
+- js/join.js: "Your private manager link" is now a red IMPORTANT box inside the You're in! card, above Open the draft room. It says: "Copy this link now. It is how you get back in on another device or after clearing your browser. Don't share it." The link is masked on screen and there is a big Copy my link button.
+- Until the link is copied (remembered on this device), Open the draft room asks first ("You have not copied your private manager link yet… Open the draft room anyway?"). Cancel stays on the page and flashes the box.
+- The flag is JOIN_IMP in join.js; false restores the old card. The old separate private-link card (with Share) is hidden.
+- css/app.css: #ownbox styles. Joining, ?l= invite links, ?c= code links and private manager links are unchanged.
+- js/version.js: FBN_BUILD 2026-11-10sh9d. sw.js: line 1 comment. MD5SUMS.txt regenerated.

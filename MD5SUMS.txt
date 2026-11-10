@@ -1,15 +1,15 @@
 d41d8cd98f00b204e9800998ecf8427e  .nojekyll
-68544b5c227d2d3004a4a6e466c9004c  CHANGED-FILES.md
+a49706393eaf0bf7cc45845824ff2e36  CHANGED-FILES.md
 fc4c2520be569d292be962f8ba4efdeb  LICENSE-third-party.txt
 8b5625f976836aad6af5f60e27144a46  README.md
-b0c7ac1a2774681393f28fbd9e1af472  STOOPIDS-TEMPLATE.md
+2d91efe85db8f5fa9a24c5a8ccb30b70  STOOPIDS-TEMPLATE.md
 d64b4a5bc83d7d701430bd795594d5bf  assets/cheer.mp3
 1efdefd1fb1432448a983cf69fd1f268  assets/hero-banner.jpg
 81f9e4f98c15e35eecbf220190fc0b0a  assets/hoops-hero-mobile.jpg
 34c41a6a6d82decc1fb988e609a0815b  assets/hoops-hero-wide.jpg
 f132a91a3e09306ab9810f24abf044f9  assets/setup-banner.svg
 0843703b60d6ca6b847460878f0d4404  assets/teams.js
-8468d8ae13b240fc74c62efa17b637bb  css/app.css
+cdd559dd794a77e6c13fb310711d5e43  css/app.css
 0fe95cd7769532da43155e24cffd305d  css/league-app.css
 422f06d20e818a28f93262854539b3da  css/power.css
 b9f73c3f451d83ad9229aafeb5ea9368  css/recap-rosters.css
@@ -39,7 +39,7 @@ ca4d112343a3e65da480e266048e1cf3  js/core.js
 919176badbe78c5adc6fb7ce260cf723  js/help.js
 55ad4cbafc8f6fa7dc4c751df374279e  js/hoops-stoopids.js
 0e122ac687e4b2d381136fa161a0dba2  js/index.js
-f0f6c0bb1eeee96cb5d20105b231a9a7  js/join.js
+d2fe9a238ac5cbd4cd207e4357d6b198  js/join.js
 4a248be8d04087454c6a2a5c53e65219  js/league-bets.js
 3f8c8f86dde0f75d98b71796bfbd2bdd  js/league-d.js
 ffbd9b41d526cedd442d6f018833af45  js/league-sched.js
@@ -62,7 +62,7 @@ ff0d6480126c6ad3ffc9312c3c1a1808  js/room.js
 4c6278d218b3092ecb311378e48f9cbb  js/store.js
 b31b8d130f47a378f2358995614b9470  js/time.js
 4d504bf1ee1831973176394e76f994f6  js/ui.js
-a321e929b32f307d86e9e7321b8d3a09  js/version.js
+024c7edd560c73d05cb0132ef01ccc05  js/version.js
 4e2ca6d61d0d9fc4e7ff1589d3d1ecea  league.html
 bfecc7dd0f1bda7d2eba6a98a31acf30  manifest.webmanifest
 3b25eb7bcd546e190180401ab0cd8833  mock.html
@@ -72,7 +72,7 @@ bfecc7dd0f1bda7d2eba6a98a31acf30  manifest.webmanifest
 0abcaa0775f7e3d21e6561e1b07ccc36  setup.html
 441fdaab0f155a04edca55cc8191e07c  shared/ui.css
 20e521bd045d8ff49ead0a01e6bfef7a  shared/ui.js
-2fd2a97e3bd10d76733bcbeb87f9283a  sw.js
+92b8377dfe868b621b27d3d8ca849415  sw.js
 dbc1acbbc855aa2997faf2d9331135b5  time.html
 1c4869cead9ab758c5325aa44c3ed066  tools/build_league_from_stoopids.py
 eee8a26eb834ea3667a3220d21d9c65d  tools/hoops_sh9_fixes.html

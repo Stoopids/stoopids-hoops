@@ -4,6 +4,8 @@ const {esc,$}=UI;const F=FBN;const TZ=UI.tz();
 const P=UI.qs();let id=F.parseCode(P.get('l')||P.get('c')||'');const editMode=P.get('edit')==='1';/* s28: profile edits live in the room's My settings sheet (real name read-only there) */
 if(editMode&&id){location.replace(UI.pageUrl('room.html',{l:id,settings:1}));return}
 let meta=null,claims={},profs={},me=null,busy=false;
+/* sh9d (Paul): big red IMPORTANT box for the private manager link; Open the draft room asks first until it is copied. false = the old card. */
+const JOIN_IMP=true;let ownCopied=false;
 const form={name:'',team:'',emoji:'',photo:'',photoInfo:'',pv:0};
 const crop={img:null,zoom:1,px:0,py:0,drag:null};
 const top=right=>{$('top').innerHTML=UI.header({sub:'Join a league',right:right||''})};
@@ -29,11 +31,16 @@ function fullView(){shell(`${leagueCard()}<div class="card"><h2>This league is f
   <a class="btn pri block" id="watch" href="${esc(UI.pageUrl('room.html',{l:id,watch:1}))}">Watch as a spectator</a><a class="btn block" style="margin-top:8px" id="already" href="${esc(UI.pageUrl('room.html',{l:id}))}">I’m already in this league</a></div>`)}
 function done(c,fresh,note){const PB=meta.mock?UI.practiceBanner('This is a mock draft, not a real league.'):'';const L=UI.pageUrl('room.html',{l:id}),own=me&&me.k?UI.pageUrl('room.html',{l:id},{as:c.mid,k:me.k}):'';
   shell(`${PB}${leagueCard()}<div class="card" id="joined"><div class="row nw">${UI.avatar(Object.assign({},c,{photo:form.photo||(profs[c.mid]||{}).photo,emoji:form.emoji||(profs[c.mid]||{}).emoji}),52)}<div class="grow"><h2 style="margin:0">${fresh?'You’re in!':'You’re already in'}</h2><div class="small mut">${esc(c.name)} · ${esc(c.team)}</div></div></div>
-  ${note?`<div class="note">${esc(note)}</div>`:''}<a class="btn pri block" id="toRoom" href="${esc(L)}" style="margin-top:12px">Open the draft room</a>
+  ${note?`<div class="note">${esc(note)}</div>`:''}${JOIN_IMP&&own?impBox(own):''}<a class="btn pri block" id="toRoom" href="${esc(L)}" style="margin-top:12px">Open the draft room</a>
   <button class="btn block" style="margin-top:8px" data-a="editme">Edit my profile</button></div>
   ${meta.mock?'':(meta.status==='lobby'?`<div class="card" id="practicecard"><h3>Practice this draft</h3><div class="small mut">Run a mock draft with this league's settings against bots, or invite leaguemates to practice together. It never changes this league.</div><a class="btn block" style="margin-top:8px" id="practicethis" href="${esc(UI.pageUrl('mock.html',{from:id}))}">Practice this draft</a></div>`:'')}
-  ${own?`<div class="card"><h3>Your private manager link</h3><div class="hint" style="margin:0 0 6px">Open this on another phone to come back as ${esc(c.name)}. Anyone who has it can act as you — don’t share it.</div><div class="urlbox">${esc(own.split('#')[0])}#••••••••••••••••</div><div class="row"><button class="btn sm" data-a="copy" data-u="${esc(own)}">Copy my link</button><button class="btn sm" data-a="share" data-u="${esc(own)}">Share</button></div></div>`:''}
+  ${own&&!JOIN_IMP?`<div class="card"><h3>Your private manager link</h3><div class="hint" style="margin:0 0 6px">Open this on another phone to come back as ${esc(c.name)}. Anyone who has it can act as you — don’t share it.</div><div class="urlbox">${esc(own.split('#')[0])}#••••••••••••••••</div><div class="row"><button class="btn sm" data-a="copy" data-u="${esc(own)}">Copy my link</button><button class="btn sm" data-a="share" data-u="${esc(own)}">Share</button></div></div>`:''}
   <div class="note">There are no accounts. Your phone remembers who you are. Anyone with the league link can read the league, so don’t put private details in your profile.</div>`)}
+function impBox(own){ownCopied=ownCopied||UI.lsGet('lcopied.'+id)==='1';return `<div class="imp" id="ownbox" role="region" aria-label="Important: your private manager link"><div class="imph">IMPORTANT: your private manager link</div>
+  <div class="impw" style="font-size:15px;color:#fff">Copy this link now. It is how you get back in on another device or after clearing your browser. <b>Don’t share it.</b></div>
+  <div class="urlbox">${esc(own.split('#')[0])}#••••••••••••••••</div>
+  <button class="btn pri block lcbig" data-a="copyown" data-u="${esc(own)}" id="copyown">${ownCopied?'Copied ✓ (copy again)':'Copy my link'}</button>
+  <div class="hint" id="ownhint" role="status">${ownCopied?'Copied. Keep it somewhere safe, like a note to yourself.':'Paste it somewhere safe, like a note or an email to yourself.'}</div></div>`}
 function emojiRow(){return `<div class="emojis" role="group" aria-label="Emoji avatar">${F.EMOJIS.map(e=>`<button type="button" data-a="emoji" data-e="${e}" class="${form.emoji===e?'on':''}" aria-label="${e}">${e}</button>`).join('')}</div>`}
 function formView(mine){const edit=!!mine;const av=F.avatarSpec(form);
   shell(`${leagueCard()}<div class="card" id="jform"><h2 style="margin:0 0 10px">${edit?'Edit your profile':'Your team'}</h2>
@@ -82,7 +89,8 @@ const ACT={
  rmphoto(){readForm();crop.img=null;form.photo='';form.photoInfo='';formView(me&&joined().find(c=>c.mid===me.mid))},
  editme(){location.href=UI.pageUrl('room.html',{l:id,settings:1})},
  editmeOld(){const c=joined().find(c=>c.mid===me.mid);const p=profs[c.mid]||{};form.name=(meta.over[c.mid]&&meta.over[c.mid].name)||p.name||c.name;form.team=(meta.over[c.mid]&&meta.over[c.mid].team)||p.team||c.team;form.emoji=p.emoji||'';form.photo=p.photo||'';form.pv=p.pv||0;formView(c)},
- copy(el){UI.copy(el.dataset.u,'Copied')},share(el){UI.share({title:meta.name,text:'My private link for '+meta.name,url:el.dataset.u})},
+ copy(el){UI.copy(el.dataset.u,'Copied')},
+ copyown(el){UI.copy(el.dataset.u,'Your private link is copied').then(()=>{ownCopied=true;UI.lsSet('lcopied.'+id,'1');el.textContent='Copied ✓ (copy again)';const h=$('ownhint');if(h)h.textContent='Copied. Keep it somewhere safe, like a note to yourself.'})},share(el){UI.share({title:meta.name,text:'My private link for '+meta.name,url:el.dataset.u})},
  join,saveme
 };
 function validate(){const n=F.clean(form.name),t=F.clean(form.team);if(!t)return'Enter a team name.';if(!n)return'Enter your name.';if(n.length>30||t.length>30)return'Keep names under 31 characters.';return''}
@@ -121,4 +129,7 @@ async function start(){if(!id)return codeForm();me=UI.getMe(id);
     view()}
   catch(e){shell('<div class="card"><h2>Can’t reach the server</h2><p class="small mut">Check your connection and try again.</p><button class="btn pri" data-a="reloadpage">Retry</button></div>')}}
 UI.registerSW();start();
+/* sh10b: Open the draft room asks first while the private link is not copied */
+document.addEventListener('click',e=>{const a=e.target.closest&&e.target.closest('#toRoom');if(!a||!JOIN_IMP||ownCopied||!$('ownbox'))return;
+  if(!confirm('You have not copied your private manager link yet.\n\nWithout it you cannot get back in on another device or after clearing your browser.\n\nOpen the draft room anyway?')){e.preventDefault();const b=$('ownbox');if(b){b.scrollIntoView({block:'center',behavior:'smooth'});b.classList.add('impflash');setTimeout(()=>b.classList.remove('impflash'),1600)}}},true);
 })();
