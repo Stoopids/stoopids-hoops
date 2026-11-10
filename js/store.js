@@ -24,8 +24,9 @@ function lsSet(key,text){try{if(text==='')localStorage.removeItem(LS+key);else l
 const remote={
   async fetchT(url,opt,ms){const ac=new AbortController();const to=setTimeout(()=>ac.abort(),ms);try{const r=await fetch(url,Object.assign({},opt,{signal:ac.signal}));if(!r.ok)throw new Error('HTTP '+r.status);return await r.text()}finally{clearTimeout(to)}},
   url(key){return remoteBase+encodeURIComponent(key)},
-  get(key,ms){return this.fetchT(this.url(key),{cache:'no-store'},ms||8000)},
-  set(key,obj,ms){return this.fetchT(this.url(key),{method:'POST',headers:{'Content-Type':'text/plain'},body:typeof obj==='string'?obj:JSON.stringify(obj)},ms||10000)},
+  /* sh6c: go through Store.fetchT (not this.fetchT) so the draft room's store-health timer sees every request; else it thinks the store is silent after 12 s and freezes human auto-pick */
+  get(key,ms){return Store.fetchT(this.url(key),{cache:'no-store'},ms||8000)},
+  set(key,obj,ms){return Store.fetchT(this.url(key),{method:'POST',headers:{'Content-Type':'text/plain'},body:typeof obj==='string'?obj:JSON.stringify(obj)},ms||10000)},
 };
 const local={
   async get(key){return lsGet(key)},

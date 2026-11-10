@@ -70,10 +70,10 @@ function ok(name,cond,extra){n++;if(cond)console.log('  ok  '+name);else{bad++;f
     ok('no Win % button',!labels.includes('Win %')&&!ui.bodyHasWinPct,labels);
     ok('default sort is Power Ranking', (ui.pills.find(x=>x.on)||{}).m==='kenpom' && /Power Ranking/.test((ui.pills.find(x=>x.on)||{}).t), ui.pills);
     ok('no Auto-pick rank label',!ui.bodyHasAuto&&!labels.some(x=>/auto-pick rank/i.test(x)));
-    ok('legend names Power Ranking, Stoopids Rank, 2025-26 season record, and no-Cup note',
-      /Power Ranking/.test(ui.leg)&&/Stoopids Rank/.test(ui.leg)&&/record = 2025-26 season/.test(ui.leg)&&/Cup/.test(ui.leg)&&!/record = 2026-27/.test(ui.leg),ui.leg);
+    ok('legend names Power Ranking, Stoopids Rank, 25-26 season record, and no-Cup note',
+      /Power Ranking/.test(ui.leg)&&/Stoopids Rank/.test(ui.leg)&&/record = 25-26 season/.test(ui.leg)&&/Cup/.test(ui.leg)&&!/record = 2026-27/.test(ui.leg),ui.leg);
     ok('lists all 30 NBA teams (none picked yet, or almost)',ui.n===30,ui.n);
-    ok('records show 64-18 (2025-26) style last-season marks',ui.rows.length&&ui.rows.every(r=>/^\d+-\d+ \(2025-26\)$/.test((r.rec||'').trim()))&&!ui.rows.some(r=>/2026-27/.test((r.rec||'')+(r.year||''))),JSON.stringify(ui.rows.slice(0,2)));
+    ok('records show 64-18 (25-26) style last-season marks',ui.rows.length&&ui.rows.every(r=>/^\d+-\d+ \(25-26\)$/.test((r.rec||'').trim()))&&!ui.rows.some(r=>/2026-27/.test((r.rec||'')+(r.year||''))),JSON.stringify(ui.rows.slice(0,2)));
     ok('projected points appear on team cards',ui.rows.filter(r=>/\d+(\.\d+)?\s*pts/.test(r.sub||'')).length>=20,JSON.stringify(ui.rows.slice(0,3)));
 
     const clickSort=async m=>{
@@ -101,7 +101,7 @@ function ok(name,cond,extra){n++;if(cond)console.log('  ok  '+name);else{bad++;f
     ok('Stoopids Rank: 30 teams, SR #1 first, ascending rank',rows.length===30&&rows[0].sr===1&&rows.every((r,i,a)=>!i||!a[i-1].sr||!r.sr||a[i-1].sr<=r.sr),rows.slice(0,5).map(r=>[r.sr,r.sub]));
 
     rows=await clickSort('power');
-    ok('Win rank: 30 teams, last-season records, OKC 64-18 first',rows.length===30&&rows.every(r=>/^\d+-\d+ \(2025-26\)$/.test((r.rec||'').trim()))&&/^64-18/.test(rows[0].rec||'')&&/Thunder|Oklahoma/i.test(rows[0].name||'')&&/^62-20/.test(rows[1].rec||'')&&/^60-22/.test(rows[2].rec||''),rows.slice(0,3).map(r=>[r.name,r.rec]));
+    ok('Win rank: 30 teams, last-season records, OKC 64-18 first',rows.length===30&&rows.every(r=>/^\d+-\d+ \(25-26\)$/.test((r.rec||'').trim()))&&/^64-18/.test(rows[0].rec||'')&&/Thunder|Oklahoma/i.test(rows[0].name||'')&&/^62-20/.test(rows[1].rec||'')&&/^60-22/.test(rows[2].rec||''),rows.slice(0,3).map(r=>[r.name,r.rec]));
 
     rows=await clickSort('alpha');
     ok('A–Z: 30 teams, names non-decreasing',rows.length===30&&rows.every((r,i,a)=>!i||a[i-1].name.localeCompare(r.name)<=0),rows.slice(0,3).map(r=>r.name));
