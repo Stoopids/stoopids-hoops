@@ -4,6 +4,12 @@
    Randomness is seeded by the mock id + bot + pick number, so a mock replays identically. */
 (function(root){
 const POWER=['SEC','Big Ten','Big 12','ACC'],P5=POWER.concat(['Big East']),WIN_MAX=14;
+/* NBA teams use East/West, not NCAA conferences. bigconf leans on the conference with more top-10 power-rank teams; upside boosts teams outside the top 10; value compares last-season win rank (or NET) to power rank. */
+function isNba(meta){const cs=[...new Set(Object.keys(meta||{}).map(t=>((meta[t]||{}).c||'')).filter(Boolean))];return cs.length>0&&cs.every(c=>c==='East'||c==='West')}
+function powerConfs(meta){if(!isNba(meta))return POWER;const ids=Object.keys(meta).filter(t=>meta[t]&&(+meta[t].o>0||+meta[t].p>0));
+  const top=ids.slice().sort((a,b)=>(+meta[a].o||+meta[a].p||99)-(+meta[b].o||+meta[b].p||99)).slice(0,10);
+  const n={};top.forEach(t=>{const c=meta[t].c;if(c)n[c]=(n[c]||0)+1});
+  const best=Object.keys(n).sort((a,b)=>n[b]-n[a]||a.localeCompare(b))[0];return best?[best]:['West']}
 const PERSONALITIES=[
  {key:'chalk',   label:'Chalk',          win:[3,0.5],temp:1.0,wo:0.5},
  {key:'bigconf', label:'Big conference', win:[6,1],  temp:2.5,confs:POWER,inConf:2.5,outConf:0.5,wo:0.4},
@@ -34,13 +40,14 @@ function homerConf(mockId,mid,meta){const c=[...new Set(Object.keys(meta).filter
 function choose(o){const P=BY[o.key]||BY.chalk,meta=o.meta||{};const ord=consensus(o.avail,meta,P.wo);if(!ord.length)return null;
   const n=Math.min(WIN_MAX,ord.length,Math.max(1,Math.round(P.win[0]+P.win[1]*((o.round||1)-1))));const win=ord.slice(0,n);
   const conf=t=>(meta[t]||{}).c||'';const hc=P.homer?homerConf(o.mockId,o.mid,meta):null;const cnt={};(o.mine||[]).forEach(t=>{cnt[conf(t)]=(cnt[conf(t)]||0)+1});
+  const confs=P.confs?powerConfs(meta):null;
   const w=win.map((t,i)=>{let x=Math.exp(-i/P.temp);const m=meta[t]||{};
-    if(P.confs)x*=P.confs.indexOf(m.c)>=0?P.inConf:P.outConf;
-    if(P.valuePer10){const pr=+m.p||0;const nr=NET&&NET[t]?NET[t]:(eRank(meta)[t]||0);if(pr&&nr&&pr>nr)x*=1+P.valuePer10*Math.min(3,(pr-nr)/10)}
-    if(P.midMajor&&(o.round||1)<=P.midMajorRounds&&P5.indexOf(m.c)<0)x*=P.midMajor;
+    if(confs)x*=confs.indexOf(m.c)>=0?P.inConf:P.outConf;
+    if(P.valuePer10){const pr=+m.o||+m.p||0;const nr=NET&&NET[t]?NET[t]:(+m.wr||eRank(meta)[t]||0);if(pr&&nr&&pr>nr)x*=1+P.valuePer10*Math.min(3,(pr-nr)/10)}
+    if(P.midMajor&&(o.round||1)<=P.midMajorRounds){if(isNba(meta)?((+m.o||+m.p||99)>10):P5.indexOf(m.c)<0)x*=P.midMajor;}
     if(hc&&m.c===hc)x*=P.homer;
     if(P.repeat!=null)x*=Math.pow(P.repeat,cnt[m.c]||0);return x});
   const tot=w.reduce((a,b)=>a+b,0);let r=o.rng()*tot;for(let i=0;i<win.length;i++){r-=w[i];if(r<=0)return{tid:win[i],pos:i,n}}return{tid:win[win.length-1],pos:win.length-1,n}}
-const api={PERSONALITIES,BY,deal,forBot,choose,consensus,blendRank,setNet,hash32,mul,label:k=>(BY[k]||{}).label||'',homerConf,_net:()=>NET};
+const api={PERSONALITIES,BY,deal,forBot,choose,consensus,blendRank,setNet,hash32,mul,label:k=>(BY[k]||{}).label||'',homerConf,_net:()=>NET,isNba,powerConfs};
 root.FBNBots=api;if(typeof module!=='undefined'&&module.exports)module.exports=api;
 })(typeof window!=='undefined'?window:globalThis);

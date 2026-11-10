@@ -353,7 +353,7 @@ body[data-tab=chat] .chatbox{margin-top:auto;position:sticky;bottom:0;padding-bo
 }
 @media (min-width:1040px){
  .ctl{grid-template-columns:300px auto minmax(0,1fr);grid-template-areas:"q srt tgl" "cfs cfs cfs"}
- #tlist .tgrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ /* 2 columns stay (not 3): NBA team names + conference line + last-season record need the width; 3 cols truncated 'Oklahoma…' / 'East · …' on desktop */
 }
 @media (prefers-reduced-motion:reduce){.ctl .ffil,.ctl .pills{scroll-behavior:auto}}
 

@@ -9,12 +9,12 @@ NBA friends-league app, built from the NCAA Fantasy BBALL structure with NBA tea
 A static site (no build step). Pages: index, setup, join, room (draft), mock, recap, redraft, league, time, help.
 
 - **30 NBA teams** in `assets/teams.js` (ESPN ids, abbreviations, `a.espncdn.com` logos).
-- **5 or 6 managers** (commissioner option at setup and in the lobby). Default five: Ken (Kentut), Paul (Party Paul), Kurt (Kurmoji), Mark (Murnane / Dirty Draymond), Murf (Cockchalkrock). A sixth seat can stay empty until the draft. 5 managers × 6 rounds or 6 × 5; snake or straight; random or set order; pick clock same as NCAA (30/60/90/120/180s or none, default 60).
+- **5 or 6 managers** (commissioner option at setup and in the lobby). Seats start empty except the commissioner, who types their own name and team name at setup. Everyone else joins with the invite link and enters their own name and team name. 5 managers × 6 rounds or 6 × 5; snake or straight; random or set order; pick clock (30/60/90/120/180s or none, default 60).
 - **Paul's scoring** in `js/scoring.js` (replaces NCAA scoring entirely). Assumptions are flagged on the Rules tab.
 - **Bets:** versus and pool only. Playoff-series and NBA Cup champion bets are not built (pending Paul's OK).
 - **Storage:** same textdb.dev host as the NCAA app (`DEFAULT_BASE` / `REMOTE_BASE` = `https://textdb.dev/api/data/`), no API keys, but every store key uses `shoops1-` (never NCAA `fbn1-`). Device localStorage/sessionStorage keys use the `shoops.` prefix (never `fbn.`). Tests must use `tools/mock_textdb.js` and set `shoops.store` to `/api/data/` — they must not write to textdb.dev.
 - **Data:** shipped `data/scores.json` and `data/tournament.json` are empty (`sample: false`). SYNTHETIC demo data is only in `data/demo/` (and `data/synthetic/`) and is labeled SYNTHETIC; the league site shows it only with `?demo=1`. Refresh script: `python3 tools/refresh_nba.py` (ESPN NBA JSON).
-- Auto-pick, mock bots, and league power rankings use **ESPN BPI (2026-27)** from `data/power.json` (`python3 tools/refresh_nba.py --power-only`), mapped by official ESPN team id. If that fetch fails, the static 2024-25 regular-season win rank in `assets/teams.js` (`meta.f`) is the fallback.
+- Auto-pick, mock bots, and league power rankings use **ESPN BPI (26-27)** from `data/power.json` (`python3 tools/refresh_nba.py --power-only`), mapped by official ESPN team id. If that fetch fails, the static 2024-25 regular-season win rank in `assets/teams.js` (`meta.f`) is the fallback.
 
 ## Run locally
 

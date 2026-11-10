@@ -3,9 +3,9 @@
 const {esc,$}=UI;const F=FBN;const TZ=UI.tz();
 const POOL=UI.loadTeams().POOL.length;
 const SS='shoops.wizard';
-const blank=()=>({name:'Stoopids Hoops',mgrName:'Paul',teamName:'Party Paul',managers:F.MANAGERS,type:'snake',whenMode:'now',startAt:null,startMode:'manual',orderMode:'random',clockSecs:60,rounds:F.roundsFor(F.MANAGERS),autoPick:true,pass:'',tz:TZ,photo:'',photoInfo:''});
+const blank=()=>({name:'Stoopids Hoops',mgrName:'',teamName:'',managers:F.MANAGERS,type:'snake',whenMode:'now',startAt:null,startMode:'manual',orderMode:'random',clockSecs:60,rounds:F.roundsFor(F.MANAGERS),autoPick:true,pass:'',tz:TZ,photo:'',photoInfo:''});
 let W=blank(),step='you',fromConfirm=false,errors={},created=null,busy=false;
-try{const s=JSON.parse(sessionStorage.getItem(SS)||'null');if(s&&s.W){W=Object.assign(blank(),s.W);W.pass='';if(W.managers!==5&&W.managers!==6)W.managers=F.MANAGERS;W.rounds=F.roundsFor(W.managers);step=F.WIZARD.indexOf(s.step)>=0?s.step:'you'}}catch(e){}
+try{const s=JSON.parse(sessionStorage.getItem(SS)||'null');if(s&&s.W){W=Object.assign(blank(),s.W);W.pass='';if(W.managers!==5&&W.managers!==6)W.managers=F.MANAGERS;W.rounds=F.roundsFor(W.managers);step=F.WIZARD.indexOf(s.step)>=0?s.step:'you';if(W.mgrName==='Paul'&&(W.teamName==='Party Paul'||!W.teamName)){W.mgrName='';W.teamName=''}}}catch(e){}
 const save=()=>{try{const w=Object.assign({},W);delete w.pass;sessionStorage.setItem(SS,JSON.stringify({W:w,step}))}catch(e){}};
 const steps=()=>F.stepsFor(W);
 const settingsOf=()=>({name:W.name,mgrName:W.mgrName,teamName:W.teamName,managers:W.managers,rounds:W.rounds,type:W.type,startAt:W.whenMode==='pick'?W.startAt:null,startMode:W.whenMode==='pick'?W.startMode:'manual',orderMode:W.orderMode,clockSecs:W.clockSecs,autoPick:W.autoPick,pass:W.pass,tz:TZ});
@@ -22,21 +22,21 @@ function tzBlock(){if(W.startAt==null)return '';const l=F.startsLine(W.startAt,T
 const VIEWS={
  you(){return `<h1 class="q">Name your league</h1><p class="sub">Everyone will see these. You can change them later.</p>
   <label class="f" for="f_name">League name</label><input type="text" id="f_name" maxlength="40" autocomplete="off" placeholder="Friday Night Hoops" value="${esc(W.name)}">${err('name')}
-  <div class="row nw" style="margin-top:12px;align-items:flex-start"><div class="grow"><label class="f" for="f_mgr">Your name</label><input type="text" id="f_mgr" maxlength="30" autocomplete="off" value="${esc(W.mgrName)}">${err('mgrName')}</div>
-  <div class="grow"><label class="f" for="f_team">Your team name</label><input type="text" id="f_team" maxlength="30" autocomplete="off" value="${esc(W.teamName)}">${err('teamName')}</div></div>
-  <p class="hint">You are the commissioner and also a manager. Next you will choose 5 or 6 managers (the sixth can stay an empty seat until the draft). You can add a team photo after the league is created.</p>
+  <div class="row nw" style="margin-top:12px;align-items:flex-start"><div class="grow"><label class="f" for="f_mgr">Your name</label><input type="text" id="f_mgr" maxlength="30" autocomplete="off" placeholder="Your name" value="${esc(W.mgrName)}">${err('mgrName')}</div>
+  <div class="grow"><label class="f" for="f_team">Your team name</label><input type="text" id="f_team" maxlength="30" autocomplete="off" placeholder="Team name" value="${esc(W.teamName)}">${err('teamName')}</div></div>
+  <p class="hint">You are the commissioner and also a manager. Type your own name and team name. Other seats start empty; each person enters their own name and team name when they join with the invite link. Next you will choose 5 or 6 managers.</p>
   <div class="lphoto" id="lphoto"><label class="f" for="f_lphoto">League photo <span class="mut" style="font-weight:600">(optional)</span></label>
   <div class="row nw" style="align-items:center;gap:12px">${W.photo?`<img id="lphotoprev" class="lpprev" src="${esc(W.photo)}" alt="League photo preview">`:'<div class="lpprev lpnone" id="lphotoprev" aria-hidden="true">🏀</div>'}
   <div class="grow"><label class="btn sm" for="f_lphoto" id="picklphoto">${W.photo?'Choose another':'Choose a photo'}</label><input type="file" id="f_lphoto" accept="image/*" class="hide">
   ${W.photo?'<button type="button" class="link" data-a="rmlphoto" id="rmlphoto" style="margin-left:8px">Remove photo</button>':''}
   <div class="hint" id="lphotoinfo">${esc(W.photoInfo||'Shown at the top instead of the default banner. Resized on your device to a small picture.')}</div><div class="err" id="lphotoerr" role="alert"></div></div></div></div>
   <div class="wyg" id="wyg"><h2>What you get</h2><ul><li>5 or 6 managers (your choice)</li><li>30 NBA teams, snake or straight draft</li><li>Season + playoffs + NBA Cup scoring</li><li>Versus and pool bets</li></ul></div>`},
- managers(){const n=W.managers===6?6:5;const presets=F.PRESET_MANAGERS.map(p=>F.mgrLabel(p));
+ managers(){const n=W.managers===6?6:5;
   return `<h1 class="q">How many managers?</h1><p class="sub">30 NBA teams are split evenly: 5 managers draft 6 teams each, or 6 managers draft 5 each. You can add a 6th manager later in the lobby.</p><div class="opts">
-  ${opt('managers','5',String(n),'5 managers (recommended)','Ken, Paul, Kurt, Mark and Murf. Six rounds, 6 teams each.')}
-  ${opt('managers','6',String(n),'6 managers','The same five, plus an empty seat the commissioner can fill. Five rounds, 5 teams each.')}</div>
-  <div class="card" id="presets" style="margin-top:12px"><h3>Default managers</h3><ul style="margin:8px 0 0 18px">${presets.map(x=>'<li>'+esc(x)+'</li>').join('')}${n===6?'<li><i>Empty seat</i> — fill later</li>':''}</ul>
-  <p class="hint" style="margin-top:8px">Real name and nickname both show in the room. You already set your own name on the previous screen; the others can take a named seat when they join.</p></div>${err('managers')}`},
+  ${opt('managers','5',String(n),'5 managers (recommended)','You plus 4 empty seats. Six rounds, 6 teams each.')}
+  ${opt('managers','6',String(n),'6 managers','You plus 5 empty seats. Five rounds, 5 teams each. You can also start with 5 and add a 6th later.')}</div>
+  <div class="card" id="seatsnote" style="margin-top:12px"><h3>Empty seats</h3>
+  <p class="hint" style="margin-top:8px">Only you are in the league at first. The other seats stay empty until each person joins with the invite link and enters their own name and team name. Nothing is pre-labeled.</p></div>${err('managers')}`},
  type(){return `<h1 class="q">Draft style</h1><p class="sub">The order managers pick in, round after round.</p><div class="opts">
   ${opt('type','snake',W.type,'Snake (recommended)','The order flips every round. Pick 1st in round 1, and you pick last in round 2.')}
   ${opt('type','linear',W.type,'Linear','The same order every round. Pick 1st each time.')}</div>
@@ -65,7 +65,7 @@ const VIEWS={
   const clk=s.clockSecs?(s.clockSecs>=120?s.clockSecs/60+' min':s.clockSecs+' sec'):'No clock';
   return `<h1 class="q">Check it over</h1><p class="sub">Nothing is created until you tap the button.</p><div class="card" id="summary" style="padding:4px 14px">
    ${row('League',esc(s.name)+'<div class="mut small" style="font-weight:600">You: '+esc(s.mgrName)+' · '+esc(s.teamName)+'</div>','you')}
-   ${row('Managers',s.managers+' managers <span class="mut small" style="font-weight:600">('+(s.managers===6?'5 named + 1 empty seat':'5 named, 6 teams each')+')</span>','managers')}${row('Draft style',s.type==='snake'?'Snake':'Linear (straight)','type')}
+   ${row('Managers',s.managers+' managers <span class="mut small" style="font-weight:600">(you plus '+(s.managers-1)+' empty seats until people join)</span>','managers')}${row('Draft style',s.type==='snake'?'Snake':'Linear (straight)','type')}
    ${row('Draft time',when?esc(when.you)+'<div class="mut small" style="font-weight:600">'+esc(when.utc)+' · others see their own time</div>':'Start now — you press Start','when')}
    ${when?row('Start',s.startMode==='auto'?'Starts on its own':'You press Start','start'):''}
    ${row('Who picks first',s.orderMode==='random'?'Random at the start':'You set the order','order')}${row('Pick clock',clk,'clock')}
@@ -130,9 +130,7 @@ async function doCreate(){if(busy)return;readInputs();const s=settingsOf();const
   busy=true;$('create').disabled=true;$('create').textContent='Creating…';
   try{const K0=F.makeLeagueId();const id=K0;const Kz=F.Keys(id);const mid=F.hexId(12),secret=F.newSecret();
     const ns=F.normalizeSettings(s);ns.tz=TZ;if(W.photo&&lpOk(W.photo))ns.photo=W.photo;const meta=F.defaultMeta(id,Object.assign({name:s.name},ns),mid);meta.name=F.clean(s.name);meta.settings=ns;
-    /* pre-label empty seats with the remaining preset managers (real name + nickname) */
-    {const used=F.clean(s.mgrName).toLowerCase();const left=F.PRESET_MANAGERS.filter(p=>p.name.toLowerCase()!==used&&F.mgrLabel(p).toLowerCase()!==used);
-      meta.seatNames={};left.forEach((p,i)=>{meta.seatNames['e'+(i+1)]=F.mgrLabel(p)});}
+    /* empty seats stay unnamed; joiners type their own name and team name */
     const cmSecret=F.newSecret();const pass=await F.makePass(cmSecret);meta.pass=pass;
     let ok=false;for(let a=0;a<3&&!ok;a++){await Store.set(Kz.meta,meta);await UI.sleep(300);const chk=F.parseJ(await Store.get(Kz.meta));ok=!!(chk&&chk.id===id&&chk.pass&&chk.pass.hash===pass.hash)}
     if(!ok)throw new Error('The league could not be saved. Check your connection and try again.');

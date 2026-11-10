@@ -485,7 +485,7 @@ def apply_bpi_to_teams_js(teams_js: Path, power: dict, stoopids: dict | None = N
             row["p"] = ranks[tid]
             n += 1
     if power:
-        data["rank_note"] = "ESPN BPI (2026-27). Auto-pick, mock bots, and Power Ranking use this list (lower is better). If BPI is missing, the static 2024-25 regular-season win rank in meta.f is the fallback."
+        data["rank_note"] = "ESPN BPI (26-27). Auto-pick, mock bots, and Power Ranking use this list (lower is better). If BPI is missing, the static 24-25 regular-season win rank in meta.f is the fallback."
         data["rank_source"] = "espn-bpi"
     ns = 0
     if stoopids:

@@ -4,8 +4,8 @@
    Stoopids Rank = data/stoopids.json expected fantasy points.
    If a fetch fails, baked values in teams.js are kept. */
 (function(){
-const SRC='ESPN BPI (2026-27)';
-const FALLBACK='Prior-season win rank (fallback: static 2024-25 regular-season wins; ESPN BPI unavailable)';
+const SRC='ESPN BPI (26-27)';
+const FALLBACK='Prior-season win rank (fallback: static 24-25 regular-season wins; ESPN BPI unavailable)';
 function ping(){try{window.dispatchEvent(new Event('hoops-meta-updated'))}catch(e){}}
 function applyPower(data){
   const META=(window.TEAMS_DATA&&TEAMS_DATA.meta)||{};

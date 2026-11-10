@@ -10,7 +10,8 @@ F.DEFAULTS={managers:5,rounds:6,type:'snake',startAt:null,startMode:'manual',ord
 F.MANAGERS=5;                                         /* default seats; commish may choose 5 or 6 */
 F.LIMITS={mgrMin:5,mgrMax:6,roundsMin:1,roundsMax:15,nameMin:2,nameMax:40,personMax:30};
 F.POOL_SIZE=30;                                       /* 30 NBA teams: 6 rounds of 5 or 5 rounds of 6 */
-F.PRESET_MANAGERS=[{name:'Ken',nick:'Kentut'},{name:'Paul',nick:'Party Paul'},{name:'Kurt',nick:'Kurmoji'},{name:'Mark',nick:'Murnane / Dirty Draymond'},{name:'Murf',nick:'Cockchalkrock'}];
+/* Seats start empty. Joiners (and the commissioner at setup) type their own name and team name. No default manager roster. */
+F.PRESET_MANAGERS=[];
 F.mgrLabel=function(m){m=m||{};const n=F.clean(m.name||''),k=F.clean(m.nick||m.team||'');if(n&&k&&k.toLowerCase()!==n.toLowerCase())return n+' ('+k+')';return n||k||'Manager'};
 F.roundsFor=function(n){n=Math.max(1,+n||F.MANAGERS);return Math.max(1,Math.floor((F.POOL_SIZE||30)/n))};
 F.seatCount=function(m){const n=m&&m.settings?+m.settings.managers:F.MANAGERS;return (n>=F.LIMITS.mgrMin&&n<=F.LIMITS.mgrMax)?n:F.MANAGERS};
@@ -359,7 +360,7 @@ F.validatePick=function(st,owner,tid,opt){opt=opt||{};if(st.status!=='live')retu
   const s=F.onClock(st);if(!s)return{error:'No pick is on the clock.'};if(opt.pool&&!opt.pool.has(String(tid)))return{error:'That team is not on the list of teams.'};
   const t=F.takenMap(st)[tid];if(t)return{error:'That team was already taken (pick #'+t.n+').',taken:t};if(owner!==s.owner)return{error:'It is pick #'+s.n+' for someone else.',turn:true};return{ok:true,slot:s}};
 /* why should the auto-picker act now?  'auto' (manager's own switch), 'away' (commissioner marked them away), 'expired' (clock out and the league auto-picks) */
-F.autoReason=function(st,now,graceMs){const s=F.onClock(st);if(!s||st.paused)return null;if(st.away[s.owner])return'away';if(st.auto[s.owner])return'auto';/* s26c16: a placeholder seat is picked for when its clock runs out; with no pick clock it is picked for at once so it can never stall the draft */if(st.ph&&st.ph[s.owner]&&!(st.autoPick&&st.clockSecs))return'away';
+F.autoReason=function(st,now,graceMs){const s=F.onClock(st);if(!s||st.paused)return null;if(st.away[s.owner])return'away';if(st.auto[s.owner])return'auto';/* mock / practice bots pick at once (short delay in the room), never by waiting out the clock */if(st.meta&&st.meta.over&&st.meta.over[s.owner]&&st.meta.over[s.owner].bot)return'away';/* s26c16: a placeholder seat is picked for when its clock runs out; with no pick clock it is picked for at once so it can never stall the draft */if(st.ph&&st.ph[s.owner]&&!(st.autoPick&&st.clockSecs))return'away';
   if(st.autoPick&&st.clockSecs&&st.deadline&&now>st.deadline+(graceMs||0))return'expired';return null};
 /* queue first, then best power rank, then a seeded random pick. prank(tid)->rank>0 or 0 */
 /* s26c8b: 'Auto-draft me'. Stored in the manager's own pref doc (K.pref(mid).auto, league-scoped, survives the start). Only that manager or the commissioner may set it.
@@ -367,7 +368,8 @@ F.autoReason=function(st,now,graceMs){const s=F.onClock(st);if(!s||st.paused)ret
 F.AUTO={delayMs:2000,undoHoldMs:10000};
 F.autoBase=(meta,picks)=>{const lp=(picks||[]).slice().reverse().find(p=>!p.skip);return Math.max(lp?(+lp.ts||0):0,+meta.startedAt||0,+meta.resumeAt||0)};
 F.canSetAuto=(me,cmOk,target)=>!!target&&(cmOk===true||(!!me&&me===target));
-F.autoDelayMs=(reason,bot,rnd)=>reason==='expired'?0:bot?1000+(rnd==null?Math.random():rnd)*1000:F.AUTO.delayMs;
+/* bots: 1–3 s, varied per seat (stable from mid when rnd is omitted); never the full pick clock. expired stays 0; human auto/away stays AUTO.delayMs. */
+F.autoDelayMs=function(reason,bot,rnd,mid){if(reason==='expired')return 0;if(!bot)return F.AUTO.delayMs;let u=rnd;if(u==null||u==='')u=mid!=null?((F.hash32('botdelay:'+String(mid))>>>0)%2000)/2000:Math.random();u=Math.max(0,Math.min(1,+u||0));return Math.round(1000+u*2000)};
 F.undoHoldUntil=(meta,slotEntry,bot)=>(!bot&&slotEntry&&meta&&(meta.voided||[]).indexOf(slotEntry.id)>=0)?(+meta.resumeAt||0)+F.AUTO.undoHoldMs:0;
 F.autoChoice=function(st,owner,poolArr,rng,prank){const taken=F.takenMap(st);const q=(st.queues&&st.queues[owner])||[];
   for(const t of q)if(!taken[t]&&poolArr.indexOf(String(t))>=0)return{tid:String(t),from:'queue'};
@@ -446,9 +448,11 @@ F.tierOf=p=>{if(!p)return{k:'unranked',label:'Unranked',note:'No BPI rank'};for(
 F.seedNum=m=>{const s=m&&m.s;return(s==null||!isFinite(+s))?null:+s};
 F.recParse=r=>{const x=/^(\d+)-(\d+)$/.exec(r||'');if(!x)return null;const w=+x[1],l=+x[2];return(w+l)?{w,l,pct:w/(w+l)}:null};
 F.searchMatch=(t,m,q)=>{q=(q||'').trim().toLowerCase();if(!q)return true;return[t.name,t.short,t.abbr,t.mascot,m&&m.c].filter(Boolean).join(' ').toLowerCase().indexOf(q)>=0};
-/* Power Ranking (meta.o) is ESPN BPI 2026-27; auto-pick uses it after the queue. Stoopids Rank (meta.sr / meta.sp) is expected fantasy points from BPI projections. Win rank (meta.wr) is last season's (2025-26) regular-season record. */
-F.RANK_SRC='ESPN BPI (2026-27)';
+/* Power Ranking (meta.o) is ESPN BPI 26-27; auto-pick uses it after the queue. Stoopids Rank (meta.sr / meta.sp) is expected fantasy points from BPI projections. Win rank (meta.wr) is last season's (25-26) regular-season record. */
+F.RANK_SRC='ESPN BPI (26-27)';
 F.REC_SRC='2025-26';
+F.seasonShort=function(s){s=String(s==null?'':s);const m=/(\d{2,4})\s*[-–]\s*(\d{2,4})/.exec(s);return m?m[1].slice(-2)+'-'+m[2].slice(-2):s};
+F.recLabel=function(rec,src){rec=String(rec||'').trim();return rec?rec+' ('+F.seasonShort(src||F.REC_SRC||'')+')':'—'};
 F.STOOP_NOTE='Expected points = proj. regular-season wins + 2×P(make playoffs) + 2×E[playoff wins] + 4×P(champion). NBA Cup points omitted: ESPN BPI has no Cup odds.';
 F.TMODES=[['kenpom','Power Ranking'],['stoopid','Stoopids Rank'],['power','Win rank'],['alpha','A–Z'],['conf','Conference'],['tiers','Tiers']];
 F.teamView=function(o){const TEAMS=o.teams,META=o.meta||{},pool=o.pool,taken=o.taken||{},watch=o.watch||new Set(),q=o.q||'',mode=o.mode||'kenpom';

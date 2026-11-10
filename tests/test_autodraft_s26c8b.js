@@ -17,7 +17,7 @@ const lob=F.defaultMeta('T2',s0,null);const sl=F.deriveState(lob,{},{m1:{auto:tr
 st.paused=true;t('paused -> no auto reason',F.autoReason(st,1001,0)===null);st.paused=false;
 let st2=F.deriveState(meta,{},{m1:{auto:false,queue:[]}},POOLSET);t('OFF -> no reason before clock',F.autoReason(st2,1001,1800)===null);t('OFF -> expired after clock',F.autoReason(st2,1000+61000+1801,1800)==='expired');
 // delays
-t('auto delay 2 s',F.autoDelayMs('auto',false)===2000&&F.autoDelayMs('away',false)===2000);t('expired 0',F.autoDelayMs('expired',false)===0);t('bot 1-2 s',F.autoDelayMs('auto',true,0.5)===1500);
+t('auto delay 2 s',F.autoDelayMs('auto',false)===2000&&F.autoDelayMs('away',false)===2000);t('expired 0',F.autoDelayMs('expired',false)===0);t('bot 1-3 s',F.autoDelayMs('auto',true,0)===1000&&F.autoDelayMs('auto',true,0.5)===2000&&F.autoDelayMs('auto',true,1)===3000);
 // selection equivalence: same function, same seeded args, whatever the reason
 const ents={};let prev='';
 for(let k=1;k<=64;k++){const s=F.deriveState(meta,ents,{m1:{auto:true,queue:['t3','t9']},m3:{auto:true,queue:[]}},POOLSET);const so=F.onClock(s);
