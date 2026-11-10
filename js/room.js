@@ -174,7 +174,7 @@ async function verifyPref(mid,batch){let d=null;try{d=F.parseJ(await readRaw(K.p
 const prefBusy=mid=>!!(PENDQ[mid]&&PENDQ[mid].length);
 /* is tid in mid's queue as this device last decided it (latest pending add/remove wins, else the shown queue) */
 function inQueueNow(mid,t){const q=PENDQ[mid]||[];for(let i=q.length-1;i>=0;i--){const g=q[i].tag;if(g&&g.t===t)return g.want}return ((PREF[mid]&&PREF[mid].queue)||[]).includes(t)}
-async function submitPick(n,owner,tid,by,o){o=o||{};if(by==='auto'&&(preStart()||startGate()||HL.stalled()||(F.autoReason(S,nowSrv(),0)==='expired'&&localEarly())))return{ok:false,msg:'held'};/* s28c: last guard for every auto-pick write */const prevId=n>1&&S.picks.length===n-1?S.picks[n-2].id:(n>1?null:'');const entry=F.makeEntry(n,owner,tid,{by,now:stampNow(),writer:WRITER,epoch:M.epoch,prev:prevId,voided:M.voided});
+async function submitPick(n,owner,tid,by,o){o=o||{};if(by==='auto'&&(preStart()||startGate()||(HL.stalled()&&!isBot(owner))||(F.autoReason(S,nowSrv(),0)==='expired'&&localEarly()&&!isBot(owner))))return{ok:false,msg:'held'};/* s28c: last guard for every auto-pick write */const prevId=n>1&&S.picks.length===n-1?S.picks[n-2].id:(n>1?null:'');const entry=F.makeEntry(n,owner,tid,{by,now:stampNow(),writer:WRITER,epoch:M.epoch,prev:prevId,voided:M.voided});
   const io={read:u=>Store.get(u,undefined,{write:1}).then(r=>{storeOk();return r}),write:postJ,sleep,adopt:(k,e)=>{ENT[k]=e||null;ENTraw[k]=e?JSON.stringify(e):'';rebuild()},later:fn=>{fn()},alert:k=>toast('Pick #'+k+' was replaced by a simultaneous write — check the board.',6000)};
   return F.submitSlot(io,{meta:M,url:K.pick(M.epoch,n),n,entry,taken:F.takenMap({picks:S.picks.filter(p=>p.n<n),kept:S.kept}),pool:POOLSET,prevId:prevId==null?undefined:prevId,fast:o.fast})}
 /* s23 (BUG-2): the chat is one key (read-modify-write), so two people sending at the same moment can overwrite each other. Every message this device sent is remembered for 3 minutes; if a later read of the chat does not have it, it is shown again at once and written back (merged), until it sticks. */
@@ -279,11 +279,12 @@ const HL=(function(){const ev=[],fly=new Map();let seq=0,lastOk=Date.now(),stall
 window.FBN_health=()=>HL.info();
 try{document.addEventListener('visibilitychange',()=>{if(!document.hidden)HL.seen()})}catch(e){}
 function autoTick(){if(!S||!loaded||autoBusy||busy||!S.logReady)return;if(preStart()||startGate()){autoPlan={n:0,at:0};return}
-  /* s28 R1 (reliability plan 2b): this page never auto-picks while its own store requests are stalling (slow / failing / no answer); it is a local freeze, no write needed */
-  if(HL.stalled()){autoPlan={n:0,at:0};return}
+  /* s28 R1 (reliability plan 2b): this page never auto-picks a person while its own store requests are stalling (slow / failing / no answer); it is a local freeze, no write needed.
+     Practice / computer bots still pick after their 1-3 s delay: a stall freeze was leaving them stuck on 0:00 AUTO-PICKING on the live store. */
   /* s28 R2: a stuck on-clock slot is never auto-picked because the clock ran out (the 15 s go-ahead is gone for 'expired'); away / auto-draft / placeholder seats keep the 15 s hold, then go through the backup spot. A stuck slot that is not on the clock holds auto-pick as before. */
   {const stk=Store.stuck();if(stk.length){const cs=F.onClock(S);const sk=cs&&stk.find(x=>x.n===cs.n);if(!sk)return;const rs=autoR(CFG.graceMs);if(!rs||(rs==='expired'&&!isBot(cs.owner)))return;if(Date.now()-(sk.since||Date.now())<CFG.stuckHoldMs)return}}   /* s23: a stuck slot gets a short hold (manager / commissioner first), then auto-pick goes ahead through the backup spot; never for a stuck slot that is not the one on the clock */
   const s=F.onClock(S);if(!s){autoPlan={n:0,at:0};return}
+  if(HL.stalled()&&!isBot(s.owner)){autoPlan={n:0,at:0};return}
   const reason=autoR(CFG.graceMs);if(!reason){autoPlan={n:0,at:0};return}
   /* s23: right after an Undo the slot is the manager's again: an away / auto-pick-on manager is not re-picked for at once (only when the pick clock runs out) */
   /* s26c8a: autoReason reports 'auto'/'away' before 'expired', so check the clock here too (else the hold never ends: 0:00 AUTO-PICKING forever); bots are not held */
@@ -291,7 +292,7 @@ function autoTick(){if(!S||!loaded||autoBusy||busy||!S.logReady)return;if(preSta
   /* s25-full (Paul via NCAA): an auto-pick-on or away manager is picked 2 s after the turn began; bots pick after 1-3 s (varied per bot), never the full clock; a run-out clock is 0 as before */
   if(autoPlan.n!==s.n){autoPlan={n:s.n,at:Date.now()+(reason!=='expired'&&!isBot(s.owner)?Math.max(0,F.autoBase(M,S.picks)+F.AUTO.delayMs-nowSrv()):F.autoDelayMs(reason,isBot(s.owner),null,s.owner))}/* s26c8b: auto/away go 2 s after the turn began (last pick / start / resume), not after this phone noticed it */}if(Date.now()<autoPlan.at)return;
   autoBusy=true;autoPlan.at=Date.now()+5000;const n=s.n;
-  (async()=>{{const s1=F.onClock(S);const rp=s1&&s1.n===n&&!isBot(s1.owner)?readPref(s1.owner).catch(()=>false):null;await pollOnce();if(rp){await rp;rebuild()}}/* s26c8b: fresh switch, so OFF cancels a pending fast pick on every phone */const s2=F.onClock(S);if(!s2||s2.n!==n||!autoR(CFG.graceMs-200))return;/* s28c: the store may have stalled or the start countdown may still run (server start time) while we waited for the poll */if(HL.stalled()||startGate())return;
+  (async()=>{{const s1=F.onClock(S);const rp=s1&&s1.n===n&&!isBot(s1.owner)?readPref(s1.owner).catch(()=>false):null;await pollOnce();if(rp){await rp;rebuild()}}/* s26c8b: fresh switch, so OFF cancels a pending fast pick on every phone */const s2=F.onClock(S);if(!s2||s2.n!==n||!autoR(CFG.graceMs-200))return;/* s28c: the store may have stalled or the start countdown may still run (server start time) while we waited for the poll */if((HL.stalled()&&!isBot(s2.owner))||startGate())return;
     const ch=F.autoChoice(S,s2.owner,POOL,F.mulberry(n*7919),autoRankOf);if(!ch)return;const r=await submitPick(n,s2.owner,ch.tid,'auto');if(r&&r.ok){toast('Auto-pick: '+tn(ch.tid)+' for '+mg(s2.owner).name);markDone(n)}})().finally(()=>{autoBusy=false;setTimeout(autoTick,50)/* s25-full: the next auto-pick-on turn goes at once */})}
 let startTried=0;
 function autoStartTick(){/* s24: a solo mock (you + 7 bots) starts at once on the creator's page */if(M&&!busy&&M.status==='lobby'&&M.mock&&M.solo&&commish()&&full8()&&Date.now()>=startTried){startTried=Date.now()+4000;actStart(true);return}
