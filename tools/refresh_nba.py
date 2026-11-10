@@ -261,17 +261,179 @@ def fetch_bpi(pool: set[str]):
         "teams": teams,
     }
 
-def apply_bpi_to_teams_js(teams_js: Path, power: dict) -> None:
-    """Bake BPI ranks into assets/teams.js meta.o / meta.p. Leaves meta.f (static fallback) alone."""
+
+STOOP_NOTE = (
+    "Expected points = proj. regular-season wins + 2×P(make playoffs) "
+    "+ 2×E[playoff wins] + 4×P(champion). NBA Cup points omitted: ESPN BPI has no Cup odds."
+)
+
+def _cat_values(row, raw_cats, name):
+    names = None
+    for c in raw_cats or []:
+        if c.get("name") == name:
+            names = c.get("names") or []
+            break
+    cat = next((c for c in (row.get("categories") or []) if c.get("name") == name), None)
+    if not names or not cat:
+        return {}
+    return dict(zip(names, cat.get("values") or []))
+
+def _prob(v):
+    if v is None:
+        return None
+    try:
+        return float(v) / 100.0
+    except (TypeError, ValueError):
+        return None
+
+def parse_stoopids(raw, pool: set[str]):
+    """Expected Stoopids points from ESPN BPI projections / playoff odds. No Cup terms (none in the feed)."""
+    if not raw:
+        return None
+    rows = []
+    cats = raw.get("categories") or []
+    for row in raw.get("teams") or []:
+        tm = row.get("team") or {}
+        try:
+            tid = str(int(tm.get("id")))
+        except (TypeError, ValueError):
+            continue
+        pr = _cat_values(row, cats, "projections")
+        po = _cat_values(row, cats, "playoffs")
+        bpi = _cat_values(row, cats, "bpi")
+        proj_w = pr.get("projectedw")
+        p_po = _prob(po.get("probmakeplayoffs") if po.get("probmakeplayoffs") is not None else pr.get("probmakeplayoffs"))
+        cs = _prob(po.get("probmakeconfsemi"))
+        cf = _prob(po.get("probmakeconfchamp"))
+        fi = _prob(po.get("probmaketitlegame"))
+        ch = _prob(po.get("probwintitle"))
+        if proj_w is None or p_po is None or None in (cs, cf, fi, ch):
+            continue
+        try:
+            proj_w = float(proj_w)
+        except (TypeError, ValueError):
+            continue
+        exp_pw = cs + cf + fi + ch
+        pts = proj_w + 2 * p_po + 2 * exp_pw + 4 * ch
+        try:
+            bpi_rank = int(bpi.get("bpirank") or 0) or 99
+        except (TypeError, ValueError):
+            bpi_rank = 99
+        rows.append({
+            "id": tid,
+            "abbr": tm.get("abbreviation"),
+            "name": tm.get("displayName"),
+            "pts": round(pts, 4),
+            "proj_w": round(proj_w, 3),
+            "p_playoff": round(p_po, 5),
+            "exp_playoff_wins": round(exp_pw, 4),
+            "p_champ": round(ch, 5),
+            "p_conf_semi": round(cs, 5),
+            "p_conf_finals": round(cf, 5),
+            "p_finals": round(fi, 5),
+            "bpi_rank": bpi_rank,
+        })
+    rows.sort(key=lambda r: (-r["pts"], -r["p_champ"], -r["proj_w"], r["bpi_rank"], r["id"]))
+    for i, r in enumerate(rows, 1):
+        r["rank"] = i
+    if len(rows) < 20:
+        print(f"stoopids: only {len(rows)} teams, not writing", file=sys.stderr)
+        return None
+    missing = sorted((pool or set()) - {r["id"] for r in rows})
+    if missing:
+        print(f"stoopids warning: no projection for ESPN ids {missing}", file=sys.stderr)
+    return {
+        "format": 1,
+        "source": "ESPN BPI projections",
+        "season": (raw.get("currentSeason") or {}).get("displayName") or "2026-27",
+        "fetched": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "updated": raw.get("lastUpdated"),
+        "url": BPI_URL,
+        "note": STOOP_NOTE,
+        "cup": "omitted",
+        "ranks": {r["id"]: r["rank"] for r in rows},
+        "pts": {r["id"]: round(r["pts"], 2) for r in rows},
+        "teams": rows,
+    }
+
+def fetch_bpi_bundle(pool: set[str]):
+    """One ESPN BPI request -> (power.json doc, stoopids.json doc). Either may be None."""
+    try:
+        raw = get(BPI_URL)
+    except Exception as e:
+        print(f"BPI fetch failed: {e}", file=sys.stderr)
+        return None, None
+    return fetch_bpi_from_raw(raw, pool), parse_stoopids(raw, pool)
+
+def fetch_bpi_from_raw(raw, pool: set[str]):
+    """Same as fetch_bpi, but from an already-fetched payload."""
+    if not raw:
+        return None
+    names = None
+    for c in raw.get("categories") or []:
+        if c.get("name") == "bpi":
+            names = c.get("names") or []
+            break
+    if not names:
+        print("BPI fetch: no bpi category", file=sys.stderr)
+        return None
+    teams, ranks, bpi = [], {}, {}
+    for row in raw.get("teams") or []:
+        tm = row.get("team") or {}
+        try:
+            tid = str(int(tm.get("id")))
+        except (TypeError, ValueError):
+            continue
+        cat = next((c for c in (row.get("categories") or []) if c.get("name") == "bpi"), None)
+        vals = dict(zip(names, cat.get("values") or [])) if cat else {}
+        try:
+            rank = int(tm.get("rankValue") or vals.get("bpirank") or 0)
+        except (TypeError, ValueError):
+            rank = 0
+        if rank <= 0:
+            continue
+        teams.append({
+            "id": tid,
+            "abbr": tm.get("abbreviation"),
+            "name": tm.get("displayName"),
+            "rank": rank,
+            "bpi": vals.get("bpi"),
+            "bpi_off": vals.get("bpioffense"),
+            "bpi_def": vals.get("bpidefense"),
+        })
+        ranks[tid] = rank
+        if vals.get("bpi") is not None:
+            bpi[tid] = vals["bpi"]
+    teams.sort(key=lambda r: r["rank"])
+    if len(ranks) < 20:
+        print(f"BPI fetch: only {len(ranks)} ranks, not writing", file=sys.stderr)
+        return None
+    missing = sorted(pool - set(ranks)) if pool else []
+    if missing:
+        print(f"BPI warning: no rank for ESPN ids {missing}", file=sys.stderr)
+    return {
+        "format": 1,
+        "source": "ESPN BPI",
+        "season": (raw.get("currentSeason") or {}).get("displayName") or "2026-27",
+        "fetched": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "updated": raw.get("lastUpdated"),
+        "url": BPI_URL,
+        "ranks": ranks,
+        "bpi": bpi,
+        "teams": teams,
+    }
+
+def apply_bpi_to_teams_js(teams_js: Path, power: dict, stoopids: dict | None = None, standings: dict | None = None) -> None:
+    """Bake BPI ranks, Stoopids Rank, and current-season records into assets/teams.js meta."""
     txt = teams_js.read_text()
     m = re.search(r"window\.TEAMS_DATA=(.*);\s*$", txt, re.S)
     if not m:
         print("teams.js: TEAMS_DATA not found, skipped bake", file=sys.stderr)
         return
     data = json.loads(m.group(1))
-    ranks = power.get("ranks") or {}
-    n = 0
     meta = data.setdefault("meta", {})
+    n = 0
+    ranks = (power or {}).get("ranks") or {}
     for tid, row in meta.items():
         if tid in ranks:
             if "f" not in row and row.get("o"):
@@ -279,11 +441,44 @@ def apply_bpi_to_teams_js(teams_js: Path, power: dict) -> None:
             row["o"] = ranks[tid]
             row["p"] = ranks[tid]
             n += 1
-    data["rank_note"] = "ESPN BPI (2026-27). Auto-pick, mock bots, and league power rankings use this list (lower is better). If BPI is missing, the static 2024-25 regular-season win rank in meta.f is the fallback."
-    data["rank_source"] = "espn-bpi"
+    if power:
+        data["rank_note"] = "ESPN BPI (2026-27). Auto-pick, mock bots, and Power Ranking use this list (lower is better). If BPI is missing, the static 2024-25 regular-season win rank in meta.f is the fallback."
+        data["rank_source"] = "espn-bpi"
+    ns = 0
+    if stoopids:
+        sr = stoopids.get("ranks") or {}
+        sp = stoopids.get("pts") or {}
+        for tid, row in meta.items():
+            if tid in sr:
+                row["sr"] = sr[tid]
+                ns += 1
+            if tid in sp:
+                row["sp"] = sp[tid]
+        data["stoop_note"] = stoopids.get("note") or STOOP_NOTE
+    nr = 0
+    if standings:
+        rows = []
+        for tid, row in meta.items():
+            s = standings.get(tid)
+            if not s or (s.get("w") is None and s.get("l") is None):
+                continue
+            w = int(s.get("w") or 0)
+            l = int(s.get("l") or 0)
+            if "r0" not in row:
+                row["r0"] = row.get("r")
+            row["r"] = f"{w}-{l}"
+            row["w"] = w
+            row["l"] = l
+            row["pct"] = (w / (w + l)) if (w + l) else 0
+            rows.append((tid, w, row["pct"], l))
+            nr += 1
+        rows.sort(key=lambda x: (-x[1], -x[2], x[3], x[0]))
+        for i, (tid, *_rest) in enumerate(rows, 1):
+            meta[tid]["wr"] = i
+        data["rec_source"] = "2026-27"
     head = txt[:txt.find("window.TEAMS_DATA=")]
     teams_js.write_text(head + "window.TEAMS_DATA=" + json.dumps(data, separators=(",", ":")) + ";\n")
-    print(f"baked BPI into {n} teams in {teams_js}")
+    print(f"baked BPI={n} stoopids={ns} records={nr} into {teams_js}")
 
 
 def main():
@@ -299,13 +494,16 @@ def main():
     outdir = Path(args.out) if args.out else root / "data"
     outdir.mkdir(parents=True, exist_ok=True)
     pool = load_ids(root / "assets/teams.js")
-    power = fetch_bpi(pool)
+    power, stoopids = fetch_bpi_bundle(pool)
     if power:
         (outdir / "power.json").write_text(json.dumps(power, indent=2) + "\n")
-        apply_bpi_to_teams_js(root / "assets/teams.js", power)
         print(f"wrote BPI {len(power.get('ranks') or {})} ranks -> {outdir / 'power.json'}")
     else:
         print("BPI unchanged (fetch failed); using existing data/power.json and teams.js fallback ranks")
+    if stoopids:
+        (outdir / "stoopids.json").write_text(json.dumps(stoopids, indent=2) + "\n")
+        print(f"wrote Stoopids Rank for {len(stoopids.get('ranks') or {})} teams -> {outdir / 'stoopids.json'}")
+    apply_bpi_to_teams_js(root / "assets/teams.js", power or {}, stoopids=stoopids)
     if args.power_only:
         return
     today = date.today()
@@ -352,6 +550,7 @@ def main():
     }
     (outdir / "scores.json").write_text(json.dumps(scores, indent=2) + "\n")
     (outdir / "tournament.json").write_text(json.dumps(tour, indent=2) + "\n")
+    apply_bpi_to_teams_js(root / "assets/teams.js", power or {}, stoopids=stoopids, standings=standings)
     print(f"wrote {len(games)} games, {len(standings)} standings, seed_lock={locked} -> {outdir}")
 
 if __name__ == "__main__":

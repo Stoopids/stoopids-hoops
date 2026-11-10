@@ -441,29 +441,35 @@ F.spinShouldPlay=function(rec,o){if(!rec||!o)return false;if(rec.n<=(o.shown||0)
 F.mSpinApply=function(m,winners,joined,now){if(m.status!=='lobby')return{error:'The draft already started.'};if(F.spinCompleted(m))return{error:'The draft order was already set with the wheel.'};if(!m.spin)return{error:'No spin to apply.'};if(winners.length!==m.spin.players.length)return{error:'The spin is not finished.'};
   if(!F.permutationOf(winners,joined))return{error:'Someone joined or left during the spin — spin again.'};const n=clone(m);n.order=winners.slice();n.orderSet=true;n.spin.done=true;n.spinDone=true;n.respins.push({gen:m.spin.gen,ts:now,kind:'spin'});return{state:n}};
 /* ============================ team list: sort / group / search / watchlist ============================ */
-F.TIERS=[{k:'elite',label:'Elite',max:8,note:'BPI 1–8'},{k:'solid',label:'Solid',max:16,note:'9–16'},{k:'sleeper',label:'Sleeper',max:24,note:'17–24'},{k:'longshot',label:'Longshot',max:Infinity,note:'25–30'}];
-F.tierOf=p=>{if(!p)return F.TIERS[3];for(const t of F.TIERS)if(t.max!=null&&p<=t.max&&t.k!=='longshot')return t;return F.TIERS[2]};
+F.TIERS=[{k:'elite',label:'Elite',max:6,note:'BPI 1–6'},{k:'contender',label:'Contender',max:12,note:'BPI 7–12'},{k:'mid',label:'Mid',max:18,note:'BPI 13–18'},{k:'fringe',label:'Fringe',max:24,note:'BPI 19–24'},{k:'longshot',label:'Longshot',max:30,note:'BPI 25–30'}];
+F.tierOf=p=>{if(!p)return{k:'unranked',label:'Unranked',note:'No BPI rank'};for(const t of F.TIERS)if(p<=t.max)return t;return F.TIERS[F.TIERS.length-1]};
 F.seedNum=m=>{const s=m&&m.s;return(s==null||!isFinite(+s))?null:+s};
 F.recParse=r=>{const x=/^(\d+)-(\d+)$/.exec(r||'');if(!x)return null;const w=+x[1],l=+x[2];return(w+l)?{w,l,pct:w/(w+l)}:null};
 F.searchMatch=(t,m,q)=>{q=(q||'').trim().toLowerCase();if(!q)return true;return[t.name,t.short,t.abbr,t.mascot,m&&m.c].filter(Boolean).join(' ').toLowerCase().indexOf(q)>=0};
-/* s26c14: source wording for Power rank (meta.o), one constant; change here only. Auto-pick ranks by meta.o (room.js autoRankOf); grades and mock bots use F.blendRank (o+p); notes/tiers stay on meta.p */F.RANK_SRC='ESPN BPI (2026-27)';  /* falls back to static 2024-25 win rank in teams.js meta.f / baked o if data/power.json cannot be loaded */
-F.TMODES=[['power','BPI'],['kenpom','Auto-pick rank'],['alpha','A–Z'],['conf','Conference'],['record','Last season'],['tiers','Tiers']];
-F.teamView=function(o){const TEAMS=o.teams,META=o.meta||{},pool=o.pool,taken=o.taken||{},watch=o.watch||new Set(),q=o.q||'',mode=o.mode||'power';
-  const nm=t=>TEAMS[t].name||TEAMS[t].short;/* s23 (LOW-1): A–Z follows the full name that the list shows */const alpha=(a,b)=>nm(a).localeCompare(nm(b));const P=t=>(META[t]&&META[t].p)||0;/* s26c14: O = ESPN BPI rank (meta.o), display/sort only; o.desc flips power/kenpom, unranked stays last */const O=t=>(META[t]&&META[t].o)||0;const dir=o.desc?-1:1;const rk=(f,a,b)=>{const x=f(a),y=f(b);return(!x||!y)?(x?-1:y?1:0):dir*(x-y)};
+/* Power Ranking (meta.o) is ESPN BPI 2026-27; auto-pick uses it after the queue. Stoopids Rank (meta.sr / meta.sp) is expected fantasy points from BPI projections. Win rank (meta.wr) is this season's record. */
+F.RANK_SRC='ESPN BPI (2026-27)';
+F.REC_SRC='2026-27';
+F.STOOP_NOTE='Expected points = proj. regular-season wins + 2×P(make playoffs) + 2×E[playoff wins] + 4×P(champion). NBA Cup points omitted: ESPN BPI has no Cup odds.';
+F.TMODES=[['kenpom','Power Ranking'],['stoopid','Stoopids Rank'],['power','Win rank'],['alpha','A–Z'],['conf','Conference'],['tiers','Tiers']];
+F.teamView=function(o){const TEAMS=o.teams,META=o.meta||{},pool=o.pool,taken=o.taken||{},watch=o.watch||new Set(),q=o.q||'',mode=o.mode||'kenpom';
+  const nm=t=>TEAMS[t].name||TEAMS[t].short;const alpha=(a,b)=>nm(a).localeCompare(nm(b));const P=t=>(META[t]&&META[t].p)||0;const O=t=>(META[t]&&META[t].o)||0;const WR=t=>(META[t]&&META[t].wr)||0;const SR=t=>(META[t]&&META[t].sr)||0;const SP=t=>{const v=META[t]&&META[t].sp;return(v==null||v==='')?null:+v};const dir=o.desc?-1:1;const rk=(f,a,b)=>{const x=f(a),y=f(b);return(!x||!y)?(x?-1:y?1:0):dir*(x-y)};
   const ids=pool.filter(t=>{if(!TEAMS[t])return false;if(o.hideDrafted&&taken[t])return false;if(o.onlyWatch&&!watch.has(t))return false;if(o.onlyQueue&&(o.queue||[]).indexOf(t)<0)return false;return F.searchMatch(TEAMS[t],META[t],q)});
-  const cmps={power:(a,b)=>rk(P,a,b)||alpha(a,b),kenpom:(a,b)=>rk(O,a,b)||alpha(a,b),alpha,
+  const stoop=(a,b)=>{const sa=SP(a),sb=SP(b);if(sa!=null&&sb!=null){const d=dir*(sb-sa);if(d)return d;return rk(SR,a,b)||rk(O,a,b)||alpha(a,b)}if(sa!=null)return-1;if(sb!=null)return 1;return rk(O,a,b)||alpha(a,b)};
+  const cmps={kenpom:(a,b)=>rk(O,a,b)||alpha(a,b),stoopid:stoop,power:(a,b)=>rk(WR,a,b)||alpha(a,b),alpha,
    seed:(a,b)=>{const x=F.seedNum(META[a]),y=F.seedNum(META[b]);return(x==null?99:x)-(y==null?99:y)||(P(a)||9999)-(P(b)||9999)||alpha(a,b)},
    record:(a,b)=>{const x=F.recParse(META[a]&&META[a].r),y=F.recParse(META[b]&&META[b].r);return(y?y.pct:-1)-(x?x.pct:-1)||(y?y.w:-1)-(x?x.w:-1)||alpha(a,b)},
-   conf:(a,b)=>(P(a)||9999)-(P(b)||9999)||alpha(a,b),tiers:(a,b)=>(P(a)||9999)-(P(b)||9999)||alpha(a,b)};
-  const cmp=cmps[mode]||cmps.power;const stars=ids.filter(t=>watch.has(t)).sort(cmp),rest=ids.filter(t=>!watch.has(t)).sort(cmp);const groups=[];
+   conf:(a,b)=>(O(a)||9999)-(O(b)||9999)||alpha(a,b),tiers:(a,b)=>(P(a)||9999)-(P(b)||9999)||alpha(a,b)};
+  const cmp=cmps[mode]||cmps.kenpom;const stars=ids.filter(t=>watch.has(t)).sort(cmp),rest=ids.filter(t=>!watch.has(t)).sort(cmp);const groups=[];
   if(mode==='conf'||mode==='tiers'||mode==='seed'){if(stars.length)groups.push({key:'watch',label:'⭐ My Picks',tids:stars});const map=new Map();
-    rest.forEach(t=>{let k,l,note='';if(mode==='conf'){k=(META[t]&&META[t].c)||'~—';l=(META[t]&&META[t].c)||'Conference unknown'}
+    rest.forEach(t=>{let k,l,note='';if(mode==='conf'){k=(META[t]&&META[t].c)||'~—';l=(META[t]&&META[t].c)==='East'?'East':(META[t]&&META[t].c)==='West'?'West':((META[t]&&META[t].c)||'Conference unknown')}
       else if(mode==='tiers'){const ti=F.tierOf(P(t));k=ti.k;l=ti.label;note=ti.note}else{const s=F.seedNum(META[t]);k=s==null?'~—':String(s).padStart(4,'0');l=s==null?'No projected seed':'Seed '+s}
       if(!map.has(k))map.set(k,{key:k,label:l,note,tids:[]});map.get(k).tids.push(t)});
-    let gs=Array.from(map.values());if(mode==='tiers'){const ord=F.TIERS.map(x=>x.k);gs.sort((a,b)=>ord.indexOf(a.key)-ord.indexOf(b.key))}else gs.sort((a,b)=>a.key<b.key?-1:a.key>b.key?1:0);gs.forEach(g=>groups.push(g))}
+    let gs=Array.from(map.values());if(mode==='tiers'){const ord=F.TIERS.map(x=>x.k).concat(['unranked']);gs.sort((a,b)=>ord.indexOf(a.key)-ord.indexOf(b.key))}
+    else if(mode==='conf'){const ord=['East','West'];gs.sort((a,b)=>{const ia=ord.indexOf(a.key),ib=ord.indexOf(b.key);if(ia>=0||ib>=0)return(ia<0?99:ia)-(ib<0?99:ib);return a.key<b.key?-1:a.key>b.key?1:0})}
+    else gs.sort((a,b)=>a.key<b.key?-1:a.key>b.key?1:0);gs.forEach(g=>groups.push(g))}
   else{const all=stars.concat(rest);if(all.length)groups.push({key:'all',label:'',tids:all,flat:true})}return groups};
 F.watchToggle=(arr,tid)=>{const a=(arr||[]).slice();const i=a.indexOf(String(tid));if(i>=0)a.splice(i,1);else a.push(String(tid));return a};
-F.rowValue=(mode,t,META)=>{const m=META[t]||{};if(mode==='kenpom')return m.o?'#'+m.o:'–';if(mode==='power'||mode==='tiers')return m.p?'#'+m.p:'—';if(mode==='seed'){const s=F.seedNum(m);return s==null?'—':'S'+s}if(mode==='record')return m.r||'—';if(mode==='conf')return m.c||'—';return m.p?'#'+m.p:'—'};
+F.rowValue=(mode,t,META)=>{const m=META[t]||{};if(mode==='kenpom')return m.o?'#'+m.o:'–';if(mode==='stoopid')return m.sp!=null?(Math.round(+m.sp*10)/10)+' pts':(m.sr?'#'+m.sr:'—');if(mode==='power')return m.wr?'#'+m.wr:(m.r||'—');if(mode==='tiers')return m.p?'#'+m.p:'—';if(mode==='seed'){const s=F.seedNum(m);return s==null?'—':'S'+s}if(mode==='record')return m.r||'—';if(mode==='conf')return m.c||'—';return m.o?'#'+m.o:'—'};
 /* ============================ export + recap ============================ */
 const csvCell=v=>{v=String(v==null?'':v);if(/^[=+\-@\t\r]/.test(v))v="'"+v;return /[",\n\r]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v};F.csvCell=csvCell;
 F.rosters=function(st,mgrs){return st.order.map(mid=>{const m=mgrs.find(x=>x.mid===mid)||{mid,name:'Manager',team:'Team'};return{mgr:m,picks:(st.roster||st.real||st.picks).filter(p=>p.owner===mid)}})};

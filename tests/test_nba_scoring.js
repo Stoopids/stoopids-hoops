@@ -16,7 +16,7 @@ ok('assumptions listed',Array.isArray(S.ASSUMPTIONS)&&S.ASSUMPTIONS.length>=5);
 const demo=JSON.parse(fs.readFileSync(path.join(__dirname,'../data/demo/scores.json'),'utf8'));
 const field=JSON.parse(fs.readFileSync(path.join(__dirname,'../data/demo/tournament.json'),'utf8'));
 ok('demo is clearly SYNTHETIC',demo.sample===true&&/^SYNTHETIC/.test(demo.label));
-ok('shipped scores.json is not sample and has no games',(()=>{const s=JSON.parse(fs.readFileSync(path.join(__dirname,'../data/scores.json'),'utf8'));return s.sample===false&&s.games.length===0})());
+ok('shipped scores.json is real (not SYNTHETIC)',(()=>{const s=JSON.parse(fs.readFileSync(path.join(__dirname,'../data/scores.json'),'utf8'));return s.sample===false&&s.source==='espn'})());
 const mgrs=[{mid:'m1',name:'NYK owner'},{mid:'m2',name:'OKC owner'},{mid:'m3',name:'ATL owner'}];
 const owners={'18':'m1','25':'m2','1':'m3'}; /* ESPN ids: NYK 18, OKC 25, ATL 1 */
 const sea=S.fullSeason(demo.games,owners,mgrs);

@@ -61,3 +61,14 @@ ESPN BPI ranks for the current NBA season (2026-27), written by `python3 tools/r
 ```
 
 `js/power-apply.js` overlays `ranks` onto `TEAMS_DATA.meta.o` and `meta.p` (auto-pick, mock bots, league power rankings). If the fetch fails, the baked ranks in `assets/teams.js` stay; `meta.f` is the static 2024-25 win-total fallback. `data/power-rankings.json` is not a team list — it is an optional prewritten manager recap; when empty, the league site generates recaps from each roster using these BPI ranks.
+
+
+## `data/stoopids.json`
+
+Expected Stoopids fantasy points from ESPN BPI projections, written by `python3 tools/refresh_nba.py`.
+
+`pts = proj. regular-season wins + 2×P(make playoffs) + 2×E[playoff wins] + 4×P(champion)`.
+
+E[playoff wins] = P(reach conf. semis) + P(reach conf. finals) + P(reach NBA Finals) + P(champion). ESPN "make playoffs" odds include play-in winners who become the 7 or 8 seed. **NBA Cup points are omitted** (ESPN BPI has no Cup odds).
+
+`js/power-apply.js` overlays `ranks` onto `meta.sr` and `pts` onto `meta.sp`. The Teams list default sort is Power Ranking (BPI); Stoopids Rank is a separate button. If projections are missing, Stoopids Rank falls back to Power Ranking.

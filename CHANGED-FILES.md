@@ -1,3 +1,6 @@
+# sh3 (build 2026-11-10sh3): draft-room NBA sorts
+Base: sh2. Draft room Teams tab: default sort is Power Ranking (ESPN BPI). Stoopids Rank is an extra button (projected fantasy points from ESPN BPI; Cup omitted, no ESPN Cup odds). Win rank uses 2026-27 standings. Win % button removed. Search placeholder "Search team or city". Record note is 2026-27. Conference filter is East/West. Tiers are five groups of six by BPI. Auto-pick rank renamed Power Ranking. data/stoopids.json written by tools/refresh_nba.py.
+
 # sh2 (build 2026-11-10sh2): ESPN BPI ranks + textdb.dev with NBA-only keys
 Base: sh1. LOCAL ONLY — not published; no remote repo.
 - Auto-pick, mock bots, and league power rankings use ESPN BPI 2026-27 (`data/power.json`, baked into `assets/teams.js` meta.o/p). Static 2024-25 win rank kept as `meta.f` fallback if the BPI fetch fails. `tools/refresh_nba.py` writes power.json (`--power-only` supported). `js/power-apply.js` overlays ranks at runtime.

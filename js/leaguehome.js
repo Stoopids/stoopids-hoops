@@ -357,7 +357,7 @@ function teamCats(t){const ev=t.events||[],sum=k=>ev.filter(e=>e.kind===k).reduc
    (T.META[tid], keyed by ESPN id). Display only: grades and sorting stay on p. Missing / invalid value shows a muted '–'. */
 const rkNum=v=>{const n=Number(v);return(v!=null&&v!==''&&Number.isInteger(n)&&n>=1&&n<=400)?n:null};
 function rkPills(tid){const m=((T&&T.META)||{})[String(tid)]||{};const p=rkNum(m.p),o=rkNum(m.o);const v=n=>n==null?'<b class="mut">–</b>':'<b>#'+n+'</b>';
-  return `<div class="rkp" data-p="${p==null?'':p}" data-o="${o==null?'':o}"><span class="pill rk-p">Win rank: ${v(p)}</span><span class="pill rk-o">Auto-pick rank: ${v(o)}</span><div class="note rks">${esc((window.FBN&&FBN.RANK_SRC)||'Prior-season win rank (assumption)')}</div></div>`}
+  return `<div class="rkp" data-p="${p==null?'':p}" data-o="${o==null?'':o}"><span class="pill rk-p">Win rank: ${v(p)}</span><span class="pill rk-o">Power Ranking: ${v(o)}</span><div class="note rks">${esc((window.FBN&&FBN.RANK_SRC)||'Prior-season win rank (assumption)')}</div></div>`}
 function vRosters(){if(!ownerSel||!D.owners.some(x=>x.mid===ownerSel))ownerSel=D.owners[0].mid;const o=D.owners.find(x=>x.mid===ownerSel);const mg=MG.find(m=>m.mid===o.mid)||o;
   let h=`<div class="tabs" role="tablist" aria-label="Owner">${D.owners.map(x=>`<button role="tab" aria-selected="${x.mid===ownerSel?'true':'false'}" data-a="pickowner" data-mid="${esc(x.mid)}" class="${x.mid===ownerSel?'on':''}">${esc(x.emoji)} ${esc(TNm(x))}${RNm(x)?' · '+esc(RNm(x)):''}</button>`).join('')}</div>`;
   const cats=Object.entries(o.by_cat).filter(([k,v])=>v!==0);
