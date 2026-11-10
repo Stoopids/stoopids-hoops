@@ -823,3 +823,10 @@ Test-only (not shipped): tests/e2e_picksheet_clock_s28.js, e2e_beep_s28.js, e2e_
 - help.html: Redraft paragraph replaced with "Teams are held all season"; removed Redraft from the league-site tab list.
 - tools/build_league_from_stoopids.py, league.html: Rules > House interpretations gains "Teams are held all season" first. The STOOPIDS redraft tab was already never shown in Hoops.
 - js/version.js: FBN_BUILD 2026-11-10sh9b. sw.js: line 1 comment. MD5SUMS.txt regenerated.
+
+## 2026-11-10sh9c — NBA wording: no college words in the draft room, recap or help (Paul)
+- js/power-gen.js, js/power-render.js: the recap grade and analysis text says "team(s)" instead of "school(s)" (e.g. "The best team is …"). Only the wording changed; the sentence structure is the same.
+- js/recap.js: "Best school" became "Best team". "Tournament outlook / Projected NCAA Tournament seeds" became "Playoff outlook / Projected playoff seeds". The how-grades-work text says teams and projected playoff seed.
+- js/room.js: the page title and the join share text say "Stoopids Hoops" (was "Fantasy BBALL NCAA"); the seed sort hint says "playoff seed".
+- A rendered scan of the room, recap, help and league tabs found no school, NCAA, AP, March Madness, bracket or KenPom words. The one exception is the verbatim STOOPIDS how-to example "season-long tournament pool".
+- js/version.js: FBN_BUILD 2026-11-10sh9c. sw.js: line 1 comment. MD5SUMS.txt regenerated.
