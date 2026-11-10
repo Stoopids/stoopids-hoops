@@ -852,3 +852,9 @@ Test-only (not shipped): tests/e2e_picksheet_clock_s28.js, e2e_beep_s28.js, e2e_
 - Old links keep working: separate #as=&k= manager links and #cm= commissioner links are read exactly as before (the room already read all three keys from one fragment).
 - tests/live_drafts_sh9c.js (new): live TEST-league drafts D1–D6 (D6 = no pick clock, close and come back with the private link).
 - js/version.js: FBN_BUILD 2026-11-10sh10. sw.js: line 1 comment. MD5SUMS.txt regenerated.
+
+## 2026-11-10sh11 — lobby Managers list no longer duplicates empty seats as "Open spot" rows (Paul)
+- Render-only bug: with 2 of 6 joined, orderListHTML already drew 6 rows (2 joined + 4 Empty seat), and a leftover loop then appended 4 more "+ Open spot" rows numbered 3–6. League data was already correct (6 seats, 2 claims). Starting the draft was safe: it fills the 4 empty seats as placeholders and auto-picks them; it does not create 10 seats or duplicate bots.
+- js/room.js lobbyView: removed the leftover Open spot loop (from before empty rows were part of lobbyOrder).
+- tests/test_nba_sh11.js, tests/e2e_nba_lobby_seats.js: 2-of-6 lobby shows exactly 6 rows and no Open spots; Start yields a 6-seat live draft with 4 placeholders.
+- js/version.js: FBN_BUILD 2026-11-10sh11. sw.js: line 1 comment. MD5SUMS.txt regenerated.
