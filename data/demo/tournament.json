@@ -1,0 +1,84 @@
+{
+  "format": 1,
+  "sample": true,
+  "label": "SYNTHETIC official seeds after play-in (not real).",
+  "year": 2027,
+  "as_of": "2026-04-19",
+  "seed_lock": true,
+  "field": {
+    "5": {
+      "seed": 1,
+      "conference": "East"
+    },
+    "2": {
+      "seed": 2,
+      "conference": "East"
+    },
+    "18": {
+      "seed": 3,
+      "conference": "East"
+    },
+    "15": {
+      "seed": 4,
+      "conference": "East"
+    },
+    "20": {
+      "seed": 5,
+      "conference": "East"
+    },
+    "14": {
+      "seed": 6,
+      "conference": "East"
+    },
+    "11": {
+      "seed": 7,
+      "conference": "East"
+    },
+    "19": {
+      "seed": 8,
+      "conference": "East"
+    },
+    "25": {
+      "seed": 1,
+      "conference": "West"
+    },
+    "7": {
+      "seed": 2,
+      "conference": "West"
+    },
+    "16": {
+      "seed": 3,
+      "conference": "West"
+    },
+    "10": {
+      "seed": 4,
+      "conference": "West"
+    },
+    "13": {
+      "seed": 5,
+      "conference": "West"
+    },
+    "6": {
+      "seed": 6,
+      "conference": "West"
+    },
+    "12": {
+      "seed": 7,
+      "conference": "West"
+    },
+    "9": {
+      "seed": 8,
+      "conference": "West"
+    }
+  },
+  "cup": {
+    "final4": [
+      "25",
+      "2",
+      "18",
+      "24"
+    ],
+    "champion": "18"
+  },
+  "champion": "25"
+}

@@ -1,0 +1,759 @@
+# sh2 (build 2026-11-10sh2): ESPN BPI ranks + textdb.dev with NBA-only keys
+Base: sh1. LOCAL ONLY — not published; no remote repo.
+- Auto-pick, mock bots, and league power rankings use ESPN BPI 2026-27 (`data/power.json`, baked into `assets/teams.js` meta.o/p). Static 2024-25 win rank kept as `meta.f` fallback if the BPI fetch fails. `tools/refresh_nba.py` writes power.json (`--power-only` supported). `js/power-apply.js` overlays ranks at runtime.
+- Official ESPN team ids corrected (MEM=29, WAS=27, TOR=28, CHA=30); SYNTHETIC demo ids remapped. NCAA sample emptied from `data/power-rankings.json`.
+- Store: `DEFAULT_BASE`/`REMOTE_BASE` = `https://textdb.dev/api/data/` (no API keys). Key prefix remains `shoops1-`. Device localStorage/sessionStorage keys renamed `fbn.*` → `shoops.*`. Tests use `tools/mock_textdb.js` + `shoops.store=/api/data/` and must not write to textdb.dev.
+- Tests: test_nba_scoring.js 9/9; e2e_nba_mock.js 18/18 (5- and 6-manager mocks through league.html; no textdb.dev requests).
+
+# sh1 (build 2026-11-10sh1): Stoopids Hoops phase 1 (local NBA copy of s28j2)
+Base: s28j2. LOCAL ONLY — not published; no remote repo.
+- Rebrand to Stoopids Hoops (js/version.js, manifest, titles, cache prefix shoops-).
+- 30 NBA teams (assets/teams.js). Store namespace shoops1- with localStorage fallback (js/store.js).
+- 5 or 6 managers, preset names, snake/straight and random/set order, NCAA pick clocks.
+- Paul's NBA scoring (js/scoring.js); league site stripped of NCAA-only scoring/KenPom/Torvik/First Four.
+- Bets remain versus + pool only. tools/refresh_nba.py + labeled SYNTHETIC demo in data/demo only.
+- js/room.js: practice banner uses seats()-1 bots; HL.stalled() does not freeze auto-pick on the localStorage backend (no fetchT traffic).
+- Tests: tests/test_nba_scoring.js (9/9); tests/e2e_nba_mock.js 5- and 6-manager mocks through recap "Go to League" into league.html standings (16/16).
+
+---
+# s28j2 (build 2026-11-02s28j2): s28j + Paste a bet behind PASTE_BET (OFF on live)
+Base: s28j (MD5SUMS deaef6e0). Staged only, not published.
+- js/league-bets.js: PF() reads window.LPASTE_BET (default OFF; only the preview guard sets it). Off: no Paste a bet box, no 'Read it' button, pz* click handlers and the paste input listener not registered. New bet form, Quick bet, postedBy/postedAt and full-card Copy unchanged.
+- js/version.js 2026-11-02s28j2; sw.js cache name fbnc-2026-11-02s28j2.
+- Tests (not shipped): tests/lib.js pasteBet option / PASTE_BET=1; tests/e2e_pastebet_flag_s28j2.js (390 + 1280: off = no box, preview on = box shown); tests/pending/paste_bet_wed.md (Paul's case, not run).
+
+| file | s28j | s28j2 |
+|---|---|---|
+| js/league-bets.js | c59a1500 | 1212179e |
+| js/version.js | bf4543ac | 0e69d150 |
+| sw.js | 382ead34 | 98f9981d |
+
+---
+# s28j (build 2026-11-02s28j): s28i + League parity items 1-15, #19 ACCEPT_FLOW (off), quick items #1 #2 #3 #14, final 980px content column, s29e copy formats
+Base: s28i (MD5SUMS c2c83579). Staged only, not published. js/room.js and js/core.js unchanged; manifest.webmanifest = s28i.
+
+| file | s28i | s28j |
+|---|---|---|
+| css/league-app.css | 0c513aac | ed17cb12 |
+| js/league-bets.js | 46b4f35a | c59a1500 |
+| js/league-d.js | e7516736 | 4356cd8d |
+| js/leaguehome.js | 6bfce2af | d6c92b86 |
+| js/version.js | 90274800 | bf4543ac |
+| sw.js | e96d9000 | 382ead34 |
+
+# s28j (build 2026-11-02s28j): s28i + League Paul preview fixes (kicker, content width, Games grid, Pool Copy, no Anyone) + Paste a bet + Posted by + Games/bet copy text
+Base: /workspace/fantasy-bball-releases/s28i (MD5SUMS c2c83579, QA GO, not live), copied; s28i not modified. Only League-owned files changed (League Site paused): css/league-app.css, js/leaguehome.js, js/league-bets.js; plus js/version.js, sw.js (line 3), this file, MD5SUMS.txt. room.js, core.js, join.js, app.css, league.html, help.html and data/ unchanged. No files added, so the sw.js precache list is unchanged. Staged only, not published.
+- Shared numbers agreed with Stoopids Site, all CSS variables at the end of league-app.css: --kicker-ratio .5, --kicker-min 11px, --content-max 1080px (1440px at min-width 1700px), --content-pad 16px, --games-min 320px, --games-gap 16px.
+- 1 Kicker: #lhead sets --title-fs (clamp(34px,10.5vw,72px)); #ltitle uses it; .s27-pres = max(11px, --title-fs × --kicker-ratio). titleFit() (leaguehome.js) now steps --title-fs on #lhead instead of the title's own font-size, so the kicker follows the fitted size on phones and for long names.
+- 2 Width: header, nav#ltabs, main and footer = width 100%, max-width var(--content-max), margin 0 auto; tab bar and content both 16px side padding (header 0, banner spans the column). Replaces the s20 980px column and the s28g uncapped Games (1600px) rule. Games .ggrid = repeat(auto-fill,minmax(min(320px,100%),1fr)), gap 16px: 1 col on phones, 2 at 700-1000, 3 at 1280/1440, 4 from 1700. Share card (#sharecard) centred like All teams.
+- 3 Pool card: '· N managers' gets .b27-pwho; .b27-pool .s24hd reserves 84px on the right and the Copy button is absolutely pinned top-right (44px).
+- 4 Bet form: 'Anyone' button and its handler removed (Select all + Clear kept). formOK still needs at least one opponent. Older open-to-anyone bets still read/accept as before.
+- 5 Paste a bet (spec /workspace/s28j-paste-bet-spec.md): textarea + Read it above the New bet form (manager devices only; hidden in view mode). Parses names (manager/team/nickname, exact then prefix, ambiguous = buttons, never guesses), odds (A-B, evens), amount only if in the line, bet text via readBet() (new pattern '@1 +N vs @2' = claim op 'plus'; existing patterns and settle maths unchanged), matched not-final game or 'Couldn’t match a game, will be settled by hand'. One summary line '<A> bets <B>: <bet>, <odds>[, <amount> pushups]', inline asks only for missing fields, one Confirm (disabled until answered) = confirmPlace()/formOK(). Bets posted FOR two other managers: event field for:A (A and B must both accept; poster or A can withdraw while pending).
+- 5b Posted by: new p/pl events carry postedBy (device manager) + postedAt; validator vPost(), reducer keeps postedBy only when it equals the log owner. Cards show 'Posted by <name> · <LTIME.stamp>' (device zone + label); older bets show nothing. New-bets badge: own = postedBy (older: by).
+- 7 Copy text: Games copy drops 'Lines: <book>' and the 'Owner, ' prefix ('<School>: <emoji> <manager>'); copied date/time already came from LTIME (device-zone day key + time with zone label, no ET bug in s28i); 'Yesterday · ' stripped like Today/Tomorrow. Bet and pool copies add the card's own 'Posted by … · <stamp>' line when present. No '$' or new money words.
+- Tests (not shipped): new e2e_layout_s28j.js, e2e_paste_bet_s28j.js, e2e_copy_tz_s28j.js; updated e2e_hero_pres_s27 (ratio 0.45-0.55, kicker follows fit), e2e_games_s28c / e2e_games_s25 (column counts), e2e_alignment (16px inset, centred Share), e2e_bets (Anyone removed -> no-opponent validation check; concurrent count 4), e2e_share_s28c (copy format), league_step (1080 column).
+
+### Item 8 — tables fill the content width
+- css/league-app.css: .obk.atk, .obk, .ocl, .b27-grid, .oqw full width (no max-width); p.note.atn/.atfw max-width none; tables in cards, .ptw, .oq width 100%; .obk.atk columns use minmax(0,…fr); ≤759px .ptw/.oqw scroll sideways inside the wrapper.
+- tests/e2e_alignment.js: new table-block section (1280/1440/1800, edges vs tab bar inner edges within 1px).
+
+### Item 9 — Share labels + managers link
+- js/leaguehome.js: 'Read-only link for friends and family'; 'Managers: use the regular link' line with clean ?l=id URL and its own Copy (copymgr → 'Copied'); hidden in view mode.
+- css: .s29sh-sub, .s29sh-mg. tests/e2e_share_s28j.js (new).
+
+### Item 10 — Profile tab
+- js/leaguehome.js: TABS 'share' → ['profile','👤 Profile'] (same slot); readRoute #share → #profile; vProfile (who / My settings → existing room.html?settings=1 / Notifications · Coming soon / share). No core.js or room.js change, no new writes.
+- css: #profile-share, #profile-who. tests/e2e_profile_s28j.js (new); tabs_exp, e2e_league_tabs, e2e_drafttabs_s26c10, e2e_layout_s28j, e2e_alignment updated for 'profile'.
+
+### Item 11 — standings places match STOOPIDS (T-1 ties)
+- js/leaguehome.js: new pure placeRanks(rows,total) + placeLabel (window.LPLACE), a port of STOOPIDS score.py 388-393 (stable sort by -total, competition rank, no tiebreak beyond points) and index.html:1364 rankTxt ('T-' when the rank is shared). Source read-only at /workspace/s29d/stage/score.py, /workspace/s29e/stage/index.html (same code in stoopids_pub). rebuild() re-ranks D.owners (and the NCAA tournament list by score) in league config order. Replaces League's old total→wins→win%→diff tiebreak (FBNScore.leagueTotals left unchanged: scoring.js is shared).
+- tests/unit_place_s28j.js (new, 7), tests/e2e_place_s28j.js (new, 6).
+
+### Item 12 — no time-zone label anywhere (screen and copies)
+- js/league-d.js LTIME.time/stamp/wdTime: no zone suffix (one formatter for cards and copies). js/leaguehome.js: Games day-header zone span, 'Last updated' zone, footer '(WIB)' removed. js/league-bets.js stampTime → LTIME.time. room.js does not use LTIME (unchanged).
+- tests: e2e_copy_tz_s28j (0 labels in DOM, copy strings and clipboard, Jakarta + New York; copy = card), e2e_games_s25, e2e_paste_bet_s28j.
+
+### Item 13 — Games tab = STOOPIDS (s29d/stage b12d5bb via /workspace/s29d/games_kit.md)
+- js/leaguehome.js: gameBody/gameCard rebuilt to STOOPIDS markup (.gh head + Copy, .gside rows with ⭐/🐶, .gow owner line, .gl 'Line: … · Moneyline … · Over/under … · book', .gsp, Quick bet; finals collapse to .gsum); 'Pool only' pill; 12-game-day cap + '+N more games' note.
+- js/league-d.js: game line keeps dog, aml/hml, book, closing flag. css/league-app.css: STOOPIDS game CSS scoped under body.lsite #lbody.
+
+### Item 14 — title only
+- js/leaguehome.js: one constant; document.title = '<League> · NCAA Fantasy'. Manifest, icons and og:title unchanged (wait for Wednesday). tests/e2e_title_s28j.js (new).
+
+### Item 15 — no Rosters tab
+- js/leaguehome.js: Rosters removed from TABS; #rosters → #teams; a Standings row opens All teams filtered to that owner. Folded into All teams: owner card (avatar, total, place, category totals) when one owner is filtered; Pts tooltip with per-category points.
+
+### Item 2 change — content width
+- css: --content-max 800px placeholder (STOOPIDS Standings column; exact px pending from Stoopids Site); 1440px rule removed; header / tab bar / footer keep --nav-max 1080px. Games auto-fill 320px + 16px gap inside the cap (2 across on desktop). Tests read CONTENT_MAX (default 800).
+
+### Parity quick items
+- #19 js/league-bets.js ACCEPT_FLOW (window.LACCEPT_FLOW, default OFF; preview guard turns it on): off = new bets Open at once, named pending bets read as Open (stored events untouched), no Accept/Decline/Waiting, no 'Waiting on me' filter, 30 s Undo kept; legacy to='*' bets shown Open with 'Anyone' and a note, settleable after the poster edits in a name (0 such bets in demo data). tests/e2e_accept_s28j.js (new); legacy bet tests run with ACCEPT_FLOW=1.
+- #1 no 'NCAA Fantasy Basketball' heading. #2 no 'Schedule updated' line. #3 footer without Draft recap / Home / Build / Reload. #14 no Refresh Live Games button on Games (live polling unchanged).
+
+### Item 2 FINAL (15:00, Stoopids Site shared_rules.md)
+- css/league-app.css: --content-max 1012px (16px padding → 980px column, = live Standings column); tab bar 1080 (1440 at ≥1700); Games auto-fill minmax(320px,1fr) gap 16 (2 across in 980); @media (max-width:351px) one Games column; tables width 100%, wrappers scroll sideways. Measured: 980 at 1280 and 1440 on Standings/Games/Bets/All teams; no sideways scroll on any tab at 320/390.
+### Copy card = s29e paste_bet_spec item 6
+- js/league-bets.js betText: 'Bet #n · Open|Settled|Wash|Cancelled[ · X won]' / text / 'A vs B · amt odds' / two 'If … is right:' lines / 'Auto-settles after the game' (open + readable) / 'Posted <Mon d, yyyy>[ by X] · <league name>'. Pool: Buy-in · N managers · Total, Members. Pool payout lines not added (not quick). Game copy already = item 7. No zone labels; ACCEPT_FLOW off on live.
+
+
+---
+# s28i (build 2026-11-02s28i): s28g + dev material removed from the public site (redo of s28h) + League s28g-hero (hero, tabs, Games filters/grid, Bets form + badge)
+Base: /workspace/fantasy-bball-releases/s28g (MD5SUMS 79728362). Rebuilt after the box rollback (the s28h folder now holds s28g contents and was not used). js/room.js (36bc5b45) and js/core.js (f53b3b35) NOT changed; css/app.css, js/join.js, league.html NOT changed; data/ identical to s28g (League's FORMAT.md / demo json tidies were lost and are not recreated). No site files added, so the sw.js precache list is unchanged. Staged only, not published.
+- s28h cleanup redone: removed CHANGE-NOTES-s24.md, CHANGE-NOTES-s25.md, tools/ (md5-identical copies in /workspace/fantasy-bball-devtools/). README.md, import/README.md: no tools/ paths or CHANGE-NOTES links (scripts named as maintainer scripts, commands use "$FBN_TOOLS"/...).
+- Tests (not shipped): new tests/devtools_path.js (FBN_TOOLS env, else ../tools, else /workspace/fantasy-bball-devtools/tools), used by test_core.js (make_bundle.sh) and e2e_cheer.js; test_refresh_conf.py same lookup.
+- League (copied unedited from /workspace/league-site-work/s28g-hero): hero title fit (titleFit, kicker ~68%), nav tabs +12% wrapping grid, Standings hint + footer demo link removed, Games S29D-GF filters and 1/2/3/4-col grid at <600/600/900/1400 (Games uncapped from 1200px), Bets placeholder / '@1 -N beats @2' spread / 'This will be auto-settled after completion.' note / equal-width type buttons / new-bets count pill. League tests: hero, games_s28c, bets_copy_s28, league_step updated; new e2e_bets_form_s28g, e2e_betsbadge_s28g (share_s28c in s28g-hero = s28g, kept).
+- All teams STOOPID column: already the plain hand-set rank (leaguehome.js x.sr=rkNum(mm.p) from raw TEAMS_DATA meta; sort on sr; labels STOOPID/ST); no app change. New tests/e2e_allteams_stoopid_s28i.js proves column + sort = meta.p and that mock bots, F.teamStrength and draft grades still use the 50/50 F.blendRank.
+- Stale tests, expectations only: e2e_games_s25 (new column breakpoints), e2e_alignment (fitted centred title, uncapped Games, centred compact All teams card, narrower cards inside the column); e2e_chipgrid and e2e_s25 already failed identically on s28g (pre-existing): chipgrid inline chips 32px in >= 44px rows with name-width; e2e_s25 sound button is icon + aria-label ('Settle sounds off/on'), and the money-word scan exempts the shipped fun-only disclaimer ('not money', 'gambling for money').
+
+| file | md5 | owner |
+|---|---|---|
+| css/league-app.css | 0c513aac5c0d62228feefa88838af91e | League |
+| js/leaguehome.js | 6bfce2af4e6d60f8bc860be75e06b2b1 | League |
+| js/league-bets.js | 46b4f35a089138b0a70fed167c4a8bb2 | League |
+| js/version.js | 90274800f4febeadb43120bfb83269e8 | Draft Room (build 2026-11-02s28i) |
+| sw.js | e96d9000d46d494ebc6ba1a958f53ace | Draft Room (line 3; cache fbnc-2026-11-02s28i) |
+| README.md, import/README.md | see MD5SUMS | no tools/ paths |
+| CHANGED-FILES.md / MD5SUMS.txt | - | regenerated |
+
+# s28g (build 2026-11-02s28g): s28f + draft-room fix for a server-time offset ahead of the turn writer
+Base: /workspace/fantasy-bball-releases/s28f (MD5SUMS b3d32389). Only js/room.js, js/version.js, sw.js, this file and MD5SUMS.txt changed; js/core.js NOT changed (League shares it). Staged only, not published.
+- Bug (QA, s28b..s28f; live s28b has it): the turn start (meta startedAt / resumeAt, last pick ts) is stamped by the page that wrote it, in that page's server time (Date.now()+srvOff). Every page computes deadline = turn start + clock and compares it with its OWN server time. When one page's server time is ahead of the writer's by at least the time left (failed time sync on a fast device clock, so srvOff stays 0; or a proxy/cache with a fast Date header - F.sane accepts up to 24 h), that page sees the deadline already past: F.autoReason says 'expired', it auto-picks the present human seat after the 1.8 s grace, the beeps are skipped (all thresholds 'already passed') and the clock sticks at 0:29/0:30. With the page behind by hours, the start gate / 'Draft starts in' held forever and no clock showed.
+- Fix (room.js): each page keeps a local turn timer on its own clock (turnLocal): from when it saw the turn begin, a full clock (plus the 60 s start countdown when it saw the draft go live from the lobby, capped at 60 s); opened mid-turn: the server time left at that moment, 0..clock. 'expired' is not trusted before that local deadline + grace (autoR() wraps every autoReason use; submitPick by 'auto' re-checks). remaining() (display and beeps) follows the local timer when it and the server deadline differ by more than 5 s, still capped to the clock length. Local start instant (localStartAt): start gate and the 'Draft starts in' countdown end when the start has passed by this page's own timer too (never held more than 60 s past first sight). New picks are stamped no earlier than the turn they follow (stampNow = max(server now, turn start + 1 ms)).
+- js/version.js: FBN_BUILD 2026-11-02s28g. sw.js: cache fbnc-2026-11-02s28g (follows FBN_BUILD), line 3 comment updated.
+- New test (not shipped): tests/e2e_skew_s28g.js (from QA qa_skewclean.js CASE=seat, no seeded timestamps): seat 1's HEAD Date at +3 h, +90 s, 0, -3 h; checks turn-start + countdown beeps, clock counts down from <= 0:30, no auto-pick before 29 s.
+- Removed vs s28f (old dev notes, not to be served): UNCLEAR.md, tests/_tmp_e2e_ports.js, tests/_tmp_midswap_s28.js, tests/_tmp_mock64.js.
+- MD5SUMS.txt regenerated (excludes tests/ node_modules shots/ __pycache__ .git; keeps empty .nojekyll).
+
+# s28f (build 2026-11-02s28f): s28e + League s28e-pres re-stage
+Base: /workspace/fantasy-bball-releases/s28e (MD5SUMS 76730ddb). Source: /workspace/league-site-work/s28e-pres (re-staged by League). Both files copied unedited after md5 check; diff of League folder vs s28e (ignoring shots/, CHANGED-FILES.md, MD5SUMS.txt) showed only these two files plus League's older js/version.js / sw.js (build s28d, not taken). Staged only, not published.
+| file | md5 | owner |
+|---|---|---|
+| css/league-app.css | 239e6eed935df6be50563d624c193066 | League |
+| tests/e2e_hero_pres_s27.js | 425b822781b9a2cc82e6f3b941f9781f | League (not in bundle) |
+| js/version.js | c3ed499143e7ceeaf7a75c6dee918ed9 | Draft Room (build 2026-11-02s28f) |
+| sw.js | f9f0b9fc2036b637cad7d5d404ab29bc | Draft Room (line 3; cache fbnc-2026-11-02s28f) |
+| CHANGED-FILES.md / MD5SUMS.txt | - | regenerated |
+
+# s28e (build 2026-11-02s28e): s28d + League s28e-pres (bigger STOOPIDS PRESENTS hero kicker)
+Base: /workspace/fantasy-bball-releases/s28d (MD5SUMS df8c4df1). Source: /workspace/league-site-work/s28e-pres (League entry "s28e-pres (staging only): s28d + bigger STOOPIDS PRESENTS hero kicker": css/league-app.css line 752 .s27-pres clamp(22px,6.5vw,30px)/900, one line, centered; tests/e2e_hero_pres_s27.js new size/one-line/no-overflow check). Both files copied unedited after md5 check. Staged only, not published.
+| file | md5 | owner |
+|---|---|---|
+| css/league-app.css | aa149134d6ec24194175c70d8e0a1689 | League |
+| tests/e2e_hero_pres_s27.js | 5be7aaeba02808ea93d62a438be05810 | League (not in bundle) |
+| js/version.js | 982927f95c5b78d561495a9d020117d1 | Draft Room (build 2026-11-02s28e) |
+| sw.js | d5e37ce2afdc6ba16089182a168c69d5 | Draft Room (line 3; cache fbnc-2026-11-02s28e) |
+| CHANGED-FILES.md / MD5SUMS.txt | - | regenerated |
+
+# s27c (build 2026-11-01s27c): s27b + the s26c16d beep
+Base: s27b (MD5SUMS 69d0f885, kept at s27.prev-s27b). Source: /workspace/fantasy-bball-releases/s26c16d (room.js 5a235eea, built on s26c16c). Staged only, not published.
+- room.js: 3-way merge (base s26c16c, ours s27b, theirs s26c16d), clean; the 24 changed lines are identical to the s26c16c->s26c16d diff. WebAudio cues for this device's own seat (3 beeps on the clock, 2 at 30 s, 1 at 10 s, once per pick via localStorage fbn.beepLast.<league>), More tab Alerts card 'Turn sound' (fbn.beepMute), old 15 s beep removed. No other file changed except version/sw.
+| file | md5 | owner |
+|---|---|---|
+| js/room.js | 9052c149f4bc7c5dcad3e8c02e6c6a06 | Draft Room |
+| js/version.js | 98c2142eb7fa148655054618fbff3544 | Draft Room (build 2026-11-01s27c) |
+| sw.js | 73e081b8e27c533de68cdc8fd5dd0336 | Draft Room (line 3; cache fbnc-2026-11-01s27c) |
+| tests/e2e_beep_s26c16d.js | 894d770c1e4284026ed5eef5c9c0fa42 | Draft Room (not in bundle) |
+| CHANGED-FILES.md / MD5SUMS.txt | - | regenerated |
+
+# s27 rebuilt as build 2026-11-01s27b: s27 rebased onto LIVE-candidate s26c16c (BUG 2 hotfix) + League s27-league-full MD5SUMS 7acc5667
+Base: /workspace/fantasy-bball-releases/s26c16c (MD5SUMS e32a9c33). Previous s27 (on s26c14) kept at s27.prev-s27a. Staged only, not published.
+- 3-way merge (base s26c14, ours s26c16c, theirs old s27). core.js merged clean: vs s26c16c the only change is the F.blendRank null/non-object meta skip. join.js = s26c16c. css/app.css = old s27 (s26c15 pill rules identical; DR2 recap2col block).
+- room.js vs s26c16c: (1) DR2 recapseed hand-off kept inside the s26c16c redirect (redirect still needs prev.logReady); (2) tiny label fix: a seat missing from the managers list shows meta.seatNames[mid], else 'Empty seat' for a placeholder (meta.over[mid].ph), else 'Former manager' as before (spectator first paint showed 'Former manager' for ~2-5 s). redraft.js not changed.
+- League (League-owned, copied after md5 check): js/leaguehome.js 4d9521fc44c34a9bffb26358d6908b66 (STOOPIDS PRESENTS hero line + BUG 1 fix), css/league-app.css aa0f43fa15ad4362f5cf658da698e2b4 (BUG 3 fix + hero). Other old-s27 League files unchanged (power-gen.js, league-bets.js).
+- Tooltip reword: no tooltip text change found in the s27 sources; nothing changed for it. RANK_OK widening is in tests/test_core.js only.
+- Tests: s27 test versions taken where only s27 changed them; test_core.js 3-way merged; League tests/e2e_hero_pres_s27.js added.
+
+| file | md5 | owner |
+|---|---|---|
+| js/room.js | c1595e71af07c84ff49d966bf5f5a4ab | Draft Room |
+| js/core.js | 9fd6efaf2558358fd9a24c36a1a281f7 | Draft Room |
+| css/app.css | 06173ddc96291285e81e7231e2bbc266 | Draft Room |
+| js/version.js | 8121f43fa25eac2783ca7c4afa8a3c3b | Draft Room (build 2026-11-01s27b) |
+| sw.js | 8eff1c214d333e0442d448bc4a547aa1 | Draft Room (line 3; cache fbnc-2026-11-01s27b) |
+| js/leaguehome.js | 4d9521fc44c34a9bffb26358d6908b66 | League |
+| css/league-app.css | aa0f43fa15ad4362f5cf658da698e2b4 | League |
+| js/recap.js, js/ui.js, js/mock.js, js/mock-bots.js, js/power-gen.js, js/league-bets.js | = old s27 | DR2 / League |
+
+# s26c16c (build 2026-11-01s26c16c): hotfix on LIVE s26c16b (QA s27 BUG 2: Back to Draft bounced to the recap)
+Base: LIVE s26c16b = /workspace/fantasy-bball-releases/s26c16b (git bb00eec). Staged only, not published. Only js/room.js changed in code; core.js and every League-owned file unchanged. tests/, shots/, node_modules, __pycache__, .git not in MD5SUMS.
+- Cause: a natural finish left meta status 'live' with endedAt null. On opening room.html the board first derives 'live' (pick log still loading), then 'complete' once all 64 picks load, and onState() took that as "the draft just ended" and sent the page to recap.html 1.8 s later.
+- Fix 1 (room.js onState): the auto-open of the recap only happens when this page had already seen the draft live with the full pick log loaded (prev.logReady). A page watching the last pick still opens the recap; a finished draft opened later (Back to Draft, League 'Draft room') stays on the board. Works for old leagues whose meta is still 'live'.
+- Fix 2 (room.js markDone): the device that saves the final pick (#rounds*8 = 64; owner/commissioner pick or auto-pick) writes meta status 'complete', endedAt = server time, endedEarly false, paused off, through the same mutateMeta path as End draft (F.mEnd) but without endedEarly. No-op if meta is already complete or has endedAt. League draftComplete() already counts every-pick-made as done; it now also sees endedAt (and recap.js uses endedAt for the draft time span). endedEarly stays false, so the Redraft is not affected.
+- No betting or money wording.
+
+| file | md5 | owner | why |
+|---|---|---|---|
+| js/room.js | 0fed80ec3d63a8602552d4f0470ba5c4 | Draft Room | onState redirect needs prev.logReady; markDone() after the final pick |
+| js/version.js | c3f0a7e328b69a4df2e6e559517af9b6 | Draft Room | build 2026-11-01s26c16c |
+| sw.js | 81f8040dcc54741a7886cce2ca46fcfd | Draft Room | line 3 comment; cache -> fbnc-2026-11-01s26c16c |
+| tests/e2e_backtodraft_s26c16c.js | a86dbfede2a5b12ba9cfc292f3b62422 | Draft Room | new e2e: no bounce + final pick completes meta (fails on s26c16b, passes on s26c16c; not in bundle) |
+| tests/shot_board_done_s26c16c.js | e6a3de4efb9c2d313814dcf7d7e8ea82 | Draft Room | board shots after completion (not in bundle) |
+| CHANGED-FILES.md | (this file) | Draft Room | s26c16c section |
+| MD5SUMS.txt | - | Draft Room | regenerated |
+
+# s26c16 (build 2026-11-01s26c16): start the draft with fewer than 8 managers (placeholder seats), fixed lobby order with empty rows, Lock order
+Rebased onto LIVE s26c15 = /workspace/fantasy-bball-releases/s26c15 (MD5SUMS 09c15fb7; Teams name-pill drafting kept: css/app.css and the s26c15 room.js changes untouched). First built on s26c14 (MD5SUMS 2f869a40). Staged only, not published. No League-owned file changed; js/shared-s25.js 8bdd1fd8d7928c3c7e085de801925234 (unchanged). tests/, shots/, node_modules, __pycache__, .git not in MD5SUMS.
+- Start with fewer than 8: the lobby order always shows 8 rows (joined managers + 'Empty seat' rows e1..e8, kept in meta.order). At Start (commissioner button or auto-start at startAt) each empty row gets a placeholder seat in ITS row (slot claim w:'ph:<row id>', same seat-claim mechanism as mock fillBots, secret thrown away; NOT a bot). Name = the name the commissioner typed on the row (meta.seatNames) else 'Seat N'. meta.over[mid].ph marks it.
+- Placeholder picks: the normal missed-pick auto-pick at clock-out (queue, then KenPom meta.o); with no pick clock it is picked at once (never stalls).
+- Re-issue link on a placeholder seat clears the ph mark; the seat keeps its mid and picks and is a normal manager.
+- Order: real leagues start in the order exactly as listed (no shuffle, no auto-spin; Paul); spin button/wheel hidden in real leagues (code kept; localhost-only test hook localStorage fbn.spin=1). Mocks: random mode shuffles placeholders in; manual/orderSet keeps rows. 8 joined: F.mStart order identical to s26c14 for the same inputs (unit test, 40 seeds); NOTE real leagues now pass fixed:true from room.js, so an 8-joined real league in orderMode random with no saved order starts in the listed order instead of a shuffle (Paul's no-spin decision).
+- Lock order (commissioner switch in the lobby, meta.orderLock): rows cannot move; a joiner takes only an unnamed empty row; if none is left join.html refuses with a plain message (the seat is filled by Re-issue link); Start uses the order exactly.
+- Lobby: Start enabled once anyone has joined; confirm says 'N empty seats will be auto-picked'. No betting or money wording.
+- core.js changes League could see: new F.isEmptyId/F.lobbyOrder/F.mSeatName/F.mOrderLock/F.canJoinLocked/F.placeholderName/F.mClaimPh; F.mStart/mMove/mSetOrder/mRandomize/autoReason/deriveState extended (st.ph). League files don't call these lobby functions; meta.order may now contain e1..e8 ids before Start only (removed at Start).
+- Placeholder queue: same per-seat pref key K.pref(mid). With tools unlocked the commissioner opens any manager's sheet (Managers card / 'Add to <name>'s queue') and adds, reorders, removes queue teams; auto-pick at clock-out uses the queue first, then KenPom. After a Re-issue claim the seat keeps its queue and picks (same mid).
+- My Team (NCAA ask): the commissioner (tools unlocked) viewing ANOTHER manager (real or placeholder) sees '<name>'s queue' with remove (x) and up/down (actQueue/actQMove with that mid) and an 'Add to <name>'s queue' button. Non-commissioner devices unchanged.
+- Fix found in rebase testing: the empty-row name Save used $('#id') (UI.$ is getElementById); now works (e2e types a name on row 7).
+
+| file | md5 | owner | why |
+|---|---|---|---|
+| js/core.js | 3436336874dec2ee064e73d6b543d739 | Draft Room | placeholders, lobby order with empty rows, Lock order, autoReason for ph |
+| js/room.js | a80e9ba307806c05cbcd5047bf010b52 | Draft Room | s26c15 room.js + placeholders at Start/auto-start, order rows/names/Lock order, confirm text, Re-issue claims ph, commissioner queue editing (sheet + My Team), wheel hidden in real leagues |
+| js/join.js | 9c90e23a62811449502ab8df25ae9cf1 | Draft Room | Lock order join refusal |
+| js/version.js | 4e9bff38d0b69019b85119928d80ef46 | Draft Room | build 2026-11-01s26c16 |
+| sw.js | 327bf68a23c8efc18fec4e99e40caee6 | Draft Room | line 3 comment; cache -> fbnc-2026-11-01s26c16 |
+| tests/e2e_absent_s26c16.js | 03ae45bab09d9d379b39ef9c52122dbb | Draft Room | new e2e (not in bundle) |
+| tests/test_absent_s26c16.js | 17f339c81a904c9e42f9a035fbf67584 | Draft Room | new unit (not in bundle) |
+| tests/e2e_draft16.js | 22c201437294640ea1460eaef93d6776 | Draft Room | 7-joined expectations now: Start enabled, confirm, auto-start with a placeholder; spin test hook (not in bundle) |
+| tests/test_core.js, tests/test_tworanks_s26c14.js, tests/e2e.js (not in bundle) | - | Draft Room | empty rows / autoReason / spin test hook |
+| CHANGED-FILES.md | (this file) | Draft Room | s26c16 section |
+| MD5SUMS.txt | - | Draft Room | regenerated |
+
+# s26c15 (build 2026-11-01s26c15): s26c14 + Teams name pill drafts (no separate Draft box)
+Base: LIVE s26c14 = /workspace/fantasy-bball-releases/s26c14 (MD5SUMS 2f869a40). Staged only, not published. js/shared-s25.js 8bdd1fd8d7928c3c7e085de801925234 (unchanged). tests/, shots/ not in MD5SUMS.
+- Teams list (Paul 'no need for another draft box'): the yellow Draft button is removed from Teams rows. On your turn (or the commissioner picking for someone) the team name pill is the Draft action: button.tm.dbtn data-a=draftrow -> the same confirmDraft -> confirm sheet -> doPick path (pick path unchanged). Yellow outline, >=48px, aria-label 'Draft <team>'. Off turn: plain name, no action (as s26c14). Q+ Queue button kept (48px; hidden for spectators). Hint text 'tap a team name to draft it.'
+- Tests updated: e2e_teams_tap_s26c14, e2e_rowtap_s25g, e2e_espn; new tests/shot_teams_pill_s27.js (pill -> confirm -> pick lands; cancel leaves no pick; off turn nothing).
+
+| file | md5 | owner |
+|---|---|---|
+| css/app.css | 486b1ad392417d891e4c25161f6e14e6 | Draft Room |
+| js/room.js | d7e27229f048d6564a99a1de842566cc | Draft Room |
+| js/version.js | fa5e7de132fee62d8a01e768bf7caa42 | Draft Room |
+| sw.js | 42fe99bd8acabaf6f73f70b8420f4060 | Draft Room |
+
+# s26c14 (build 2026-11-01s26c14): Draft Room two ranks (STOOPID rank + Power rank/KenPom), auto-pick queue-then-KenPom, o/p blend for mock bots + grades, Rules tab, Draft-button-only picking, BUG-1/BUG-2 + League s26c14-league-full
+Base: /workspace/fantasy-bball-releases/s26c13 (MD5SUMS 6e4bd13f). Staged only, not published. js/shared-s25.js 8bdd1fd8d7928c3c7e085de801925234 (unchanged). tests/, shots/, node_modules, __pycache__ not in MD5SUMS.
+- Ranks: STOOPID rank = meta.p (label renamed from "Power rank"); Power rank = new meta.o = KenPom 2026-27 preseason ratings rank for all 365 teams (/workspace/kenpom/kenpom_o.json via tools/kenpom_rank.py: 365/365 matched, 20 explicit aliases, kenpom_unmatched.txt empty d41d8cd98f00b204e9800998ecf8427e). Credit is the single constant F.RANK_SRC='KenPom 2026-27 preseason ratings'; no Torvik/GordStats credit anywhere. Teams sort pills STOOPID rank / Power rank (tap again to reverse), row badge "S #p / P #o", '–' when missing.
+- Auto-pick (every path: Auto-pick switch, clock expiry, Auto-draft me): queue first, then best KenPom rank (o); teams without o last, p as tie-break. Rules: "Auto-pick: queue first, then KenPom rank."
+- Mock bots + draft grades: blended rank F.blendRank(meta,wo) = wo*o + (1-wo)*p, teams with p always ahead of teams without p (no-p default p = maxP + o, KenPom order among them). Grades (F.teamStrength / rosterRatings) 50/50; bots without personality 50/50; personalities wo: chalk .5, bigconf .4, value .7, upside .6, homer .3, balanced .5 (guard windows unchanged). NOTE: the finished-draft grade from League js/power-gen.js (schoolScore) still uses p - League-owned, not edited.
+- Rules tab between Chat and More (Board, Teams, My Team, Chat, Rules, More): Draft Rules + League Rules link (league.html?l=<id>#rules, hidden in mocks); header Rules buttons and the post-draft More Rules card removed; lobby buttons kept. Draft Rules section 10 Rankings (3 points). "about 3 seconds" wording.
+- Safety: a team is drafted only via its own Draft button + confirm (row/name taps never pick); Queue button 48px tall, labelled, >=8px (10px) gap from Draft. Commissioner picking-for-someone gets Draft buttons (no Queue).
+- Who are you? picker: "Just watching (spectator)" first, full width, 48px.
+- test_core: exact label "STOOPID rank" allowlisted in the live-pool word check; roster strength test now on the blend. KenPom alias table: 21 explicit entries (LIU added; it already matched).
+- NOT done: meta.completed_at/endedAt on a natural finish (touches the pick path; League handles it in draftComplete).
+- Lobby: grey "UTC · Commissioner’s zone" line under the start time removed (render only, room.js).
+- BUG-1: group mock personalities run on every joined device (shared meta.mockOpts), one pick per slot. BUG-2: no-clock undo hold (10 s) confirmed by test (KEPT). Pre-draft synced countdown NOT included (see s26c14-countdown-status.txt).
+
+| file | md5 | owner | why |
+|---|---|---|---|
+| assets/teams.js | 536e882a44b318e0b08ef96c80c9b6c2 | Draft Room | s26c14 |
+| css/app.css | 9125642b9b69a34842547bebd447cced | Draft Room | s26c14 |
+| css/league-app.css | 2a39e8668e41074ff1408f2c555f6964 | League | s26c14 |
+| js/core.js | 6905f1c92dbc25af2b475997cff38764 | Draft Room | s26c14 |
+| js/league-bets.js | ad8fbcb71ffc55ac4ebe51b261dc2d08 | League | s26c14 |
+| js/league-d.js | e75167362ea9a9353aa44946763c9634 | League | s26c14 |
+| js/leaguehome.js | 50ca9b4ffea230f20f2262326346e04c | League | s26c14 |
+| js/mock-bots.js | bf2c25253e672ef3952b0fd06e42ad13 | Draft Room | s26c14 |
+| js/mock.js | abfa3575297de542ad98245944481d02 | Draft Room | s26c14 |
+| js/power-render.js | 271969c72964545d5c71610cc563a8f7 | League | s26c14 |
+| js/room.js | 084e2a9951dc78562a2847ededf3f0f6 | Draft Room | s26c14 |
+| js/rules.js | b6c40f01a574e3c88d516c6c075879f3 | Draft Room | s26c14 |
+| js/version.js | 89ed85d54cdb994df66133a83554a239 | Draft Room | s26c14 |
+| sw.js | 4c2bb6f84e46568b77f1f35e2e179f1d | Draft Room | s26c14 |
+| tools/kenpom_rank.py | be1290331d89ff8782ac60ce0b8143b9 | Draft Room | s26c14 |
+
+League section (top of /workspace/league-site-work/s26c14-league-full/CHANGED-FILES.md, md5 ea2a1227, MD5SUMS 08e9fbac):
+# s26c14-league-full (League, on s26c13-league-full): STOOPID rank (p) + Power rank (o, KenPom 2026-27 preseason ratings) in the Rosters school detail
+Base: s26c13-league-full (MD5SUMS f2c11ffce33ba029380d6faf5aa1017c). Staged only, not published. core.js / version.js / sw.js / assets/teams.js untouched (Draft Room owns; o arrives via teams.js meta[espnId].o in DR s26c14).
+p was not shown anywhere in League files before (only Draft Room / power-render recap card label, now 'Avg STOOPID rank'); All teams table has no room at 320/390, so both ranks go in the Rosters › school detail (tap a school row). Grades/sorting stay on p.
+| file | md5 | owner | why |
+|---|---|---|---|
+| js/leaguehome.js | 50ca9b4ffea230f20f2262326346e04c | League | draftComplete(): a natural finish (every pick made, no endedAt from Draft Room) also counts as complete, so the Draft tab shows the pick board; Rosters detail: 'STOOPID rank: #p' + 'Power rank: #o' pills, note 'Power rank: KenPom 2026-27 preseason ratings', '–' when missing (rkNum/rkPills); Games toggle labels 'Upcoming' / 'Past' (no emoji, no counts); header: 'Standings updated' line and Refresh Live Games row removed, title + tagline centred; Refresh Live Games + 'Last updated <time>' at the top of the Games tab (liveRow); footer line 'Standings last updated <time>'; view-only guards (sendChat, urlSignIn, heroWrite return under window.LVIEW); first lines: #bets/<id> / #games/<id> cleaned to the tab hash on reload / repeat open (s26w) |
+| css/league-app.css | 2a39e8668e41074ff1408f2c555f6964 | League | .rkp pills; S26C14-VIEW (html.viewonly hides chat form, bet actions, quick-bet, photo controls); S26C14-HDR (centred title, Games-top live row, footer line); S26C14-PARITY (tab labels 12px on phones, desktop pill tabs with inline icon, pill school chips, footer 14px side padding) |
+| tests/e2e_torvik_o.js (not in bundle) | 031f7c9159a27d060ab0c0fd780fad2e | League | with-o / without-o, 320/390/1280; real o from /workspace/kenpom/kenpom_o.json (names mapped to ESPN ids, 344/365) else torvik_o.json else mock; source line KenPom |
+| js/power-render.js | 271969c72964545d5c71610cc563a8f7 | League | Recap grade card label 'Avg power rank' -> 'Avg STOOPID rank' (text only) |
+| tests/e2e_s23.js (not in bundle) | cc09d8deccc8ad183e069c6dcf93e2ff | League | expected label 'Avg STOOPID rank' (B2 check + header comment) |
+| js/league-d.js | e75167362ea9a9353aa44946763c9634 | League | top: ?view=1 view-only mode (sessionStorage fbn.view; identity keys fbn.me.*/fbn.cm.* read empty and can't be written; every non-GET fetch/XHR/sendBeacon refused; html.viewonly); history.scrollRestoration='manual' |
+| js/league-bets.js | ad8fbcb71ffc55ac4ebe51b261dc2d08 | League | append() refuses under window.LVIEW (view-only) |
+| tests/league_step.js (not in bundle) | c0148a7f1364cd45a29a958be144a12c | League | Games toggle expects exactly Upcoming / Past |
+| tests/e2e_postdraft_s26c14.js (not in bundle) | 32dd76851193436e9298a31eb4557395 | League | new: completed 8x8 BALL DON'T LIE mock, every tab 320/390/1280 + pick-64 timing |
+| tests/e2e_view_s26c14.js (not in bundle) | 912196b44e8ff5cc02ea2e0b47e08974 | League | new: ?view=1 zero writes, guest forced, identity untouched, open-at-top, no sticky bet hash |
+| tests/e2e_live_s26c14.js (not in bundle) | c5871655b3415f8e033298d4e90da85c | League | new: mock ESPN live->final moves Upcoming->Past without reload; poll gaps; focus; standings unaffected |
+| tests/e2e_header_s26c14.js (not in bundle) | caee8f6be4f491dcb1c5f3a260c2429c | League | new: header/footer/Games-top live row, 320/390/1280 |
+Not done here (Draft Room files): room.js 'Who are you?' picker 'Just watching' button; core/room do not set meta.endedAt on a natural finish (League now handles it in draftComplete); test_core 'stoopid' word rule vs the approved 'STOOPID rank' label.
+
+
+# s26c13 (build 2026-11-01s26c13): League s26c13-league-full + Draft Room s26c9 (UI compaction + lobby) + s26mo4 (mock bot personalities) + s26c11-conf, on live s26c8b
+Base: live c96e05d (tag 2026-11-01s26c8b) = /workspace/fantasy-bball-releases/s26c8b (MD5SUMS.txt md5 d175568dd7291dc7fa308c21944f3af1; = live eca8125/s26c11 + Auto-draft me toggle in js/core.js, js/room.js, js/rules.js). Staged only, not published. js/shared-s25.js 8bdd1fd8d7928c3c7e085de801925234 (unchanged); js/core.js 0469b8648e5b27afa7e7ee0a18c2f320 (s26c8b, unchanged). tests/, shots/, node_modules, __pycache__ not in MD5SUMS.
+Merges: League files taken whole from s26c13-league-full (MD5SUMS f2c11ffc; vs live only assets/teams.js, css/league-app.css, js/leaguehome.js, .nojekyll differ). s26c9 deltas vs s26c8a and s26mo4 deltas vs s26c8a applied (no file overlap between them). js/room.js and js/rules.js 3-way merged (s26c8a/s26c11 base, s26c9, s26c8b): room.js tickClock keeps the s26c8b Auto re-pick hold countdown + the s26c9 lobby countdown hero; lobby order rows keep the s26c9 viewer highlight/YOU tag + the s26c8b 🤖 AUTO badge. rules.js: s26c8b Autopick text; section 8 Scoring, section 9 "Can’t make the draft?" (s26c9 order, title and .r2miss layout, ids r2_miss/r2_missclk) with the 3 s26c8b points (queue, clock, Auto-draft me). Auto-pick wording "about 2 seconds" -> "about 3 seconds" (QA measured ~3 s; delay code unchanged). tools/refresh_data.py + data/FORMAT.md from s26c11-conf (League's copies were identical to live, so no conflict).
+
+| file | md5 | owner | why |
+|---|---|---|---|
+| assets/teams.js | 208a42ea0268c4dc172a193c27d9abf0 | Draft Room 2 (via League) | 365-team pool (s26c12-pool) |
+| js/leaguehome.js | fe4679701323039e91ba7d12487ecf78 | League | s26c13-league-full: pre-draft 📖 Rules tab (#rules), 365 pool readiness |
+| css/league-app.css | 40ab6e51735f527272774499450167aa | League | s26c13-league-full |
+| .nojekyll | (empty) | League/live | from live |
+| js/room.js | 008b93a9525c6a3305d59ae520ff4fd7 | Draft Room | s26c9 (a360c08c) + s26c8b toggle (5bb6fe35), merged |
+| js/rules.js | c141e381ea1ce3f6ae9bd0555d05fdcf | Draft Room | s26c9 (95ee6d1e) + s26c8b (29ed1c91), merged; "about 3 seconds" |
+| js/recap.js | 563093cd2e3f54dcc3fdaefd0ee78286 | Draft Room | s26c9 League site new-tab rule |
+| css/app.css | c4050f822fda71bbbdee8fe88022ef3d | Draft Room | s26c9 blocks |
+| js/mock-bots.js (new) | adcb1f00426208a96dc0242dc04c627b | Draft Room | s26mo4 personalities |
+| js/mock.js | 1f84b4b0e795cf0f765369c6bea2af8a | Draft Room | s26mo4 (MOCK_CUSTOMIZE_LINK=true) |
+| mock.html | 8651de3c384a5387ec19ec8c1dc594e4 | shared | + js/mock-bots.js |
+| room.html | dc5dc90e7dd8ad325b34f5fb28fe1425 | shared | + js/mock-bots.js before js/mock.js (only change vs live) |
+| tools/refresh_data.py | 6559e8a171d431e60a937caaaaf65b8f | Draft Room | s26c11-conf annotate_net |
+| data/FORMAT.md | cf4fc8b4afa5beeab4d4bd9c8b62d78a | League/Draft Room | s26c11-conf |
+| js/version.js | 1a5020f090f4b8d58b580ba13f53173f | Draft Room | FBN_BUILD 2026-11-01s26c13 |
+| sw.js | 2543f36726c07e3549e0f7ac163e9f0d | Draft Room | line 3 comment; js/mock-bots.js in SHELL; cache fbnc-2026-11-01s26c13 |
+| CHANGED-FILES.md / MD5SUMS.txt | - | Draft Room | this section; regenerated |
+
+Tests (not in bundle): League's e2e_league_tabs, e2e_power_recap, league_step, tabs_exp, e2e_wordscan (USD team code exempt), e2e_allteams, e2e_pool365_s26c12, e2e_prerules_s26c13; s26c9 e2e_lobby_s26c9 (now 3 points incl. Auto-draft me), e2e_more_pd_s26c9, e2e_rules_dr2, e2e_sitelink; s26mo4 e2e_mock, e2e_mock_options_s26, e2e_undo_repick_s26c8a, sim/shots; s26c11-conf test_refresh_conf.py; s26c8b autodraft tests. Fixed: e2e_chips SEC 16 (was 12); e2e_stage5 Teams each cap 15 at 12 managers (was 13); e2e_mock_opts_c8 APP/SHOTDIR from env (no port 18731), #m_bots optional, now exits 1 on a bad run; e2e_draft16 accepts "<name> League site →"; e2e.js: lobby hero "SCHEDULED IN" case-insensitive, pre-draft league page may show Rules/Recap/Draft tabs but no standings tabs, and the end-of-draft check accepts the s23 recap jump (see below).
+e2e.js 'Draft complete' timeout: not slowness. A room open when the last pick lands shows Draft complete and jumps to recap.html ~1.8 s later (s23 item 9). The phone that makes pick #48 sees it first; by the time the test has waited for the commissioner's banner and read 48 entries, that phone is already on recap.html, so polling #banner can never match. All 8 phones reach the end within 2 s of the last pick at 365 rows (logged per phone). The test now counts the recap jump for this league as complete; timeout unchanged.
+
+# s26c8b (build 2026-11-01s26c8b): Auto-draft me (opt-in fast auto-pick) + Rules 'Can't make the draft?', on live eca8125 (tag 2026-11-01s26c11)
+Base: git eca8125 (= /workspace/fantasy-bball-releases/s26c11 app files; this CHANGED-FILES.md continues the s26c11 release copy). Staged only, not published. Draft Room files only; no League-owned file changed; js/shared-s25.js 8bdd1fd8d7928c3c7e085de801925234. Rebase onto s26c13: core.js/room.js/rules.js are untouched by s26c9..s26c13 League work, so they copy over as-is; bump version.js/sw.js.
+Design: switch = the manager's own pref doc (K.pref(mid).auto, league-scoped, set in the lobby or during the draft). Only that manager or the commissioner can switch it (F.canSetAuto). Auto/away turns use the existing autoReason/autoChoice path (queue, then best power rank, unranked last, then seeded random) and the deterministic auto id; picked 2 s after the turn began (F.AUTO.delayMs); pref re-read before submit so OFF cancels. After an Undo the slot waits 10 s from the Undo (meta.resumeAt + F.AUTO.undoHoldMs) or the clock + grace, whichever first, shown as 'Auto re-pick in Ns'; re-pick gets the s26c8a u1 suffix. Badge: 🤖 AUTO on the clock card, lobby order list, board header, manager list.
+
+| file | md5 | owner | why |
+|---|---|---|---|
+| js/core.js | 0469b8648e5b27afa7e7ee0a18c2f320 | Draft Room | +F.AUTO, F.autoBase, F.canSetAuto, F.autoDelayMs, F.undoHoldUntil (7 lines inserted before F.autoChoice) |
+| js/room.js | 5bb6fe3589b22916932664fdc7b0797d | Draft Room | syncPrefs/pollOnce load all managers' prefs (badge); actAuto permission guard; autoTick 2 s delay from turn start, undo hold 10 s, fresh pref re-read; banner AUTO tag + countdown; tickClock countdown; AUTO badges (order list, board header, managers card); My Team 'Auto-draft me' card; click action autodraft |
+| js/rules.js | 29ed1c9185222ce2311ca0a58316bd99 | Draft Room | Autopick text (about 2 s; Undo waits clock or 10 s); new section 8 'Can't make the draft?' (3 points); Scoring now 9 |
+| js/version.js | 9d0c7b8947fa09c64cab2a705377467d | Draft Room | build 2026-11-01s26c8b |
+| sw.js | 58794b1dd721869a4c7cf500f7db1380 | Draft Room | line 3 comment; cache fbnc-2026-11-01s26c8b |
+| tests/test_autodraft_s26c8b.js, tests/test_unranked_pool_s26c8b.js, tests/e2e_autodraft_s26c8b.js, tests/bulk_autodraft_s26c8b.js, tests/shots_s26c8b.js (not in bundle) | - | Draft Room | new tests |
+| tests/e2e_autopick_instant.js (not in bundle) | ecd2b58c2106485be38af19d86370561 | Draft Room | expectation: pick 5 within 4.5 s of pick 4 (2 s delay by design) |
+| CHANGED-FILES.md / MD5SUMS.txt | - | Draft Room | this section / regenerated |
+
+# s26c11 (build 2026-11-01s26c11): League-only release on s26c8a, League files from s26c11-league-full
+Base: /workspace/fantasy-bball-releases/s26c8a (MD5SUMS.txt md5 7dec44f38f88a77ee8dc883e382300e6) plus the League-owned files from /workspace/fantasy-bball-releases/s26c11-league-full (MD5SUMS.txt md5 f90beb79c477b1e8d85e502ecb79aa7f). Staged only, not published. s26c11-league-full differs from s26c8a in no Draft Room file; js/shared-s25.js 8bdd1fd8d7928c3c7e085de801925234. tests/, shots/, node_modules, __pycache__ not listed in MD5SUMS.
+
+League: Games cards (aligned pills, one-line owner row, no empty score box before tip-off); Standings > Breakdown (one row per school, same-width pills, one column per category + Tot); All teams (Team, Owner, Rec, Pts, Conf, AP, NET; owner filter chips); conf mapping (normalised conf names/ESPN codes via CFS, net.json ranks[].conf fallback, '–' until known).
+
+| file | md5 | owner | why |
+|---|---|---|---|
+| league.html | 20d047f6fc4424e7521baac3f5781940 | League | from s26c11-league-full (s26c10: power.css / power-gen / power-render for the Recap tab) |
+| js/leaguehome.js | 825c0b7138b69061e37e62e3a82770df | League | from s26c11-league-full: All teams Pts/Conf/owner filter, Breakdown, Games cards, Draft + Recap tabs (s26c10) |
+| js/league-d.js | 08c81b13210f8f7e80baf64074e017ba | League | from s26c11-league-full: LRANK.netConfOf conf fallback |
+| css/league-app.css | b9a6e7a038d730d3507b4c8be7ec533a | League | from s26c11-league-full: All teams, Breakdown, Games, Draft/Recap tab rules |
+| js/version.js | 620087c42f9ec1642117e6273a5d7963 | Draft Room | build 2026-11-01s26c11 |
+| sw.js | 66343772c1ed0614b560ae91ddb17c36 | Draft Room | line 3 build comment; cache -> fbnc-2026-11-01s26c11 |
+| tests/e2e_allteams_s26c11.js, e2e_gamecards_s26c11.js, e2e_breakdown_s26c5.js, e2e_drafttabs_s26c10.js, e2e_toptabs.js (not in bundle) | see report | League | from league-site-work/tests-s26c8 |
+| tests/mock10_s26c11.js (not in bundle) | - | Release | 10 solo mocks + league.html Games/Breakdown/All teams check |
+| CHANGED-FILES.md / MD5SUMS.txt | (this file) | Release | s26c11 section; regenerated |
+
+## s26c8 (update): js/leaguehome.js 59adf7e0 from League s26c10-league (SUB declared before topNow; fixes league.html init error)
+
+# s26mo3 (build 2026-10-31s26mo3): queue drag-to-reorder fix + Show picked toggle + 'Draft order updated' toast, on s26c7s + s26mo2
+Base: /workspace/fantasy-bball-releases/s26c7s (MD5SUMS.txt md5 20bb0d28a9b84b4ed468b743cd3984e1) plus js/mock.js, js/ui.js, js/recap.js from s26mo2 (s26-mock-options). Staged only, not published. No League-owned file changed; js/shared-s25.js 8bdd1fd8.
+
+| file | md5 | owner | why |
+|---|---|---|---|
+| js/room.js | 2d95ea5c280da7a18d45b119e20aaf5c | Draft Room | s26c6s REG-1 room.js (fcfe8df8) + queue rows get a drag grip (pointer events, touch-action:none) for touch/mouse reorder; 'Show picked' chip (fbn.showpicked, off by default); 'Draft order updated' toast for non-commissioners (debounced, not on first load / wheel spin) |
+| css/app.css | e689583c4d431f8e19da0145bf0b4eb2 | Draft Room | s26c6s app.css (36b60bf3) + .qgrip / .qrow.qdrag rules appended |
+| js/mock.js | 35170418ed281974ec4edc467357a817 | Draft Room | from s26mo2 |
+| js/ui.js | 5aa18165b81a3f7791885f84dd19a04d | Draft Room | from s26mo2 |
+| js/recap.js | 6e54a3d4ca444814432b7c39d6d11517 | Draft Room | from s26mo2 |
+| js/scoring.js | dea3951c79015c462034d16d386d2548 | Draft Room | from s26c7s |
+| js/version.js | 888682c77fb28c69caafadcc3b851116 | Draft Room | build 2026-10-31s26mo3 |
+| sw.js | 78e896058368cebbd0aa640f7828bc1a | Draft Room | line 3 build comment; cache -> fbnc-2026-10-31s26mo3 |
+| tests/e2e_queue_touch_s26mo3.js (not in bundle) | b3ead7e9773a2d5b370c800a6ca82d41 | Draft Room | new e2e (Playwright, touch at 390) |
+| tests/e2e_showpicked_order_s26mo3.js (not in bundle) | 1fbda12b043cc9253c0d8033bc8f7e0f | Draft Room | new e2e (Playwright, touch at 390) |
+| CHANGED-FILES.md | (this file) | Draft Room | s26mo3 section |
+
+# s26c7s (build 2026-10-31s26c7s): s26c7 (STOOPIDS conference points) rebuilt on s26c6s
+Base: /workspace/fantasy-bball-releases/s26c6s (MD5SUMS.txt md5 0c9f2aad2e5e6508586e8c86a5527d2a). Staged only, not published. Only js/scoring.js (from s26c7r) added vs s26c6s. No League-owned file changed; css/app.css 36b60bf31b742d92cfcd183ba79e193b; js/shared-s25.js 8bdd1fd8d7928c3c7e085de801925234. tests/, shots/, node_modules not listed in MD5SUMS.
+
+| file | md5 | owner | why |
+|---|---|---|---|
+| js/scoring.js | dea3951c79015c462034d16d386d2548 | Draft Room | from s26c7r/s26-confpts: conf_reg/conf_tourn, S.confPoints, S.leagueTotals |
+| js/room.js | fcfe8df8a6b46b3cc34dca6560ba608d | Draft Room | from s26c6s (REG-1 fix) |
+| js/version.js | d8c6fe002588512177bc48622016da98 | Draft Room | build 2026-10-31s26c7s |
+| sw.js | 01d1b9e5d8a30eb3334af5c0179881f2 | Draft Room | line 3 build comment; cache -> fbnc-2026-10-31s26c7s |
+| tests/test_core.js (not in bundle) | 1c370c8348101b56191d126ae9f8037f | Draft Room | expectations: also allow js/scoring.js comments naming the STOOPIDS 'win' / conf_reg rules |
+| tests/test_confpts.js (not in bundle) | 2512fdf1954dc0cc9af59c5e85456186 | Draft Room | unit tests |
+| CHANGED-FILES.md | (this file) | Draft Room | s26c7s section |
+| MD5SUMS.txt | - | Draft Room | regenerated |
+
+# s26c6s (build 2026-10-31s26c6s): fix QA REG-1 (s25m mock-room scroll jump) on s26c6r
+Base: /workspace/fantasy-bball-releases/s26c6r (= s26c6/s25m rebased on live 26dc465). Staged only, not published. No League-owned file changed; css/app.css unchanged (36b60bf31b742d92cfcd183ba79e193b); js/shared-s25.js unchanged (8bdd1fd8d7928c3c7e085de801925234). tests/, shots/, node_modules not listed in MD5SUMS.
+Root cause: s25m holdY() did window.scrollBy(0,dh) whenever the banner (On the clock card) was wholly above the viewport and changed height. In the mock room bots pick every few seconds, so the banner changes height on most picks and scrollY moved 24-25 px each time (Teams +24, More -25 at 390). Fix: while the banner is above the viewport its height is frozen (height + overflow:hidden, nothing of it is on screen), so neither content nor scrollY moves; it is released when it scrolls back into view (one scrollBy only if still scrolled past its top). BUG-3 Teams anchor still dy=0.
+
+| file | md5 | owner | why |
+|---|---|---|---|
+| js/room.js | fcfe8df8a6b46b3cc34dca6560ba608d | Draft Room | REG-1: holdY freezes an off-screen banner instead of scrollBy(dh) |
+| js/version.js | 33496342bcbf7ad12669613619f32fca | Draft Room | build 2026-10-31s26c6s |
+| sw.js | 874b330a7c8971862a8aa0da1b5c0e98 | Draft Room | line 3 build comment; cache follows FBN_BUILD -> fbnc-2026-10-31s26c6s |
+| CHANGED-FILES.md | (this file) | Draft Room | s26c6s section |
+| MD5SUMS.txt | - | Draft Room | regenerated |
+| tests/test_core.js (not in bundle) | 1c370c8348101b56191d126ae9f8037f | Draft Room | expectations: allow the s26c STOOPIDS 2026-27 import references in js/recap.js and README |
+| tests/e2e_profile_btns_s25g.js (not in bundle) | c141955cc6608073fe7c17f58ece6c07 | Draft Room | expectations: under 360 px labels may wrap to 2 lines (s25m BUG-2), never clipped, >=44 px |
+
+# s26c6r (build 2026-10-31s26c6r): s26c6 (= s25m Draft Room fixes) rebased onto live 26dc465 (tag 2026-10-31s26mo)
+Base: live commit 26dc465 = /workspace/fantasy-bball-releases/s26-mock-options (MD5SUMS.txt md5 39c6179492f027d67b6ef1db81c1a564; all app files byte-identical to the repo at 26dc465). Staged only, not published. No conflicts: s26c6 changed css/app.css + js/room.js vs s26c4, live s26mo changed js/mock.js + mock.html vs s26c4; disjoint. mock.js/mock.html kept from live. No League-owned file changed; js/shared-s25.js unchanged (8bdd1fd8d7928c3c7e085de801925234). tests/, shots/, node_modules not listed in MD5SUMS.
+
+| file | md5 | owner | why |
+|---|---|---|---|
+| css/app.css | 36b60bf31b742d92cfcd183ba79e193b | Draft Room | from s26c6/s25m (loader size, BUG-1 alert bar, BUG-2 profile buttons <360px) |
+| js/room.js | 799dc0e3d7ce38f413191d983dfa7869 | Draft Room | from s26c6/s25m (BUG-3 holdY) |
+| js/version.js | c1fdb2c7f3760893ae7fde6aee0a1afa | Draft Room | build 2026-10-31s26c6r |
+| sw.js | 6f1a2e4918e267bcec341702d21819f5 | Draft Room | line 3 build comment; cache follows FBN_BUILD -> fbnc-2026-10-31s26c6r |
+| js/mock.js | 1cc07c3c42401757f817f6c4ba749799 | Draft Room | unchanged from live s26mo |
+| mock.html | 6332a6756cea5487f30b2cc3471b753a | Draft Room | unchanged from live s26mo |
+| CHANGED-FILES.md | (this file) | Draft Room | s26c6r section |
+| MD5SUMS.txt | - | Draft Room | regenerated |
+
+Tests: test_scoring 21/21, e2e_lobby_compact_dr2 25/25, mock.html smoke (390 + 1280, solo mock create, mock-keys-only) 12/12.
+
+# s26-mock-options (build 2026-10-31s26mo): changed files vs s26c4
+Draft Room staged test build (not published). Mock setup options: Your draft seat (Any (random) default, or 1-8; solo mocks: the order is fixed when the mock is made, so no wheel spin is needed and you land in your seat), Order (snake / straight = type linear, 1-8 every round), Pick clock (the room's F.CLOCKS: 30, 60, 90 sec, 2 min, 3 min, no clock), Bot draft style (best available / random). Query presets: mock.html?seat=1-8|any&order=snake|straight&clock=30|60|90|120|180|0&bots=best|random. No core.js / room.js change: the random bot style wraps F.autoChoice inside js/mock.js, only for a mock this device created (localStorage mockopts.<id>). New dev-copy test tests/e2e_mock_options_s26.js (not in the bundle). tests/, shots/ and node_modules not listed.
+
+| file | md5 | owner | why |
+|---|---|---|---|
+| js/mock.js | 1cc07c3c42401757f817f6c4ba749799 | Draft Room | seat, order, clock, bot style options; meta.mockOpts |
+| mock.html | 6332a6756cea5487f30b2cc3471b753a | Draft Room | inline style: option grid, selects min-height 44px |
+| js/version.js | dddd057c57b509124c68d04bcbfcb7ea | Draft Room | build 2026-10-31s26mo |
+| sw.js | 422a736718e6de5b64ae00d172131cca | Draft Room | build comment 2026-10-31s26mo (cache name follows FBN_BUILD) |
+
+# s26c2-loader (staged on 2026-10-31s26c2 / 76f05fe5; MD5SUMS.txt before md5 b9c8f5980308df031a34305559c26b30)
+Bigger bouncing-basketball loader (Paul): balls 30px -> clamp(56px,22vw,90px) via --bs; bounce height, shadow, gaps and "Loading…" text scale with it. Only the BALL-LOADER blocks changed. version.js / sw.js NOT bumped (Draft Room owns them).
+
+| file | md5 | why |
+|---|---|---|
+| css/league-app.css | 7d1af2d09adce41691998788dd9dc53a | BALL-LOADER block: huge balls |
+| css/power.css | 422f06d20e818a28f93262854539b3da | BALL-LOADER copy: huge balls |
+| CHANGED-FILES.md | (this file) | s26c2-loader section |
+
+# s26c2 (build 2026-10-31s26c2): changed files vs s26c (MD5SUMS.txt md5 028bfc8fa7f29b93c501b2f2ddb1b5f6)
+League-approved team names in the JSON, card headers and text; build bump. No League-owned file changed; js/shared-s25.js md5 8bdd1fd8d7928c3c7e085de801925234.
+
+| file | md5 | why |
+|---|---|---|
+| README.md | 262bee0799369fbf2298360c827e790f | s26c2 note |
+| import/README.md | c0a54150fbc6f123b758c2a7fccef478 | s26c2 note |
+| import/stoopids-draft-results.json | cb2f334310b363a0e1c6d957ba52bc4e | approved team names, build tag |
+| js/version.js | 7c1921767ab955e29cdcb9d16ed8feb8 | build 2026-10-31s26c2 |
+| sw.js | a0dfd08d9ac68c3982964792b1fc527a | cache follows build (comment) |
+| tools/gen_stoopids_import.js | 806c1ebcb679950c59121f0d77b3528e | team-name override map |
+| tools/stoopids-2026-27-text.js | 68b4e52ce8e8b897bb68f602a93ba901 | team names in text |
+| CHANGED-FILES.md | (this file) | s26c2 section |
+
+# s26c (build 2026-10-31s26c): changed files vs s25-full (2026-10-30s25l, MD5SUMS.txt md5 48957c8a1f000b6c8c2cb5c08f2411fa)
+STOOPIDS 2026-27 Draft recap from a static import: recap.html?import=stoopids-2026-27. Draft Room files only; no League-owned file changed (league.html, leaguehome.js, league-*.js, power-*.js, css/power.css, css/league-app.css, data/, help.html untouched); js/shared-s25.js md5 8bdd1fd8d7928c3c7e085de801925234 unchanged. Wisconsin (275) on Jake confirmed by Stoopids Site (overall 63, R8 P7), graded normally.
+
+| file | md5 | why |
+|---|---|---|
+| README.md | 85a362a734e132de8a2375eeaab3c4cc | s26c section |
+| import/README.md | e64c43f45fcff1ed2b863575ae9c80e9 | contract v1 spec, grading method, Wisconsin note |
+| import/stoopids-draft-results.json | 010c945a1e46f82409e7b4c6af2e1595 | contract v1 data (64 picks, 8 grades) |
+| js/recap.js | 1a855e97cd40670942d4d9e5bf6ede71 | import mode: 3 sections (Congratulations, Take a look at your draft recap!, League site) |
+| js/version.js | f83718e2beea5ce445e1759c260e0894 | build 2026-10-31s26c |
+| sw.js | dde0ac8afb22c640c7f2018da83a0393 | cache follows build; import JSON in SHELL |
+| tools/gen_stoopids_import.js | 2c88e77aafb9db3f192638bba3de421a | regenerates the import JSON with js/power-gen.js |
+| tools/stoopids-2026-27-text.js | 1632a74d4f523344a620b259cd30c425 | wording pass: hand-written 4- and 10-sentence text per manager |
+| CHANGED-FILES.md | (this file) | s26c section |
+
+Test-only: headless Chromium at 390 and 1280 px; screenshots in /workspace/fantasy-bball-releases/s26c-shots/.
+
+# s25-full (build 2026-10-30s25l): changed files vs s25b
+Draft room NCAA checklist (a)-(k), DR2 rules/lobby, SS recap grid, League restage merged. s25k: League leaguehome.js, league-bets.js, league-app.css re-copied unchanged from s25b-league; shared-s25.js kept (League b8c38b44 + QA focus({preventScroll:true}) at line 247). power-render.js md5 f41ca47bcf06390f70dd76b03c8df980 (League, unchanged by Draft Room). tests/, shots/ and node_modules not listed. s25l: version bump only (test-only fix: tests/xss_safe_exprs.json reviews the League Bets sub-tab exprs; no app file changed).
+
+| file | md5 | owner | why |
+|---|---|---|---|
+| CHANGE-NOTES-s25.md | fdb538b9a8247a3f56406fb69fa80031 | Draft Room | notes |
+| UNCLEAR.md | dc050cbfbdc4a7acac091c14b90bb9d0 | DR2 (merged) | new: merged as delivered |
+| assets/cheer.mp3 | d64b4a5bc83d7d701430bd795594d5bf | Draft Room | new: draft-done cheer (16 KB, tools/make_cheer.js) |
+| css/app.css | 31e8991b30ba2628129c48404da8b909 | Draft Room | room/recap s25-full styles (trow min-height, queue panel, picks-away, invite card, recap layout) |
+| css/league-app.css | 16a417545f7e791990662317f7c28c40 | League | s25k: re-copied unchanged from s25b-league, unchanged by Draft Room |
+| css/recap-rosters.css | b9f73c3f451d83ad9229aafeb5ea9368 | Stoopids Site (merged) | new: merged as delivered |
+| css/rules-lobby.css | 23ec9ff1f0f2d44fee14f4436484d8da | DR2 (merged) | new: merged as delivered |
+| data/net.json | 2931bf38f01c5f4dc10f27d05bf98f9f | League | new: League restage merge (65b8fe80 / s25b-league), unchanged by Draft Room |
+| js/core.js | bdd69382fb06819e7a0c2fd39c63caae | Draft Room | legacy autoPick:false derives auto-pick on (stored setting untouched) |
+| js/league-bets.js | d4a0f8ebbd87670d28ab4d91f008b6b9 | League | s25k: re-copied unchanged from s25b-league, unchanged by Draft Room |
+| js/league-d.js | 4be068d4c9248ec9e691d22ced01df11 | League | League restage merge (65b8fe80 / s25b-league), unchanged by Draft Room |
+| js/league-sched.js | 93bef2c3d8fb3e2699766d943fc00b57 | League | League restage merge (65b8fe80 / s25b-league), unchanged by Draft Room |
+| js/leaguehome.js | e350c22642ffdf508e8bb42b88a85203 | League | s25k: re-copied unchanged from s25b-league, unchanged by Draft Room |
+| js/links-card.js | 500c5794a8653c2d5efba42f02d9a996 | Draft Room | links card markup tweaks |
+| js/power-render.js | f41ca47bcf06390f70dd76b03c8df980 | League | League restage merge (65b8fe80 / s25b-league), unchanged by Draft Room |
+| js/recap.js | 05298d87ae7ba8f247c66491c9b8fb20 | Draft Room | compact hero, layout reorg (What's next top, How grades + build small print last), rounds collapsible, no How the order was set, compact rosters, inline mock recap, XSS esc; s25j: scroll-spy picks section nearest the top line (deep link #tab=awards kept) |
+| js/redraft.js | 757c3c165a79010c4b592f2eeffcb64c | Draft Room | Draft Room redraft wording |
+| js/room.js | 77b68136eaf36c364596393a471abc04 | Draft Room | row-tap on turn + confirm modal, no ESPN in Teams/pop-up, Queued chip, star removed, legend, queue panel, picks-away line, invite+Mock Draft card, instant autopick, autonote in commish tools, clock-out read-only, Rules buttons, cheer, Links h3 spacing, scroll anchor by data-k |
+| js/rules.js | a132aa8407a9547d9a0b393c2f975d90 | DR2 (merged) | new: merged as delivered |
+| js/setup.js | 325fd1c31be3daa075c692517c505d03 | Draft Room | clock-out step info only, no Wait option |
+| js/shared-s25.js | 8bdd1fd8d7928c3c7e085de801925234 | shared (s25d partner, scroll focus) | League b8c38b44 + QA-requested focus({preventScroll:true}) at line 247; kept as is in s25k |
+| js/ui.js | 492ccd9c76149ab8aa02333f688bf449 | Draft Room | rosters {compact:1}, focus preventScroll |
+| js/version.js | dbbe6d30e570c02b7c4c63b08ac399f3 | Draft Room | build 2026-10-30s25l + FBN_TITLE |
+| league.html | d3b6f53ee707b59cd40376a4074ae674 | League | League restage merge (65b8fe80 / s25b-league), unchanged by Draft Room |
+| recap.html | 0f266bd8a433e2e46c44f4ba05dd5fa6 | Draft Room | loads recap-rosters.css |
+| room.html | 134e6e7647318ff230f715f573896a66 | Draft Room | loads rules.js, rules-lobby.css |
+| sw.js | 29fa7a2305fe68ea6dec70da0098dcd6 | Draft Room | build 2026-10-30s25l (comment; cache name follows FBN_BUILD); precache rules.js, rules-lobby.css, recap-rosters.css, cheer.mp3 |
+| tools/make_bundle.sh | 1760e479a35e108232d3af8f0bb4ce33 | Draft Room | new: bundle helper |
+| tools/make_cheer.js | eec74fd3057df72e16b0c7f1ede9dbde | Draft Room | new: generates cheer.mp3 |
+| tools/mock_textdb.js | 564a76fc93bd657cffacd255c20ebb3e | Draft Room | new: local test server |
+
+## League changes vs s25j (copied from s25b-league/CHANGED-FILES.md; s25k/s25l re-copied these League files)
+- js/league-bets.js: the Bets sub-tabs ('✏️ Write it Up' / '💰 Tally', the obSeg() bar placed before the form); Tally with netted pushup settle lines; the Who Owes Who 8x8 grid always shown, with the "Nothing settled yet (N bets still open)" note; team nicknames in CAPS.
+- js/leaguehome.js: nav tab renamed '💵 Bets' (icon approved by Paul via NCAA at 18:43 WIB); keepPos/LKEEP scroll restore; manual scrollRestoration; a tab's first open goes to the top; a user scroll of more than 40px cancels the snap; focus() calls use preventScroll.
+- css/league-app.css: the .ob-seg / .tabs.ob-seg sub-tab bar (max-width 440px on purpose, copied from the partner build at owes_s25i_upload L132), 44px taps.
+- js/shared-s25.js: L247 Escape focus uses preventScroll (from Draft Room/QA).
+
+# s25b (build 2026-10-30s25b): changed files vs s25
+Recap layout, mock coaching tips, viewer time zone, home Archive. League files same as s25 (incl. s25-league-links patch).
+
+| file | md5 | owner | why |
+|---|---|---|---|
+| css/app.css | 3c7c07d5a6fddd6f0f87ec00a21d1aa7 | Draft Room | recap s25b layout (small card, grade line, How grades work, Your 8 picks, coaching tips), archive section styles |
+| js/core.js | 223470587db1bb11a20a0bfbbe975b0c | Draft Room | viewer time zone helpers F.zoneAbbr/zoneLabel/fmtClock/fmtLong (Intl timeZoneName short); no hard-coded ET |
+| js/index.js | d5a4b4dd98032b2bdbd076984e172487 | Draft Room | home: Archive / Restore per league (device-only), collapsed Archived leagues (N), League site button skips archived |
+| js/links-card.js | bdce9a228602e1bef4d663b0149aa1ad | Draft Room | links text uses viewer time + zone label |
+| js/recap.js | 8c3d2b0ae183c07552278669b522e5f1 | Draft Room | s25b real/mock recap layout, See my grade, mock coaching tips (better pick available checked vs pick log), viewer time zone |
+| js/room.js | f1a8554eee006f7068aeb73c9deeff27 | Draft Room | pick/chat/countdown times in viewer time zone with short label |
+| js/setup.js | da167626cb22246d75ce8852bb7314d5 | Draft Room | date/time step shows commissioner local time + zone label (live), stores UTC |
+| js/ui.js | 926fd500f4199fd4437097458d9fc4f7 | Draft Room | U.archivedIds/isArchived/setArchived; lastPlace (resume) skips archived |
+| js/version.js | c74e5d26735628fea75ada7df0c46510 | Draft Room | tag 2026-10-30s25b |
+
+# s25 (build 2026-10-30s25): changed files vs s24c (MD5SUMS.txt md5 5edc883171e2a8c389c52dbb943adb83)
+Draft Room setup polish (items 1-11) + League s25 merged. League CHANGED-FILES (s25-league) entries folded in below.
+
+| file | md5 | owner | why |
+|---|---|---|---|
+| setup.html | ba0bad6039db68759ec53e44ca6569dd | Draft Room | items 1-6: banner img, setup.css + links-card.js |
+| css/setup.css | d1d9f2f57bdc8060aedc91603cfcc6f4 | Draft Room | new: setup-only styles (body.setup): centered 560px card, nav right under the form (not sticky), banner, What you get, league photo, locked continue |
+| assets/setup-banner.svg | 8495ef48ff34e2986385d382d6572174 | Draft Room | new: original basketball banner (own SVG, no hotlink) |
+| js/setup.js | 6363ec7ea117ef9766855e0b4ae53f3b | Draft Room | step 1 What you get list (8 managers, snake draft, 64 picks, season-long scoring, pushup challenges); optional league photo (on-device resize to 256px JPEG under 40 KB, preview, remove, polite errors, saved in meta.settings.photo); links card replaces Email me these links, continue locked until one is used; Copy draft reminder |
+| js/links-card.js | 0be80f3f4322500bd839f2c0f51546ae | Draft Room (shared) | new shared module window.LinksCard: Share / Copy all / Download file (.txt Blob) / Email; fromDevice() rebuilds links from localStorage; no network, no logging |
+| js/room.js | 3f54f4fe9ca4ac60c8d9b9aabdfd92f8 | Draft Room | Your links (commissioner only, More tab); Send invite link / Copy draft reminder; How your queue works note under Auto-pick for me |
+| room.html | 20abfd684bfb969d32e49a3ce6454576 | Draft Room | loads js/links-card.js |
+| js/core.js | dbe3338bb3c204b7b216f1f00c29bbf3 | Draft Room | settings.photo kept through normalizeSettings / normalizeMeta / mSettings (F.leaguePhotoOk, JPEG data URL <= 40 KB) |
+| js/recap.js | 39ddb4c17679265daec1faa2119355bd | Draft Room | seeded one-liners on Top 3 steals / reaches (stable per league); compact end card markup (.rctop) |
+| css/app.css | 085e73354eb3fb616db7447bb21ec789 | Draft Room | .lcbtns shared links card; .rcquip; compact end card (mock + real); recap tab bar wraps (4 per row, 3 under 360px, one row on desktop), no sideways scroll |
+| sw.js | 02d95fb2f5e4aab59cfb0f31b9df4d72 | shared | SHELL adds css/setup.css, assets/setup-banner.svg, js/links-card.js, js/shared-s25.js; cache name from version.js |
+| js/version.js | 928375802fe6d6d35b8e82eea125a9c6 | shared | build tag 2026-10-30s25 (sw cache fbnc-2026-10-30s25) |
+| js/league-bets.js | bcea3db8d1aee74cd8aab09e9217b85b | League | copied unchanged from s25-league |
+| css/league-app.css | 4d56a407d5291815a000770b8bcc9626 | League | copied unchanged from s25-league |
+| js/leaguehome.js | af7e882e8ec318d27bf0cb81910898e0 | League | copied unchanged from s25-league |
+| js/power-gen.js | e23c8f96ab3ce7de4c03ce8625002c85 | League | copied unchanged from s25-league |
+| help.html | 8e37f14c044757c2c7e89fc62efb0488 | League | copied unchanged from s25-league |
+| league.html | dc9cc1c5fb21a7f9e380ddf454f75b32 | League | copied unchanged from s25-league |
+| js/shared-s25.js | 8e463fd88a7a4978a6ab52fb24091a3d | League | new, copied unchanged from s25-league (partner League edition) |
+| CHANGE-NOTES-s25.md | 108a443c72ab6889d9d59526369887b2 | League | copied unchanged from s25-league |
+| CHANGED-FILES.md | (this file) | | s25 section |
+
+Test-only (not shipped): tests/e2e_setup_s25.js, e2e_links_s25.js, e2e_tabbars_s25.js, quip_shots.js (new); test_core.js (help limit 2900; settings.photo test; no word-rule exception); test_xss_static.js (3 reviewed constant exprs; League shared-s25 skip + meme img-only check); e2e_tabs.js (Ctrl-click check scrolls the non-sticky phone tab bar into view first); League tests copied from s25-league.
+
+## League s25 entries (from s25-league/CHANGED-FILES.md)
+
+# s25-league (build 2026-10-30s25): changed files vs s24-league
+Base: /workspace/fantasy-bball-releases/s24-league (MD5SUMS.txt md5 605cfe478a857ada34be07488c2ba4a8). Stage only. Notes: CHANGE-NOTES-s25.md. Shipped: the partner's League edition js/shared-s25.js (md5 8e463fd88a7a4978a6ab52fb24091a3d). Its first version, shared-s25.js (md5 eb87a816…), was not shipped because it broke the word rule. Shared spec: league-site-work/s25-autosettle-spec.md.
+
+| file | md5 | why |
+|---|---|---|
+| js/league-bets.js | bcea3db8d1aee74cd8aab09e9217b85b | creator-only settle for new actions; v:25 marker, unmarked (pre-s25) settles keep the s24 rule; save confirm; bet reading; proposed result from the final score; settle sound = shared synth (S25.synth), pop-up = shared SVG memes as <img> data URL (our mute / reduced-motion / after-tap rules kept); reactions; card grid wrappers |
+| css/league-app.css | 4d56a407d5291815a000770b8bcc9626 | read-as / proposal / sound / pop-up / reactions styles; card grid 1 / 2 (700px, partner breakpoint) / 3 (1400px); tab bar wraps into equal-width rows (3 per row at 360px and below, 4 per row 361-559px, one row from 560px when the tabs fit, else wraps; same as the partner site), not sticky under 760px |
+| js/leaguehome.js | af7e882e8ec318d27bf0cb81910898e0 | tagline (one placeholder line, 2-day rotation from 2026-11-01 ET); league photo hook (meta.settings.photo as the banner fallback, validated) |
+| js/power-gen.js | e23c8f96ab3ce7de4c03ce8625002c85 | funnier power-ranking text (kind one-liners appended to existing sentences); facts, grades and 4 / 10 sentence counts unchanged |
+| help.html | 8e37f14c044757c2c7e89fc62efb0488 | "How your queue works" in the Managers card (text from draftroom-notes/s25-setup/HELP-QUEUE.md) |
+| js/version.js | 928375802fe6d6d35b8e82eea125a9c6 | build tag 2026-10-30s25 |
+| js/shared-s25.js | 8e463fd88a7a4978a6ab52fb24091a3d | new: partner site's League-safe shared file (shared-s25-league.js), copied unchanged; md5 matches the source |
+| league.html | dc9cc1c5fb21a7f9e380ddf454f75b32 | loads js/shared-s25.js before league-bets.js |
+| sw.js | f8c093770c96f522fe8a7bd9491bc13a | **OVERLAP (shared file)**: 'js/shared-s25.js' added to the SHELL list (test_core requires every loaded script in it); nothing else changed |
+| CHANGE-NOTES-s25.md | 108a443c72ab6889d9d59526369887b2 | new |
+| CHANGED-FILES.md | (this file) | s25 section |
+
+Test-only (not shipped): tests/e2e_tabs_s25.js (new, 27a6ccfecc6129ce45344cf2118059a7; checks 320, 359, 360, 361, 390, 559, 560, 700, 760, 1280); tests/e2e_s25_addon.js (new, a82d7bdc121a1f07d0e09e440a99153a); tests/test_powerfun_s25.js (new, 8c01d23d24dd807a8aabafe9ef272b64); tests/e2e_lsite.js (dea5e4de2779aaca26d5457eaeacffae) and tests/e2e_alignment.js (a6a302adce9debe7847635ba362917d5): tab bar now wraps instead of scrolling; tests/test_core.js (20e7ad0371cb31a8aee695830e149f3a): help length limit 2600 -> 2900 for the approved queue note; tests/e2e_s25.js now 2d5a30d7182e89e706a45f47f9d8ec9c (grid checks at 699 / 700px; shared synth + memes); tests/test_xss_static.js (0bd1486014b380eff3e28b5821211dbe): js/shared-s25.js skipped for the attribute check (SVG from numeric literals), plus a check that the memes are used only as an <img> data URL; tests/e2e_legacy_s25.js (new, 0d70c60457da4101a7c5df33abf8f30e); tests/e2e_s25.js (new, 82323d1fac965136318cfc48c75036a9); tests/test_tagline_s25.js (new, 0dd65a886b73c62caa45adb874a9216d); tests/e2e_bets.js (b5cf2b869d7fe04f5013dbd3913f281b), tests/e2e_bets_s24.js (26c3ff8dff1b8cef3bdf8693812a4ffd), tests/e2e_betfilter_s24.js (7e7b62b46a4a546d76cfb375ed2acc88): updated for creator-only settle and the card grid (e2e_betfilter_s24 is back to the s24 expectations for its legacy reports: only the card selector and intro wording changed).
+
+
+# s24c (build 2026-10-29s24c) — changes vs s24b. League source: s24-league MD5SUMS.txt 605cfe478a857ada34be07488c2ba4a8
+| file | md5 | owner | why |
+|---|---|---|---|
+| js/index.js | d9520e27572790db2e657e6c89b38573 | Draft Room | QA LOW: resume decides LOCALLY whether the id is a mock (no store call needed); a 503 / failed / offline store never opens a mock; a refused record falls back to the other record or Home |
+| js/ui.js | 29f52131815f6b527dc3e9496cc8daaa | Draft Room | UI.isMockId (MK prefix unless a known real league, fbn.mocks, new fbn.mockids list of 100); lastPlace refuses mock ids, kind other than room/recap, mock:true; saveLast / lastTab refuse mock ids |
+| js/core.js | f1cf7b5fcef5337ebb28bc86b23e4893 | Draft Room | F.MOCK_PREFIX 'MK', F.makeMockId; real league ids are re-rolled so they never start with MK |
+| js/mock.js | 58d2d61688ef76489db5179f7b371a59 | Draft Room | new mocks use F.makeMockId |
+| js/room.js | b00d529b2116b91d827ab082cfd51ed1 | Draft Room | in-room last-tab fallback ignored for mock ids |
+| js/league-bets.js | 3b25ea8455ba46aa20f21f6d55edf9ef | League (carried unchanged) | s24b: Edit re-reads the logs first, "Too late to edit" with no write |
+| css/league-app.css | f787b627477fadf6484c20290cbb5e2e | League (carried unchanged) | s24b: "None selected" counter wraps |
+| CHANGE-NOTES-s24.md | aab153233971799b3f33f8771338cdb2 | League (carried unchanged) | League notes |
+| README.md | 6915982fd62658c24f08f4a2a08adcc5 | shared | League s24 section synced |
+| js/version.js | 9b8e4b9db4cde2dd102fa01da1600e76 | shared | tag 2026-10-29s24c |
+Not taken from League: js/index.js, js/version.js. Tests: new tests/e2e_resume_mock.js (503, failed fetch, offline, old / forged lastnav, lastsite and recap records pointing at mocks, kind / mock flag, in-room and recap last-tab fallback); tests/e2e_mock.js allows fbn.mockids; League tests/e2e_bets_s24.js updated.
+
+# s24b (build 2026-10-29s24b) — changes vs s24 (League s24 update, MD5SUMS 5d493fe20c32538ea2ec4bc1f19ece7f; comments reworded)
+| file | md5 | owner | why |
+|---|---|---|---|
+| js/leaguehome.js | 0e17be5bfaca08198b9a5b211778b8da | League (carried unchanged) | shared ball loader; mocks never write fbn.lastsite |
+| js/league-bets.js | 7b65170d9a58ce9447941cf92152a995 | League (carried unchanged) | Bets block order, loader |
+| js/power-render.js | 1ddeaf8aeac84cb20bdac5550f4ef171 | League (carried unchanged) | recap power rankings loader |
+| css/league-app.css | 7c7e4755a15a807d56c8659dd0edccaf | League (carried unchanged) | loader .bl* |
+| css/power.css | 1140f2da29cde9770a09178bc02cfd3f | League (carried unchanged) | loader for recap |
+| CHANGE-NOTES-s24.md | 3f72e783e053af7db4003a6ab9d53934 | League (carried unchanged) | notes 9-11 + mock hook |
+| README.md | 6915982fd62658c24f08f4a2a08adcc5 | shared | League s24 section synced (live-pool name removed from README) |
+| js/version.js | cc1f46c08e0ccbd3f4ddedbe5325a01b | shared | tag 2026-10-29s24b (cached files changed; sw.js cache name follows) |
+League's js/index.js (7750c07f…) NOT taken: the draft room's single merged resume (56d883b2…) stays. Tests carried: e2e_bets_s24, e2e_deeplink_s24, e2e_refresh_s24, e2e_betfilter_s24, e2e_loader_s24, seed_league.js ({mock:true}).
+
+# s24 (build 2026-10-29s24) — changed files vs s23-full
+Base: /workspace/fantasy-bball-releases/s23-full (tag 2026-10-29s23). Draft Room s24 (mock drafts, #tab= hash, tab links, unified resume) merged with League site s24 (/workspace/fantasy-bball-releases/s24-league). No Solana / wallet code (reverted).
+
+| file | md5 | owner | why |
+|---|---|---|---|
+| mock.html | 9e86ebb6f16c6d8b8b42bd276371cb9d | Draft Room | new: mock draft setup page (solo / with others), last 5 mocks |
+| js/mock.js | ac358626839d0f495133b3507b9d3597 | Draft Room | new: FBNMock.create (practice league, mock flag, settings copied, 7 bots / fill seats), mock list on device |
+| js/room.js | dafc0f1b75274f65bc14994c1104af46 | Draft Room | PRACTICE banner, bot auto-picks, solo autostart, fill bots, Practice while you wait (hidden when live), Run another / Back to my league (no League site in mocks), tabs as <a href="#tab=">, hash tabs, last place |
+| js/recap.js | ebb92b6d3b45f2e0d315a8a059661d32 | Draft Room | grades vs bots note, Run another / Back to my league, section links #tab=, last place |
+| js/ui.js | ea9c3c57f19dee530cb594b39e5611f0 | Draft Room | hashTab/setHashTab, saveLast/lastTab/lastPlace (fbn.lastnav + League fbn.lastsite, newest within 14 days), isStandalone, firstPage |
+| js/index.js | 56d883b2d6bb4b50f0c3cd03d29bb828 | shared | ONE unified standalone resume (replaces League's s24 statement), Try a mock draft |
+| js/join.js | c722cf40f5c9176781bba2dcdd1d0686 | Draft Room | Practice this draft |
+| js/core.js | 9d96d827d952c128781e0e07e48ae6be | Draft Room | mock flag kept on reset |
+| room.html | 9447ca8628fa90520b99a3d9e2e75ca7 | Draft Room | practice banner host |
+| css/app.css | 245791d2b93766f49ccb75499c81a716 | Draft Room | mock / practice styles, tab links |
+| sw.js | fffff590518bd990fb6eea9bfd1fb526 | Draft Room | precache mock.html, js/mock.js (cache name from version.js) |
+| js/version.js | 974a51faaa7738fa26a220fd7b5e9285 | shared | tag 2026-10-29s24 |
+| README.md | f64616b50444e393d60d8800586aa1ae | shared | s24 Draft Room sections + League s24 section |
+| css/league-app.css | 90efa06270281c7ad9938d45c0126275 | League (carried unchanged from s24-league) | tab links, bets filters, small screens |
+| js/league-bets.js | fdd7a12b4cfbed532f3b3021be9362af | League (carried unchanged) | edit, fix result, filters |
+| js/leaguehome.js | 2fdf91f777b1013a059172a444da118f | League (carried unchanged) | tab routes, deep links, share, fbn.lastsite |
+| CHANGE-NOTES-s24.md | 5ca84ae430987db88d687e699d74cf16 | League (carried unchanged) | League s24 notes |
+| CHANGED-FILES.md | (this file) | | s24 section |
+
+Not shipped (tests): new tests/e2e_mock.js, e2e_tabs.js, e2e_refresh.js, e2e_anchor.js; League tests carried: e2e_bets_s24, e2e_deeplink_s24, e2e_betfilter_s24, e2e_refresh_s24, e2e_lsite, e2e_sitelink; e2e_security / e2e_toptabs updated for #tab= and a click race. tools/make_bundle.sh adds mock.html.
+
+# s24-league (build 2026-10-29s24) — changed files vs live s23
+Base: /workspace/fantasy-bball (live s23). League Bets work (Edit on pending bets, two-sided Fix result) + League site tab URLs, deep links and copy / share links. Notes: CHANGE-NOTES-s24.md.
+
+| file | md5 | why |
+|---|---|---|
+| js/league-bets.js | 3b25ea8455ba46aa20f21f6d55edf9ef | Edit button (withdraw + prefilled form); Fix result events fr / fc / fd, reduce rules, history on the card; #b27Board closed (cards no longer inside the totals box); 🔗 copy-link button on each bet card; Bets list filters (Person / Status / search terms), remembered per league, #bets/f= hash, reveal() for deep links; layout = the partner site block order: form, totals + Still open, filter row with "Showing x of y bets", waiting section, cards, intro card with the live line last; shared loader while the bets load; s24b: Edit re-reads the logs first, "Too late to edit" with no write |
+| css/league-app.css | f787b627477fadf6484c20290cbb5e2e | history / edit-hint styles; below 380px chips wrap so tap targets stay >= 44px; Copy link / card link buttons, deep-link highlight; nav a.tb mirrors every nav button rule; one-row filter bar (.b27-flt); .b27-cnt / .b27-top; the partner site BALL-LOADER CSS (.bl*); s24b: "None selected" counter wraps (no sideways scroll) |
+| js/version.js | 974a51faaa7738fa26a220fd7b5e9285 | build tag 2026-10-29s24 (sw.js cache name fbnc-2026-10-29s24 is derived from it; sw.js bytes unchanged) |
+| README.md | 9e51aac381ba8e1a2d8c6dfb40422999 | s24 section (incl. tab URLs / deep links) + tab links + refresh / home-screen app + Bets filters + Bets layout + loader + power loader / mock skip |
+| js/leaguehome.js | 0e17be5bfaca08198b9a5b211778b8da | tab URLs (pushState / replaceState, popstate + hashchange), deep links #bets/<id> #games/<id> with highlight + not-found note, Copy link / Share, links never carry identity; tabs are real <a href="?l=CODE#tab"> links (plain click in place, modified / middle click = browser default); remembers the last tab per league (no identity) for reloads without a hash and home-screen launches; #bets/f=<p>-<s>[/q=] route, filter in Copy link, deep link resets filters; LLOADER() shared loader (the partner site ballLoader markup) replaces the "Loading the league…" card; mock leagues skip fbn.lastsite / last-tab memory (draft room HOOK.md hook 1) |
+| js/index.js | 7750c07fa06661c09fbba0fc19db248e | **OVERLAP (Draft Room file)**: one statement at the top: a fresh home-screen (standalone) launch at start_url reopens the last League site tab (used in the last 14 days); browser mode unchanged |
+| js/power-render.js | 1ddeaf8aeac84cb20bdac5550f4ef171 | League-owned (recap page module): ball loader replaces "Loading the power rankings…" |
+| css/power.css | 1140f2da29cde9770a09178bc02cfd3f | League-owned: BALL-LOADER CSS copy for recap.html (no Draft Room CSS edited) |
+| CHANGE-NOTES-s24.md | see MD5SUMS.txt | new (s24 shipped files: comments reworded, no partner-site name, test_core word check) |
+| CHANGED-FILES.md | (this file) | s24 section |
+
+Test-only (not shipped): tests/e2e_betfilter_s24.js (new, md5 d2bc264e4d8471501e41de5128d59d43); tests/e2e_refresh_s24.js (new, md5 e5ba397cc94e0e1cac890979bbf7be75); tests/e2e_bets_s24.js (new, md5 72d423210a3295519a7da8d26f3e6d21; asserts no bet card sits inside #b27Board); tests/e2e_deeplink_s24.js (new, md5 9a05959fedc63ab67cea76579fa094ac); tests/e2e_lsite.js (md5 282fdfd0d7913ba524b1d6415750ade5) and tests/e2e_sitelink.js (md5 1689dda8249b9bdc913850d76b6934f8): '#ltabs a' -> '#ltabs a.nd' for the Draft link, sitelink checks tab hrefs carry only ?l=CODE#tab.
+
+# s23 (build 2026-10-29s23) — changed files vs s22b
+Base: /workspace/fantasy-bball-releases/s22b (MD5SUMS.txt md5 4ac201a69189bf10f44f8142c4741225). Draft Room files only; no League-owned file changed (League has no s23 work marked ready).
+
+| file | md5 | why |
+|---|---|---|
+| js/room.js | 9a933ebfd57d200be9493e3122b3478b | items 1,3,4,5,6,9,10,12 (undo/auto-pick race, spin save on Hide, not-found guard, chat re-add, spin for all, end-of-draft redirect + end card, start countdown/auto-start/auto-spin/8 managers) |
+| js/store.js | a1c776ffcad4a1e1444e2a41913572c1 | item 2 (5xx read-back, backup key) |
+| js/core.js | 18f400f6856a3118082b5522bd8bc8cf | items 1,2,12 + LOW-1 (auto-pick ids, replay, countdown/start helpers, A–Z full name) |
+| js/recap.js | 7366287ea6a7a12ed8cb7bf9ea273a37 | item 9 (recap layout, league grades, share my grade) |
+| js/setup.js | 6ee37a04f0db5eea861da8145211b72c | item 8 (Email me these links), item 12 time-zone line |
+| js/ui.js | 098e3ef32e73ab38f34fd127cb2989df | LOW-2 ("Checking your link…"), shared helpers |
+| css/app.css | 17261ccabfde4a54937f1ae9d5569ce7 | items 7, 9, 10 |
+| js/version.js | 9776e2bd9dee9e6e3f5947b65f73fda0 | build tag 2026-10-29s23 |
+| README.md | b3a5846b8b360e5138fa8b245b88e251 | s23 section |
+| CHANGED-FILES.md | (this file) | new |
+
+Test-only (not shipped): tests/e2e.js line 260 time.html New York check accepts UTC-4 or UTC-5 (DST ends Nov 1 2026); tests/s23_extra_shots.js (new).
+
+## League site part of s23 = the s22 League items (partner-site Bets page + Quick bet)
+Merged in `/workspace/fantasy-bball-releases/s23-full` (= s23 + these files). League changes copied unchanged from `/workspace/fantasy-bball-releases/s22`; build tag stays 2026-10-29s23; sw.js unchanged (no new files).
+
+| file | md5 | why |
+|---|---|---|
+| js/league-bets.js | 8d01f9c584fb8682b3c641b196fc6527 | Quick bet picker (Winner only; no lines in data), undo bets placed together (30 s), new-bets badge |
+| js/leaguehome.js | 83d3c73fa9870b7d390ddc46bdc141fa | Quick bet pill hook on Games cards, chat bar panel (league chat key), Bets nav badge |
+| css/league-app.css | 417564e23154768827df0ac9946d538d | qb-*, chat panel, nav badge styles |
+| README.md | see MD5SUMS.txt | s23 README + the s22 "Bets tab and Games cards" section |
+
+## s26c4 = s26c2-loader (League huge ball loader) + version bump
+Base: `/workspace/fantasy-bball-releases/s26c2-loader`. Build tag 2026-10-31s26c4; sw.js cache name follows FBN_BUILD (fbnc-2026-10-31s26c4), only the line 3 build comment changed.
+
+| file | md5 | why |
+|---|---|---|
+| js/version.js | 8188679c5f3d35b5addf53e0af6ea180 | build tag 2026-10-31s26c4 |
+| sw.js | bc56dd427517a61e2cfccd736d82b2aa | line 3 build comment |
+| CHANGED-FILES.md | (this file) | s26c4 section |
+
+## s26c8 = s26mo3 + s26-refresh-conf + League s26c8-league
+Base: `/workspace/fantasy-bball-releases/s26mo3` (contains s26c6s, s26c7s, s26mo2). Build tag 2026-10-31s26c8; sw.js cache fbnc-2026-10-31s26c8, only line 3 comment changed. js/shared-s25.js unchanged (8bdd1fd8). s26c9-league not included.
+
+| file | md5 | source / why |
+|---|---|---|
+| tools/refresh_data.py | e4e39ff31d500374f55f2608a32cfe38 | s26-refresh-conf (conf map writer) |
+| data/FORMAT.md | 52813fdc903155a9c2ed83d89e8ab49d | hand merge: s26-refresh-conf conf row + League conf section/League total text |
+| css/league-app.css | 506fea4551564150db362a018bb42dc0 | League s26c8-league |
+| help.html | 21176772a3a2aeabee6db958d0e57220 | League s26c8-league |
+| js/league-d.js | 9d29a81ab1be0c02b76fe9f491e3b3ee | League s26c8-league |
+| js/leaguehome.js | 2e22aeffd7f254e00991d3f842c0d201 | League s26c8-league |
+| js/version.js | 906d061a5374db9ac6b6e9297ebe7bb3 | build tag 2026-10-31s26c8 |
+| sw.js | 0cfb732202e2d92e9bf8c6ad14bcbd84 | line 3 build comment |
+| README.md | unchanged | |
+| CHANGED-FILES.md | (this file) | s26c8 section |
+
+Test-only (not shipped): tests/test_refresh_conf.py (s26-refresh-conf); League tests e2e_banner_s26c5.js, e2e_breakdown_s26c5.js, e2e_noscrolljump_s25.js, e2e_ownerbreak_s26c3.js, e2e_toptabs.js, e2e_totals_s26c8.js, fixture_s26c3.js, open_s26c3.js.
+
+## s26c8a = s26c8 + fix: Undo leaves the next pick stuck on "0:00 AUTO-PICKING" (QA s26c8-live20 BUG-1, r02/r07/r17)
+Base: `/workspace/fantasy-bball-releases/s26c8` (MD5SUMS 31fc0b1c9712f0fa0b7251df85be7e72). Build tag 2026-10-31s26c8a; sw.js cache fbnc-2026-10-31s26c8a (name follows FBN_BUILD; only the line 3 comment changed). js/shared-s25.js unchanged (8bdd1fd8). No League-owned file touched.
+Root cause (two parts, both needed):
+1. js/room.js:209 (s26c8) post-Undo hold: "do not re-pick a voided slot unless reason==='expired'". F.autoReason (js/core.js:331) returns 'auto'/'away' BEFORE it checks the clock, so for a bot / auto-pick-on manager the reason is never 'expired' and the hold never ends -> 0:00 AUTO-PICKING forever.
+2. js/core.js:299 F.makeEntry: auto-pick ids are deterministic (epoch-slot-team-prev). After the Undo the bot re-picks the same team with the same prev, so the new pick gets the voided id, F.entryProblem (core.js:301) says 'voided' and the replay drops it -> stuck again.
+Fix: makeEntry takes `voided` and, when the computed id is on it, adds a deterministic `u<k>` suffix (same on every phone; manual ids are random and unaffected unless they collide). room.js submitPick passes M.voided. The post-Undo hold now also ends when the pick clock has run out (deadline+grace), and does not apply to mock bots (they re-pick after their usual 1-2 s).
+
+| file | md5 | why |
+|---|---|---|
+| js/core.js | dca9873aae77266fe95f8a1918cad4a1 | makeEntry: void applies only to the original instance (u<k> suffix) |
+| js/room.js | 571425ffc9e122426ef7bb06305a0790 | submitPick passes voided; post-Undo hold ends at clock expiry, not for bots |
+| js/version.js | d6f164d5b9136473bbcc756bb8ba578a | build tag 2026-10-31s26c8a |
+| sw.js | fb40644887afdf2250b23ce4b7f85d7f | line 3 build comment |
+| CHANGED-FILES.md | (this file) | s26c8a section |
+
+Test-only (not shipped): tests/e2e_undo_repick_s26c8a.js (Playwright; undo auto pick, double undo, undo manual pick + re-pick same team, draft keeps advancing; 390 and 1280 px; fbn.store mock, textdb.dev aborted).
+
+## s26c16b (2026-11-01 18:35 WIB)
+- js/room.js: Randomize button hidden (and its action ignored) in real leagues, same rule as the wheel; mocks unchanged.
+- js/version.js: FBN_BUILD 2026-11-01s26c16b. sw.js: line 3 comment (cache name follows FBN_BUILD).
+
+## s28 = s27c + after-draft draft-room items + reliability 1-2 + My settings (2026-11-02s28)
+Base: `/workspace/fantasy-bball-releases/s27` (MD5SUMS f3869ed5952785e9b4f6a212cf713356, 2026-11-01s27c). Build tag 2026-11-02s28; sw.js cache fbnc-2026-11-02s28 (name follows FBN_BUILD; only the line 3 comment changed). No League-owned file touched (league.html, leaguehome.js, league-*.js, power-*.js, css/power.css, css/league-app.css, data/, help.html, shared-s25.js unchanged).
+1. Pick sheet clock: live countdown next to Close in the 'Pick a team' header ('Paused' when paused, hidden with No clock); the header is sticky; the filter bar sticks under it.
+2. Seat beeps: 3 at turn start, 2 at 30 s, then 1 beep per second 10..3 s and 4 fast beeps per second in the last 2 s. Mute, own seat only, never paused / after picking / No clock; each second once (localStorage), past seconds skipped (reload, fresh page, background tab). Checked 5x a second in the last 11 s; clock text updates before the beep. Helper text under Turn sound updated.
+3. Display clamp: remaining() never exceeds clockSecs; the re-pick hold shows at most 10 s; nothing is counted down until the server-time offset is known (max 2 s; hold shows 'Auto re-pick soon').
+4. 60 s 'Draft starts in' countdown on a commissioner Start (real leagues; not mocks, not the scheduled auto-start): meta startedAt = resumeAt = now+60 s, startCd = 60000. Pick #1's clock runs from startedAt (F.deadlineOf unchanged). No picks / auto-picks / beeps / Pause before it; commissioner 'Start now' moves startedAt to now. Old s27c clients: see risks.
+5. No-clock undo freeze: with No clock, after a commissioner Undo of a slot, auto-pick is frozen for that slot (away / auto-draft / placeholder seats; mock bots unaffected) until someone picks by hand; the On the clock card shows 'Auto-pick frozen after Undo (No clock) · pick by hand'. With a clock the 10 s re-pick hold is unchanged.
+6. Queue saves: taps apply on screen at once and are coalesced (300 ms debounce, max 1.2 s) into one read-merge-write per manager; add/remove decided at tap time (idempotent); background read-back re-applies ops lost to a simultaneous write (up to 4 rounds); stale reads older than our write are ignored.
+R1. Stall guard: every page times its own store requests (Store.fetchT); while stalled (request > 8 s in flight, last 2 > 8 s or failed, 3 failures in 20 s, no success for 12 s while visible, or offline) it does not auto-pick; healthy again after 20 s with 4+ fast successes. localhost test hook fbn.healthOff=1.
+R2. A stuck on-clock slot is never auto-picked for clock-out (the 15 s go-ahead is gone for 'expired'); away / auto-draft / placeholder seats keep the 15 s hold then the backup spot.
+S. My settings merged from s28-settings (core.js, join.js taken as is; room.js 3-way merge, TEAM_NAME_ON_TOP=true, ALLOW_PHOTO=true).
+A. With TEAM_NAME_ON_TOP: Online chips, on-the-clock banner (team on top, real name under; team no longer repeated in the sub line), pick cards (pick sheet header, confirm 'on behalf of', Teams 'taken by' label, commissioner note) show the team name. B. At <=520 px the top-bar pill shows only the team name.
+
+Test-only (not shipped): tests/e2e_picksheet_clock_s28.js, e2e_beep_s28.js, e2e_clamp_s28.js, e2e_startcd_s28.js, e2e_undo_noclock_s28.js, e2e_queue_coalesce_s28.js, e2e_slowstore_s28.js, e2e_teamtop_s28.js, e2e_settings_s28.js, shots_s28_settings.js; updated e2e_beep_s26c16d.js (new 10 s pattern), e2e_security.js, e2e_profile_btns_s25g.js (from s28-settings).
+
+## s28L (2026-11-02s28L) — s28 + League s28-bets-full
+- Base: s28 (room.js, core.js, join.js, app.css etc. unchanged).
+- From League /workspace/league-site-work/s28-bets-full (copied unedited): js/league-bets.js, js/leaguehome.js, css/league-app.css, tests/test_core.js (+ League tests e2e_bets_copy_s28.js, e2e_parity_s28.js). No other League-owned file differed.
+- js/version.js: FBN_BUILD 2026-11-02s28L. sw.js: cache fbnc-2026-11-02s28L (follows FBN_BUILD), line 3 comment updated, precache adds data/demo/scores.json and data/demo/tournament.json.
+- MD5SUMS.txt regenerated (excludes tests/ node_modules shots/ __pycache__ .git).
+- tests/e2e_undo_noclock_s26c14.js: after a No-clock Undo, now expects the s28 item 5 freeze (pick #1 not auto re-picked for 25 s) instead of a re-pick after the hold (one undo instead of two). 8/8 pass.
+- tests/e2e_autodraft_s26c8b.js: AUTO badge check expects the team name on top (Aces) instead of the real name 'Ana'. 27/27 pass.
+- tests/e2e_midswap_s28.js: header comment documenting SWAP_CMD (what it does, example, base build s27c -> s28); new tests/README.md with the same note.
+
+## s28b (2026-11-02s28b) — s28L + League s28b-chips chip fix
+- Base: s28L (live as commit 6949500; MD5SUMS 731d6146). data/ unchanged from s28L (nothing taken from League's data/).
+- From League /workspace/league-site-work/s28b-chips (copied unedited, md5 verified): js/league-bets.js, css/league-app.css, tests/e2e_bets_copy_s28.js. No other file taken.
+- js/version.js: FBN_BUILD 2026-11-02s28b. sw.js: cache fbnc-2026-11-02s28b (follows FBN_BUILD), line 3 comment updated.
+- tests/test_core.js: narrow allow-list for the exact phrase 'is our model of expected STOOPIDS points' in js/room.js and js/rules.js (the phrase is in both; room.js and rules.js unchanged). [corrected in s28c: the earlier note said room.js only]
+- MD5SUMS.txt regenerated (excludes tests/ node_modules shots/ __pycache__ .git; keeps empty .nojekyll).
+
+## s28c (2026-11-02s28c) — s28b + two draft-room reliability fixes
+- Base: s28b (MD5SUMS e93b6b56, QA GO). Only js/room.js, js/version.js, sw.js and this file changed. core.js unchanged. No League-owned file touched.
+- Bug A (e2e_slowstore_s28 R1 intermittent): the stall state was only updated inside autoTick, and autoTick returns early while the page is busy, an auto-pick is in flight, or the log is not ready. A page that was busy when the store went slow never entered the stall, so it read the recovery as healthy at once and auto-picked 2-3 s after lat=0. Fix: the stall check also runs on its own 500 ms timer while a draft is live (FBN_health() checks it too), so slow reads, polls and saves count on every page. When a stall clears, a 5 s recovery hold follows the existing 20 s healthy window. The auto-pick re-checks the stall after its fresh poll and once more right before writing.
+- Bug B (e2e_startcd_s28 once under load): auto-pick and clock-out could act on a stale on-screen or local-timer state during the 60 s start countdown. Fix: new startGate() uses the server start instant (meta startedAt / resumeAt against server time). No auto-pick (autoTick, the in-flight auto-pick, or submitPick by 'auto') happens before that instant, and the clock never shows 0:00 before it. syncTime keeps its old server offset when a re-sync round trip takes longer than 2.5 s, because a slow answer under load gives a poor time estimate.
+- s28b note corrected: the test_core.js allow-list covers js/room.js and js/rules.js.
+- js/version.js: FBN_BUILD 2026-11-02s28c. sw.js: cache fbnc-2026-11-02s28c (follows FBN_BUILD), line 3 comment updated.
+- MD5SUMS.txt regenerated (excludes tests/ node_modules shots/ __pycache__ .git; keeps empty .nojekyll).
+
+## s28d (2026-11-02s28d) — s28c + League s28c-games
+- Base: s28c (MD5SUMS bf792019; s28b live as commit 8090fde + room.js auto-pick fix 508d0ff4). core.js, join.js, app.css and data/ unchanged from s28c; room.js = s28c's 508d0ff4 + the display fix below (League's data/scores.json not taken).
+- From League /workspace/league-site-work/s28c-games (MD5SUMS 3e1adbd2; copied unedited, md5 verified): js/leaguehome.js d008c4d9, css/league-app.css 81d5b2d0, js/league-bets.js 1de9cb14. league-bets.js builds on s28b's 04fc866b: the s28b chip fix (team name on top, bRNm/.tl) is included; the only change is the s28c per-bet copy-as-text button and removal of the tab Copy link button.
+- Tests from League: new e2e_games_s28c, e2e_share_s28c, e2e_breakdown_grid_s28c; updated e2e_betfilter_s24, e2e_bets_copy_s28, e2e_deeplink_s24, e2e_games_s25, e2e_live_s26c14, e2e_parity_s28, league_step.
+- No other League-owned file differed (league.html, league-*.js, power-*, css/power.css, help.html, shared-s25.js identical). No new files, so the sw.js precache list is unchanged.
+- js/room.js (Draft Room, QA beep_s28 freeze): root cause: s28c's startGate() compares server time (Date.now()+srvOff) with max(startedAt,resumeAt), and remaining() returned the full clock whenever it was true. A stale, failed or wrong server offset (e.g. a Date header hours behind) keeps nowSrv() before startedAt, so the display was frozen at full time until the first pick, and the 30 s / countdown beeps never fired. Fix: the clock display is held only while the start instant is still ahead by this device's own clock too (dispHold); with no start time, or once it has passed locally, the display counts down, using local time when the server offset says 'before start' but the local clock says 'after' (dispNow). Auto-pick, clock-out and their save still use startGate() (server time), so early-pick protection is unchanged.
+- js/version.js: FBN_BUILD 2026-11-02s28d. sw.js: cache fbnc-2026-11-02s28d (follows FBN_BUILD), line 3 comment updated.
+- MD5SUMS.txt regenerated (excludes tests/ node_modules shots/ __pycache__ .git; keeps empty .nojekyll).

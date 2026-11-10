@@ -1,0 +1,962 @@
+
+:root{--bg:#10131a;--card:#1a1f2b;--card2:#222939;--line:#2d3548;--tx:#eef1f7;--mut:#9aa6bd;--acc:#ffd23f;--good:#4ade80;--bad:#f87171}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.4 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+a{color:var(--acc)}
+header{max-width:1000px;margin:0 auto;padding:0 0 8px}
+.hero{position:relative;aspect-ratio:992/160;background:linear-gradient(135deg,#17224a 0%,#2b2a4a 55%,#6b4220 100%) 50% 50%/cover no-repeat;border-radius:0 0 18px 18px;overflow:hidden}
+.titlebar{padding:12px 10px 4px;text-align:left}
+.titlebar .tag{margin:6px 0 0;color:#e7ecf6}
+.fresh{display:flex;width:fit-content;max-width:100%;align-items:center;min-height:40px;margin:-6px 0 -8px;padding:6px 14px 6px 0;font-size:12px;line-height:1.3;color:var(--mut);opacity:.55;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+.fresh[hidden]{display:none}
+.fresh:hover{opacity:.85}
+.fresh:focus-visible{opacity:.9;outline:1px dashed var(--mut);outline-offset:-2px;border-radius:6px}
+.sub{padding:0 14px}
+@media (max-width:640px){.hero{aspect-ratio:16/5;background-position:50% 50%}}   /* s26c5: banner about half its old height (was 16/10) */
+h1{color:var(--acc);margin:0;text-transform:uppercase;overflow-wrap:anywhere;font-size:clamp(34px,9vw,56px);letter-spacing:.04em;font-weight:900;line-height:1}
+h1 span{color:var(--acc)}
+.tag{color:var(--mut);margin:6px 0 0}
+.badge{display:inline-block;padding:3px 9px;border-radius:99px;font-size:12px;font-weight:700;background:var(--card2);border:1px solid var(--line);margin:8px 6px 0 0}
+.badge.warn{background:#4b3a0b;border-color:#8a6d12;color:#ffe08a}
+/*<NAV-ONE-ROW>*/
+/* All tabs on ONE row, never wrapping or scrolling. Phone: tiny icon above a short label (full name stays in aria-label). Desktop (>=900px): full labels in pills. */
+nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:6px 10px;display:flex;flex-wrap:nowrap;gap:2px;overflow:hidden;max-width:1000px;margin:8px auto 0}
+nav button,nav a.tb{position:relative;flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:9px;padding:4px 0;min-height:46px;font:inherit;font-size:9.5px;font-weight:800;letter-spacing:-.01em;line-height:1.05;white-space:nowrap;cursor:pointer}
+nav button .ni,nav a.tb .ni{font-size:17px;line-height:1}
+nav button .nl,nav a.tb .nl{display:block;max-width:100%;overflow:hidden;text-overflow:clip}
+nav button .nl.f,nav a.tb .nl.f{display:none}
+nav button.on,nav a.tb.on{background:var(--acc);color:#111;border-color:var(--acc)}
+nav button:focus-visible,nav a.tb:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+@media (max-width:370px){nav{padding:6px 2px;gap:1px}nav button,nav a.tb{font-size:8.8px;letter-spacing:-.025em}}
+@media (min-width:900px){nav{padding:8px 10px;gap:5px}nav button,nav a.tb{flex:1 1 auto;flex-direction:row;gap:6px;border-radius:99px;padding:8px 10px;min-height:40px;font-size:13px;letter-spacing:0}nav button .ni,nav a.tb .ni{font-size:14px}nav button .nl.f,nav a.tb .nl.f{display:block}nav button .nl.s,nav a.tb .nl.s{display:none}}
+/*</NAV-ONE-ROW>*/
+/*<DRAFT-TAB>*/
+/* "Draft" is an external link (<a class="nd">) styled like the tab buttons. 10 items now: phone labels get shorter (see NAVSHORT below), full labels only from 1040px. */
+nav a.nd{position:relative;flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--card);color:var(--tx);border:1px dashed var(--acc);border-radius:9px;padding:4px 0;min-height:46px;font:inherit;font-size:9.5px;font-weight:800;letter-spacing:-.01em;line-height:1.05;white-space:nowrap;cursor:pointer;text-decoration:none}
+nav a.nd .ni{font-size:17px;line-height:1}
+nav a.nd .nl{display:block;max-width:100%;overflow:hidden;text-overflow:clip}
+nav a.nd .nl.f{display:none}
+nav a.nd:hover{background:var(--card2)}
+nav a.nd:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+@media (max-width:420px){nav{padding:6px 10px;gap:1px}}
+@media (max-width:370px){nav a.nd{font-size:8.8px;letter-spacing:-.025em}}
+@media (max-width:340px){nav button,nav a.tb,nav a.nd{font-size:8.2px;letter-spacing:-.03em}}
+@media (min-width:600px) and (max-width:999px){nav{gap:3px}nav button,nav a.tb,nav a.nd{flex:1 1 0;flex-direction:column;gap:2px;border-radius:9px;padding:4px 0;min-height:46px;font-size:11.5px;letter-spacing:-.01em}nav button .ni,nav a.tb .ni,nav a.nd .ni{font-size:19px}nav button .nl.f,nav a.tb .nl.f,nav a.nd .nl.f{display:none}nav button .nl.s,nav a.tb .nl.s,nav a.nd .nl.s{display:block}}
+/*</DRAFT-TAB>*/
+main{max-width:1000px;margin:0 auto;padding:12px 10px 60px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px;margin:10px 0;overflow-wrap:anywhere}
+.lb{display:flex;align-items:center;gap:10px;cursor:pointer}
+.rank{font-size:26px;font-weight:900;width:46px;text-align:center;color:var(--acc)}
+.who{flex:1;min-width:0}
+.who b{font-size:17px}
+.who small{display:block;color:var(--mut)}
+.pts{font-size:28px;font-weight:900;text-align:right}
+.pts small{display:block;font-size:11px;color:var(--mut);font-weight:600}
+.bar{height:6px;background:var(--card2);border-radius:9px;margin-top:8px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--acc)}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+.chip{text-decoration:none;display:inline-flex;align-items:center;gap:5px;padding:2px 8px 2px 2px;border-radius:99px;font-weight:700;font-size:12.5px;border:2px solid transparent;max-width:100%}
+.chip img,.chip .nologo{width:22px;height:22px;border-radius:50%;background:#fff;object-fit:contain;padding:1px;flex:none}
+.chip .nologo{display:inline-flex;align-items:center;justify-content:center;background:#e2e8f0;color:#1e293b;font-size:9px;font-weight:900;letter-spacing:-.02em;line-height:1}
+.chip.big .nologo{font-size:11px}
+.chip:hover{filter:brightness(1.12)}
+/*<RANK-CHIPS>*/
+/* Ranks tab (tidy): every card is the same height. Phones (<700px): row 1 = rank | name + team-name subtitle | points, then an equal-width chip grid (4 columns, 3 below 340px, rows fixed at 32px). Team names wrap to 2 lines inside the chip instead of being cut off. >=700px (RANK-BESIDE below): rank | name | points | chips as true columns shared by all cards (CSS subgrid), so points and chips line up vertically. Markup: cards wrapped in .ocl, chip name in span.cn. Links/JS unchanged. */
+.card.oc{display:grid;grid-template-columns:46px minmax(0,1fr) auto;grid-template-areas:"rank who pts" "bar bar bar" "chips chips chips";column-gap:10px;align-items:center}
+.card.oc .lb{display:contents}
+.card.oc .rank{grid-area:rank}
+.card.oc .who{grid-area:who}
+.card.oc .pts{grid-area:pts}
+.card.oc .bar{grid-area:bar}
+.card.oc .chips{grid-area:chips;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-auto-rows:32px;gap:4px;margin-top:8px;align-self:stretch;--rows:2;min-height:calc(var(--rows)*32px + (var(--rows) - 1)*4px);align-content:start}
+.card.oc .chip{display:flex;align-items:center;gap:3px;min-width:0;max-width:none;height:32px;box-sizing:border-box;padding:0 3px 0 2px;font-size:9.5px;letter-spacing:-.02em;line-height:1.1;overflow:hidden}
+.card.oc .chip img,.card.oc .chip .nologo{width:17px;height:17px;margin:0;flex:none;padding:1px}
+.card.oc .chip .nologo{font-size:7px}
+.card.oc .chip .cn{min-width:0;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow:hidden;overflow-wrap:normal;word-break:normal;text-align:left}
+.card.oc .chip .cn.one{display:block;white-space:nowrap;text-overflow:ellipsis}
+@media (max-width:339px){.card.oc .chips{grid-template-columns:repeat(3,minmax(0,1fr));--rows:3}}
+/*</RANK-CHIPS>*/
+/*<RANK-BESIDE>*/
+/* >=700px only: one shared 4-column track set (rank | name | points | chips) for the whole list via subgrid, so names, points and chip grids line up in every card; name column is as wide as the longest name (max 230px), points column right-aligned. */
+@media (min-width:700px){
+  .ocl{display:grid;grid-template-columns:56px fit-content(230px) auto minmax(0,1fr);column-gap:12px;margin-top:10px}
+  .ocl>.card.oc{grid-column:1/-1;grid-template-columns:56px 200px 64px minmax(0,1fr);grid-template-areas:"rank who pts chips" "bar bar bar bar";column-gap:12px}
+  @supports (grid-template-columns:subgrid){.ocl>.card.oc{grid-template-columns:subgrid}}
+  .card.oc .pts{justify-self:end;text-align:right}
+  .card.oc .chips{margin-top:0}
+  .card.oc .bar{margin-top:8px}
+  .card.oc .chip{font-size:11.5px;letter-spacing:0;padding:0 6px 0 2px;gap:4px}
+  .card.oc .chip img,.card.oc .chip .nologo{width:20px;height:20px}
+  .ocl>.card.oc{margin:0 0 10px}
+}
+@media (min-width:1000px){.card.oc .chip{font-size:12.5px}}
+/*</RANK-BESIDE>*/
+/*<CHIP-RECORD>*/
+/* Standings chips: the team's W-L (data.json "records": completed regular-season + conference games, same number as the Teams tab) sits inside the chip on its own small line under the school name (logo spans both lines). Chip rows are 40px instead of 32px to make room. A team with no completed game is not in "records" and shows 0-0; if the data has no "records" key at all, no record is shown. */
+.card.oc .chips{grid-auto-rows:40px;min-height:calc(var(--rows)*40px + (var(--rows) - 1)*4px)}
+.card.oc .chip{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:auto auto;align-content:center;align-items:center;column-gap:3px;row-gap:0;height:40px}
+.card.oc .chip img,.card.oc .chip .nologo{grid-row:1/3;align-self:center}
+.card.oc .chip .cn{grid-column:2}
+.card.oc .chip .cr{grid-column:2;display:block;font-size:.92em;font-weight:600;line-height:1.1;letter-spacing:0;white-space:nowrap;font-variant-numeric:tabular-nums;opacity:.85;text-align:left;margin-top:1px}
+.card.oc .chip .cn.one{align-self:end}
+/*</CHIP-RECORD>*/
+/*<CHIP-FIT>*/
+/* Standings chips: the school name stays on ONE line (never wraps). chipFit() (JS, after every render / resize) shrinks the name font a step at a time until it fits the chip (floor 9px); only a name that still does not fit at 9px is cut with an ellipsis (the whole chip link title and the text keep the full name). Chip size / width / height unchanged. */
+.card.oc .chip .cn{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/*</CHIP-FIT>*/
+.chip.big{font-size:15px;padding:3px 11px 3px 3px}
+.chip.big img{width:30px;height:30px}
+.chip.out{opacity:.55;text-decoration:line-through}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{padding:7px 6px;text-align:left;border-bottom:1px solid var(--line);vertical-align:middle}
+th{color:var(--mut);font-size:12px;text-transform:uppercase;letter-spacing:.04em;position:sticky;top:0}
+td.n,th.n{text-align:right;font-variant-numeric:tabular-nums}
+.sc{overflow-x:auto;overflow-wrap:normal;background-color:var(--card);background-image:linear-gradient(90deg,var(--card) 30%,rgba(26,31,43,0)),linear-gradient(270deg,var(--card) 30%,rgba(26,31,43,0)),linear-gradient(90deg,rgba(0,0,0,.5),rgba(0,0,0,0)),linear-gradient(270deg,rgba(0,0,0,.6),rgba(0,0,0,0));background-position:0 0,100% 0,0 0,100% 0;background-repeat:no-repeat;background-size:28px 100%,28px 100%,12px 100%,12px 100%;background-attachment:local,local,scroll,scroll}
+.swipe{display:none;font-size:12px;color:var(--mut);margin:4px 2px 0}
+@media (max-width:640px){.swipe{display:block}}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 10px}
+.tabs button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:10px;padding:10px 13px;min-height:40px;cursor:pointer;font-weight:600}
+.tabs button.on{border-color:var(--acc);color:var(--acc)}
+
+.trow{cursor:pointer}
+.det{background:var(--card2);border-radius:10px;padding:8px 10px;margin:4px 0 10px}
+.pill{display:inline-block;padding:1px 8px;border-radius:99px;background:var(--card2);border:1px solid var(--line);font-size:12px;margin:2px 3px 2px 0}
+.good{color:var(--good)}.bad{color:var(--bad)}.mut{color:var(--mut)}
+ul.it{margin:6px 0;padding-left:18px}
+ul.it li{margin:2px 0}
+.quip{color:var(--acc);font-style:italic;margin:6px 0 0}
+h2{font-size:19px;margin:18px 0 6px}
+.note{overflow-wrap:anywhere;font-size:13px;color:var(--mut)}
+select,.sel{background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:9px 10px;min-height:40px;font:inherit}
+.gday{margin:16px 2px 4px;font-weight:800;color:var(--acc)}
+.gm{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin:8px 0}
+.gm.h2h{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc) inset}
+.gm .gh{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12.5px;color:var(--mut);margin-bottom:6px}
+.gside{display:flex;align-items:center;gap:8px;padding:4px 0}
+.gside .nm{flex:1;min-width:0;display:flex;flex-wrap:wrap;gap:4px;align-items:center}
+.gside .sc2{font-size:22px;font-weight:900;min-width:34px;text-align:right}
+.gside.lose .sc2{color:var(--mut);font-weight:700}
+.opill{display:inline-block;padding:0 7px;border-radius:99px;font-size:11.5px;font-weight:700;background:var(--card2);border:1px solid var(--line)}
+.gl{border-top:1px dashed var(--line);margin-top:6px;padding-top:6px;font-size:13px}
+.up{display:inline-block;padding:1px 8px;border-radius:99px;font-weight:800;font-size:12px;background:#7c2d12;color:#ffedd5}
+.up.ns{background:var(--card2);color:var(--mut)}
+.h2b{display:inline-block;padding:1px 8px;border-radius:99px;font-weight:800;font-size:12px;background:var(--acc);color:#111}
+
+.seed{font-size:11px;color:var(--mut)}
+
+.btn{background:var(--acc);color:#111;border:0;border-radius:10px;padding:11px 14px;min-height:40px;font-weight:800;cursor:pointer}
+.btn.sec{background:var(--card2);color:var(--tx);border:1px solid var(--line)}
+.agrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.agrid .card{margin:0}
+.agrid td.t{word-break:break-word}
+.arow-champ td{background:rgba(255,210,63,.08)}
+.crown{margin-left:4px}
+.asel{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:6px 0 4px}
+.asel select{font-size:16px;font-weight:700;min-width:190px}
+.fine{font-size:12px;color:var(--mut)}
+.pill.warn{background:#4b3a0b;border-color:#8a6d12;color:#ffe08a}
+footer{max-width:1000px;margin:0 auto;padding:0 10px 40px;color:var(--mut);font-size:12px}
+
+/* ---------- "Who are you?" modal (the online list now lives in the chat bar) ---------- */
+/* the old standalone 'Online now' strip CSS (#presence/.pr/.pc/.pg) was removed: that info now lives in the merged chat bar (CHAT-BAR) */
+
+
+/*<OWNED-GAMES>*/.gUn{display:flex;align-items:center;gap:6px;margin-top:8px;font-size:12px;color:var(--mut);cursor:pointer;min-height:28px}.gUn input{width:16px;height:16px;margin:0}/*</OWNED-GAMES>*/
+/*<REFRESH-NOW>*/
+.lv{display:flex;flex-wrap:wrap;align-items:center;column-gap:2px;width:fit-content;max-width:100%;min-height:40px;margin:-14px 0 -8px;font-size:12px;line-height:1.3;color:var(--mut);opacity:.7}
+.lv[hidden],.lvA[hidden]{display:none}
+.lv button{min-width:40px;min-height:40px;padding:0 8px;border:0;background:none;color:inherit;font:inherit;cursor:pointer;border-radius:8px;display:inline-flex;align-items:center;gap:5px;-webkit-tap-highlight-color:transparent}
+/*<NO-CHECKED-LINE>*/.lv #lvT:empty+button{margin-left:-8px}   /* no status text: the Refresh button lines up with the Updated line above it (cancels its 8px padding) */
+.lv #lvT:empty{display:none}/*</NO-CHECKED-LINE>*/
+.lv .lvU{font-size:12px;white-space:nowrap;margin-left:4px;opacity:.9}.lv .lvU[hidden]{display:none}.lv button{white-space:nowrap}
+.lv button:hover{opacity:.85;text-decoration:underline}
+.lv button:focus-visible{outline:1px dashed var(--mut);outline-offset:-2px}
+.lv button[disabled]{cursor:default;text-decoration:none;opacity:.8}
+.lv .lvsp{width:11px;height:11px;border:2px solid currentColor;border-right-color:transparent;border-radius:50%;display:inline-block;animation:lvspin .8s linear infinite}
+@keyframes lvspin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.lv .lvsp{animation:none}}
+.lvA{margin:0 0 4px;font-size:11px;color:var(--mut);opacity:.7;word-break:break-word}
+/*</REFRESH-NOW>*/
+
+
+/* chat bar (link to the draft room chat) */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.chat{position:fixed;left:0;right:0;bottom:0;z-index:30;box-sizing:border-box;margin:0;padding:8px max(10px,calc((100% - 980px)/2)) calc(8px + env(safe-area-inset-bottom,0px));background:var(--bg);border-top:1px solid var(--line);display:flex;flex-direction:column-reverse}   /* ONE fixed bar at the bottom of every tab (page content gets --chatH bottom padding), the panel opens upward as a sheet */
+body{padding-bottom:var(--chatH,0px)}
+body.nochat .chat{visibility:hidden}   /* hidden (space kept) while a text field outside the chat has focus, so the phone keyboard never meets two bars */
+.chat[hidden]{display:none}
+.chat-t{display:flex;align-items:center;gap:8px;width:100%;min-height:54px;background:var(--card);border:1px solid var(--line);border-radius:12px;color:var(--tx);font:inherit;padding:6px 12px;cursor:pointer;text-align:left}
+.chat.top{margin-top:10px}
+.cbm{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.cb1,.cb2{display:block;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cb1{font-size:12px;font-weight:700;color:var(--mut);line-height:1.25}
+.cb1 .cbo{color:var(--tx);margin-right:9px;white-space:nowrap}
+.cb1 .cbf,.cb1 .cbg{color:var(--mut);font-weight:600;margin-right:9px;white-space:nowrap}
+.cb1 .pd{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--good);box-shadow:0 0 0 2px rgba(74,222,128,.22);margin-right:4px;vertical-align:0}
+.cb2{font-size:13.5px;font-weight:600;color:#c3cbdc;line-height:1.3}
+.cb2.un{color:var(--tx);font-weight:800}
+.cb2.ty{color:var(--acc);font-weight:700;font-style:italic}
+.cb2.mut{color:var(--mut);font-weight:500}
+.chat-t .cdot{flex:none;min-width:26px;height:26px;padding:0 8px;border-radius:99px;background:#ff3b5c;color:#fff;font-size:14px;font-weight:900;font-style:normal;line-height:26px;text-align:center;box-shadow:0 0 0 3px rgba(255,59,92,.3)}
+.chat-t .cdot[hidden]{display:none}
+.chat.unread .chat-t{border-color:var(--acc);background:#2b2510;animation:cbpulse 2.2s ease-in-out infinite}
+@keyframes cbpulse{0%,100%{box-shadow:0 0 0 0 rgba(255,210,63,0)}50%{box-shadow:0 0 0 5px rgba(255,210,63,.32),0 0 16px rgba(255,210,63,.3)}}
+@media (prefers-reduced-motion:reduce){.chat.unread .chat-t{animation:none;box-shadow:0 0 0 3px rgba(255,210,63,.5)}}
+.chat-t:focus-visible,.chat-f button:focus-visible,.chat-f input:focus-visible,.chat-p button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.chat-t .ca{color:var(--acc);font-size:12px;flex:none}
+/* nav for 10 items */
+@media (max-width:599px){nav button,nav a.tb,nav a.nd{flex:1 1 auto}}
+
+/* ===== League site additions (not in the template): banner change control, placeholders, demo bar, toast, redraft buttons, owner card, power rankings ===== */
+html{-webkit-text-size-adjust:100%}
+header{position:relative}
+.heroctl{position:absolute;top:10px;right:10px;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;z-index:2}
+.heroctl .btn{background:rgba(16,19,26,.82);backdrop-filter:blur(4px);color:var(--tx);border:1px solid var(--line)}
+.btn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;min-height:44px;font:inherit;font-weight:800}
+.btn.sm{padding:8px 12px}
+.btn[disabled]{opacity:.55;cursor:default}
+.btn.endbig{min-height:52px;font-size:17px;margin:2px 6px 2px 0}
+.rdbtns{margin-top:10px;display:flex;flex-wrap:wrap;gap:6px}
+.demobar{background:var(--acc);color:#111;font-weight:700;font-size:14px;padding:8px 12px;text-align:center;position:sticky;top:0;z-index:20}
+.demobar a{color:#111;text-decoration:underline;margin-left:6px;display:inline-block;padding:12px 8px;margin:-12px 0 -12px 4px}
+nav{top:var(--demoh,0px)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(90px + env(safe-area-inset-bottom,0px));background:#0b0e14;border:1px solid var(--acc);color:var(--tx);padding:9px 14px;border-radius:12px;z-index:60;max-width:92vw;font-weight:700;box-shadow:0 6px 24px rgba(0,0,0,.5);text-align:center;font-size:14px;pointer-events:none}
+.hide{display:none!important}
+[hidden]{display:none!important}
+#buildtag{font-size:11px;color:var(--mut);margin:14px 0 0;display:flex;gap:8px;align-items:center;flex-wrap:wrap}#buildtag b{color:var(--acc)}#buildtag a{display:inline-block;padding:14px 8px}
+footer a{display:inline-block;padding:12px 4px}
+#lhome,.card.bad{margin-top:14px}
+.card.bad{color:var(--bad)}
+.chat-t{text-decoration:none;color:var(--tx)}
+.oh{display:flex;gap:10px;align-items:center}
+.av{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;overflow:hidden;flex:none;color:#111;font-weight:900}
+.av img{width:100%;height:100%;object-fit:cover}
+.lb[role=button]:focus-visible,.trow:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:10px}
+.tabs button[aria-selected=true]{border-color:var(--acc);color:var(--acc)}
+.tabs button{min-height:44px}
+.tabs select{min-height:44px}
+select{min-height:44px}
+.gUn{min-height:44px}.gUn input{width:20px;height:20px}
+.fresh{min-height:44px}
+.lv,.lv button{min-height:44px}
+@media (min-width:1040px){nav button,nav a.tb,nav a.nd{min-height:44px}}
+.trow{cursor:pointer}
+.pill.warn{background:#4b3a0b;border-color:#8a6d12;color:#ffe08a}
+/* power rankings */
+
+/* s16: every tappable thing is at least 44 x 44 CSS px on a phone (real boxes, not just hit areas). The tab bar scrolls sideways inside itself. */
+@media (max-width:599px){
+  nav{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-webkit-overflow-scrolling:touch;justify-content:flex-start}
+  nav::-webkit-scrollbar{display:none}
+  nav button,nav a.tb,nav a.nd{flex:1 0 auto;min-width:44px;padding:4px 7px;white-space:nowrap}
+  nav button .nl,nav a.tb .nl,nav a.nd .nl{max-width:none;overflow:visible}
+  .card.oc .chips{grid-auto-rows:44px;min-height:calc(var(--rows)*44px + (var(--rows) - 1)*4px)}
+  .card.oc .chip{height:44px;min-height:44px}
+  .chip{min-height:44px}
+  .chip.big{min-height:44px}
+  .tabs button{min-width:44px;min-height:44px}
+  footer a{display:inline-flex;align-items:center;box-sizing:border-box;min-width:44px;min-height:44px;padding:0 6px;line-height:1.2}
+  .trow td{padding-top:12px;padding-bottom:12px}
+}
+footer a{min-height:44px;box-sizing:border-box}
+
+/* s18: store trouble / offline notes (the page stays alive and retries) */
+.offnote{font-size:13px;color:var(--mut);padding:8px 12px;border-style:dashed;margin:8px 0}
+#trouble .btn{margin-top:4px}
+#buildtag a{display:inline-flex;align-items:center;box-sizing:border-box;min-height:44px;min-width:44px}
+
+/* s20: ONE column on every League-site view at widths >= 600px: banner, title, tab row, cards/rows, notes, footer and the fixed chat bar all start and end on the same left and right edges (the 980px column inside the 1000px page; 10px side margins on phones). 11 tabs in one row without scrolling (icon over a medium label). */
+.titlebar,.sub{box-sizing:border-box}
+@media (min-width:600px){header{padding:0 10px 8px}.hero{border-radius:0 0 18px 18px}nav{box-sizing:border-box;width:calc(100% - 20px);max-width:980px;margin:8px auto 0;padding:6px 0}}
+nav button .nl.m,nav a.tb .nl.m,nav a.nd .nl.m{display:none}
+@media (min-width:1000px){nav{gap:4px;overflow:hidden}nav button,nav a.tb,nav a.nd{flex:1 1 0;min-width:0;flex-direction:column;gap:2px;border-radius:9px;padding:4px 0;min-height:50px;font-size:12px;letter-spacing:0}nav button .ni,nav a.tb .ni,nav a.nd .ni{font-size:19px}nav button .nl.f,nav a.tb .nl.f,nav a.nd .nl.f,nav button .nl.s,nav a.tb .nl.s,nav a.nd .nl.s{display:none}nav button .nl.m,nav a.tb .nl.m,nav a.nd .nl.m{display:block}}
+
+/* ===== s20: Bets tab (pushup challenges), pushup challenge look ===== */
+.sb-in,.sb-ta{background:var(--card2);color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:inherit;width:100%}
+.st.open{color:#7dd3fc}.st.settled{color:var(--good)}.st.wash{color:var(--mut)}.st.unparsed{color:#fbbf24;border-color:#8a6d12}
+.mx td,.mx th{padding:5px 7px;font-size:13px;text-align:right;white-space:nowrap}.mx td:first-child,.mx th:first-child{text-align:left;position:sticky;left:0;background:var(--card)}
+.mx td.z{color:#4b566d}
+.b27-q{margin:12px 0 4px;font-weight:700;font-size:14px}
+.b27-chips{display:flex;flex-wrap:wrap;gap:6px}
+.b27-chip,.b27-amt{min-height:46px;border-radius:12px;border:2px solid var(--line);background:var(--card2);color:var(--tx);font:inherit;font-weight:800;font-size:15px;padding:0 14px;cursor:pointer}
+.b27-chip[aria-pressed=true],.b27-amt[aria-pressed=true]{background:var(--acc);color:#111;border-color:var(--acc)}
+.b27-amts{display:grid;grid-template-columns:repeat(6,1fr);gap:5px}
+.b27-amt.cu{font-size:12px;letter-spacing:-.02em}
+.b27-note{font-size:12px;color:var(--mut);line-height:1.35}
+.b27-r{font-size:12px}
+.b27-amt{font-size:18px;padding:0}
+.b27-in{font-size:16px;min-height:46px}
+.oq tr.oqh td{font-size:12px;color:var(--mut);padding:9px 2px 2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-bottom:0}
+.b27-form textarea.b27-in{min-height:84px;resize:vertical;margin-top:8px}
+.b27-cw{margin-top:8px}
+.b27-bad-t{color:var(--bad);font-size:13px;min-height:16px;margin-top:4px}
+.b27-livebox,.b27-confirm #b27Live{margin-top:12px;padding:10px;border-radius:12px;background:var(--card2);border:1px solid var(--line);font-size:14px}
+.b27-w{color:var(--good);font-size:13.5px;margin-top:3px}.b27-l{color:#fbbf24;font-size:13.5px;margin-top:2px}
+.b27-sum{margin:10px 0 6px;font-weight:800;overflow-wrap:anywhere}
+.b27-big{width:100%;min-height:52px;font-size:17px;margin-top:6px}
+.b27-big:disabled,#b27Place:disabled{opacity:.45;cursor:default}
+.b27-act{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:8px}
+.b27-b{min-height:44px;padding:0 12px}
+.b27-t{margin:4px 0;font-size:15px;overflow-wrap:anywhere}.b27-m{font-size:13.5px}
+/*<MULTI-BET>*/
+.b27-opps{display:grid;grid-template-columns:repeat(var(--n,7),minmax(0,1fr));gap:6px}   /* all opponents on ONE row at every width (7 equal columns; short names + smaller type on narrower screens, see media below) */
+.b27-opps .b27-chip{position:relative;min-height:58px;min-width:0;padding:6px 4px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;line-height:1.15;text-align:center;overflow:hidden;font-size:13px}
+.b27-chip.op .ck{display:none;position:absolute;top:2px;right:5px;font-weight:900;font-size:11px;line-height:1}.b27-chip.op[aria-pressed=true] .ck{display:block}
+.b27-chip.op .em{font-size:18px;line-height:1.1;white-space:nowrap}
+.b27-chip.op .nm{display:block;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.b27-chip.op .nm .tl{display:block;overflow:hidden;text-overflow:ellipsis}.b27-chip.op .nm .tnr{font-size:.8em}.b27-chip.op[aria-pressed=true] .nm .tnr{color:inherit;opacity:.75}   /* s28b: team name line first, real name under it */
+.b27-chip.op .nm .sh,.b27-chip.op .nm .xs{display:none}
+@media (max-width:899px){.b27-chip.op .nm .f{display:none}.b27-chip.op .nm .sh{display:inline}.b27-opps .b27-chip{font-size:12.5px}}
+@media (max-width:599px){.b27-chip.op .nm .sh{display:none}.b27-chip.op .nm .xs{display:inline}.b27-opps{gap:3px}.b27-opps .b27-chip{min-height:52px;padding:4px 0;border-width:1.5px;border-radius:9px;font-size:10px;letter-spacing:-.02em}.b27-chip.op .em{font-size:16px}.b27-chip.op .ck{top:1px;right:3px;font-size:9px}}   /* phones: all 7 chips stay on ONE row (equal 1/7 columns, short names, small type) */
+@media (max-width:399px){.b27-amt.cu{font-size:11px;letter-spacing:-.03em;white-space:nowrap;min-width:0;overflow:hidden}}
+@media (max-width:359px){.b27-opps .b27-chip{font-size:9px}.b27-chip.op .em{font-size:14px}}
+.b27-selbar{display:flex;flex-wrap:nowrap;align-items:center;gap:8px;margin-top:8px}
+.b27-selbar .b27-sm{min-height:44px;min-width:88px;white-space:nowrap;padding:0 12px;border-radius:10px;border:2px solid var(--line);background:var(--card2);color:var(--tx);font:inherit;font-weight:700;font-size:14px;cursor:pointer}
+.b27-selbar .cnt{font-size:13px;color:var(--mut);margin-left:auto;white-space:normal;min-width:0;overflow-wrap:anywhere}
+/*</MULTI-BET>*/
+/*<OWES-TABLE>*/
+/* "Who owes who" (Bets 26-27): pair nets + per-manager nets, names never wrap (emoji + name; a short name on phones, ellipsis as the last resort). */
+.oq{width:100%;max-width:560px;border-collapse:collapse;table-layout:fixed;font-size:14px}
+.oq td,.oq th{padding:7px 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border-bottom:1px solid var(--line);text-align:left}
+.oq th{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.04em}
+.oq .n{text-align:right;font-variant-numeric:tabular-nums}
+.oq .ow{color:var(--mut);text-align:center;padding:7px 0}
+.oq.oqx col.a,.oq.oqx col.b{width:35%}.oq.oqx col.m{width:14%}.oq.oqx col.v{width:16%}
+.oqn{white-space:nowrap}.oqn::before{content:attr(data-em) " "}.oqn .s{display:none}
+.oqs{font-size:12px;color:var(--mut);margin:2px 0 6px}
+/*<OWES-CHART>*/
+/* plain matrix = the old Side bets matrix (table.mx inside .card.sc); only the totals get a light divider + bold */
+.mx.oqm td.t,.mx.oqm th.t{font-weight:800;border-left:1px solid var(--line)}.mx.oqm tfoot td,.mx.oqm tfoot th{font-weight:800;border-top:1px solid var(--line)}.mx.oqm td.t{color:var(--tx)}
+@media (max-width:1000px){.swipe.oqw{display:block}}
+.oqc{display:flex;flex-direction:column;gap:5px;margin-top:6px}
+.oqc .cr{display:grid;grid-template-columns:96px minmax(0,1fr) 54px;align-items:center;gap:6px}
+.oqc .cn{white-space:nowrap;font-size:13.5px}
+.oqc .ct{position:relative;height:20px;display:block}
+.oqc .ct::before{content:"";position:absolute;left:50%;top:-2px;bottom:-2px;width:2px;margin-left:-1px;background:var(--mut);opacity:.7}
+.oqc .cb{position:absolute;top:3px;bottom:3px;width:calc(var(--w) * 50%);border-radius:3px}
+.oqc .cb.pos{left:50%;background:var(--good);border-radius:0 4px 4px 0}.oqc .cb.neg{right:50%;background:var(--bad);border-radius:4px 0 0 4px}
+.oqc .cv{text-align:right;font-size:13.5px;font-variant-numeric:tabular-nums}
+@media (min-width:600px){.oqc .cr{grid-template-columns:170px minmax(0,1fr) 64px}}
+/*</OWES-CHART>*/
+
+@media (max-width:599px){.oqn.hs .f{display:none}.oqn.hs .s{display:inline}.oq td,.oq th{padding:7px 2px}.oqn::before{content:attr(data-e1) " "}}
+@media (max-width:359px){.oq{font-size:13px}.oq.oqx col.a,.oq.oqx col.b{width:33%}.oq.oqx col.m{width:12%}.oq.oqx col.v{width:22%}}
+/*</OWES-TABLE>*/
+.b27-owe{padding:6px 0;border-bottom:1px solid var(--line);font-size:15px}
+.b27-ok{border-color:#2f6b47}.b27-bad{border-color:#8a2d2d}
+
+.b27-c{margin:10px 0}.b27-c .st{font-size:11px;border:1px solid var(--line);border-radius:99px;padding:1px 8px;font-weight:800}
+#b27Head .btn,#b27Retry{min-height:44px}
+
+/* s20 even column: from 600px up the banner, title, tag, tab row, every tab's content, the footer (and the chat bar, see .chat) share ONE column
+   (max 980px, centered, 10px page margin on narrower screens) with identical left and right edges. Nothing is wider than the tab row. */
+@media (min-width:600px){
+  header,nav,main,footer{box-sizing:border-box;width:calc(100% - 20px);max-width:980px;margin-left:auto;margin-right:auto}
+  header{padding:0 0 8px}
+  .titlebar,.sub{padding-left:0;padding-right:0}
+  main{padding:12px 0 60px}
+  footer{padding:0 0 40px}
+  nav{padding:6px 0}
+  .gday{margin-left:0;margin-right:0}
+}
+
+/* s20: school names that are links to the school's ESPN page (a.tl) and chips: >= 44px tall (phone and desktop), no overflow */
+a.tl{display:inline-flex;align-items:center;min-height:44px;box-sizing:border-box;color:inherit;text-decoration:underline dotted;text-underline-offset:3px;max-width:100%}
+a.tl:hover{filter:brightness(1.15)}a.tl:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+span.chip.nolink{cursor:default}
+
+/* ===== s20 CHIP GRID: one shared school chip (.school-chip, together with .chip for the team colors) and one shared grid (.school-grid) =====
+   Every school chip is the SAME box: fixed height 44px (equal width inside a grid: 2 columns on phones, 4 from 600px; outside a grid, one fixed width per screen size).
+   A long name is cut with an ellipsis on ONE line (the title attribute holds the full name); the chip never wraps and never changes size. The chip is an <a> to the school's
+   ESPN page (target=_blank rel="noopener noreferrer") or, without an ESPN id, a plain <span class="... nolink">. Markup:  <div class="school-grid"><a class="chip school-chip" ...><img><span class="cn">Name</span>[<span class="cr">12-3</span>]</a>...</div> */
+.school-grid,.card.oc .chips.school-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:44px;gap:6px;align-content:start;align-items:stretch;min-height:0;margin-top:8px}
+@media (min-width:600px){.school-grid,.card.oc .chips.school-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.chip.school-chip,.card.oc .chip.school-chip{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-rows:1fr;align-items:center;align-content:center;column-gap:6px;row-gap:0;box-sizing:border-box;width:100%;min-width:0;max-width:100%;height:44px;min-height:44px;padding:0 8px 0 5px;border-radius:12px;overflow:hidden;font-size:12px;line-height:1.15;letter-spacing:0;font-weight:700}
+.chip.school-chip img,.chip.school-chip .nologo,.card.oc .chip.school-chip img,.card.oc .chip.school-chip .nologo{width:26px;height:26px;grid-row:1/3;align-self:center;margin:0;padding:1px;border-radius:50%}
+.chip.school-chip .nologo,.card.oc .chip.school-chip .nologo{font-size:9px}
+.chip.school-chip .cn,.card.oc .chip.school-chip .cn,.card.oc .chip.school-chip .cn.one{display:block;grid-column:2;grid-row:1;align-self:end;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left;-webkit-line-clamp:unset;-webkit-box-orient:unset;font-size:inherit}
+.chip.school-chip .cr,.card.oc .chip.school-chip .cr{display:block;grid-column:2;grid-row:2;align-self:start;margin:1px 0 0;font-size:.9em;font-weight:600;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.85;text-align:left}
+.chip.school-chip:not(:has(.cr)) .cn{align-self:center;grid-row:1/3}
+.chip.school-chip.big{font-size:13px;padding:0 10px 0 5px}.chip.school-chip.big img{width:30px;height:30px}
+/* outside a grid (game cards, tables) every chip is the same fixed width */
+.gside .chip.school-chip,td .chip.school-chip{width:172px;flex:none}
+@media (max-width:599px){.gside .chip.school-chip,td .chip.school-chip{width:150px}}
+@media (max-width:339px){.card.oc .chips.school-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+/* manager cards: one column, every card the same height (header row + two or four chip rows) and nothing ragged */
+.ocl{align-items:stretch}
+.ocl>.card.oc{align-self:stretch}
+.card.oc .who .nm,.card.oc .who small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+/* s22: Quick bet pill + picker on a Games card (every tap target 44px) */
+.qbw{margin-top:8px;display:flex;justify-content:flex-end}
+.qb-btn{min-width:44px;font:inherit;font-size:13px;font-weight:800;min-height:44px;padding:0 14px;border-radius:99px;border:1px solid var(--acc);background:transparent;color:var(--acc);cursor:pointer}
+.qb-btn[aria-expanded=true]{background:var(--acc);color:#111}
+.qb-pick{margin-top:8px;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--card2);font-size:13px;min-width:0}
+.qb-pick .qb-r{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:8px 0}
+.qb-pick .qb-l{font-weight:800}
+.qb-pick .qb-r.v{display:block}
+.qb-pick .qb-r.v .qb-l{display:block;margin-bottom:4px;font-size:12px;color:var(--mut)}
+.qb-pick .qb-g{display:flex;gap:6px;min-width:0}
+.qb-pick .qb-g button{flex:1 1 0;min-width:0}
+.qb-pick .qb-g.w{flex-wrap:wrap}
+.qb-pick .qb-g.w button{flex:1 1 auto}
+.qb-pick button{min-width:44px;font:inherit;font-weight:800;font-size:14px;min-height:44px;padding:0 12px;border-radius:10px;border:2px solid var(--line);background:var(--card);color:var(--tx);cursor:pointer;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.qb-pick button[aria-pressed=true]{border-color:var(--acc);color:var(--acc)}
+.qb-pick button:focus-visible,.qb-btn:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.qb-pick .qb-x{border:0;background:transparent;color:var(--mut);font-weight:600}
+.qb-pick .qb-m{color:var(--bad,#ff6b6b);font-weight:700;margin:4px 0}
+.qb-hint{margin:6px 0 2px;padding:6px 10px;border-radius:10px;background:var(--card2);border:1px solid var(--acc);color:var(--tx)}
+.b27-form{scroll-margin-top:84px}
+/* s22: chat panel (the chat bar opens upward as a sheet; same chat as the draft room) */
+.chat-b{display:flex;flex-direction:column;max-height:70vh;max-height:70dvh;overflow:hidden;background:var(--card);border:1px solid var(--line);border-radius:12px;margin-top:6px;padding:8px;min-width:0}
+.chat-b[hidden]{display:none}
+.chat-h{display:flex;gap:6px;align-items:center;justify-content:space-between;margin:0 0 6px;min-width:0}
+.chat-h .chat-room{display:inline-flex;align-items:center;min-height:44px;padding:0 10px;border-radius:10px;border:1px solid var(--line);background:var(--card2);color:var(--acc);font-size:12px;font-weight:700;text-decoration:none;white-space:nowrap}
+.chat-l{height:min(46vh,320px);overflow-y:auto;overflow-x:hidden;padding:2px 2px 4px;overscroll-behavior:contain}
+.chat-l .ce{color:var(--mut);font-size:13px;text-align:center;padding:18px 8px}
+.cm{max-width:90%;margin:6px 0;padding:6px 10px;border-radius:12px;background:var(--card2);border:1px solid var(--line);min-width:0}
+.cm.me{margin-left:auto;background:#3a3010;border-color:#8a6d12}
+.cm .cw{font-weight:800;color:var(--acc);font-size:12px}
+.cm .ct{color:var(--mut);font-size:11px;margin-left:6px;white-space:nowrap}
+.cm .cx{font-size:14px;overflow-wrap:anywhere;word-break:break-word}
+.cm.pend{opacity:.6}
+.chat-f{display:flex;gap:6px;margin-top:8px}
+.chat-f input{flex:1;min-width:0;min-height:44px;font-size:16px;background:var(--card2);color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-family:inherit}
+.chat-f button{flex:none;min-height:44px;min-width:64px;border:0;border-radius:10px;background:var(--acc);color:#111;font:inherit;font-weight:800;cursor:pointer;padding:0 14px}
+.chat-p{margin-top:8px}
+.chat-m{min-height:18px;margin-top:4px;font-size:12px;color:var(--mut)}
+.chat-m .bad{color:var(--bad)}
+.chat-t{font:inherit;text-align:left}
+/* s22: "new" mark on the Bets tab */
+nav button .nb,nav a.tb .nb{position:absolute;top:-5px;right:6px;background:var(--acc);color:#111;border-radius:99px;font-size:9px;font-weight:900;line-height:1;padding:2px 5px;pointer-events:none}
+/* s24: Fix result history + edit hint */
+.b27-hist{margin-top:8px;padding:8px 10px;border:1px solid rgba(255,255,255,.08);border-radius:10px;background:rgba(0,0,0,.18);font-size:13px;overflow-wrap:anywhere}
+.b27-hist ol{margin:4px 0 0;padding-left:18px}.b27-hist li{margin:2px 0}
+.b27-hist li.fx-confirmed{color:var(--good,#4ade80)}.b27-hist li.fx-pending{color:var(--acc,#ffd23f)}
+.b27-edhint{margin:6px 0;padding:6px 10px;border-left:3px solid var(--acc,#ffd23f);background:rgba(255,210,63,.08);border-radius:6px}
+/* s24: below 380px seven opponents on one row gave chips under 44px wide (37px at 320, 42px at 360); wrap to 4 per row and 3 pushup buttons per row so every tap target is >= 44px */
+@media (max-width:379px){.b27-opps{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.b27-opps .b27-chip{font-size:11px}.b27-chip.op .nm .xs{display:inline}.b27-amts{grid-template-columns:repeat(3,1fr)}}
+/* s24: share / copy-link buttons and the deep-link highlight */
+.lshare{display:flex;justify-content:flex-end;margin:0 0 6px}
+.lshare .cpt{min-height:44px;padding:0 14px;font-size:14px}
+.cpl{min-width:44px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;border:1px solid var(--line);border-radius:10px;background:var(--card2);color:var(--tx);font:inherit;font-size:16px;cursor:pointer;padding:0;margin-left:auto}
+/* s28: the bet link button sits at the right end of the .s24hd header row (partner s24LinkBtn) */
+.dl-hl{outline:3px solid var(--acc);outline-offset:2px;box-shadow:0 0 0 8px rgba(255,210,63,.18);transition:outline-color .4s,box-shadow .4s}
+@media (prefers-reduced-motion:reduce){.dl-hl{transition:none}}
+
+/* s24: League site tabs are real links (a.tb) styled exactly like the old buttons */
+nav a.tb{text-decoration:none;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+/* s24: Bets list filters: one row (Person, Status, search terms); wraps below 360px */
+.b27-flt{padding:10px}
+.b27-flt .b27-fr{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px}
+.b27-flt select,.b27-flt .b27-fq{min-height:44px;width:100%;min-width:0;box-sizing:border-box;border:1px solid var(--line);border-radius:8px;color:var(--tx);font:inherit;font-size:16px;font-weight:400;padding:0 12px;margin:0}
+.b27-flt select{appearance:none;-webkit-appearance:none;background:var(--card) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%23eef1f7' stroke-width='1.6'/%3E%3C/svg%3E") no-repeat right 10px center;padding-right:28px;text-overflow:ellipsis;white-space:nowrap;overflow:hidden;cursor:pointer;color-scheme:dark}
+.b27-flt .b27-fq{background:var(--card2)}
+.b27-flt .b27-fq::placeholder{color:var(--mut)}
+.b27-flt select:focus-visible,.b27-flt .b27-fq:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+@media (max-width:399px){.b27-flt .b27-fr{gap:5px}.b27-flt select,.b27-flt .b27-fq{font-size:14px;padding:0 7px}.b27-flt select{padding-right:21px;background-position:right 6px center}.b27-flt .b27-fq::placeholder{font-size:13px}}
+@media (max-width:359px){.b27-flt .b27-fr{grid-template-columns:1fr 1fr}.b27-flt .b27-fq{grid-column:1 / -1}}
+.b27-cnt{margin-top:6px}.b27-top{margin:6px 0 0}
+/* s24: shared League site ball loader */
+/*<BALL-LOADER>*/
+/* ONE reusable loader: 3 basketballs bouncing in a staggered rhythm, each with a ground shadow that squashes / stretches; centered "Loading…" line under it. CSS only. Markup comes from ballLoader(). s26c2-loader: huge balls, --bs = clamp(56px,22vw,90px) so 3 balls fit at 320px; bounce/shadow/text scale with --bs. */
+.bl{--bs:clamp(56px,22vw,90px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:calc(var(--bs)*.2);padding:calc(var(--bs)*.6) 0 calc(var(--bs)*.45);text-align:center;max-width:100%;overflow:hidden}
+.bl-row{display:flex;gap:calc(var(--bs)*.3);align-items:flex-start}
+.bl-b{position:relative;width:var(--bs);height:calc(var(--bs)*2.2)}
+.bl-b i{position:absolute;left:0;top:0;width:var(--bs);height:var(--bs);font-size:calc(var(--bs)*.9);line-height:var(--bs);font-style:normal;text-align:center;transform-origin:50% 100%;animation:blBounce .84s infinite}
+.bl-b s{position:absolute;left:10%;bottom:0;width:80%;height:calc(var(--bs)*.2);border-radius:50%;background:rgba(255,255,255,.28);box-shadow:0 0 calc(var(--bs)*.14) rgba(255,255,255,.12);animation:blShadow .84s infinite}
+.bl-b:nth-child(2) i,.bl-b:nth-child(2) s{animation-delay:.14s}
+.bl-b:nth-child(3) i,.bl-b:nth-child(3) s{animation-delay:.28s}
+.bl-t{font-size:clamp(15px,calc(var(--bs)*.24),22px);color:var(--mut);letter-spacing:.02em}
+@keyframes blBounce{0%,100%{transform:translateY(0) scale(1,1);animation-timing-function:cubic-bezier(.4,0,.9,.6)}46%{transform:translateY(calc(var(--bs)*1.1)) scale(1,1)}50%{transform:translateY(calc(var(--bs)*1.133)) scale(1.14,.84);animation-timing-function:cubic-bezier(.1,.4,.6,1)}56%{transform:translateY(calc(var(--bs)*1.033)) scale(.94,1.08)}}
+@keyframes blShadow{0%,100%{transform:scale(.45,.7);opacity:.3;animation-timing-function:cubic-bezier(.4,0,.9,.6)}50%{transform:scale(1.2,1);opacity:.85;animation-timing-function:cubic-bezier(.1,.4,.6,1)}}
+@media (prefers-reduced-motion:reduce){.bl-b i,.bl-b s{animation:none}.bl-b i{transform:translateY(calc(var(--bs)*1.133))}.bl-b s{transform:none;opacity:.7}}
+/*</BALL-LOADER>*/
+@media (max-width:359px){.b27-selbar{flex-wrap:wrap}}   /* s24b: the 3 buttons + counter do not fit below 360px: let the row wrap */
+.b27-sndrow{margin-top:8px}.b27-snd{min-height:44px}.b27-propc{margin:8px 0 0;padding:10px;background:var(--card2)}.b27-read,.b27-prop{margin-top:4px}
+/* s25: settle pop-up */
+.b27-pop{position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(0,0,0,.6);box-sizing:border-box;animation:b27PopIn .18s ease-out}
+.b27-popc{max-width:min(320px,100%);box-sizing:border-box;background:var(--card);border:2px solid var(--acc);border-radius:16px;padding:18px;text-align:center;color:var(--tx)}
+.b27-popc img{max-width:100%;max-height:50vh;display:block;margin:0 auto 8px;border-radius:10px}
+.b27-popi{font-size:56px;line-height:1.1}.b27-popt{font-size:18px;font-weight:800;margin:6px 0}
+.b27-pop[data-kind=win] .b27-popc{border-color:var(--good)}.b27-pop[data-kind=loss] .b27-popc{border-color:var(--bad)}
+@keyframes b27PopIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.b27-pop{animation:none}}
+/* s25: reactions row (6 emoji, fits 320px: equal columns, each >= 44px) */
+.b27-rx{display:grid;grid-template-columns:repeat(6,minmax(44px,1fr));gap:2px;margin-top:8px}
+.b27-rxb{min-height:44px;min-width:44px;box-sizing:border-box;padding:0 2px;border:1px solid var(--line);border-radius:10px;background:var(--card2);color:var(--tx);font:inherit;display:flex;align-items:center;justify-content:center;gap:3px;cursor:pointer;-webkit-touch-callout:none;user-select:none}
+.b27-rxb .e{font-size:18px;line-height:1}.b27-rxb .n{font-size:12px;font-weight:700;color:var(--mut)}
+.b27-rxb.on{border-color:var(--acc);background:rgba(255,210,63,.14)}.b27-rxb.on .n{color:var(--acc)}
+.b27-rxwho{margin-top:4px}
+/* s25: bet cards in a grid: 1 column under 700px, 2 from 700px, 3 from 1400px (same breakpoints as the partner site) */
+.b27-grid{display:grid;grid-template-columns:minmax(0,1fr);gap:0 12px;align-items:start}
+@media (min-width:700px){.b27-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1400px){.b27-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+/* s25: no sideways-scrolling tab bar. The tabs wrap into rows of equal-width buttons (CSS grid): 3 per row at 360px and below, 4 per row at 361-559px,
+   from 560px one row when it fits (else it wraps). All tabs visible at once, every tap >= 44px, labels never cut off, active state unchanged. */
+nav#ltabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;overflow:visible;overflow-x:visible;padding:6px 8px;justify-content:stretch}
+nav#ltabs button,nav#ltabs a.tb,nav#ltabs a.nd{flex:none;min-width:0;width:auto;min-height:48px;padding:4px 2px;white-space:normal;text-align:center}
+nav#ltabs .nl{max-width:100%;overflow:visible;white-space:normal;overflow-wrap:normal;word-break:normal;line-height:1.1}
+@media (max-width:360px){nav#ltabs{grid-template-columns:repeat(3,minmax(0,1fr));padding:6px 4px}}
+@media (min-width:560px){nav#ltabs{grid-template-columns:repeat(auto-fit,minmax(48px,1fr))}}   /* one row from 560px when the 10 tabs fit (same as the partner site), else they wrap */
+@media (max-width:759px){nav#ltabs{position:static}}   /* s25: the wrapped bar is 3-4 rows on a phone, so it no longer sticks to the top and covers the page */
+/* s25: equal-size bet cards. The partner site has no card height / clamp rules yet (checked owes_s25b_upload + audit), so these values are ours:
+   min-height 220px on every card, bet text clamped to 3 lines with a 'more' / 'less' button, card = flex column with the buttons and reactions pinned to the bottom. */
+.b27-grid{align-items:stretch}
+.b27-grid>.b27-c{display:flex;flex-direction:column;min-height:220px;box-sizing:border-box;min-width:0}
+.b27-grid>.b27-c>.b27-sp{flex:1 1 auto;min-height:0}
+.b27-c .b27-t{display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:3;line-clamp:3;overflow:hidden}
+.b27-c .b27-t.open{display:block;-webkit-line-clamp:unset;line-clamp:none;overflow:visible}
+.b27-more{align-self:flex-start;min-height:44px;min-width:44px;margin:-6px 0 2px -6px;padding:0 10px;border:0;background:none;color:var(--acc);font:inherit;font-weight:700;font-size:14px;cursor:pointer;text-decoration:underline}
+.b27-more[hidden]{display:none}
+/* s25 Games page: grid (1 col, 2 from 700px, 3 from 1400px, same breakpoints as .b27-grid), equal-height cards per row, two tight lines,
+   full-width Quick bet pinned to the bottom, finished games as one-line rows that open with a 44px button. Own values (the partner site has no Games grid yet). */
+.ggrid{display:grid;grid-template-columns:minmax(0,1fr);gap:8px 12px;align-items:stretch}
+@media (min-width:700px){.ggrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1400px){.ggrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.ggrid>.gm{margin:0;display:flex;flex-direction:column;min-width:0;box-sizing:border-box;padding:6px 10px}
+.ggrid.gfins{align-items:start}
+.gday .gtz{font-size:11px;font-weight:700;color:var(--mut);margin-left:4px}
+.gm .gl1{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:6px}
+.gm .gl1 .gside{padding:0;min-width:0;gap:6px}
+.gm .gl1 .gside.gh2{flex-direction:row-reverse;text-align:right}
+.gm .gl1 .gside.gh2 .nm{justify-content:flex-end}
+.gm .gl1 .gside .nm{flex:1 1 0}
+.gm .gl1 .gside .chip.school-chip{width:100%;max-width:150px;min-width:0;flex:0 1 auto;overflow:hidden}   /* one size per viewport: min(150px, the column) */
+.gm .gl1 .gside .chip .cn{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.gm .gl1 .gside .sc2{font-size:20px;width:36px;min-width:36px;flex:none;text-align:center}
+.gm .gl1 .gat{color:var(--mut);font-size:12px;font-weight:700}
+.gm .gh.gl2{margin:2px 0 0;gap:4px 6px}
+.gm .gl2 .cpl{min-height:44px}
+.gm .gl{margin-top:4px;padding-top:4px}
+.ggrid>.gm .qbw,.gm .qbw{margin-top:auto;padding-top:6px;display:flex;justify-content:flex-end}   /* bottom row pinned; Quick bet bottom-right (Paul) */
+.ggrid>.gm .qb-btn,.gm .qb-btn{display:inline-flex;align-items:center;justify-content:center;width:auto;min-height:44px;padding:8px 16px;font-size:.9em;font-weight:700;border-radius:10px;border:0;background:#FFD400;color:#111;line-height:1.2;box-sizing:border-box}
+.gm .qb-btn[aria-expanded=true]{background:#FFD400;color:#111;box-shadow:0 0 0 2px var(--tx) inset}
+.gm.gfin{padding:0 10px}
+.gfr{display:flex;align-items:center;gap:8px;width:100%;min-height:44px;padding:0;border:0;background:transparent;color:var(--tx);font:inherit;font-size:14px;text-align:left;cursor:pointer}
+.gfr .gfn{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--mut)}
+.gfr .gfn.w{color:var(--tx);font-weight:700}
+.gfr .gdash{color:var(--mut)}
+.gfr .gfl{margin-left:auto;font-size:12px;font-weight:800;color:var(--mut);flex:none}
+.gfr .gchev{flex:none;transition:transform .15s}
+.gfr[aria-expanded=true] .gchev{transform:rotate(180deg)}
+.gfr:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:8px}
+.gm.gfin .gx{padding:2px 0 8px;border-top:1px dashed var(--line)}
+/* s25 AP Top 25 badge (partner site spec): pill before the name, 4px gap */
+.rkb{display:inline-block;margin-right:4px;font-size:.72em;font-weight:700;line-height:1;padding:1px 5px;border-radius:999px;background:#FFD400;color:#111;vertical-align:1px;white-space:nowrap}
+/* s25 Standings toggle (partner site spec; segments keep our 44px tap height) */
+.segw{margin:0 0 10px}
+.segv{display:inline-flex;background:#222;border:1px solid #444;border-radius:999px;padding:2px;max-width:100%}
+.segv .seg{min-height:44px;padding:6px 14px;font:inherit;font-size:.85em;font-weight:600;border:0;border-radius:999px;background:transparent;color:#bbb;cursor:pointer}
+.segv .seg[aria-pressed=true]{background:#FFD400;color:#111}
+.segv .seg:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.rkh{margin:0 0 8px;font-size:17px}
+.rkl{list-style:none;margin:0;padding:0}
+.rkrow{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;padding:6px 0;border-top:1px solid var(--line);min-width:0}
+.rkrow:first-child{border-top:0}
+.rkrow .chip{max-width:100%}
+.rkv{font-weight:700;font-variant-numeric:tabular-nums}
+.rko{margin-left:auto;font-size:13px}
+/* s25 Redraft tab: full-width practice button */
+#redraftmock.prac{display:flex;align-items:center;justify-content:center;width:100%;box-sizing:border-box;min-height:44px;margin:0 0 10px;background:var(--acc);color:#10131a;font-weight:800;border-radius:10px;text-decoration:none}
+/* s25c shared reaction row (js/shared-s25.js): keep our 44px tap rule on top of the shared 36px sizes */
+.b27-c .s25rx,.b27-c .s25add{min-height:44px;min-width:44px}
+.b27-c .s25pk button{width:44px;height:44px}
+
+/* s25 bet time stamps (partner site spec) */
+.b27-c .b27-stamp{font-size:.75em;font-weight:400;color:#9a9a9a;line-height:1.3;margin:6px 0 4px;overflow-wrap:anywhere}
+
+/* s25 League header title (option 1): small gold presenter line, title, muted subtitle; wraps cleanly from 320px */
+.lbrand{padding:12px 14px 8px;max-width:100%;box-sizing:border-box;overflow-wrap:anywhere}
+.lbrand .lb-pre{display:flex;align-items:center;gap:8px;color:#FFD400;font-size:.8em;font-weight:800;letter-spacing:.04em;line-height:1.2}
+.lbrand .lb-ball{width:24px;height:24px;border-radius:50%;flex:none}
+.lbrand .lb-main{font-size:clamp(1.35em,5.2vw,2.2em);font-weight:800;line-height:1.15;margin-top:4px;color:var(--tx)}
+.lbrand .lb-sub{font-size:clamp(1em,3.6vw,1.35em);font-weight:400;color:var(--mut);line-height:1.25;margin-top:2px}
+/* s25 Quick bet panel: every chip and pick button is a 44x44 minimum tap target, no overflow at 320px */
+.qb-pick button,.qb-pick .qb-g button,.qb-pick .qb-g.w button,.gm .qb-pick button{min-height:44px;min-width:44px;box-sizing:border-box}
+.qb-pick .qb-g{flex-wrap:wrap}
+.qb-pick,.qb-pick .qb-r{max-width:100%;box-sizing:border-box}
+
+/* s25 GOLD-LINE (partner site s25g, exact values) */
+.who .gold{display:block;font-size:12px;line-height:1.3;color:var(--mut);font-weight:400;white-space:nowrap;letter-spacing:1px}   /* s25g */
+.who .gold{max-width:100%;overflow:hidden;text-overflow:clip}   /* League: a long row never pushes past the name column at 320px (title/aria-label keep the count) */
+.who .gold0{height:1.3em}
+
+/* s25g WHO-CENTER (phones: name block centered, rank left, points right) and QB-BOLT, exact s25g values */
+@media (max-width:600px){.card.oc .who{text-align:center;overflow-wrap:anywhere}.card.oc .who small{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.qb-bolt{display:inline-block;vertical-align:-.125em;flex:none;margin-right:.35em}
+.lbrand .lb-pre[hidden]{display:none}   /* neutral fallback: no presenter line */
+.oqe{margin:2px 0 6px}   /* s25k: "Nothing settled yet" note over the all-zero Who owes who grid */
+.mx.oqm .nk{letter-spacing:.02em}.mx.oqm th.nk{white-space:normal;overflow-wrap:normal;word-break:keep-all;font-size:11px;line-height:1.15;vertical-align:bottom;min-width:3.5em}.mx.oqm td.rn.nk{white-space:normal;overflow-wrap:normal;font-size:12px;line-height:1.2;min-width:7em;max-width:16em}.oqc .cn.nk{overflow-wrap:anywhere;font-weight:700;font-size:13px;line-height:1.15}   /* s25k: team nicknames: column heads wrap between words only (the grid scrolls sideways); row names wrap, a long single word stays whole and the grid scrolls sideways */
+/*<BETS-TALLY> s25k: Bets sub-tabs, CSS from the partner build (ONE-BETS .ob-seg + TAB-GRID .tabs.ob-seg) */.ob-seg{flex-wrap:nowrap;gap:0;max-width:440px}.ob-seg button{flex:1 1 0;min-width:0;position:relative;border-radius:0;white-space:nowrap;padding:10px 6px}.ob-seg button:first-child{border-radius:10px 0 0 10px}.ob-seg button:last-child{border-radius:0 10px 10px 0;margin-left:-1px}.ob-seg button.on{background:var(--acc);color:#111;border-color:var(--acc);font-weight:800}.tabs.ob-seg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0}.tabs.ob-seg button{white-space:normal;min-height:44px}#b27People td.n,#b27People th.n{text-align:right}/*</BETS-TALLY>*/
+#b27Settle .tset{padding:6px 0;font-weight:700;overflow-wrap:anywhere;line-height:1.3}#b27Settle .tset+.tset{border-top:1px solid var(--line)}   /* s25l: Tally settle lines (partner S25J) */
+/* s26c3 compact owner breakdown (Rosters tab): tighter header card, one subgrid row per school, category point chips under each school */
+#ownercard.ohc{padding:10px 12px}
+#ownercard.ohc .oh{gap:8px}
+#ownercard.ohc .ohn{min-width:0}
+#ownercard.ohc .ohn>b{font-size:17px;line-height:1.2}
+#ownercard.ohc .ohn .note{margin:0;font-size:12px}
+#ownercard.ohc .ohp{margin-top:4px}
+.obk{padding:8px 10px;display:grid;grid-template-columns:minmax(0,max-content) repeat(4,max-content);justify-content:start;column-gap:14px;align-items:center;overflow:hidden}
+.obk .obtg{grid-column:1/-1;contain:inline-size;display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin:0 0 2px}
+.obk .obtg .note{margin:0}
+.obk .obtg button{min-height:44px;min-width:44px;padding:0 12px;font-size:12.5px;font-weight:700}.obk .obtg button.on{border-color:var(--acc);color:var(--acc)}
+.obk .obh,.obk .obr,.obk .obl{grid-column:1/-1;display:grid;grid-template-columns:subgrid;align-items:center}
+.obk .obh{font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);font-weight:800;white-space:nowrap;padding:2px 0 4px;border-bottom:1px solid var(--line)}
+.obk .obr{border-bottom:1px solid var(--line);padding:3px 0 5px}
+.obk .obr:last-child{border-bottom:0}
+.obk .obl{min-height:44px;cursor:pointer;border-radius:10px}
+.obk .n{text-align:right;font-variant-numeric:tabular-nums;font-size:14px;white-space:nowrap}
+.obk .obtot{color:var(--acc);font-size:15px}
+.obk .obt{min-width:0;display:flex}
+.obk .obt .chip.school-chip{width:auto;max-width:100%;height:32px;min-height:32px;font-size:13px;padding:0 9px 0 3px;position:relative;column-gap:5px}
+.obk .obt .chip.school-chip::before{content:'';position:absolute;left:0;right:0;top:-6px;bottom:-6px}   /* 44px tap area around the 32px chip */
+.obk .obt .chip.school-chip img,.obk .obt .chip.school-chip .nologo{width:24px;height:24px}
+.obk .obc{grid-column:1/-1;contain:inline-size;display:flex;flex-wrap:wrap;gap:4px;margin-top:3px;min-width:0}
+.obk .obp{display:inline-flex;align-items:center;gap:4px;padding:1px 7px;border-radius:99px;background:var(--card2);border:1px solid var(--line);font-size:11.5px;line-height:1.5;white-space:nowrap;color:var(--tx)}
+.obk .obp b{color:var(--good)}
+.obk .obp.neg b{color:var(--bad)}
+.obk .obp.z{opacity:.55}.obk .obp.z b{color:var(--mut)}
+.obk .obz{font-size:11.5px}
+.obk .det{grid-column:1/-1;contain:inline-size;margin:6px 0 2px;min-width:0;overflow-wrap:anywhere}
+@media (max-width:420px){.obk{column-gap:8px;padding:6px 8px}.obk .n{font-size:13px}.obk .obt .chip.school-chip{font-size:12px}}
+@media (max-width:339px){.obk{column-gap:6px}.obk .obt .chip.school-chip{padding-right:6px}}
+/*<S26C4> Standings > Points (.obk.pk) and All teams (.obk.atk): reuse the s26c3 compact grid; no sideways scroll on phones */
+.obk.pk{margin-bottom:10px}.obk.pk .obtg{min-height:36px}.obk.pk .pkn{font-size:16px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.obk.pk .pkt{color:var(--acc);font-size:16px;white-space:nowrap}
+.obk.pk .obl,.obk.atk .obl{cursor:default}
+.obk.atk{grid-template-columns:minmax(0,max-content) minmax(0,1fr) repeat(3,max-content)}
+.obk.atk .ato{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:13px}
+@media (max-width:480px){.obk.atk{grid-template-columns:minmax(0,1fr) repeat(3,max-content);column-gap:8px}.obk.atk .obh span:nth-child(2){display:none}.obk.atk .obh span:first-child::after{content:' / owner'}.obk.atk .obl{grid-template-rows:auto auto}.obk.atk .obl>.obt{grid-column:1;grid-row:1}.obk.atk .obl>.ato{grid-column:1;grid-row:2;font-size:12px;color:var(--mut);padding:0 0 2px 4px}.obk.atk .obl>.n{grid-row:1/span 2}}
+/*</S26C4>*/
+/* s26c11: All teams like STOOPIDS (s26o2), compact: columns sized to content, card centered (<= 720px), owner narrow (ellipsis), Conf, Rec/AP/NET/Pts side by side,
+   numbers ~1.1x bold tabular; owner filter chips (44px). Phones: owner + conf on a second line under the team. */
+.obk.atk{width:fit-content;max-width:min(720px,100%);box-sizing:border-box;margin-left:auto;margin-right:auto;grid-template-columns:minmax(0,max-content) minmax(0,8ch) repeat(2,max-content) minmax(0,7ch) repeat(2,max-content);column-gap:12px}
+.obk.atk .ato{max-width:8ch}
+.obk.atk .atc{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:12.5px;color:var(--mut)}
+.obk.atk .obl>.n{font-size:15.5px;font-weight:800;font-variant-numeric:tabular-nums;min-width:2.2em}
+.obk.atk .obl>.atp{color:var(--acc)}
+p.note.atn{max-width:720px;margin-left:auto;margin-right:auto}
+.atfw{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px;max-width:720px;margin:0 auto 8px}
+.atfl{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);font-weight:800;margin-right:2px}
+.atf{min-height:44px;min-width:44px;padding:0 12px;border-radius:99px;border:1px solid var(--line);background:var(--card);color:var(--tx);font:inherit;font-size:13px;font-weight:700;cursor:pointer;max-width:12em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.atf.on{background:var(--acc);border-color:var(--acc);color:#10131a}
+.atf:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+@media (max-width:480px){.obk.atk{width:auto;grid-template-columns:minmax(0,1fr) repeat(4,max-content);column-gap:9px}.obk.atk .obh span:nth-child(5){display:none}.obk.atk .obh span:first-child::after{content:' / owner · conf'}
+  .obk.atk .obl>.n{grid-row:1;font-size:14.5px;min-width:0}.obk.atk .obl>.ato{max-width:none}.obk.atk .obl>.atc{grid-column:2/-1;grid-row:2;text-align:right;font-size:11.5px;padding-bottom:2px}.atf{padding:0 10px;font-size:12.5px}}
+@media (max-width:339px){.obk.atk{column-gap:6px}.obk.atk .obl>.n{font-size:14px}.obk.atk .obh span:first-child::after{content:' / owner'}}
+/* s26c11: Standings > Breakdown, one row per school (STOOPIDS s26q): same-width pills, one narrow column per category, total last */
+.obk.pk.pq{display:block}
+.pq .ptab tr.obr,.pq .ptab tr.obh{display:table-row;grid-column:auto;border:0;padding:0;min-height:0;text-transform:none;letter-spacing:normal}
+.pq .ptab td.obp{display:table-cell;background:none;border:0;border-radius:0;padding:2px 1px;font-size:inherit;line-height:inherit;opacity:1}
+.pq .ptw{max-width:100%;overflow-x:auto;margin-top:4px}
+.pq .ptab{width:100%;border-collapse:collapse;table-layout:fixed;font-variant-numeric:tabular-nums;font-size:12.5px;line-height:1.2}
+.pq .ptab th,.pq .ptab td{padding:2px 1px;text-align:center;white-space:nowrap;overflow:hidden}
+.pq .ptab th{font-size:10px;font-weight:800;letter-spacing:.02em;color:var(--mut);padding-bottom:4px;border-bottom:1px solid var(--line)}
+.pq .ptab tr.obr td{border-top:1px solid var(--line);height:44px}
+.pq .ptab .ptn{width:150px;text-align:left;padding-left:0;overflow:visible}
+.pq .ptab .ptn .obt{display:block}
+.pq .ptab .ptn .chip.school-chip{width:146px;max-width:146px;box-sizing:border-box;overflow:hidden}
+.pq .ptab .ptn .chip.school-chip>:last-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.pq .ptab td.obp b{color:var(--good);font-weight:700}.pq .ptab td.obp.neg b{color:var(--bad)}.pq .ptab td.obp.z b{color:var(--mut);font-weight:400}
+.pq .ptab .ptt{width:34px;text-align:right}.pq .ptab .obtot{color:var(--acc);font-size:14px}
+@media (min-width:760px){.obk.pk.pq{max-width:720px;margin-left:auto;margin-right:auto}}
+@media (max-width:480px){.pq .ptab{font-size:11.5px}.pq .ptab th{font-size:9px}.pq .ptab .ptn{width:112px}.pq .ptab .ptn .chip.school-chip{width:108px;max-width:108px;font-size:11.5px}.pq .ptab .ptt{width:28px}}
+@media (max-width:339px){.pq .ptab{font-size:10.5px}.pq .ptab th{font-size:8.5px;letter-spacing:-.03em}.pq .ptab .ptn{width:92px}.pq .ptab .ptn .chip.school-chip{width:89px;max-width:89px;font-size:10.5px;padding-right:4px}.pq .ptab .ptt{width:24px}.pq .ptab .obtot{font-size:12.5px}}
+/* s26c11: Games cards: both sides line up (pill row + one-line owner row, – when none), names on one line with ellipsis, equal-width pills, cards stretch per row */
+.ggrid:not(.gfins){align-items:stretch}
+.gm .gl1{gap:4px}
+.gm .gl1 .gside .nm{flex-direction:column;flex-wrap:nowrap;align-items:stretch;gap:3px}
+.gm .gl1 .gside .gtr{display:flex;align-items:center;gap:4px;min-width:0}
+.gm .gl1 .gside.gh2 .gtr{flex-direction:row-reverse}
+.gm .gl1 .gside .chip.school-chip{width:100%;max-width:none;flex:1 1 0;padding-left:3px;padding-right:6px;column-gap:4px}
+.gm .gl1 .gside .gow{height:22px;line-height:22px;display:flex;gap:4px;min-width:0;overflow:hidden;white-space:nowrap}
+.gm .gl1 .gside.gh2 .gow{justify-content:flex-end}
+.gm .gl1 .gside .gow .opill{min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:20px;flex:0 1 auto}
+.gm .gl1 .gside .gno{color:var(--mut);font-weight:700;padding:0 7px}
+.gm .gl1 .gside.nosc .sc2{display:none}
+@media (max-width:379px){.gm .gl1 .gat{font-size:11px}.gm .gl1 .gside .chip.school-chip img,.gm .gl1 .gside .chip.school-chip .nologo{width:20px;height:20px}}
+/* s26c5: header buttons sit on the banner (wrapper .herow), not over the site title */.herow{position:relative}
+/* s26c10: Draft tab (room link before the draft, pick board after) and Recap tab */
+nav#ltabs.pre{grid-template-columns:minmax(0,120px)}
+.gdw{margin:10px 2px}
+#godraft{display:flex;align-items:center;justify-content:center;width:100%;box-sizing:border-box;min-height:56px;font-size:19px;margin:8px 0 0;background:var(--acc);color:#10131a}
+.dbhead{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px}.dbhead .note{flex:1 1 auto}
+.dround .drt{display:block;color:var(--acc);margin-bottom:6px}
+.dpicks{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr;gap:4px}
+@media (min-width:760px){.dpicks{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.dpick{display:grid;grid-template-columns:2.2em minmax(0,1fr) minmax(0,1.3fr);align-items:center;gap:8px;min-height:44px;min-width:0;border-top:1px solid rgba(255,255,255,.06);padding:2px 0}
+.dpn{color:var(--mut);font-variant-numeric:tabular-nums;text-align:right}
+.dpm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.dps{min-width:0;overflow:hidden}.dps>*{max-width:100%}
+.wkh{margin-top:18px}
+#recapgrades #powerrank{margin:0}
+nav#ltabs.pre{grid-template-columns:repeat(3,minmax(0,120px))}   /* s26c13: Rules, Recap, Draft before the draft */
+.rcroom{margin:14px 2px 6px;text-align:right}
+.rcrl{display:inline-flex;align-items:center;min-height:44px;min-width:44px;padding:0 6px;font-size:13px;color:var(--mut);text-decoration:none}
+.rcrl:hover,.rcrl:focus-visible{color:var(--acc);text-decoration:underline}
+
+/*<S26C14> Rosters school detail: STOOPID rank + Power rank pills */
+.rkp{display:flex;flex-wrap:wrap;gap:4px 6px;margin:0 0 6px}.rkp .rks{flex-basis:100%;font-size:11.5px;margin:0}
+/*<S26C14-VIEW> ?view=1 view-only (top of js/league-d.js): write controls hidden; the code blocks the writes too */
+html.viewonly #chatform,html.viewonly .b27-act,html.viewonly .qbw,html.viewonly .qb-btn,html.viewonly .qb-pick,html.viewonly #heroctl{display:none!important}
+/*<S26C14-HDR> header = title centred + tagline right under it; Refresh Live Games row on the Games tab top; 'Standings last updated' line in the footer */
+#lhead.titlebar{text-align:center}#lhead .tag{margin:4px auto 0}
+#lbody>.lv{margin:0 0 6px;opacity:.85}
+.ffresh{padding:10px 0 2px;font-size:12px;color:var(--mut)}.ffresh[hidden]{display:none}
+/*<S26C14-PARITY> STOOPIDS s26w look (CSS only): tab labels 12px on phones (STOOPIDS 12px), desktop tab buttons are pills with the icon beside the label
+  (STOOPIDS nav a.nt, 12.5px; League keeps its 48px tap height), school chips are pills (STOOPIDS 99px radius), footer side padding 14px */
+@media (max-width:759px){nav#ltabs a.tb .nl,nav#ltabs a.tb{font-size:12px;letter-spacing:0}nav#ltabs a.tb{border-radius:10px}}
+@media (max-width:339px){nav#ltabs a.tb .nl,nav#ltabs a.tb{font-size:11px}}
+@media (min-width:760px){nav#ltabs a.tb{flex-direction:row;justify-content:center;align-items:center;gap:6px;border-radius:99px;font-size:12.5px;padding:4px 8px}nav#ltabs a.tb .nl{font-size:12.5px;white-space:nowrap}}
+.chip.school-chip,.card.oc .chip.school-chip{border-radius:99px}
+footer#foot{padding-left:14px;padding-right:14px}
+@media (min-width:600px){footer#foot{padding-left:0;padding-right:0}}
+/*<S27> STOOPIDS s27 look (its S27 CSS block), League tap rule kept: every control >= 44px */
+.s27-hd{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:nowrap;max-width:100%}
+.s27-hd h1{min-width:0;overflow-wrap:anywhere}
+.s27-share{flex:none;display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:0 12px;border-radius:999px;border:1px solid var(--line);background:var(--card2);color:var(--tx);font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+.s27-share:hover{border-color:var(--acc)}
+.s27-seg{margin:0 0 8px}
+.s27-gf{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 6px}
+.s27-gf select,.s27-gf>button{min-height:44px;padding:4px 8px;font-size:13px;border-radius:8px;max-width:48%;box-sizing:border-box}
+.s27-gf>button{border:1px solid var(--line);background:var(--card2);color:var(--tx);font-weight:700;cursor:pointer}
+.s27-gf>button.on{background:var(--acc);color:#111;border-color:var(--acc)}
+.s27-ck{display:inline-flex;align-items:center;gap:4px;font-size:13px;color:var(--mut);min-height:44px}
+.s27-info{margin:0 0 10px;font-size:12px;color:var(--mut)}
+.s27-copy{margin-left:auto;min-height:44px;min-width:44px;padding:0 10px;border-radius:8px;border:1px solid var(--line);background:var(--card2);color:var(--tx);font:inherit;font-size:12px;font-weight:700;cursor:pointer}
+.s27-copy.on{background:var(--acc);color:#111;border-color:var(--acc)}
+.s27-tipk{all:unset;cursor:pointer;font-weight:700;font-size:14px;display:inline-flex;align-items:center;min-height:44px}
+.s27-tipk>span{border-bottom:1px dotted currentColor}
+.s27-tipk:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.s27-pop{display:block;margin:2px 0 6px;padding:8px 10px;max-width:340px;border-radius:10px;background:#d8ecff;color:#0b2540;font-size:13px;font-weight:500;line-height:1.35;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+.s27-pop a,.s27-pop button{color:#0b4fa0;font-weight:700;white-space:nowrap}
+.s27-pop button{all:unset;color:#0b4fa0;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;min-height:44px;text-decoration:underline}
+.s27-howl{all:unset;display:inline-flex;align-items:center;min-height:44px;margin:0 0 6px;font-weight:700;color:var(--acc);cursor:pointer}
+.s27-how .card p{margin:6px 0 0;line-height:1.45}
+.s27-sort button{all:unset;cursor:pointer;white-space:nowrap;display:inline-flex;align-items:center;min-height:44px}
+.s27-sort i{font-style:normal;font-size:.8em;opacity:.6;margin-left:2px}
+.s27-sort[aria-sort=ascending] i,.s27-sort[aria-sort=descending] i{opacity:1;color:var(--acc)}
+.s27-ls{display:none}
+.obk.atk .obh{align-items:center}
+.obk.atk{grid-template-columns:minmax(0,max-content) minmax(0,1fr) repeat(5,max-content)}
+@media (min-width:481px){.obk.atk{grid-template-columns:minmax(0,max-content) minmax(0,8ch) repeat(2,max-content) minmax(0,7ch) repeat(4,max-content)}}
+@media (max-width:600px){.s27-lf{display:none}.s27-ls{display:inline}.s27-sort i{display:none}}
+@media (max-width:480px){.obk.atk{grid-template-columns:minmax(0,1fr) repeat(6,max-content);column-gap:7px}.obk.atk .obl>.ats{grid-row:1}}
+@media (max-width:339px){.obk.atk{column-gap:4px}}
+@media (min-width:900px){.pq .ptw,.pk.pq{width:min(100%,940px)}.pq .ptab{width:100%;font-size:15px}.pq .ptab th{font-size:12.5px}.pq .ptab th,.pq .ptab td{padding:5px 8px}}
+.hero{aspect-ratio:auto;width:auto;height:clamp(130px,22vw,235px);background-position:center 40%}
+@media (max-width:640px){.hero{aspect-ratio:auto;height:clamp(104px,37vw,150px);background-position:center 22%}}
+/*</S27>*/
+/* s27qa BUG3: the older '.obk.atk .obh span:nth-child(2){display:none}' (<=480px) also hid span.s27-ls inside the ST/KP sort buttons; show it again, 44px tap targets */
+@media (max-width:600px){.obk.atk .obh .s27-sort .s27-ls{display:inline}.obk.atk .obh .s27-sort button{min-width:44px;min-height:44px;justify-content:center}}
+/* s27qa: hero kicker 'STOOPIDS PRESENTS' above the league name (STOOPIDS muted small caps, letter-spaced) */
+.s27-pres{font-size:clamp(23px,7.1vw,49px);font-weight:900;letter-spacing:.08em;line-height:1.1;font-variant:small-caps;text-transform:lowercase;margin:0 0 4px;color:var(--mut);text-align:center}
+#lhead #ltitle{font-size:clamp(34px,10.5vw,72px)}
+
+/* ===== s28 Bets page = partner Bets page: rules copied from the live page <style> (S26W-ROW, s24lk, s24hd, s24fb, s25mute, POOL / S26F-POOL, S26K-MODAL, CARD-SIZE).
+   Changed for the League's 44px tap-target rule: .s25mute 34px -> 44px, .s26px 40px -> 44px. ===== */
+.s24lb{display:flex;justify-content:flex-end;gap:6px;margin:0 0 6px}
+.s26w-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 0 10px;min-width:0}
+.s26w-row>.s24lb{margin:0;flex:0 0 auto}
+.s26w-row>:first-child{flex:0 1 auto;min-width:0;margin-top:0;margin-bottom:0}
+.s26w-row>.ob-seg{flex:1 1 auto}
+@media(max-width:360px){.s26w-row .s24lb .s24lk{padding-left:10px;padding-right:10px}}
+.s24lk{display:inline-flex;align-items:center;justify-content:center;gap:4px;min-height:44px;min-width:44px;padding:6px 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--tx);font:inherit;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap}
+.s24lk.i{padding:4px 8px;font-size:15px;margin-left:auto}
+.s24lk:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+.b27-c .s24hd{position:relative}
+.s24hd{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.s25mute{font-size:16px;min-height:44px;min-width:44px;margin-left:8px;vertical-align:middle;border-radius:9px;border:2px solid var(--line);background:var(--card);color:var(--tx);cursor:pointer}
+.b27-pool .b27-t{font-weight:600}
+.s26k-bd{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;padding:12px;box-sizing:border-box}
+.s26k-m{width:100%;max-width:520px;max-height:85vh;overflow-y:auto;overscroll-behavior:contain;border-radius:16px}
+.s26k-m>.card{margin:0}
+body.s26k-lock{overflow:hidden}
+.b27-lb{display:flex;align-items:center;gap:8px;margin:14px 0 6px;font-weight:700;font-size:15px}
+.b27-lb .note{font-weight:400}
+.b27-form textarea.b27-in{min-height:84px;resize:vertical;margin-top:8px;width:100%;box-sizing:border-box}
+.s26n{flex:none;width:24px;height:24px;border-radius:50%;background:var(--acc);color:#111;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:800}
+.s26st .b27-in{margin-top:0}
+.s26st textarea.b27-in{min-height:64px}
+.b27-errbox{outline:2px solid var(--bad);outline-offset:0;border-color:var(--bad)!important}
+.s26err{color:var(--bad);font-size:13px;margin-top:4px}
+.s26err:empty{display:none}
+.s26pot{margin-top:6px;font-weight:700}
+.s26sum{margin-top:6px;font-size:14px;color:var(--mut)}
+.s26sum.ok{color:var(--good,#5cd17a)}
+.s26pr{display:grid;grid-template-columns:minmax(64px,30%) minmax(0,1fr) 44px;gap:8px;align-items:center;margin-top:8px}
+.s26pl{font-weight:700;font-size:14px;min-width:0}
+.s26pi,.s26ps{min-height:44px;width:100%;min-width:0;font-size:16px;box-sizing:border-box}
+.s26px{width:44px;height:44px;border-radius:10px;border:2px solid var(--line);background:var(--card2);color:var(--tx);font-size:20px;cursor:pointer}
+.s26add{margin-top:10px;min-height:44px;padding:0 14px;border-radius:10px;border:2px solid var(--line);background:var(--card2);color:var(--tx);font:inherit;font-weight:700;font-size:14px;cursor:pointer}
+.s26set{margin-top:8px}
+.s26set .s26pr{grid-template-columns:minmax(80px,38%) minmax(0,1fr)}
+.s26terms{margin:8px 0 2px;font-size:17px;font-weight:800;line-height:1.3;overflow-wrap:anywhere}
+.b27-kind button{min-height:44px}
+
+
+/* s28 Share tab */
+#sharecard .sharebox{margin:10px 0}#shareurl{width:100%;box-sizing:border-box;min-height:44px;padding:0 10px;border-radius:10px;border:1px solid var(--line);background:var(--card2);color:var(--tx);font:inherit;font-size:13px}
+#sharecard .sharebtns{display:flex;flex-wrap:wrap;gap:8px}#sharecard .sharebtns .btn{min-height:44px;flex:1 1 160px}
+/* s28 Recap: like the partner Draft Recap, grade cards in two columns on desktop (>=1000px), one column on phones; weekly write-ups below */
+.s28-rcc{min-width:0}
+@media (min-width:1000px){#recapgrades ol.prl{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;align-items:start}#recapgrades ol.prl>li{min-width:0;margin:0}
+  #recapgrades #powerrank .plb{grid-template-columns:44px 40px minmax(0,1fr) auto 20px;grid-template-areas:"rank av who grade chev" "meta meta meta meta meta";column-gap:10px;padding:12px}#recapgrades #powerrank .pmeta{text-align:left}#recapgrades #powerrank .pchips{padding:0 12px 12px}#recapgrades #powerrank .ppan{padding:12px}#recapgrades #powerrank .sch{grid-template-columns:1fr}}
+.segw{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}.segw .s24lb{margin-left:auto}
+/* s28 team on top, real name under */
+.tn2{display:inline-flex;flex-direction:column;line-height:1.15;min-width:0;vertical-align:middle}.tn2 .tnt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.tnr{display:block;font-size:11.5px;font-weight:600;color:var(--mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.ato .tnt{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}.pkn .tnr{display:block}#b27People td .tnr{font-size:11px}
+/* s28c Games = STOOPIDS s29b (/workspace/s29b/games_snippet.md). .rkseg/.rkseg-b = the STOOPIDS Standings toggle classes (League's Standings uses .segv/.seg with the same values) */
+.rkseg{display:inline-flex;background:#222;border:1px solid #444;border-radius:999px;padding:2px;margin:0 0 10px}
+.rkseg-b{font:inherit;padding:6px 14px;font-size:.85em;font-weight:600;min-height:44px;border:0;border-radius:999px;background:transparent;color:#bbb;cursor:pointer}
+.rkseg-b.on{background:#FFD400;color:#111}
+.rkseg-b:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.rkseg.g4{display:flex;width:100%;box-sizing:border-box;margin:0 0 8px;gap:2px}
+.rkseg.g4>.rkseg-b{flex:1 1 0;min-width:0;padding:6px 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+.rkseg.g4>select.rkseg-b{-webkit-appearance:none;appearance:none;text-align-last:center;margin:0;line-height:normal}
+.rkseg.g4>select.rkseg-b option{background:#222;color:#eee}
+.g4s{display:none}
+@media(max-width:359px){.rkseg.g4>.rkseg-b{padding:6px 2px;font-size:.8em}
+.g4l{display:none}
+.g4s{display:inline}
+}
+.tabs.g2row{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0}
+.tabs.g2row>select{flex:1 1 0;min-width:110px;width:auto}
+.tabs.g2row>button{flex:0 0 auto;width:auto;white-space:nowrap}
+.tabs.g2row>.s24lb{margin:0 0 0 auto;flex:0 0 auto}
+/* League fit: row 2 controls keep the League filter look and 44px taps */
+.tabs.g2row>select,.tabs.g2row>button{min-height:44px;padding:4px 8px;font-size:13px;border-radius:8px;box-sizing:border-box}
+.tabs.g2row>button{border:1px solid var(--line);background:var(--card2);color:var(--tx);font-weight:700;cursor:pointer}
+.tabs.g2row>button.on{background:var(--acc);color:#111;border-color:var(--acc)}
+.gctl2{margin:0 0 8px}
+/* s28c Standings > Breakdown on desktop (>=900px) = STOOPIDS s29b S29B-BD on League's #ptsv / .pk.pq. Default B: 2 across at full content width. Variant A: html.bd-a (one full-width column, stat columns spread out). Phones (<900px): one column. */
+@media (min-width:900px){
+#ptsv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));justify-items:stretch;align-items:start;gap:10px}#ptsv>.note{grid-column:1/-1}
+#ptsv>.obk.pk.pq{width:auto;max-width:none;min-width:0;margin:0}
+#ptsv .pq .ptw{width:auto;overflow-x:auto}
+#ptsv .pq .ptab{width:100%;font-size:13px}#ptsv .pq .ptab th{font-size:11px}#ptsv .pq .ptab th,#ptsv .pq .ptab td{padding:4px 4px}
+#ptsv .pq .ptab .ptn,#ptsv .pq .ptab .ptn .chip.school-chip{width:140px;min-width:140px;max-width:140px}#ptsv .pq .ptab .ptn .chip.school-chip{font-size:12.5px}
+html.bd-a #ptsv{grid-template-columns:minmax(0,1fr)}
+html.bd-a #ptsv .pq .ptab{font-size:15px}html.bd-a #ptsv .pq .ptab th{font-size:12.5px}html.bd-a #ptsv .pq .ptab th,html.bd-a #ptsv .pq .ptab td{padding:5px 8px}
+html.bd-a #ptsv .pq .ptab .ptn,html.bd-a #ptsv .pq .ptab .ptn .chip.school-chip{width:220px;min-width:220px;max-width:220px}html.bd-a #ptsv .pq .ptab .ptn .chip.school-chip{font-size:14px}
+}
+/* s28c one Share: view-only badge; Share tab = STOOPIDS s29b S29B-SHARE; per-card Copy = .s27-copy (League keeps its 44px min-height for taps; STOOPIDS uses 32px) */
+.vobadge{display:inline-flex;align-items:center;min-height:32px;margin:0 0 8px;padding:4px 12px;border-radius:999px;background:#d8ecff;color:#0b2540;font-size:13px;font-weight:800}
+.s29sh{display:flex;flex-direction:column;gap:8px;max-width:520px}.s29sh-l{font-weight:700;font-size:13px}.s29sh select{min-height:44px;width:100%}.s29sh-b{align-self:flex-start;min-width:120px}.s29sh-u{font-family:ui-monospace,Menlo,monospace;font-size:13px;word-break:break-all;padding:8px 10px;border:1px solid var(--line);border-radius:8px;user-select:all}
+.s29sh h2{margin:0}
+.s27-copy.on{background:var(--acc);color:#111;border-color:var(--acc)}
+.gl2 .s27-copy,.s24hd .s27-copy{flex:none}
+.s29g{padding:8px}
+/* s28g main nav +12% = STOOPIDS s29d S29D-NAV (/workspace/s29d/games_filters_snippet.md), same values and breakpoints; selector mapped from their nav>a.nt to League's nav#ltabs a.tb
+   (+ .nl label spans, which carry their own font-size on League). Before (s28f): <=759px a.tb/.nl 12px (<=339px 11px), >=760px 12.5px; padding 4px 2px (>=760px 4px 8px); min-height 48px; icon 17px (app.css). */
+/*<S29D-NAV>*/
+@media (max-width:1039px){nav#ltabs a.tb,nav#ltabs a.tb .nl{font-size:13.5px}nav#ltabs a.tb{min-height:52px;padding:4.5px 9px}nav#ltabs a.tb .ni{font-size:17px}}
+@media (max-width:559px){nav#ltabs a.tb{padding:4.5px}}
+@media (min-width:1040px){nav#ltabs a.tb,nav#ltabs a.tb .nl{font-size:14px}nav#ltabs a.tb{min-height:45px;padding:9px}nav#ltabs a.tb .ni{font-size:16px}}
+/*</S29D-NAV>*/
+/* s28g Games filters = STOOPIDS s29d /workspace/s29d/games_filters_snippet.md, copied verbatim (.rkseg/.rkseg-b above are the same 'reused, unchanged' rules) */
+/*<S29D-GF>*/ /* Games filters: no card. Row 1 = the plain Standings .rkseg/.rkseg-b toggle (no overrides at all). Row 2 = .gf2: compact selects + Pool only pill, same 44px height and font as a toggle button */
+.gf2{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 10px}
+.gf2-s,.gf2-b{box-sizing:border-box;height:44px;font:inherit;font-size:.85em;font-weight:600;border-radius:999px;border:1px solid #444;background:#222;color:#bbb;padding:0 12px;cursor:pointer;max-width:100%}
+.gf2-s{padding:0 8px 0 12px;width:auto;min-width:0}
+.gf2-s.on,.gf2-b.on{background:#FFD400;color:#111;border-color:#FFD400}
+.gf2+.gUn{margin-top:-4px;margin-bottom:8px}
+/*</S29D-GF>*/
+.gf2 #gDaySel{max-width:132px;text-overflow:ellipsis}   /* League-only: long 'Tomorrow · Tue, Nov 3' labels would push row 2 to a third line at 320 */
+/* s28g New bet form: 'One side vs another' | 'Pool / buy-in' = two equal buttons filling the row, one line each, ~+10% font (app.css .tabs button 11px -> 12.1px; <=350px 10px -> 11px), >=44px tall */
+.tabs.b27-kind{display:flex;flex-wrap:nowrap;gap:6px;width:100%;box-sizing:border-box}
+.tabs.b27-kind>button{flex:1 1 0;min-width:0;width:auto;min-height:48px;padding:8px 6px;font-size:12.1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:center}
+@media (max-width:350px){.tabs.b27-kind>button{font-size:11px;padding:8px 4px;letter-spacing:0}}
+/* s28g auto-settle note = STOOPIDS s29d S29D-AUTO (verbatim) */
+/*<S29D-AUTO>*/.s29-auto{margin:4px 0 0;font-size:12.5px;font-weight:600;color:#7fd99a}.s29-auto.s29-hand{color:var(--mut);font-weight:500}/*</S29D-AUTO>*/
+/* s28g Games cards grid (no STOOPIDS s29d rule for this yet): 1 col <600, 2 at 600-899, 3 at 900-1399, 4 at >=1400; on the Games tab the main column is not capped at 980/1000px from 1200px */
+.ggrid{grid-template-columns:minmax(0,1fr)}
+@media (min-width:600px){.ggrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:900px){.ggrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (min-width:1200px){body.lsite[data-ltab=games] main{max-width:1600px;width:calc(100% - 32px)}}
+@media (min-width:1400px){.ggrid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+/* ===== s28j (Paul preview fixes; shared numbers agreed with the reference site team, keep as variables) =====
+   --kicker-ratio: 'Stoopids presents' kicker = ratio x the rendered title size (titleFit sets --title-fs on #lhead), floor 11px.
+   --content-max: tab bar and every tab's content share one centred column (1080px, 1440px from 1700px), 16px side padding.
+   --games-min / --games-gap: Games cards auto-fill inside the column (3 at 1280-1440, 4 from 1700, 1 on phones). */
+:root{--kicker-ratio:.5;--kicker-min:11px;--content-max:1012px;--nav-max:1080px;--content-pad:16px;--games-min:320px;--games-gap:16px}
+/* s28j item 2 change: no 1440px rule; every tab's content = the reference site Standings column (--content-max, value pending from the reference site team); header + tab bar keep --nav-max */
+#lhead{--title-fs:clamp(34px,10.5vw,72px)}
+#lhead #ltitle{font-size:var(--title-fs)}
+#lhead .s27-pres{font-size:max(var(--kicker-min),calc(var(--title-fs) * var(--kicker-ratio)))}
+body.lsite header,body.lsite nav#ltabs,body.lsite footer{box-sizing:border-box;width:100%;max-width:var(--nav-max);margin-left:auto;margin-right:auto;padding-left:var(--content-pad);padding-right:var(--content-pad)}
+body.lsite main,
+body.lsite[data-ltab] main{box-sizing:border-box;width:100%;max-width:var(--content-max);margin-left:auto;margin-right:auto;padding-left:var(--content-pad);padding-right:var(--content-pad)}
+body.lsite nav#ltabs{margin-top:8px}
+body.lsite .ggrid{grid-template-columns:repeat(auto-fill,minmax(min(var(--games-min),100%),1fr));gap:var(--games-gap)}
+/* Bets Pool card: Copy pinned top-right on the header line (like bet cards); '· N managers' wraps underneath */
+.b27-pool .s24hd{position:relative;padding-right:84px;min-height:44px}
+.b27-pool .s24hd>.s27-copy{position:absolute;top:0;right:0;margin:0}
+body.lsite header{padding-left:0;padding-right:0}   /* banner spans the column; tab bar and content are inset by --content-pad inside the same box */
+#sharecard.s29sh{margin-left:auto;margin-right:auto}   /* s28j: Share card centred under the tabs (like the compact All teams card) */
+/* s28j Paste a bet (top of the New bet form) */
+.b27-pz{margin:8px 0 10px;padding:10px;border:1px dashed var(--line);border-radius:12px;display:flex;flex-direction:column;gap:6px}
+.b27-pz .b27-q{margin:0}.b27-pz-t{width:100%;box-sizing:border-box;min-height:56px;resize:vertical;font:inherit;font-size:15px;padding:8px 10px}
+#b27PzRead{align-self:flex-start;min-height:44px}
+.b27-pz-sum{font-weight:800;font-size:15px;line-height:1.35;overflow-wrap:anywhere}
+.b27-pz-q{display:flex;flex-wrap:wrap;align-items:center;gap:6px}.b27-pz-q .b27-sm{min-height:44px}
+.b27-pz-bad{color:#ffb4b4}
+#b27PzOk{min-height:44px}
+.b27-posted{font-size:12px;margin-top:4px}
+/* s28j item 8: every table / table-like list fills the capped content column (= tab bar inner width = Games grid): no fit-content / max-width shrink.
+   Phones keep sideways scroll inside the table wrapper (.swipe / .ptw / .card.obk overflow-x:auto) when a table is wider than the screen. */
+body.lsite #lbody .obk.atk,body.lsite #lbody .obk,body.lsite #lbody .ocl,body.lsite #lbody .b27-grid,body.lsite #lbody .oqw{width:100%;max-width:none;margin-left:0;margin-right:0;box-sizing:border-box}
+body.lsite #lbody p.note.atn,body.lsite #lbody .atfw{max-width:none}
+body.lsite #lbody .card>table,body.lsite #lbody .obk table,body.lsite #lbody .ptw,body.lsite #lbody .oq{width:100%;max-width:none}
+@media (min-width:481px){body.lsite #lbody .obk.atk{grid-template-columns:minmax(0,1.6fr) minmax(0,1fr) repeat(2,max-content) minmax(0,1fr) repeat(4,max-content)}}   /* All teams columns share the full width (was fit-content <= 720px, centred) */
+@media (max-width:759px){body.lsite #lbody .ptw,body.lsite #lbody .oqw{overflow-x:auto;-webkit-overflow-scrolling:touch}}
+/* s28j item 9: Share = 'Read-only link for friends and family'; a small separate managers line (regular link + its own Copy), hidden in view mode */
+.s29sh-sub{margin:-4px 0 0;font-weight:700;font-size:14px}
+.s29sh-mg{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:4px;padding-top:8px;border-top:1px solid var(--line);font-size:12.5px}
+.s29sh-mg .s29sh-ml{font-weight:700;color:var(--mut)}.s29sh-mg .s29sh-u{flex:1 1 220px;min-width:0;font-size:12px}
+html.viewonly .s29sh-mg{display:none}
+#profile-share #sharecard.s29sh{max-width:none}#profile-share{margin-top:10px}#profile-who .pf-team{font-size:17px}   /* s28j item 10: Profile sections share the column width */
+/* s28j item 13: Games tab = the reference site (verbatim from /workspace/s29d/games_kit.md = s29d/stage/index.html 198-216, 512-518, 559-585, 692-693), scoped under
+   body.lsite #lbody so the older League game rules (.gl1/.gtr/.gfr…) no longer apply; grid columns stay item 2 (auto-fill minmax(320px,1fr), gap 16px, inside --content-max). */
+body.lsite #lbody .gday{margin:16px 2px 4px;font-weight:800;color:var(--acc)}
+body.lsite #lbody .gm{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin:8px 0}
+body.lsite #lbody .gm.h2h{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc) inset}
+body.lsite #lbody .gm .gh{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-size:12.5px;color:var(--mut);margin-bottom:6px;position:relative}
+body.lsite #lbody .gside{display:flex;align-items:center;gap:8px;padding:4px 0;flex-direction:row;text-align:left}
+body.lsite #lbody .gside .nm{flex:1;min-width:0;display:flex;flex-wrap:wrap;gap:4px;align-items:center;flex-direction:row}
+body.lsite #lbody .gside .sc2{font-size:22px;font-weight:900;min-width:34px;width:auto;text-align:right}
+body.lsite #lbody .gside.lose .sc2{color:var(--mut);font-weight:700}
+body.lsite #lbody .gm .opill{display:inline-block;padding:0 7px;border-radius:99px;font-size:11.5px;font-weight:700;background:var(--card2);border:1px solid var(--line)}
+body.lsite #lbody .gm .gl{border-top:1px dashed var(--line);margin-top:6px;padding-top:6px;font-size:13px}
+body.lsite #lbody .gm .up{display:inline-block;padding:1px 8px;border-radius:99px;font-weight:800;font-size:12px;background:#7c2d12;color:#ffedd5}
+body.lsite #lbody .gm .up.ns{background:var(--card2);color:var(--mut)}
+body.lsite #lbody .h2b{display:inline-block;padding:1px 8px;border-radius:99px;font-weight:800;font-size:12px;background:var(--acc);color:#111}
+body.lsite #lbody .gm .seed{font-size:11px;color:var(--mut)}
+body.lsite #lbody .gm .s27-copy{margin-left:auto;min-height:32px;padding:0 10px;border-radius:8px;border:1px solid var(--line);background:var(--card2);color:var(--tx);font:inherit;font-size:12px;font-weight:700;cursor:pointer}
+body.lsite #lbody .gm .s27-copy.on{background:var(--acc);color:#111;border-color:var(--acc)}
+body.lsite #lbody .gf2{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 10px}
+body.lsite #lbody .gf2-s,body.lsite #lbody .gf2-b{box-sizing:border-box;height:44px;font:inherit;font-size:.85em;font-weight:600;border-radius:999px;border:1px solid #444;background:#222;color:#bbb;padding:0 12px;cursor:pointer;max-width:100%}
+body.lsite #lbody .gf2-s{padding:0 8px 0 12px;width:auto;min-width:0}
+body.lsite #lbody .gf2-s.on,body.lsite #lbody .gf2-b.on{background:#FFD400;color:#111;border-color:#FFD400}
+body.lsite #lbody .ggrid{align-items:stretch;margin:6px 0 10px}
+body.lsite #lbody .ggrid>.gm{margin:0;padding:8px 10px;display:flex;flex-direction:column;box-sizing:border-box;min-width:0}
+body.lsite #lbody .ggrid>.gm>*{flex:none}body.lsite #lbody .ggrid>.gm>.gsp{margin-top:auto;height:0}
+body.lsite #lbody .ggrid .gm .gh{margin-bottom:2px}body.lsite #lbody .ggrid .gside{padding:1px 0}body.lsite #lbody .ggrid .gside .sc2{font-size:19px}body.lsite #lbody .ggrid .gl{margin-top:4px;padding-top:4px;font-size:12.5px}
+body.lsite #lbody .ggrid .qbw{display:flex;justify-content:flex-end;margin-top:8px;padding-top:0}
+body.lsite #lbody .ggrid .qb-btn{display:inline-flex;align-items:center;justify-content:center;width:auto;padding:8px 16px;min-height:44px;font-size:.9em;font-weight:700;border-radius:10px;background:#FFD400;color:#111;border:0;box-shadow:none}
+body.lsite #lbody .ggrid>.gm.gfin{padding:0;align-self:start}
+body.lsite #lbody .gsum{all:unset;box-sizing:border-box;display:flex;flex-wrap:wrap;gap:6px;align-items:center;width:100%;min-height:44px;padding:8px 12px;font-size:13.5px;cursor:pointer;border-radius:14px}
+body.lsite #lbody .gsum:focus-visible{outline:2px solid var(--acc)}body.lsite #lbody .gsum .gst{font-size:11.5px;font-weight:800;color:var(--mut)}body.lsite #lbody .gsum .w{font-weight:900}body.lsite #lbody .gsum .gch{margin-left:auto;color:var(--mut)}
+body.lsite #lbody .gfin .gbody{padding:0 10px 8px;border-top:0}body.lsite #lbody .gfin .gbody[hidden]{display:none}
+body.lsite #lbody .ggrid .gside .nm{flex-wrap:nowrap}
+body.lsite #lbody .ggrid .gside .chip{flex:none;width:260px;height:40px;max-width:calc(100% - 44px);box-sizing:border-box;overflow:hidden;white-space:nowrap}
+body.lsite #lbody .ggrid .gside .chip .cn{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+body.lsite #lbody .ggrid .gside .nm>span{flex:none}
+body.lsite #lbody .ggrid .gow{height:20px;overflow:hidden;white-space:nowrap;display:flex;gap:4px;align-items:center;padding-left:2px;justify-content:flex-start}
+body.lsite #lbody .ggrid .gow .opill{flex:none;line-height:16px}
+body.lsite #lbody .ggrid:not(:has(>.gfin)){row-gap:0}
+body.lsite #lbody .ggrid:not(:has(>.gfin))>.gm{display:grid;grid-row:span 9;grid-template-rows:subgrid;grid-template-columns:minmax(0,1fr);row-gap:0;margin-bottom:12px;align-content:start}
+/* s28j item 2 FINAL (shared_rules.md, content column 980 = 1012 - 2x16): tab bar 1440 at >=1700 (content stays 1012); 320px phone guard; tables fill the column and scroll sideways in their own wrapper */
+@media (min-width:1700px){:root{--nav-max:1440px}}
+@media (max-width:351px){body.lsite #lbody .ggrid{grid-template-columns:minmax(0,1fr)}}
+body.lsite #lbody table{width:100%}
+body.lsite #lbody .card:has(>table),body.lsite #lbody .sc,body.lsite #lbody .swipe{max-width:100%;overflow-x:auto}
+body.lsite #lbody th,body.lsite #lbody td{min-width:2.5em}

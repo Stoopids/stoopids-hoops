@@ -1,0 +1,5799 @@
+{
+  "format": 1,
+  "sample": true,
+  "label": "SYNTHETIC \u2014 invented slice for feasibility / UI testing only. Isolated from STOOPIDS and from real NBA results. Do not ship as live data.",
+  "season": "2026-27",
+  "as_of": "2026-06-20",
+  "source": "SYNTHETIC",
+  "seed_lock": true,
+  "standings": {
+    "5": {
+      "seed": 1
+    },
+    "2": {
+      "seed": 2
+    },
+    "18": {
+      "seed": 3
+    },
+    "15": {
+      "seed": 4
+    },
+    "20": {
+      "seed": 5
+    },
+    "14": {
+      "seed": 6
+    },
+    "11": {
+      "seed": 7
+    },
+    "19": {
+      "seed": 8
+    },
+    "25": {
+      "seed": 1
+    },
+    "7": {
+      "seed": 2
+    },
+    "16": {
+      "seed": 3
+    },
+    "10": {
+      "seed": 4
+    },
+    "13": {
+      "seed": 5
+    },
+    "6": {
+      "seed": 6
+    },
+    "12": {
+      "seed": 7
+    },
+    "9": {
+      "seed": 8
+    }
+  },
+  "games": [
+    {
+      "id": "900000001",
+      "day": "2025-11-02",
+      "start": "2025-11-02T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "25",
+        "score": 110,
+        "short": "OKC"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000002",
+      "day": "2025-11-03",
+      "start": "2025-11-03T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "25",
+        "score": 110,
+        "short": "OKC"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000003",
+      "day": "2025-11-04",
+      "start": "2025-11-04T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "25",
+        "score": 110,
+        "short": "OKC"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000004",
+      "day": "2025-11-05",
+      "start": "2025-11-05T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "25",
+        "score": 110,
+        "short": "OKC"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000005",
+      "day": "2025-11-06",
+      "start": "2025-11-06T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "25",
+        "score": 110,
+        "short": "OKC"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000006",
+      "day": "2025-11-07",
+      "start": "2025-11-07T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "25",
+        "score": 110,
+        "short": "OKC"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000007",
+      "day": "2025-11-08",
+      "start": "2025-11-08T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "25",
+        "score": 110,
+        "short": "OKC"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000008",
+      "day": "2025-11-09",
+      "start": "2025-11-09T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "25",
+        "score": 110,
+        "short": "OKC"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000009",
+      "day": "2025-11-10",
+      "start": "2025-11-10T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "25",
+        "score": 110,
+        "short": "OKC"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000010",
+      "day": "2025-11-11",
+      "start": "2025-11-11T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "25",
+        "score": 110,
+        "short": "OKC"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000011",
+      "day": "2025-11-12",
+      "start": "2025-11-12T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "25",
+        "score": 110,
+        "short": "OKC"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000012",
+      "day": "2025-11-13",
+      "start": "2025-11-13T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "25",
+        "score": 110,
+        "short": "OKC"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000013",
+      "day": "2025-11-14",
+      "start": "2025-11-14T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "2",
+        "score": 110,
+        "short": "BOS"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000014",
+      "day": "2025-11-15",
+      "start": "2025-11-15T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "2",
+        "score": 110,
+        "short": "BOS"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000015",
+      "day": "2025-11-16",
+      "start": "2025-11-16T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "2",
+        "score": 110,
+        "short": "BOS"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000016",
+      "day": "2025-11-17",
+      "start": "2025-11-17T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "2",
+        "score": 110,
+        "short": "BOS"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000017",
+      "day": "2025-11-18",
+      "start": "2025-11-18T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "2",
+        "score": 110,
+        "short": "BOS"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000018",
+      "day": "2025-11-19",
+      "start": "2025-11-19T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "2",
+        "score": 110,
+        "short": "BOS"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000019",
+      "day": "2025-11-20",
+      "start": "2025-11-20T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "2",
+        "score": 110,
+        "short": "BOS"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000020",
+      "day": "2025-11-21",
+      "start": "2025-11-21T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "2",
+        "score": 110,
+        "short": "BOS"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000021",
+      "day": "2025-11-22",
+      "start": "2025-11-22T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "2",
+        "score": 110,
+        "short": "BOS"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000022",
+      "day": "2025-11-23",
+      "start": "2025-11-23T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "2",
+        "score": 110,
+        "short": "BOS"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000023",
+      "day": "2025-11-24",
+      "start": "2025-11-24T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "2",
+        "score": 110,
+        "short": "BOS"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000024",
+      "day": "2025-11-25",
+      "start": "2025-11-25T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "2",
+        "score": 110,
+        "short": "BOS"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000025",
+      "day": "2025-11-26",
+      "start": "2025-11-26T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "18",
+        "score": 110,
+        "short": "NYK"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000026",
+      "day": "2025-11-27",
+      "start": "2025-11-27T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "18",
+        "score": 110,
+        "short": "NYK"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000027",
+      "day": "2025-11-28",
+      "start": "2025-11-28T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "18",
+        "score": 110,
+        "short": "NYK"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000028",
+      "day": "2025-11-01",
+      "start": "2025-11-01T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "18",
+        "score": 110,
+        "short": "NYK"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000029",
+      "day": "2025-11-02",
+      "start": "2025-11-02T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "18",
+        "score": 110,
+        "short": "NYK"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000030",
+      "day": "2025-11-03",
+      "start": "2025-11-03T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "18",
+        "score": 110,
+        "short": "NYK"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000031",
+      "day": "2025-11-04",
+      "start": "2025-11-04T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "18",
+        "score": 110,
+        "short": "NYK"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000032",
+      "day": "2025-11-05",
+      "start": "2025-11-05T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "18",
+        "score": 110,
+        "short": "NYK"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000033",
+      "day": "2025-11-06",
+      "start": "2025-11-06T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "18",
+        "score": 110,
+        "short": "NYK"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000034",
+      "day": "2025-11-07",
+      "start": "2025-11-07T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "18",
+        "score": 110,
+        "short": "NYK"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000035",
+      "day": "2025-11-08",
+      "start": "2025-11-08T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "7",
+        "score": 110,
+        "short": "DEN"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000036",
+      "day": "2025-11-09",
+      "start": "2025-11-09T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "7",
+        "score": 110,
+        "short": "DEN"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000037",
+      "day": "2025-11-10",
+      "start": "2025-11-10T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "7",
+        "score": 110,
+        "short": "DEN"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000038",
+      "day": "2025-11-11",
+      "start": "2025-11-11T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "7",
+        "score": 110,
+        "short": "DEN"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000039",
+      "day": "2025-11-12",
+      "start": "2025-11-12T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "7",
+        "score": 110,
+        "short": "DEN"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000040",
+      "day": "2025-11-13",
+      "start": "2025-11-13T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "7",
+        "score": 110,
+        "short": "DEN"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000041",
+      "day": "2025-11-14",
+      "start": "2025-11-14T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "7",
+        "score": 110,
+        "short": "DEN"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000042",
+      "day": "2025-11-15",
+      "start": "2025-11-15T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "7",
+        "score": 110,
+        "short": "DEN"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000043",
+      "day": "2025-11-16",
+      "start": "2025-11-16T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "7",
+        "score": 110,
+        "short": "DEN"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000044",
+      "day": "2025-11-17",
+      "start": "2025-11-17T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "7",
+        "score": 110,
+        "short": "DEN"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000045",
+      "day": "2025-11-18",
+      "start": "2025-11-18T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "7",
+        "score": 110,
+        "short": "DEN"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000046",
+      "day": "2025-11-19",
+      "start": "2025-11-19T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "7",
+        "score": 110,
+        "short": "DEN"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000047",
+      "day": "2025-11-20",
+      "start": "2025-11-20T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "5",
+        "score": 110,
+        "short": "CLE"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000048",
+      "day": "2025-11-21",
+      "start": "2025-11-21T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "5",
+        "score": 110,
+        "short": "CLE"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000049",
+      "day": "2025-11-22",
+      "start": "2025-11-22T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "5",
+        "score": 110,
+        "short": "CLE"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000050",
+      "day": "2025-11-23",
+      "start": "2025-11-23T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "5",
+        "score": 110,
+        "short": "CLE"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000051",
+      "day": "2025-11-24",
+      "start": "2025-11-24T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "5",
+        "score": 110,
+        "short": "CLE"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000052",
+      "day": "2025-11-25",
+      "start": "2025-11-25T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "5",
+        "score": 110,
+        "short": "CLE"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000053",
+      "day": "2025-11-26",
+      "start": "2025-11-26T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "5",
+        "score": 110,
+        "short": "CLE"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000054",
+      "day": "2025-11-27",
+      "start": "2025-11-27T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "5",
+        "score": 110,
+        "short": "CLE"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000055",
+      "day": "2025-11-28",
+      "start": "2025-11-28T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "5",
+        "score": 110,
+        "short": "CLE"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000056",
+      "day": "2025-11-01",
+      "start": "2025-11-01T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "5",
+        "score": 110,
+        "short": "CLE"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000057",
+      "day": "2025-11-02",
+      "start": "2025-11-02T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "5",
+        "score": 110,
+        "short": "CLE"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000058",
+      "day": "2025-11-03",
+      "start": "2025-11-03T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "5",
+        "score": 110,
+        "short": "CLE"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000059",
+      "day": "2025-11-04",
+      "start": "2025-11-04T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "16",
+        "score": 110,
+        "short": "MIN"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000060",
+      "day": "2025-11-05",
+      "start": "2025-11-05T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "16",
+        "score": 110,
+        "short": "MIN"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000061",
+      "day": "2025-11-06",
+      "start": "2025-11-06T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "16",
+        "score": 110,
+        "short": "MIN"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000062",
+      "day": "2025-11-07",
+      "start": "2025-11-07T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "16",
+        "score": 110,
+        "short": "MIN"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000063",
+      "day": "2025-11-08",
+      "start": "2025-11-08T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "16",
+        "score": 110,
+        "short": "MIN"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000064",
+      "day": "2025-11-09",
+      "start": "2025-11-09T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "16",
+        "score": 110,
+        "short": "MIN"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000065",
+      "day": "2025-11-10",
+      "start": "2025-11-10T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "16",
+        "score": 110,
+        "short": "MIN"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000066",
+      "day": "2025-11-11",
+      "start": "2025-11-11T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "16",
+        "score": 110,
+        "short": "MIN"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000067",
+      "day": "2025-11-12",
+      "start": "2025-11-12T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "16",
+        "score": 110,
+        "short": "MIN"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000068",
+      "day": "2025-11-13",
+      "start": "2025-11-13T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "16",
+        "score": 110,
+        "short": "MIN"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000069",
+      "day": "2025-11-14",
+      "start": "2025-11-14T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "16",
+        "score": 110,
+        "short": "MIN"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000070",
+      "day": "2025-11-15",
+      "start": "2025-11-15T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "13",
+        "score": 110,
+        "short": "LAL"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000071",
+      "day": "2025-11-16",
+      "start": "2025-11-16T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "13",
+        "score": 110,
+        "short": "LAL"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000072",
+      "day": "2025-11-17",
+      "start": "2025-11-17T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "13",
+        "score": 110,
+        "short": "LAL"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000073",
+      "day": "2025-11-18",
+      "start": "2025-11-18T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "13",
+        "score": 110,
+        "short": "LAL"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000074",
+      "day": "2025-11-19",
+      "start": "2025-11-19T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "13",
+        "score": 110,
+        "short": "LAL"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000075",
+      "day": "2025-11-20",
+      "start": "2025-11-20T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "13",
+        "score": 110,
+        "short": "LAL"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000076",
+      "day": "2025-11-21",
+      "start": "2025-11-21T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "13",
+        "score": 110,
+        "short": "LAL"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000077",
+      "day": "2025-11-22",
+      "start": "2025-11-22T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "13",
+        "score": 110,
+        "short": "LAL"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000078",
+      "day": "2025-11-23",
+      "start": "2025-11-23T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "13",
+        "score": 110,
+        "short": "LAL"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000079",
+      "day": "2025-11-24",
+      "start": "2025-11-24T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "13",
+        "score": 110,
+        "short": "LAL"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000080",
+      "day": "2025-11-25",
+      "start": "2025-11-25T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "13",
+        "score": 110,
+        "short": "LAL"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000081",
+      "day": "2025-11-26",
+      "start": "2025-11-26T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "10",
+        "score": 110,
+        "short": "HOU"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000082",
+      "day": "2025-11-27",
+      "start": "2025-11-27T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "10",
+        "score": 110,
+        "short": "HOU"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000083",
+      "day": "2025-11-28",
+      "start": "2025-11-28T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "10",
+        "score": 110,
+        "short": "HOU"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000084",
+      "day": "2025-11-01",
+      "start": "2025-11-01T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "10",
+        "score": 110,
+        "short": "HOU"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000085",
+      "day": "2025-11-02",
+      "start": "2025-11-02T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "10",
+        "score": 110,
+        "short": "HOU"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000086",
+      "day": "2025-11-03",
+      "start": "2025-11-03T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "10",
+        "score": 110,
+        "short": "HOU"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000087",
+      "day": "2025-11-04",
+      "start": "2025-11-04T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "10",
+        "score": 110,
+        "short": "HOU"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000088",
+      "day": "2025-11-05",
+      "start": "2025-11-05T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "10",
+        "score": 110,
+        "short": "HOU"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000089",
+      "day": "2025-11-06",
+      "start": "2025-11-06T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "10",
+        "score": 110,
+        "short": "HOU"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000090",
+      "day": "2025-11-07",
+      "start": "2025-11-07T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "10",
+        "score": 110,
+        "short": "HOU"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000091",
+      "day": "2025-11-08",
+      "start": "2025-11-08T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "10",
+        "score": 110,
+        "short": "HOU"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000092",
+      "day": "2025-11-09",
+      "start": "2025-11-09T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "15",
+        "score": 110,
+        "short": "MIL"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000093",
+      "day": "2025-11-10",
+      "start": "2025-11-10T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "15",
+        "score": 110,
+        "short": "MIL"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000094",
+      "day": "2025-11-11",
+      "start": "2025-11-11T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "15",
+        "score": 110,
+        "short": "MIL"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000095",
+      "day": "2025-11-12",
+      "start": "2025-11-12T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "15",
+        "score": 110,
+        "short": "MIL"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000096",
+      "day": "2025-11-13",
+      "start": "2025-11-13T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "15",
+        "score": 110,
+        "short": "MIL"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000097",
+      "day": "2025-11-14",
+      "start": "2025-11-14T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "15",
+        "score": 110,
+        "short": "MIL"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000098",
+      "day": "2025-11-15",
+      "start": "2025-11-15T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "15",
+        "score": 110,
+        "short": "MIL"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000099",
+      "day": "2025-11-16",
+      "start": "2025-11-16T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "15",
+        "score": 110,
+        "short": "MIL"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000100",
+      "day": "2025-11-17",
+      "start": "2025-11-17T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "15",
+        "score": 110,
+        "short": "MIL"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000101",
+      "day": "2025-11-18",
+      "start": "2025-11-18T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "15",
+        "score": 110,
+        "short": "MIL"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000102",
+      "day": "2025-11-19",
+      "start": "2025-11-19T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "20",
+        "score": 110,
+        "short": "PHI"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000103",
+      "day": "2025-11-20",
+      "start": "2025-11-20T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "20",
+        "score": 110,
+        "short": "PHI"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000104",
+      "day": "2025-11-21",
+      "start": "2025-11-21T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "20",
+        "score": 110,
+        "short": "PHI"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000105",
+      "day": "2025-11-22",
+      "start": "2025-11-22T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "20",
+        "score": 110,
+        "short": "PHI"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000106",
+      "day": "2025-11-23",
+      "start": "2025-11-23T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "20",
+        "score": 110,
+        "short": "PHI"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000107",
+      "day": "2025-11-24",
+      "start": "2025-11-24T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "20",
+        "score": 110,
+        "short": "PHI"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000108",
+      "day": "2025-11-25",
+      "start": "2025-11-25T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "20",
+        "score": 110,
+        "short": "PHI"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000109",
+      "day": "2025-11-26",
+      "start": "2025-11-26T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "20",
+        "score": 110,
+        "short": "PHI"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000110",
+      "day": "2025-11-27",
+      "start": "2025-11-27T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "20",
+        "score": 110,
+        "short": "PHI"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000111",
+      "day": "2025-11-28",
+      "start": "2025-11-28T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "20",
+        "score": 110,
+        "short": "PHI"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000112",
+      "day": "2025-11-01",
+      "start": "2025-11-01T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "11",
+        "score": 110,
+        "short": "IND"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000113",
+      "day": "2025-11-02",
+      "start": "2025-11-02T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "11",
+        "score": 110,
+        "short": "IND"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000114",
+      "day": "2025-11-03",
+      "start": "2025-11-03T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "11",
+        "score": 110,
+        "short": "IND"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000115",
+      "day": "2025-11-04",
+      "start": "2025-11-04T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "11",
+        "score": 110,
+        "short": "IND"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000116",
+      "day": "2025-11-05",
+      "start": "2025-11-05T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "11",
+        "score": 110,
+        "short": "IND"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000117",
+      "day": "2025-11-06",
+      "start": "2025-11-06T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "11",
+        "score": 110,
+        "short": "IND"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000118",
+      "day": "2025-11-07",
+      "start": "2025-11-07T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "11",
+        "score": 110,
+        "short": "IND"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000119",
+      "day": "2025-11-08",
+      "start": "2025-11-08T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "11",
+        "score": 110,
+        "short": "IND"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000120",
+      "day": "2025-11-09",
+      "start": "2025-11-09T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "11",
+        "score": 110,
+        "short": "IND"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000121",
+      "day": "2025-11-10",
+      "start": "2025-11-10T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "6",
+        "score": 110,
+        "short": "DAL"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000122",
+      "day": "2025-11-11",
+      "start": "2025-11-11T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "6",
+        "score": 110,
+        "short": "DAL"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000123",
+      "day": "2025-11-12",
+      "start": "2025-11-12T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "6",
+        "score": 110,
+        "short": "DAL"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000124",
+      "day": "2025-11-13",
+      "start": "2025-11-13T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "6",
+        "score": 110,
+        "short": "DAL"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000125",
+      "day": "2025-11-14",
+      "start": "2025-11-14T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "6",
+        "score": 110,
+        "short": "DAL"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000126",
+      "day": "2025-11-15",
+      "start": "2025-11-15T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "6",
+        "score": 110,
+        "short": "DAL"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000127",
+      "day": "2025-11-16",
+      "start": "2025-11-16T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "6",
+        "score": 110,
+        "short": "DAL"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000128",
+      "day": "2025-11-17",
+      "start": "2025-11-17T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "6",
+        "score": 110,
+        "short": "DAL"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000129",
+      "day": "2025-11-18",
+      "start": "2025-11-18T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "6",
+        "score": 110,
+        "short": "DAL"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000130",
+      "day": "2025-11-19",
+      "start": "2025-11-19T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "14",
+        "score": 110,
+        "short": "MIA"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000131",
+      "day": "2025-11-20",
+      "start": "2025-11-20T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "14",
+        "score": 110,
+        "short": "MIA"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000132",
+      "day": "2025-11-21",
+      "start": "2025-11-21T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "14",
+        "score": 110,
+        "short": "MIA"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000133",
+      "day": "2025-11-22",
+      "start": "2025-11-22T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "14",
+        "score": 110,
+        "short": "MIA"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000134",
+      "day": "2025-11-23",
+      "start": "2025-11-23T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "14",
+        "score": 110,
+        "short": "MIA"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000135",
+      "day": "2025-11-24",
+      "start": "2025-11-24T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "14",
+        "score": 110,
+        "short": "MIA"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000136",
+      "day": "2025-11-25",
+      "start": "2025-11-25T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "14",
+        "score": 110,
+        "short": "MIA"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000137",
+      "day": "2025-11-26",
+      "start": "2025-11-26T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "14",
+        "score": 110,
+        "short": "MIA"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000138",
+      "day": "2025-11-27",
+      "start": "2025-11-27T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "14",
+        "score": 110,
+        "short": "MIA"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000139",
+      "day": "2025-11-28",
+      "start": "2025-11-28T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "12",
+        "score": 110,
+        "short": "LAC"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000140",
+      "day": "2025-11-01",
+      "start": "2025-11-01T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "12",
+        "score": 110,
+        "short": "LAC"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000141",
+      "day": "2025-11-02",
+      "start": "2025-11-02T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "12",
+        "score": 110,
+        "short": "LAC"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000142",
+      "day": "2025-11-03",
+      "start": "2025-11-03T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "12",
+        "score": 110,
+        "short": "LAC"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000143",
+      "day": "2025-11-04",
+      "start": "2025-11-04T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "12",
+        "score": 110,
+        "short": "LAC"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000144",
+      "day": "2025-11-05",
+      "start": "2025-11-05T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "12",
+        "score": 110,
+        "short": "LAC"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000145",
+      "day": "2025-11-06",
+      "start": "2025-11-06T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "12",
+        "score": 110,
+        "short": "LAC"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000146",
+      "day": "2025-11-07",
+      "start": "2025-11-07T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "12",
+        "score": 110,
+        "short": "LAC"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000147",
+      "day": "2025-11-08",
+      "start": "2025-11-08T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "9",
+        "score": 110,
+        "short": "GSW"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000148",
+      "day": "2025-11-09",
+      "start": "2025-11-09T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "9",
+        "score": 110,
+        "short": "GSW"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000149",
+      "day": "2025-11-10",
+      "start": "2025-11-10T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "9",
+        "score": 110,
+        "short": "GSW"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000150",
+      "day": "2025-11-11",
+      "start": "2025-11-11T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "9",
+        "score": 110,
+        "short": "GSW"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000151",
+      "day": "2025-11-12",
+      "start": "2025-11-12T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "9",
+        "score": 110,
+        "short": "GSW"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000152",
+      "day": "2025-11-13",
+      "start": "2025-11-13T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "9",
+        "score": 110,
+        "short": "GSW"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000153",
+      "day": "2025-11-14",
+      "start": "2025-11-14T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "9",
+        "score": 110,
+        "short": "GSW"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000154",
+      "day": "2025-11-15",
+      "start": "2025-11-15T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "9",
+        "score": 110,
+        "short": "GSW"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000155",
+      "day": "2025-11-16",
+      "start": "2025-11-16T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "19",
+        "score": 110,
+        "short": "ORL"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000156",
+      "day": "2025-11-17",
+      "start": "2025-11-17T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "19",
+        "score": 110,
+        "short": "ORL"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000157",
+      "day": "2025-11-18",
+      "start": "2025-11-18T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "19",
+        "score": 110,
+        "short": "ORL"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000158",
+      "day": "2025-11-19",
+      "start": "2025-11-19T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "19",
+        "score": 110,
+        "short": "ORL"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000159",
+      "day": "2025-11-20",
+      "start": "2025-11-20T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "19",
+        "score": 110,
+        "short": "ORL"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000160",
+      "day": "2025-11-21",
+      "start": "2025-11-21T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "19",
+        "score": 110,
+        "short": "ORL"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000161",
+      "day": "2025-11-22",
+      "start": "2025-11-22T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "19",
+        "score": 110,
+        "short": "ORL"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000162",
+      "day": "2025-11-23",
+      "start": "2025-11-23T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "19",
+        "score": 110,
+        "short": "ORL"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000163",
+      "day": "2025-11-24",
+      "start": "2025-11-24T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "24",
+        "score": 110,
+        "short": "SAS"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000164",
+      "day": "2025-11-25",
+      "start": "2025-11-25T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "24",
+        "score": 110,
+        "short": "SAS"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000165",
+      "day": "2025-11-26",
+      "start": "2025-11-26T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "24",
+        "score": 110,
+        "short": "SAS"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000166",
+      "day": "2025-11-27",
+      "start": "2025-11-27T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "24",
+        "score": 110,
+        "short": "SAS"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000167",
+      "day": "2025-11-28",
+      "start": "2025-11-28T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "24",
+        "score": 110,
+        "short": "SAS"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000168",
+      "day": "2025-11-01",
+      "start": "2025-11-01T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "24",
+        "score": 110,
+        "short": "SAS"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000169",
+      "day": "2025-11-02",
+      "start": "2025-11-02T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "24",
+        "score": 110,
+        "short": "SAS"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000170",
+      "day": "2025-11-03",
+      "start": "2025-11-03T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "29",
+        "score": 110,
+        "short": "MEM"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000171",
+      "day": "2025-11-04",
+      "start": "2025-11-04T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "29",
+        "score": 110,
+        "short": "MEM"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000172",
+      "day": "2025-11-05",
+      "start": "2025-11-05T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "29",
+        "score": 110,
+        "short": "MEM"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000173",
+      "day": "2025-11-06",
+      "start": "2025-11-06T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "29",
+        "score": 110,
+        "short": "MEM"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000174",
+      "day": "2025-11-07",
+      "start": "2025-11-07T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "29",
+        "score": 110,
+        "short": "MEM"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000175",
+      "day": "2025-11-08",
+      "start": "2025-11-08T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "29",
+        "score": 110,
+        "short": "MEM"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000176",
+      "day": "2025-11-09",
+      "start": "2025-11-09T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "29",
+        "score": 110,
+        "short": "MEM"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000177",
+      "day": "2025-11-10",
+      "start": "2025-11-10T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "1",
+        "score": 110,
+        "short": "ATL"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000178",
+      "day": "2025-11-11",
+      "start": "2025-11-11T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "1",
+        "score": 110,
+        "short": "ATL"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000179",
+      "day": "2025-11-12",
+      "start": "2025-11-12T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "1",
+        "score": 110,
+        "short": "ATL"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000180",
+      "day": "2025-11-13",
+      "start": "2025-11-13T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "1",
+        "score": 110,
+        "short": "ATL"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000181",
+      "day": "2025-11-14",
+      "start": "2025-11-14T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "1",
+        "score": 110,
+        "short": "ATL"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000182",
+      "day": "2025-11-15",
+      "start": "2025-11-15T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "1",
+        "score": 110,
+        "short": "ATL"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000183",
+      "day": "2025-11-16",
+      "start": "2025-11-16T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "1",
+        "score": 110,
+        "short": "ATL"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000184",
+      "day": "2025-11-17",
+      "start": "2025-11-17T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "4",
+        "score": 110,
+        "short": "CHI"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000185",
+      "day": "2025-11-18",
+      "start": "2025-11-18T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "4",
+        "score": 110,
+        "short": "CHI"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000186",
+      "day": "2025-11-19",
+      "start": "2025-11-19T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "4",
+        "score": 110,
+        "short": "CHI"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000187",
+      "day": "2025-11-20",
+      "start": "2025-11-20T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "4",
+        "score": 110,
+        "short": "CHI"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000188",
+      "day": "2025-11-21",
+      "start": "2025-11-21T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "4",
+        "score": 110,
+        "short": "CHI"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000189",
+      "day": "2025-11-22",
+      "start": "2025-11-22T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "4",
+        "score": 110,
+        "short": "CHI"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000190",
+      "day": "2025-11-23",
+      "start": "2025-11-23T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "8",
+        "score": 110,
+        "short": "DET"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000191",
+      "day": "2025-11-24",
+      "start": "2025-11-24T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "8",
+        "score": 110,
+        "short": "DET"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000192",
+      "day": "2025-11-25",
+      "start": "2025-11-25T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "8",
+        "score": 110,
+        "short": "DET"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000193",
+      "day": "2025-11-26",
+      "start": "2025-11-26T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "8",
+        "score": 110,
+        "short": "DET"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000194",
+      "day": "2025-11-27",
+      "start": "2025-11-27T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "8",
+        "score": 110,
+        "short": "DET"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000195",
+      "day": "2025-11-28",
+      "start": "2025-11-28T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "8",
+        "score": 110,
+        "short": "DET"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000196",
+      "day": "2025-11-01",
+      "start": "2025-11-01T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "23",
+        "score": 110,
+        "short": "SAC"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000197",
+      "day": "2025-11-02",
+      "start": "2025-11-02T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "23",
+        "score": 110,
+        "short": "SAC"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000198",
+      "day": "2025-11-03",
+      "start": "2025-11-03T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "23",
+        "score": 110,
+        "short": "SAC"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000199",
+      "day": "2025-11-04",
+      "start": "2025-11-04T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "23",
+        "score": 110,
+        "short": "SAC"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000200",
+      "day": "2025-11-05",
+      "start": "2025-11-05T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "23",
+        "score": 110,
+        "short": "SAC"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000201",
+      "day": "2025-11-06",
+      "start": "2025-11-06T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "23",
+        "score": 110,
+        "short": "SAC"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000202",
+      "day": "2025-11-07",
+      "start": "2025-11-07T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "21",
+        "score": 110,
+        "short": "PHX"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000203",
+      "day": "2025-11-08",
+      "start": "2025-11-08T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "21",
+        "score": 110,
+        "short": "PHX"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000204",
+      "day": "2025-11-09",
+      "start": "2025-11-09T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "21",
+        "score": 110,
+        "short": "PHX"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000205",
+      "day": "2025-11-10",
+      "start": "2025-11-10T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "21",
+        "score": 110,
+        "short": "PHX"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000206",
+      "day": "2025-11-11",
+      "start": "2025-11-11T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "21",
+        "score": 110,
+        "short": "PHX"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000207",
+      "day": "2025-11-12",
+      "start": "2025-11-12T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "17",
+        "score": 110,
+        "short": "BKN"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000208",
+      "day": "2025-11-13",
+      "start": "2025-11-13T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "17",
+        "score": 110,
+        "short": "BKN"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000209",
+      "day": "2025-11-14",
+      "start": "2025-11-14T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "17",
+        "score": 110,
+        "short": "BKN"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000210",
+      "day": "2025-11-15",
+      "start": "2025-11-15T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "17",
+        "score": 110,
+        "short": "BKN"
+      },
+      "away": {
+        "id": "21",
+        "score": 90,
+        "short": "PHX"
+      }
+    },
+    {
+      "id": "900000211",
+      "day": "2025-11-16",
+      "start": "2025-11-16T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "17",
+        "score": 110,
+        "short": "BKN"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000212",
+      "day": "2025-11-17",
+      "start": "2025-11-17T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "28",
+        "score": 110,
+        "short": "TOR"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000213",
+      "day": "2025-11-18",
+      "start": "2025-11-18T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "28",
+        "score": 110,
+        "short": "TOR"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000214",
+      "day": "2025-11-19",
+      "start": "2025-11-19T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "28",
+        "score": 110,
+        "short": "TOR"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000215",
+      "day": "2025-11-20",
+      "start": "2025-11-20T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "28",
+        "score": 110,
+        "short": "TOR"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000216",
+      "day": "2025-11-21",
+      "start": "2025-11-21T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "28",
+        "score": 110,
+        "short": "TOR"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000217",
+      "day": "2025-11-22",
+      "start": "2025-11-22T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "3",
+        "score": 110,
+        "short": "NOP"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000218",
+      "day": "2025-11-23",
+      "start": "2025-11-23T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "3",
+        "score": 110,
+        "short": "NOP"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000219",
+      "day": "2025-11-24",
+      "start": "2025-11-24T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "3",
+        "score": 110,
+        "short": "NOP"
+      },
+      "away": {
+        "id": "28",
+        "score": 90,
+        "short": "TOR"
+      }
+    },
+    {
+      "id": "900000220",
+      "day": "2025-11-25",
+      "start": "2025-11-25T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "3",
+        "score": 110,
+        "short": "NOP"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000221",
+      "day": "2025-11-26",
+      "start": "2025-11-26T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "22",
+        "score": 110,
+        "short": "POR"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000222",
+      "day": "2025-11-27",
+      "start": "2025-11-27T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "22",
+        "score": 110,
+        "short": "POR"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000223",
+      "day": "2025-11-28",
+      "start": "2025-11-28T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "22",
+        "score": 110,
+        "short": "POR"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000224",
+      "day": "2025-11-01",
+      "start": "2025-11-01T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "22",
+        "score": 110,
+        "short": "POR"
+      },
+      "away": {
+        "id": "17",
+        "score": 90,
+        "short": "BKN"
+      }
+    },
+    {
+      "id": "900000225",
+      "day": "2025-11-02",
+      "start": "2025-11-02T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "26",
+        "score": 110,
+        "short": "UTA"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000226",
+      "day": "2025-11-03",
+      "start": "2025-11-03T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "26",
+        "score": 110,
+        "short": "UTA"
+      },
+      "away": {
+        "id": "22",
+        "score": 90,
+        "short": "POR"
+      }
+    },
+    {
+      "id": "900000227",
+      "day": "2025-11-04",
+      "start": "2025-11-04T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "26",
+        "score": 110,
+        "short": "UTA"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000228",
+      "day": "2025-11-05",
+      "start": "2025-11-05T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "30",
+        "score": 110,
+        "short": "CHA"
+      },
+      "away": {
+        "id": "27",
+        "score": 90,
+        "short": "WAS"
+      }
+    },
+    {
+      "id": "900000229",
+      "day": "2025-11-06",
+      "start": "2025-11-06T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "30",
+        "score": 110,
+        "short": "CHA"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000230",
+      "day": "2025-11-07",
+      "start": "2025-11-07T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "30",
+        "score": 110,
+        "short": "CHA"
+      },
+      "away": {
+        "id": "3",
+        "score": 90,
+        "short": "NOP"
+      }
+    },
+    {
+      "id": "900000231",
+      "day": "2025-11-08",
+      "start": "2025-11-08T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "27",
+        "score": 110,
+        "short": "WAS"
+      },
+      "away": {
+        "id": "30",
+        "score": 90,
+        "short": "CHA"
+      }
+    },
+    {
+      "id": "900000232",
+      "day": "2025-11-09",
+      "start": "2025-11-09T00:00:00Z",
+      "status": "final",
+      "kind": "reg",
+      "round": "",
+      "neutral": false,
+      "home": {
+        "id": "27",
+        "score": 110,
+        "short": "WAS"
+      },
+      "away": {
+        "id": "26",
+        "score": 90,
+        "short": "UTA"
+      }
+    },
+    {
+      "id": "900000233",
+      "day": "2025-12-10",
+      "start": "2025-12-10T00:00:00Z",
+      "status": "final",
+      "kind": "cup",
+      "round": "Cup Quarterfinals",
+      "neutral": true,
+      "home": {
+        "id": "25",
+        "score": 120,
+        "short": "OKC"
+      },
+      "away": {
+        "id": "20",
+        "score": 100,
+        "short": "PHI"
+      }
+    },
+    {
+      "id": "900000234",
+      "day": "2025-12-10",
+      "start": "2025-12-10T00:00:00Z",
+      "status": "final",
+      "kind": "cup",
+      "round": "Cup Quarterfinals",
+      "neutral": true,
+      "home": {
+        "id": "2",
+        "score": 118,
+        "short": "BOS"
+      },
+      "away": {
+        "id": "15",
+        "score": 110,
+        "short": "MIL"
+      }
+    },
+    {
+      "id": "900000235",
+      "day": "2025-12-11",
+      "start": "2025-12-11T00:00:00Z",
+      "status": "final",
+      "kind": "cup",
+      "round": "Cup Quarterfinals",
+      "neutral": true,
+      "home": {
+        "id": "18",
+        "score": 112,
+        "short": "NYK"
+      },
+      "away": {
+        "id": "7",
+        "score": 108,
+        "short": "DEN"
+      }
+    },
+    {
+      "id": "900000236",
+      "day": "2025-12-11",
+      "start": "2025-12-11T00:00:00Z",
+      "status": "final",
+      "kind": "cup",
+      "round": "Cup Quarterfinals",
+      "neutral": true,
+      "home": {
+        "id": "24",
+        "score": 115,
+        "short": "SAS"
+      },
+      "away": {
+        "id": "13",
+        "score": 111,
+        "short": "LAL"
+      }
+    },
+    {
+      "id": "900000237",
+      "day": "2025-12-13",
+      "start": "2025-12-13T00:00:00Z",
+      "status": "final",
+      "kind": "cup",
+      "round": "Cup Semifinals",
+      "neutral": true,
+      "home": {
+        "id": "25",
+        "score": 125,
+        "short": "OKC"
+      },
+      "away": {
+        "id": "2",
+        "score": 118,
+        "short": "BOS"
+      }
+    },
+    {
+      "id": "900000238",
+      "day": "2025-12-13",
+      "start": "2025-12-13T00:00:00Z",
+      "status": "final",
+      "kind": "cup",
+      "round": "Cup Semifinals",
+      "neutral": true,
+      "home": {
+        "id": "18",
+        "score": 109,
+        "short": "NYK"
+      },
+      "away": {
+        "id": "24",
+        "score": 101,
+        "short": "SAS"
+      }
+    },
+    {
+      "id": "900000239",
+      "day": "2025-12-16",
+      "start": "2025-12-16T00:00:00Z",
+      "status": "final",
+      "kind": "cup",
+      "round": "Cup Championship",
+      "neutral": true,
+      "home": {
+        "id": "18",
+        "score": 108,
+        "short": "NYK"
+      },
+      "away": {
+        "id": "25",
+        "score": 105,
+        "short": "OKC"
+      }
+    },
+    {
+      "id": "900000240",
+      "day": "2026-04-15",
+      "start": "2026-04-15T00:00:00Z",
+      "status": "final",
+      "kind": "playin",
+      "round": "Play-In",
+      "neutral": true,
+      "home": {
+        "id": "19",
+        "score": 105,
+        "short": "ORL",
+        "seed": 8
+      },
+      "away": {
+        "id": "1",
+        "score": 99,
+        "short": "ATL",
+        "seed": 9
+      }
+    },
+    {
+      "id": "900000241",
+      "day": "2026-04-15",
+      "start": "2026-04-15T00:00:00Z",
+      "status": "final",
+      "kind": "playin",
+      "round": "Play-In",
+      "neutral": true,
+      "home": {
+        "id": "4",
+        "score": 98,
+        "short": "CHI",
+        "seed": 9
+      },
+      "away": {
+        "id": "14",
+        "score": 102,
+        "short": "MIA",
+        "seed": 10
+      }
+    },
+    {
+      "id": "900000242",
+      "day": "2026-04-16",
+      "start": "2026-04-16T00:00:00Z",
+      "status": "final",
+      "kind": "playin",
+      "round": "Play-In",
+      "neutral": true,
+      "home": {
+        "id": "9",
+        "score": 112,
+        "short": "GSW",
+        "seed": 8
+      },
+      "away": {
+        "id": "29",
+        "score": 101,
+        "short": "MEM",
+        "seed": 9
+      }
+    },
+    {
+      "id": "900000243",
+      "day": "2026-04-16",
+      "start": "2026-04-16T00:00:00Z",
+      "status": "final",
+      "kind": "playin",
+      "round": "Play-In",
+      "neutral": true,
+      "home": {
+        "id": "12",
+        "score": 108,
+        "short": "LAC",
+        "seed": 7
+      },
+      "away": {
+        "id": "23",
+        "score": 100,
+        "short": "SAC",
+        "seed": 10
+      }
+    },
+    {
+      "id": "900000244",
+      "day": "2026-05-01",
+      "start": "2026-05-01T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "25",
+        "score": 111,
+        "short": "OKC",
+        "seed": 1
+      },
+      "away": {
+        "id": "20",
+        "score": 95,
+        "short": "PHI",
+        "seed": 5
+      }
+    },
+    {
+      "id": "900000245",
+      "day": "2026-05-02",
+      "start": "2026-05-02T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "25",
+        "score": 111,
+        "short": "OKC",
+        "seed": 1
+      },
+      "away": {
+        "id": "13",
+        "score": 95,
+        "short": "LAL",
+        "seed": 5
+      }
+    },
+    {
+      "id": "900000246",
+      "day": "2026-05-03",
+      "start": "2026-05-03T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "25",
+        "score": 111,
+        "short": "OKC",
+        "seed": 1
+      },
+      "away": {
+        "id": "14",
+        "score": 95,
+        "short": "MIA",
+        "seed": 6
+      }
+    },
+    {
+      "id": "900000247",
+      "day": "2026-05-04",
+      "start": "2026-05-04T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "25",
+        "score": 111,
+        "short": "OKC",
+        "seed": 1
+      },
+      "away": {
+        "id": "6",
+        "score": 95,
+        "short": "DAL",
+        "seed": 6
+      }
+    },
+    {
+      "id": "900000248",
+      "day": "2026-05-05",
+      "start": "2026-05-05T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "Conference Semifinals",
+      "neutral": true,
+      "home": {
+        "id": "25",
+        "score": 111,
+        "short": "OKC",
+        "seed": 1
+      },
+      "away": {
+        "id": "11",
+        "score": 95,
+        "short": "IND",
+        "seed": 7
+      }
+    },
+    {
+      "id": "900000249",
+      "day": "2026-05-06",
+      "start": "2026-05-06T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "Conference Semifinals",
+      "neutral": true,
+      "home": {
+        "id": "25",
+        "score": 111,
+        "short": "OKC",
+        "seed": 1
+      },
+      "away": {
+        "id": "12",
+        "score": 95,
+        "short": "LAC",
+        "seed": 7
+      }
+    },
+    {
+      "id": "900000250",
+      "day": "2026-05-07",
+      "start": "2026-05-07T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "Conference Semifinals",
+      "neutral": true,
+      "home": {
+        "id": "25",
+        "score": 111,
+        "short": "OKC",
+        "seed": 1
+      },
+      "away": {
+        "id": "19",
+        "score": 95,
+        "short": "ORL",
+        "seed": 8
+      }
+    },
+    {
+      "id": "900000251",
+      "day": "2026-05-08",
+      "start": "2026-05-08T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "Conference Semifinals",
+      "neutral": true,
+      "home": {
+        "id": "25",
+        "score": 111,
+        "short": "OKC",
+        "seed": 1
+      },
+      "away": {
+        "id": "9",
+        "score": 95,
+        "short": "GSW",
+        "seed": 8
+      }
+    },
+    {
+      "id": "900000252",
+      "day": "2026-05-09",
+      "start": "2026-05-09T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "Conference Finals",
+      "neutral": true,
+      "home": {
+        "id": "25",
+        "score": 111,
+        "short": "OKC",
+        "seed": 1
+      },
+      "away": {
+        "id": "20",
+        "score": 95,
+        "short": "PHI",
+        "seed": 5
+      }
+    },
+    {
+      "id": "900000253",
+      "day": "2026-05-10",
+      "start": "2026-05-10T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "Conference Finals",
+      "neutral": true,
+      "home": {
+        "id": "25",
+        "score": 111,
+        "short": "OKC",
+        "seed": 1
+      },
+      "away": {
+        "id": "13",
+        "score": 95,
+        "short": "LAL",
+        "seed": 5
+      }
+    },
+    {
+      "id": "900000254",
+      "day": "2026-05-11",
+      "start": "2026-05-11T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "Conference Finals",
+      "neutral": true,
+      "home": {
+        "id": "25",
+        "score": 111,
+        "short": "OKC",
+        "seed": 1
+      },
+      "away": {
+        "id": "14",
+        "score": 95,
+        "short": "MIA",
+        "seed": 6
+      }
+    },
+    {
+      "id": "900000255",
+      "day": "2026-05-12",
+      "start": "2026-05-12T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "Conference Finals",
+      "neutral": true,
+      "home": {
+        "id": "25",
+        "score": 111,
+        "short": "OKC",
+        "seed": 1
+      },
+      "away": {
+        "id": "6",
+        "score": 95,
+        "short": "DAL",
+        "seed": 6
+      }
+    },
+    {
+      "id": "900000256",
+      "day": "2026-05-13",
+      "start": "2026-05-13T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "NBA Finals",
+      "neutral": true,
+      "home": {
+        "id": "25",
+        "score": 111,
+        "short": "OKC",
+        "seed": 1
+      },
+      "away": {
+        "id": "11",
+        "score": 95,
+        "short": "IND",
+        "seed": 7
+      }
+    },
+    {
+      "id": "900000257",
+      "day": "2026-05-14",
+      "start": "2026-05-14T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "NBA Finals",
+      "neutral": true,
+      "home": {
+        "id": "25",
+        "score": 111,
+        "short": "OKC",
+        "seed": 1
+      },
+      "away": {
+        "id": "12",
+        "score": 95,
+        "short": "LAC",
+        "seed": 7
+      }
+    },
+    {
+      "id": "900000258",
+      "day": "2026-05-15",
+      "start": "2026-05-15T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "NBA Finals",
+      "neutral": true,
+      "home": {
+        "id": "25",
+        "score": 111,
+        "short": "OKC",
+        "seed": 1
+      },
+      "away": {
+        "id": "19",
+        "score": 95,
+        "short": "ORL",
+        "seed": 8
+      }
+    },
+    {
+      "id": "900000259",
+      "day": "2026-05-16",
+      "start": "2026-05-16T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "NBA Finals",
+      "neutral": true,
+      "home": {
+        "id": "25",
+        "score": 111,
+        "short": "OKC",
+        "seed": 1
+      },
+      "away": {
+        "id": "9",
+        "score": 95,
+        "short": "GSW",
+        "seed": 8
+      }
+    },
+    {
+      "id": "900000260",
+      "day": "2026-05-01",
+      "start": "2026-05-01T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "18",
+        "score": 111,
+        "short": "NYK",
+        "seed": 3
+      },
+      "away": {
+        "id": "20",
+        "score": 95,
+        "short": "PHI",
+        "seed": 5
+      }
+    },
+    {
+      "id": "900000261",
+      "day": "2026-05-02",
+      "start": "2026-05-02T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "18",
+        "score": 111,
+        "short": "NYK",
+        "seed": 3
+      },
+      "away": {
+        "id": "13",
+        "score": 95,
+        "short": "LAL",
+        "seed": 5
+      }
+    },
+    {
+      "id": "900000262",
+      "day": "2026-05-03",
+      "start": "2026-05-03T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "18",
+        "score": 111,
+        "short": "NYK",
+        "seed": 3
+      },
+      "away": {
+        "id": "14",
+        "score": 95,
+        "short": "MIA",
+        "seed": 6
+      }
+    },
+    {
+      "id": "900000263",
+      "day": "2026-05-04",
+      "start": "2026-05-04T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "18",
+        "score": 111,
+        "short": "NYK",
+        "seed": 3
+      },
+      "away": {
+        "id": "6",
+        "score": 95,
+        "short": "DAL",
+        "seed": 6
+      }
+    },
+    {
+      "id": "900000264",
+      "day": "2026-05-05",
+      "start": "2026-05-05T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "Conference Semifinals",
+      "neutral": true,
+      "home": {
+        "id": "18",
+        "score": 111,
+        "short": "NYK",
+        "seed": 3
+      },
+      "away": {
+        "id": "11",
+        "score": 95,
+        "short": "IND",
+        "seed": 7
+      }
+    },
+    {
+      "id": "900000265",
+      "day": "2026-05-06",
+      "start": "2026-05-06T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "Conference Semifinals",
+      "neutral": true,
+      "home": {
+        "id": "18",
+        "score": 111,
+        "short": "NYK",
+        "seed": 3
+      },
+      "away": {
+        "id": "12",
+        "score": 95,
+        "short": "LAC",
+        "seed": 7
+      }
+    },
+    {
+      "id": "900000266",
+      "day": "2026-05-07",
+      "start": "2026-05-07T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "Conference Semifinals",
+      "neutral": true,
+      "home": {
+        "id": "18",
+        "score": 111,
+        "short": "NYK",
+        "seed": 3
+      },
+      "away": {
+        "id": "19",
+        "score": 95,
+        "short": "ORL",
+        "seed": 8
+      }
+    },
+    {
+      "id": "900000267",
+      "day": "2026-05-08",
+      "start": "2026-05-08T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "Conference Semifinals",
+      "neutral": true,
+      "home": {
+        "id": "18",
+        "score": 111,
+        "short": "NYK",
+        "seed": 3
+      },
+      "away": {
+        "id": "9",
+        "score": 95,
+        "short": "GSW",
+        "seed": 8
+      }
+    },
+    {
+      "id": "900000268",
+      "day": "2026-05-09",
+      "start": "2026-05-09T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "Conference Finals",
+      "neutral": true,
+      "home": {
+        "id": "18",
+        "score": 111,
+        "short": "NYK",
+        "seed": 3
+      },
+      "away": {
+        "id": "20",
+        "score": 95,
+        "short": "PHI",
+        "seed": 5
+      }
+    },
+    {
+      "id": "900000269",
+      "day": "2026-05-10",
+      "start": "2026-05-10T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "Conference Finals",
+      "neutral": true,
+      "home": {
+        "id": "18",
+        "score": 111,
+        "short": "NYK",
+        "seed": 3
+      },
+      "away": {
+        "id": "13",
+        "score": 95,
+        "short": "LAL",
+        "seed": 5
+      }
+    },
+    {
+      "id": "900000270",
+      "day": "2026-05-11",
+      "start": "2026-05-11T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "Conference Finals",
+      "neutral": true,
+      "home": {
+        "id": "18",
+        "score": 111,
+        "short": "NYK",
+        "seed": 3
+      },
+      "away": {
+        "id": "14",
+        "score": 95,
+        "short": "MIA",
+        "seed": 6
+      }
+    },
+    {
+      "id": "900000271",
+      "day": "2026-05-01",
+      "start": "2026-05-01T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "2",
+        "score": 111,
+        "short": "BOS",
+        "seed": 2
+      },
+      "away": {
+        "id": "20",
+        "score": 95,
+        "short": "PHI",
+        "seed": 5
+      }
+    },
+    {
+      "id": "900000272",
+      "day": "2026-05-02",
+      "start": "2026-05-02T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "2",
+        "score": 111,
+        "short": "BOS",
+        "seed": 2
+      },
+      "away": {
+        "id": "13",
+        "score": 95,
+        "short": "LAL",
+        "seed": 5
+      }
+    },
+    {
+      "id": "900000273",
+      "day": "2026-05-03",
+      "start": "2026-05-03T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "2",
+        "score": 111,
+        "short": "BOS",
+        "seed": 2
+      },
+      "away": {
+        "id": "14",
+        "score": 95,
+        "short": "MIA",
+        "seed": 6
+      }
+    },
+    {
+      "id": "900000274",
+      "day": "2026-05-04",
+      "start": "2026-05-04T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "2",
+        "score": 111,
+        "short": "BOS",
+        "seed": 2
+      },
+      "away": {
+        "id": "6",
+        "score": 95,
+        "short": "DAL",
+        "seed": 6
+      }
+    },
+    {
+      "id": "900000275",
+      "day": "2026-05-05",
+      "start": "2026-05-05T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "Conference Semifinals",
+      "neutral": true,
+      "home": {
+        "id": "2",
+        "score": 111,
+        "short": "BOS",
+        "seed": 2
+      },
+      "away": {
+        "id": "11",
+        "score": 95,
+        "short": "IND",
+        "seed": 7
+      }
+    },
+    {
+      "id": "900000276",
+      "day": "2026-05-06",
+      "start": "2026-05-06T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "Conference Semifinals",
+      "neutral": true,
+      "home": {
+        "id": "2",
+        "score": 111,
+        "short": "BOS",
+        "seed": 2
+      },
+      "away": {
+        "id": "12",
+        "score": 95,
+        "short": "LAC",
+        "seed": 7
+      }
+    },
+    {
+      "id": "900000277",
+      "day": "2026-05-07",
+      "start": "2026-05-07T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "Conference Semifinals",
+      "neutral": true,
+      "home": {
+        "id": "2",
+        "score": 111,
+        "short": "BOS",
+        "seed": 2
+      },
+      "away": {
+        "id": "19",
+        "score": 95,
+        "short": "ORL",
+        "seed": 8
+      }
+    },
+    {
+      "id": "900000278",
+      "day": "2026-05-01",
+      "start": "2026-05-01T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "7",
+        "score": 111,
+        "short": "DEN",
+        "seed": 2
+      },
+      "away": {
+        "id": "20",
+        "score": 95,
+        "short": "PHI",
+        "seed": 5
+      }
+    },
+    {
+      "id": "900000279",
+      "day": "2026-05-02",
+      "start": "2026-05-02T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "7",
+        "score": 111,
+        "short": "DEN",
+        "seed": 2
+      },
+      "away": {
+        "id": "13",
+        "score": 95,
+        "short": "LAL",
+        "seed": 5
+      }
+    },
+    {
+      "id": "900000280",
+      "day": "2026-05-03",
+      "start": "2026-05-03T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "7",
+        "score": 111,
+        "short": "DEN",
+        "seed": 2
+      },
+      "away": {
+        "id": "14",
+        "score": 95,
+        "short": "MIA",
+        "seed": 6
+      }
+    },
+    {
+      "id": "900000281",
+      "day": "2026-05-04",
+      "start": "2026-05-04T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "7",
+        "score": 111,
+        "short": "DEN",
+        "seed": 2
+      },
+      "away": {
+        "id": "6",
+        "score": 95,
+        "short": "DAL",
+        "seed": 6
+      }
+    },
+    {
+      "id": "900000282",
+      "day": "2026-05-05",
+      "start": "2026-05-05T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "Conference Semifinals",
+      "neutral": true,
+      "home": {
+        "id": "7",
+        "score": 111,
+        "short": "DEN",
+        "seed": 2
+      },
+      "away": {
+        "id": "11",
+        "score": 95,
+        "short": "IND",
+        "seed": 7
+      }
+    },
+    {
+      "id": "900000283",
+      "day": "2026-05-06",
+      "start": "2026-05-06T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "Conference Semifinals",
+      "neutral": true,
+      "home": {
+        "id": "7",
+        "score": 111,
+        "short": "DEN",
+        "seed": 2
+      },
+      "away": {
+        "id": "12",
+        "score": 95,
+        "short": "LAC",
+        "seed": 7
+      }
+    },
+    {
+      "id": "900000284",
+      "day": "2026-05-07",
+      "start": "2026-05-07T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "Conference Semifinals",
+      "neutral": true,
+      "home": {
+        "id": "7",
+        "score": 111,
+        "short": "DEN",
+        "seed": 2
+      },
+      "away": {
+        "id": "19",
+        "score": 95,
+        "short": "ORL",
+        "seed": 8
+      }
+    },
+    {
+      "id": "900000285",
+      "day": "2026-05-01",
+      "start": "2026-05-01T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "5",
+        "score": 111,
+        "short": "CLE",
+        "seed": 1
+      },
+      "away": {
+        "id": "20",
+        "score": 95,
+        "short": "PHI",
+        "seed": 5
+      }
+    },
+    {
+      "id": "900000286",
+      "day": "2026-05-02",
+      "start": "2026-05-02T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "5",
+        "score": 111,
+        "short": "CLE",
+        "seed": 1
+      },
+      "away": {
+        "id": "13",
+        "score": 95,
+        "short": "LAL",
+        "seed": 5
+      }
+    },
+    {
+      "id": "900000287",
+      "day": "2026-05-03",
+      "start": "2026-05-03T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "5",
+        "score": 111,
+        "short": "CLE",
+        "seed": 1
+      },
+      "away": {
+        "id": "14",
+        "score": 95,
+        "short": "MIA",
+        "seed": 6
+      }
+    },
+    {
+      "id": "900000288",
+      "day": "2026-05-04",
+      "start": "2026-05-04T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "5",
+        "score": 111,
+        "short": "CLE",
+        "seed": 1
+      },
+      "away": {
+        "id": "6",
+        "score": 95,
+        "short": "DAL",
+        "seed": 6
+      }
+    },
+    {
+      "id": "900000289",
+      "day": "2026-05-01",
+      "start": "2026-05-01T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "16",
+        "score": 111,
+        "short": "MIN",
+        "seed": 3
+      },
+      "away": {
+        "id": "20",
+        "score": 95,
+        "short": "PHI",
+        "seed": 5
+      }
+    },
+    {
+      "id": "900000290",
+      "day": "2026-05-02",
+      "start": "2026-05-02T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "16",
+        "score": 111,
+        "short": "MIN",
+        "seed": 3
+      },
+      "away": {
+        "id": "13",
+        "score": 95,
+        "short": "LAL",
+        "seed": 5
+      }
+    },
+    {
+      "id": "900000291",
+      "day": "2026-05-03",
+      "start": "2026-05-03T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "16",
+        "score": 111,
+        "short": "MIN",
+        "seed": 3
+      },
+      "away": {
+        "id": "14",
+        "score": 95,
+        "short": "MIA",
+        "seed": 6
+      }
+    },
+    {
+      "id": "900000292",
+      "day": "2026-05-04",
+      "start": "2026-05-04T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "16",
+        "score": 111,
+        "short": "MIN",
+        "seed": 3
+      },
+      "away": {
+        "id": "6",
+        "score": 95,
+        "short": "DAL",
+        "seed": 6
+      }
+    },
+    {
+      "id": "900000293",
+      "day": "2026-05-01",
+      "start": "2026-05-01T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "15",
+        "score": 111,
+        "short": "MIL",
+        "seed": 4
+      },
+      "away": {
+        "id": "20",
+        "score": 95,
+        "short": "PHI",
+        "seed": 5
+      }
+    },
+    {
+      "id": "900000294",
+      "day": "2026-05-02",
+      "start": "2026-05-02T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "15",
+        "score": 111,
+        "short": "MIL",
+        "seed": 4
+      },
+      "away": {
+        "id": "13",
+        "score": 95,
+        "short": "LAL",
+        "seed": 5
+      }
+    },
+    {
+      "id": "900000295",
+      "day": "2026-05-01",
+      "start": "2026-05-01T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "10",
+        "score": 111,
+        "short": "HOU",
+        "seed": 4
+      },
+      "away": {
+        "id": "20",
+        "score": 95,
+        "short": "PHI",
+        "seed": 5
+      }
+    },
+    {
+      "id": "900000296",
+      "day": "2026-05-02",
+      "start": "2026-05-02T00:00:00Z",
+      "status": "final",
+      "kind": "playoff",
+      "round": "First Round",
+      "neutral": true,
+      "home": {
+        "id": "10",
+        "score": 111,
+        "short": "HOU",
+        "seed": 4
+      },
+      "away": {
+        "id": "13",
+        "score": 95,
+        "short": "LAL",
+        "seed": 5
+      }
+    }
+  ]
+}

@@ -1,0 +1,782 @@
+:root{--bg:#10131a;--card:#1a1f2b;--card2:#222939;--line:#2d3548;--tx:#eef1f7;--mut:#9aa6bd;--acc:#ffd23f;--good:#4ade80;--bad:#f87171;--warn:#fbbf24;--sb:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif}
+body{min-height:100vh;min-height:100dvh}
+a{color:var(--acc)}button{font:inherit;color:inherit;cursor:pointer}
+.wrap{max-width:640px;margin:0 auto;padding:0 max(14px,env(safe-area-inset-right)) 40px max(14px,env(safe-area-inset-left))}
+.wrap.wide{max-width:1100px}
+.top{display:flex;align-items:center;gap:10px;padding:12px max(14px,env(safe-area-inset-right)) 8px max(14px,env(safe-area-inset-left));max-width:1100px;margin:0 auto}
+.top .logo{width:34px;height:34px;border-radius:9px;flex:none}
+.top .brand{font-weight:900;font-size:13px;line-height:1.15;color:var(--acc);letter-spacing:.01em;text-decoration:none;flex:1;min-width:0}
+.top .brand small{display:block;color:var(--mut);font-weight:700;font-size:11px;margin-top:1px}
+.top .hr{display:flex;gap:6px;align-items:center;flex:none}
+h1{margin:6px 0 4px;font-size:clamp(26px,7.4vw,38px);line-height:1.1;color:var(--tx)}
+h1 em{font-style:normal;color:var(--acc)}
+h2{margin:0 0 6px;font-size:20px}
+.sub{color:var(--mut);margin:0 0 16px}
+.mut{color:var(--mut)}.small{font-size:13px}.tiny{font-size:12px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0}
+.card h3{margin:0 0 6px;font-size:16px}
+.btn{background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-weight:800;font-size:15px;text-align:center;text-decoration:none;color:var(--tx);display:inline-block}
+.btn.pri{background:var(--acc);color:#111;border-color:var(--acc)}
+.btn.bad{background:#3a1717;border-color:#7f2d2d;color:#ffb4b4}
+.btn.sm{padding:5px 10px;font-size:13px;border-radius:9px}
+.btn.block{display:block;width:100%}
+.btn:disabled,.btn[disabled]{opacity:.4;cursor:not-allowed}
+.link{background:none;border:0;color:var(--acc);text-decoration:underline;padding:0;font-size:inherit;font-weight:700}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.row.nw{flex-wrap:nowrap}.grow{flex:1;min-width:0}
+.stack>*+*{margin-top:10px}
+label.f{display:block;font-weight:800;margin:0 0 4px;font-size:14px}
+input[type=text],input[type=search],input[type=password],input[type=number],input[type=datetime-local],select,textarea{width:100%;background:var(--card2);border:1px solid var(--line);color:var(--tx);border-radius:12px;padding:12px;font:inherit;outline:none;font-size:16px}
+input:focus,select:focus,textarea:focus{border-color:var(--acc)}
+select{width:auto}
+.hint{color:var(--mut);font-size:13px;margin:6px 0 0}
+.err{color:#ff9a9a;font-weight:700;font-size:14px;margin:8px 0 0;min-height:1.2em}
+.note{background:#2a2410;border:1px solid #6b5712;color:#ffe9a8;border-radius:12px;padding:10px 12px;font-size:14px;margin:10px 0}
+.hide{display:none!important}
+.pill{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:99px;font-size:12px;font-weight:800;background:var(--card2);border:1px solid var(--line);white-space:nowrap}
+.pill.live{color:var(--good);border-color:#1f6b3d}.pill.bad{color:var(--warn);border-color:#8a6d12}
+.pill i{width:8px;height:8px;border-radius:50%;background:currentColor;display:inline-block}.pill.live i{animation:pulse 1.8s infinite}
+@keyframes pulse{50%{opacity:.3}}
+/* avatars */
+.av{display:inline-flex;align-items:center;justify-content:center;border-radius:50%;flex:none;overflow:hidden;color:#111;font-weight:900;background:#888;line-height:1;vertical-align:middle}
+.av img{width:100%;height:100%;object-fit:cover;display:block}
+/* wizard */
+.wiz{min-height:calc(100vh - 62px);min-height:calc(100dvh - 62px);display:flex;flex-direction:column}
+.prog{margin:4px 0 14px}.prog .bar{height:6px;background:var(--card2);border-radius:99px;overflow:hidden}.prog .bar i{display:block;height:100%;background:var(--acc);border-radius:99px;transition:width .25s}
+.prog .lbl{font-size:12px;color:var(--mut);font-weight:700;margin-top:5px;display:flex;justify-content:space-between}
+.q{font-size:clamp(22px,6vw,28px);font-weight:900;line-height:1.15;margin:4px 0 6px}
+.opts{display:grid;gap:10px;margin:14px 0}
+.opt{display:block;text-align:left;width:100%;background:var(--card);border:2px solid var(--line);border-radius:14px;padding:13px 14px}
+.opt b{display:block;font-size:17px}.opt span{display:block;color:var(--mut);font-size:13.5px;margin-top:2px}
+.opt.on{border-color:var(--acc);background:#2a2410}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.chipb{background:var(--card);border:2px solid var(--line);border-radius:12px;padding:12px 16px;font-weight:900;font-size:17px;min-width:76px;text-align:center}
+.chipb.on{border-color:var(--acc);background:var(--acc);color:#111}
+.stepper{display:flex;align-items:center;justify-content:center;gap:18px;margin:18px 0}
+.stepper button{width:56px;height:56px;border-radius:16px;background:var(--card2);border:1px solid var(--line);font-size:28px;font-weight:900}
+.stepper output{font-size:54px;font-weight:900;min-width:90px;text-align:center;color:var(--acc);font-variant-numeric:tabular-nums}
+.wnav{position:sticky;bottom:0;background:linear-gradient(transparent,var(--bg) 22%);padding:22px 0 calc(14px + var(--sb));margin-top:auto;display:flex;gap:10px}
+.wnav .btn{flex:1;padding:14px}
+.sumrow{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--line)}.sumrow:last-child{border:0}
+.sumrow .k{color:var(--mut);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.04em}
+.sumrow .v{font-weight:800}
+.sumrow .ed{margin-left:auto;background:var(--card2);border:1px solid var(--line);border-radius:9px;padding:4px 9px;font-size:13px;font-weight:800}
+.board-ex{border-collapse:collapse;font-size:12px;margin:8px 0}.board-ex td,.board-ex th{border:1px solid var(--line);padding:3px 6px;text-align:center;min-width:26px}.board-ex th{color:var(--mut);font-weight:700}
+.tzline{margin:8px 0;padding:10px 12px;background:var(--card);border:1px solid var(--line);border-radius:12px;font-size:14px}
+.tzline b{color:var(--acc)}
+/* links screen */
+.lnk{margin:0 0 16px}.lnk h3{margin:0 0 2px;font-size:16px}.lnk .why{color:var(--mut);font-size:13px;margin-bottom:6px}
+.url{display:block;font-size:12.5px;word-break:break-all;background:var(--card2);border:1px solid var(--line);border-radius:8px;padding:8px 10px;margin:4px 0 8px;color:var(--tx);text-decoration:none;user-select:all}
+.tag{display:inline-block;font-size:11px;font-weight:900;letter-spacing:.04em;border-radius:6px;padding:1px 7px;margin-left:6px;vertical-align:middle}
+.tag.pri{background:#3a1717;color:#ffb4b4}.tag.ok{background:#12351f;color:var(--good)}.tag.mut{background:var(--card2);color:var(--mut)}
+.qr{background:#fff;padding:10px;border-radius:12px;display:inline-block;line-height:0}.qr svg{width:190px;height:190px}
+.code{font:800 22px/1 ui-monospace,Menlo,Consolas,monospace;letter-spacing:.06em;color:var(--acc)}
+/* photo */
+.photo-prev{display:flex;gap:14px;align-items:center}
+.crop{position:relative;width:132px;height:132px;border-radius:18px;overflow:hidden;background:var(--card2);border:1px solid var(--line);touch-action:none;flex:none}
+.crop canvas{width:100%;height:100%;display:block}
+.emojis{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}.emojis button{width:42px;height:42px;font-size:22px;background:var(--card2);border:2px solid var(--line);border-radius:12px}.emojis button.on{border-color:var(--acc)}
+/* room */
+body.room{--tabh:55px}
+html:has(body.room){scroll-padding-top:60px}
+.tabs{position:sticky;top:0;z-index:20;background:#0b0e14;border-bottom:1px solid var(--line);display:flex;padding:0 max(env(safe-area-inset-right),calc((100vw - 1100px)/2)) 0 max(env(safe-area-inset-left),calc((100vw - 1100px)/2))}
+.tabs a{display:block;text-align:center;text-decoration:none;-webkit-tap-highlight-color:transparent}
+.tabs button,.tabs a{flex:1 1 0;min-width:0;min-height:54px;background:none;border:0;padding:6px 2px 5px;color:var(--mut);font:inherit;font-size:11px;font-weight:800;position:relative;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:inset 0 -3px 0 transparent}
+.tabs button:focus-visible,.tabs a:focus-visible{outline:2px solid var(--acc);outline-offset:-3px}
+@media (min-width:900px){body.room{--tabh:59px}.tabs button,.tabs a{font-size:14px;min-height:58px}.tabs button span,.tabs a span{display:inline-block;margin-right:7px;vertical-align:-2px}}
+.tabs button span,.tabs a span{display:block;font-size:19px;line-height:1.1}.tabs button.on,.tabs a.on{color:var(--acc);box-shadow:inset 0 -3px 0 var(--acc)}
+
+.tabs .bd{position:absolute;top:3px;left:55%;background:var(--bad);color:#fff;border-radius:99px;font-size:10px;padding:0 5px;font-weight:900}
+.banner{border-radius:16px;padding:12px 14px;margin:8px 0;background:var(--card);border:1px solid var(--line);display:flex;gap:12px;align-items:center}
+.banner .bm{flex:1;min-width:0}.banner .lbl{font-size:11px;font-weight:900;letter-spacing:.1em;color:var(--acc)}
+.banner .nm{font-size:20px;font-weight:900;line-height:1.15;overflow-wrap:anywhere}.banner .sb{color:var(--mut);font-size:13px;margin-top:2px}
+.banner .cd{font-size:30px;font-weight:900;font-variant-numeric:tabular-nums;text-align:right}.banner .cd small{display:block;font-size:10px;color:var(--mut);font-weight:700;letter-spacing:.05em}
+.banner.me{background:var(--acc);color:#111;border-color:#fff}.banner.me .lbl,.banner.me .sb{color:#2b2400}
+.cd.low{color:var(--bad)}.banner.me .cd.low{color:#a10000}.cd.warn{animation:pulse .8s infinite}
+.pickbtn{display:block;width:100%;margin:8px 0 0;padding:13px;font-size:16px}
+.alertbar{background:#4b3a0b;border:1px solid #8a6d12;color:#ffe08a;border-radius:12px;padding:8px 12px;margin:6px 0;font-weight:700;font-size:14px}
+.cflict{background:#3a1717;border:1px solid #7f2d2d;color:#ffd0d0;border-radius:12px;padding:10px 12px;margin:8px 0;font-weight:700}
+.chip{text-decoration:none;display:inline-flex;align-items:center;gap:5px;padding:2px 8px 2px 2px;border-radius:99px;font-weight:700;font-size:12.5px;border:2px solid transparent;max-width:100%;white-space:nowrap}
+.chip img,.chip .nologo{width:22px;height:22px;border-radius:50%;background:#fff;object-fit:contain;padding:1px;flex:none}.chip .nologo{display:inline-block}
+.chip.big{font-size:15px;padding:3px 11px 3px 3px}.chip.big img{width:30px;height:30px}
+.chip.sm{font-size:11px;padding:1px 6px 1px 1px}.chip.sm img,.chip.sm .nologo{width:18px;height:18px}
+.bwrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--card);max-height:68vh}
+table.board{border-collapse:separate;border-spacing:0;min-width:100%}
+.board th,.board td{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:3px;text-align:center;vertical-align:middle}
+.board th{position:sticky;top:0;background:#151a25;z-index:2;font-size:11px;min-width:92px;padding:5px 3px;font-weight:800}
+.board th .av{display:flex;margin:0 auto 2px}.board th .tn{display:block;color:var(--mut);font-weight:600;font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:90px;margin:0 auto}
+.board th.me{background:#3a3211;color:var(--acc)}
+.board th.rh,.board td.rh{position:sticky;left:0;z-index:3;min-width:34px;width:34px;background:#151a25;font-size:11px;font-weight:900;color:var(--mut)}
+.board td{height:48px;min-width:92px;position:relative}.board td .pn{position:absolute;top:1px;left:3px;font-size:9px;color:var(--mut);font-weight:800}
+.board td.cur{outline:2px solid var(--acc);outline-offset:-2px;background:#2a2410}.board td.mine{background:#1f2616}
+.board td .dim{color:#3d465c;font-size:12px;font-weight:800}.board td .chip{max-width:88px;overflow:hidden}.board td .au{position:absolute;top:1px;right:3px;font-size:9px}
+.ctl{position:sticky;top:0;background:var(--bg);padding:6px 0;z-index:4}
+.sortlbl{display:block;margin:8px 2px 3px;font-size:12px;font-weight:900;letter-spacing:.04em;text-transform:uppercase;color:var(--acc)}
+.sortsel{display:block;width:100%;padding:11px 12px;font-size:16px;font-weight:800;border:2px solid var(--acc);border-radius:12px;background:var(--card);color:var(--tx)}
+.pills{display:flex;gap:6px;margin-top:6px;overflow-x:auto;padding-bottom:2px}.pills button{flex:none;white-space:nowrap;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:4px 10px;font-size:12px;font-weight:800}
+.pills button.on{background:var(--acc);color:#111;border-color:var(--acc)}
+.trow{display:flex;align-items:center;gap:8px;padding:7px 8px;background:var(--card);border:1px solid var(--line);border-radius:12px;margin:5px 0}.trow.taken{opacity:.5}.trow.go{cursor:pointer}
+.trow .tm{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px;align-items:flex-start}.trow .tm small{color:var(--mut);font-size:11px}
+.trow .rk{font-size:12px;color:var(--mut);font-weight:800;min-width:36px;text-align:center}.trow .rk small{display:block;font-size:9px;font-weight:700;color:#6f7893}
+.grp{background:var(--bg);margin:10px 0 2px;padding:3px 2px;font-weight:900;font-size:13px;color:var(--acc);display:flex;justify-content:space-between;border-bottom:1px solid var(--line)}.grp small{color:var(--mut);font-weight:700}
+.wstar{background:none;border:0;font-size:20px;line-height:1;padding:2px 4px;color:#586079}.wstar.on{color:var(--acc)}
+.qbtn{background:none;border:1px solid var(--line);border-radius:8px;font-size:11px;font-weight:900;padding:5px 6px;color:var(--mut)}.qbtn.on{color:#111;background:var(--acc);border-color:var(--acc)}
+.dr{font-size:10px;font-weight:900;color:#9fd7a8}
+#pickov{position:fixed;inset:0;background:#10131a;z-index:35;overflow:auto}#pickov .pbox{max-width:560px;margin:0 auto;padding:8px 12px calc(24px + var(--sb))}
+#pickov .phead{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:6px 2px}#pickov .phead small{display:block;color:var(--mut)}
+.opills{display:flex;gap:6px;overflow-x:auto;padding:4px 0}.opills button{flex:none;display:flex;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:4px 11px 4px 4px;font-weight:800;font-size:13px}.opills button.on{background:var(--acc);color:#111;border-color:var(--acc)}
+.qrow{display:flex;align-items:center;gap:6px;padding:5px 0;border-bottom:1px solid var(--line)}.qrow:last-child{border:0}.qn{width:22px;color:var(--acc);font-weight:900;text-align:center}
+.sw{display:flex;align-items:center;gap:10px;font-weight:800}.sw input{width:22px;height:22px;accent-color:var(--acc);flex:none}
+.mrow{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid var(--line)}.mrow:last-child{border:0}
+.mrow .nm{font-weight:800;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.mrow .tm2{color:var(--mut);font-size:12.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mrow .no{color:var(--acc);font-weight:900;width:22px;text-align:center;flex:none}
+.mrow.drag{background:#2a2410;border-radius:10px}.handle{touch-action:none;cursor:grab;color:var(--mut);font-size:20px;padding:4px 6px;user-select:none}
+.mrow.open .nm{color:var(--mut)}
+.dot{width:9px;height:9px;border-radius:50%;background:#5b6578;display:inline-block;flex:none}.dot.on{background:var(--good);box-shadow:0 0 0 2px rgba(74,222,128,.22)}
+.seg{display:flex;gap:6px;margin:6px 0}.seg button{flex:1;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px;font-weight:800}.seg button.on{background:var(--acc);color:#111;border-color:var(--acc)}
+.msg{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:7px 10px;margin:6px 0;max-width:92%}.msg.mine{margin-left:auto;background:#2a2410;border-color:#5b4a12}
+.msg .who{font-size:11px;font-weight:900;color:var(--acc);display:flex;gap:6px;align-items:center}.msg .tx{overflow-wrap:anywhere;white-space:pre-wrap}
+.msg .rx{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}.rx button{background:var(--card2);border:1px solid var(--line);border-radius:99px;padding:1px 7px;font-size:12px}.rx button.on{border-color:var(--acc);background:#3a3211}
+.chatbox{position:sticky;bottom:var(--sb);display:flex;gap:6px;background:var(--bg);padding:8px 0;z-index:4}
+.tag2{display:inline-block;font-size:10px;font-weight:900;border-radius:6px;padding:1px 6px;letter-spacing:.04em;background:var(--card2);color:var(--mut)}.tag2.value{background:#12351f;color:var(--good)}.tag2.reach{background:#3a1717;color:#ffb4b4}.tag2.auto{color:var(--acc)}
+.sheetbg{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:40;display:flex;align-items:flex-end;justify-content:center}
+.sheet{background:var(--card);border-top:3px solid var(--acc);border-radius:18px 18px 0 0;padding:16px 16px calc(16px + var(--sb));width:100%;max-width:520px;max-height:90vh;max-height:90dvh;overflow:auto}
+.fixedval{padding:11px 12px;border:1px dashed var(--line);border-radius:10px;color:var(--mut);font-size:16px}
+.sheet h2{margin:0 0 8px;font-size:20px}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(12px + var(--sb));background:#0b0e14;border:1px solid var(--acc);color:var(--tx);padding:9px 14px;border-radius:12px;z-index:60;max-width:92vw;font-weight:700;box-shadow:0 6px 24px rgba(0,0,0,.5);text-align:center;font-size:14px}
+.ov{position:fixed;inset:0;background:rgba(5,7,11,.94);z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;overflow:auto}
+.who8{display:grid;grid-template-columns:1fr 1fr;gap:8px;width:100%;max-width:420px;margin:14px 0}.who8 button{display:flex;flex-direction:column;align-items:center;gap:6px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 8px;font-weight:800;font-size:15px}
+.urlbox{font-size:12px;word-break:break-all;background:var(--card2);padding:6px 8px;border-radius:8px;margin:6px 0;user-select:all}
+.pr{display:flex;flex-wrap:wrap;align-items:center;gap:5px 6px;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px 9px;min-width:0;margin:6px 0}
+.pr .prl{font-size:12px;font-weight:800;color:var(--acc)}.pc{display:inline-flex;align-items:center;gap:5px;padding:2px 9px 2px 3px;border-radius:99px;border:1px solid var(--line);background:var(--card2);font-size:12px;font-weight:700}
+.pc.off{opacity:.7;background:transparent;border-style:dashed;color:var(--mut)}.pc.me{border-color:var(--acc)}
+#buildtag{font-size:11px;color:var(--mut);margin:14px 0 0;display:flex;gap:8px;align-items:center;flex-wrap:wrap}#buildtag b{color:var(--acc)}
+#buildtag a{display:inline-flex;align-items:center;box-sizing:border-box;min-height:44px;min-width:44px;padding:0 8px}
+#wheelov{position:fixed;inset:0;background:rgba(8,10,16,.9);z-index:45;display:flex;align-items:flex-start;justify-content:center;overflow:auto;padding:10px}
+.wbox{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--acc);border-radius:18px;padding:12px;width:100%;max-width:420px}.wbox h2{margin:0 0 4px;font-size:19px}
+.wheelwrap{position:relative;width:min(100%,300px);margin:6px auto}.wheelwrap svg{width:100%;height:auto;display:block;overflow:visible}
+.wptr{position:absolute;left:50%;top:-8px;transform:translateX(-50%);width:0;height:0;border-left:11px solid transparent;border-right:11px solid transparent;border-top:22px solid var(--acc);z-index:2}
+.wslots{display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;margin:8px 0}.wslot{display:flex;gap:6px;align-items:center;background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:5px 8px;font-size:13px;font-weight:700;min-width:0}
+.wslot b{color:var(--acc);min-width:18px}.wslot.next{border-color:var(--acc)}.wslot.empty{color:var(--mut);font-weight:600}.wslot span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.wwin{text-align:center;font-weight:900;font-size:16px;min-height:24px;color:var(--acc)}
+.rost{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+@media(min-width:900px){body.room .wrap{max-width:1100px}.board td,.board th{min-width:104px}.bwrap{max-height:72vh}}
+.landing{padding-top:22px;text-align:left}.landing h1{font-size:25px;line-height:1.15;margin:6px 0 8px}.landing .ball{font-size:38px}.landing .btn.block{padding:14px;font-size:17px;margin:14px 0 4px}
+.toprow{display:flex;gap:6px;align-items:center;flex-wrap:wrap;max-width:1100px;margin:0 auto;padding:0 max(14px,env(safe-area-inset-right)) 6px max(14px,env(safe-area-inset-left))}
+.toast{pointer-events:none}
+/* ---- league site (Stage 2) ---- */
+.strow{padding:0;overflow:hidden}.strow summary{display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer;list-style:none}.strow summary::-webkit-details-marker{display:none}
+.strow summary .grow{display:flex;flex-direction:column;line-height:1.25}.strow .nm{font-size:16px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.strow .tn{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.place{width:26px;text-align:center;font-weight:900;font-size:18px;color:var(--mut);flex:none}.place small{font-size:11px}.place.first{color:var(--acc)}
+.score{text-align:right;flex:none;min-width:48px;display:flex;flex-direction:column;line-height:1.1}.score b{font-size:24px}.score small{font-size:11px;color:var(--mut);font-weight:700}
+.strow[open] summary{border-bottom:1px solid var(--line);background:var(--card2)}
+.strow .det{padding:8px 12px 10px}.tl{display:flex;align-items:center;gap:8px;padding:3px 0}.tl2{padding:4px 0;border-top:1px solid var(--line)}.tl2:first-child{border-top:0}.evs{margin-top:1px}
+.up{padding:5px 0;border-top:1px solid var(--line);display:flex;flex-wrap:wrap;gap:5px;align-items:center}.up:first-of-type{border-top:0}
+.seedtag{background:var(--acc);color:#111;border-radius:6px;padding:0 6px;font-size:11px;font-weight:900}
+.tcard .schools{margin-top:10px}.school{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:5px 0;border-top:1px solid var(--line)}.school:first-child{border-top:0}.school .rec{min-width:34px}.school .stt{color:var(--mut);margin-left:auto;text-align:right}
+.dayh{font-size:12px;font-weight:900;color:var(--mut);text-transform:uppercase;letter-spacing:.04em;margin:14px 2px 2px}
+.game{padding:8px 12px;margin:6px 0}.game .gt{margin-bottom:2px}.gs{display:flex;align-items:center;gap:7px;padding:2px 0}.gs .sd{width:18px;text-align:center;font-size:11px;font-weight:800;color:var(--mut)}.gs .own{color:var(--mut)}
+.gs .sc{margin-left:auto;font-weight:700;font-size:17px;color:var(--mut);min-width:28px;text-align:right}.gs.w .sc{color:var(--tx);font-weight:900}
+.upb{background:var(--warn);color:#111;border-radius:5px;padding:0 5px;font-size:10px;font-weight:900;text-transform:uppercase}
+.gfil{margin:4px 0 2px;flex-wrap:nowrap}.gfil select{flex:1;min-width:0;width:100%}
+
+@media(min-width:900px){#lapp{max-width:960px}.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 14px;align-items:start}.dsplit{display:grid;grid-template-columns:1fr 1fr;gap:0 14px;align-items:start}}
+.demobar{background:var(--acc);color:#111;font-weight:700;font-size:14px;padding:8px 12px;text-align:center;position:sticky;top:0;z-index:20}
+.demobar a{color:#111;text-decoration:underline;margin-left:6px}
+.board th .tn{white-space:normal;line-height:1.15;max-height:2.3em;overflow:hidden;max-width:100px}
+@media(min-width:1200px){body.room .wrap{max-width:1400px}.board td,.board th{min-width:100px}}
+
+/* help page */
+.steps{margin:0;padding-left:20px}.steps li{margin:5px 0;line-height:1.4}ul.steps{list-style:disc}#helppage h2{font-size:21px;color:var(--acc);margin-bottom:0}#helpjump{margin:12px 0 0}#helppage .card h3{color:var(--tx)}html{scroll-padding-top:12px}html:has(#helppage){scroll-behavior:smooth}
+
+/* touch devices: tap targets of at least 44 px (iOS / Android guidance) and no double-tap zoom delay */
+html{touch-action:manipulation}
+@media (pointer:coarse),(max-width:700px){
+  a.url{min-height:44px;display:flex;align-items:center}
+ .btn,.btn.sm,button.btn{min-height:44px}
+ .btn.sm{min-width:44px;display:inline-flex;align-items:center;justify-content:center}
+ .seg button,.opills button,.pills button,.chipb,.sumrow .ed,.qbtn,.wstar,button[data-a=ropen],button[data-a=emoji],button[data-a=om]{min-height:44px;min-width:44px}
+ .pills button,.opills button{display:inline-flex;align-items:center}
+ .sw{min-height:44px}
+ .rx button,.msg .rx button{min-height:44px;min-width:44px}
+ .handle{display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px}
+ .link{min-height:44px;min-width:44px;padding:0 10px}
+ input[type=range]{min-height:44px;margin:0}
+ .top .brand{display:flex;flex-direction:column;justify-content:center;min-height:44px}
+ #buildtag a{display:inline-flex;align-items:center;box-sizing:border-box;min-height:44px;min-width:44px;padding:0 8px}
+ #leaguehome2,.demobar a{display:inline-block;padding:12px 8px}
+ .demobar a{margin:-12px 0 -12px 4px}
+}
+a,button,input,select,textarea,label,summary,[data-a]{touch-action:manipulation}
+/* WebKit (iPhone/iPad) draws a native white select that hides the light text: use our own dark select with a chevron; dark native pickers */
+:root{color-scheme:dark}
+select,select.sortsel{-webkit-appearance:none;appearance:none;background-color:var(--card2);color:var(--tx);padding-right:36px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='9' viewBox='0 0 14 9'%3E%3Cpath d='M1 1l6 6 6-6' fill='none' stroke='%239aa6bd' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center}
+select.sortsel{background-color:var(--card)}
+select option{background:var(--card);color:var(--tx)}
+/* toast: 12px above the bottom edge; above the sticky League site button while that button is showing (it is hidden at >=900px wide and on short landscape phones) */
+body.hasstick .toast{bottom:calc(72px + var(--sb))}
+@media (min-width:900px){body.hasstick .toast{bottom:calc(12px + var(--sb))}}
+@media (max-height:500px){body.hasstick .toast{bottom:calc(12px + var(--sb))}}
+/* a toast must not sit on top of an open dialog */
+body:has(.sheetbg) .toast,body:has(#pickov) .toast{bottom:auto;top:calc(12px + env(safe-area-inset-top))}
+
+/* redraft: slots of owners who dropped nothing */
+.board td.skip{opacity:.4;background:transparent}
+.board td.skip .pn{opacity:.6}
+
+/* league-site links */
+a.pill{color:var(--acc);text-decoration:none}.pill.dis{opacity:.55}
+.banner.finalbn{flex-wrap:wrap}.endbtns{width:100%}
+@media (pointer:coarse),(max-width:700px){a.pill{min-height:44px}}
+
+/* recap: rosters side by side (swipe on a phone, grid on a desktop) */
+.rosgrid{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:6px;-webkit-overflow-scrolling:touch}
+.rosgrid .roster{flex:0 0 min(86%,300px);scroll-snap-align:start;margin:0}
+@media (min-width:900px){.rosgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));overflow:visible}.rosgrid .roster{flex:none}}
+.strength{margin-top:6px}
+.sitebtns{margin:8px 0}.sitebtns .btn{min-height:44px;display:flex;align-items:center;justify-content:center;text-align:center}.sitebtns .btn.cur{border-color:var(--acc);color:var(--acc)}
+.endbig{display:flex;min-height:56px;align-items:center;justify-content:center;font-size:18px;text-align:center}
+.nextlist{margin:6px 0 0;padding-left:20px;line-height:1.5}
+.hl{display:flex;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--line)}
+
+/* ===== League site (league.html): same family as the reference site: banner, big yellow title, one-row tab bar, rank cards, chat bar ===== */
+body.lsite .wrap{max-width:1000px;padding:0 0 100px}
+.lhdr{position:relative;margin:0 0 4px}
+.hero{aspect-ratio:1280/420;background:linear-gradient(135deg,#17224a 0%,#2b2a4a 55%,#6b4220 100%) center 40%/cover no-repeat;border-radius:0 0 18px 18px;overflow:hidden;min-height:96px}
+@media (max-width:640px){.hero{aspect-ratio:16/10;background-position:50% 30%}}
+.hero.herofail{background-image:linear-gradient(135deg,#17224a 0%,#2b2a4a 55%,#6b4220 100%)!important}
+.heroctl{position:absolute;top:10px;right:10px;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end;z-index:2}
+.heroctl .btn{background:rgba(16,19,26,.82);backdrop-filter:blur(4px);min-height:44px}
+.titlebar{padding:12px 14px 4px}
+.titlebar .lab{letter-spacing:.1em;font-weight:900;color:var(--acc);font-size:11px}
+.titlebar h1{color:var(--acc);margin:2px 0 4px;font-size:clamp(34px,9vw,56px);letter-spacing:.03em;font-weight:900;line-height:1;overflow-wrap:anywhere}
+.lnav{position:sticky;top:var(--demoh,0px);z-index:5;background:var(--bg);border-bottom:1px solid var(--line);padding:6px 4px;display:flex;flex-wrap:nowrap;gap:2px;overflow:hidden;margin:8px 0 0}
+.lnav button,.lnav a.nd{position:relative;flex:1 1 0;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--card);color:var(--tx);border:1px solid var(--line);border-radius:9px;padding:4px 0;min-height:46px;font:inherit;font-size:10px;font-weight:800;letter-spacing:-.01em;line-height:1.05;white-space:nowrap;cursor:pointer;text-decoration:none}
+.lnav a.nd{border-style:dashed;border-color:var(--acc)}
+.lnav .ni{font-size:17px;line-height:1}.lnav .nl{display:block;max-width:100%;overflow:hidden}.lnav .nl.f{display:none}
+.lnav button.on{background:var(--acc);color:#111;border-color:var(--acc)}
+.lnav button:focus-visible,.lnav a.nd:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+@media (max-width:370px){.lnav{padding:6px 2px;gap:1px}.lnav button,.lnav a.nd{font-size:8.8px;letter-spacing:-.025em}}
+@media (min-width:600px) and (max-width:1039px){.lnav button,.lnav a.nd{font-size:11.5px}.lnav .ni{font-size:19px}}
+@media (min-width:1040px){.lnav{padding:8px;gap:4px}.lnav button,.lnav a.nd{flex:1 1 auto;flex-direction:row;gap:5px;border-radius:99px;padding:8px 10px;min-height:44px;font-size:13px;letter-spacing:0}.lnav .ni{font-size:14px}.lnav .nl.f{display:block}.lnav .nl.s{display:none}}
+#lmain{padding:12px 10px 20px}
+body.lsite .card{border-radius:14px}
+body.lsite .seg{max-width:440px}
+/* rank cards */
+.card.oc{padding:12px}.card.oc>summary{list-style:none;cursor:pointer}.card.oc>summary::-webkit-details-marker{display:none}
+.card.oc summary.lb{display:grid;grid-template-columns:46px minmax(0,1fr) auto;grid-template-areas:"rank who pts" "bar bar bar" "chips chips chips";column-gap:10px;align-items:center}
+.card.oc .rank{grid-area:rank;font-size:26px;font-weight:900;text-align:center;color:var(--acc)}.card.oc .place small{font-size:13px}
+.card.oc .who{grid-area:who;display:flex;gap:8px;align-items:center;min-width:0}.card.oc .wn{min-width:0;display:flex;flex-direction:column}
+.card.oc .wn b{font-size:17px}.card.oc .wn small{color:var(--mut);display:block}
+.card.oc .pts{grid-area:pts;font-size:28px;font-weight:900;text-align:right}.card.oc .pts small{display:block;font-size:11px;color:var(--mut);font-weight:600}
+.card.oc .bar{grid-area:bar;display:block;height:6px;background:var(--card2);border-radius:9px;margin-top:8px;overflow:hidden}.card.oc .bar i{display:block;height:100%;background:var(--acc)}
+.card.oc .chips{grid-area:chips;display:grid;grid-template-columns:repeat(auto-fill,minmax(112px,1fr));gap:6px 4px;margin-top:8px}
+.card.oc .cc{display:flex;flex-direction:column;align-items:flex-start;min-width:0}.card.oc .cc .chip{max-width:100%}.card.oc .cc .cr{font-size:11px;color:var(--mut);margin:1px 0 0 6px;font-variant-numeric:tabular-nums}
+.card.oc[open] summary{margin-bottom:6px}
+@media (min-width:700px){.card.oc summary.lb{grid-template-columns:56px 210px 70px minmax(0,1fr);grid-template-areas:"rank who pts chips" "bar bar bar bar";column-gap:12px}.card.oc .chips{margin-top:0}}
+.dayh{margin:16px 2px 4px;font-weight:800;color:var(--acc)}
+/* chat bar */
+.chatbar{position:fixed;left:50%;transform:translateX(-50%);bottom:max(8px,env(safe-area-inset-bottom));width:min(980px,calc(100% - 20px));z-index:6;display:grid;grid-template-columns:auto minmax(0,1fr) auto;grid-template-areas:"cl cp cb" "cm cm cb";gap:0 10px;align-items:center;min-height:52px;padding:6px 12px;background:#2a2410;border:1.5px solid var(--acc);border-radius:14px;color:var(--tx);text-decoration:none;box-shadow:0 6px 24px rgba(0,0,0,.45)}
+.chatbar .cl{grid-area:cl;font-size:11px;color:var(--mut);font-weight:800}.chatbar .cp{grid-area:cp;font-size:12px;color:var(--mut);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.chatbar .cm{grid-area:cm;font-weight:800;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.chatbar .cb{grid-area:cb;min-width:30px;height:30px;border-radius:50%;background:#e8365d;color:#fff;font-weight:900;display:flex;align-items:center;justify-content:center;font-size:13px}.chatbar .cb[hidden]{display:none}
+/* end-of-draft: League site is the biggest action; See my team is a large secondary; Draft recap is small */
+.banner.finalbn .endbig{width:100%;min-height:64px;font-size:20px;font-weight:900;margin:0 0 8px}
+.banner.finalbn .endsec{display:flex;align-items:center;justify-content:center;width:100%;min-height:52px;font-size:17px;font-weight:800;margin-top:8px}
+.endsmall{width:100%;display:flex;justify-content:center;margin-top:8px}.endsmall .btn{min-height:44px}
+.stickysite{position:fixed;left:max(12px,env(safe-area-inset-left));right:max(12px,env(safe-area-inset-right));bottom:calc(10px + var(--sb));z-index:19;min-height:50px;display:flex;align-items:center;justify-content:center;font-size:17px;font-weight:900;text-align:center;text-decoration:none;box-shadow:0 6px 22px rgba(0,0,0,.5)}
+.stickysite[hidden]{display:none}
+.stickysite.rc{bottom:calc(10px + var(--sb))}
+body.hasstick .wrap{padding-bottom:96px}body.hasstick.recapp .wrap{padding-bottom:90px}
+@media (min-width:900px){.stickysite{display:none}body.hasstick .wrap{padding-bottom:40px}}
+.card.oc .chips{grid-template-columns:repeat(auto-fill,minmax(100px,1fr))!important}
+.card.oc .cc .chip{overflow:hidden;text-overflow:ellipsis}
+
+.wrap .ctl{top:var(--tabh,0px)}
+@media (min-width:700px){.card.oc .chips{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:8px 8px}.card.oc summary.lb{align-items:center}}
+.card.oc summary.lb{align-content:start}
+.sitebtns{flex-wrap:nowrap;width:100%}.sitebtns .btn{flex:1 1 0;white-space:nowrap;min-width:0}
+/* recap: exports are small, low-key text links at the very bottom (below rosters and highlights) */
+.exportrow{display:flex;gap:6px;justify-content:center;align-items:center;flex-wrap:wrap;margin:18px 0 10px;font-size:13px}
+.lnkbtn{background:none;border:0;color:var(--mut);text-decoration:underline;font:inherit;font-size:13px;min-height:44px;padding:0 12px;cursor:pointer}
+.lnkbtn:hover,.lnkbtn:focus-visible{color:var(--acc)}
+body.hasstick.recapp .exportrow{margin-bottom:70px}
+
+/* chat tab: the page is a column, the message box is pinned to the bottom of the screen even with few messages */
+body[data-tab=chat] .wrap{display:flex;flex-direction:column;min-height:calc(100vh - var(--tabh));min-height:calc(100dvh - var(--tabh));padding-bottom:0}
+body[data-tab=chat] #view{flex:1;display:flex;flex-direction:column}
+body[data-tab=chat] #chatbody{flex:1}
+body[data-tab=chat] .chatbox{margin-top:auto;position:sticky;bottom:0;padding-bottom:calc(8px + var(--sb))}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+/* reduced motion: no pulses, no progress or other transitions */
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.pill.live i,.cd.warn{animation:none!important}.prog .bar i{transition:none!important}html:has(#helppage){scroll-behavior:auto}}
+/* short landscape phones: the sticky League site button would cover the board; the End-of-draft banner still has the League site button */
+@media (max-height:500px){.stickysite{display:none}body.hasstick .wrap{padding-bottom:40px}}
+
+/* ---- Teams tab, compact rows (44 px) + grid on wide screens + sticky sort/filter header ---- */
+.ctl{display:grid;grid-template-columns:minmax(0,1fr);gap:4px;padding:6px 0 6px;box-shadow:0 6px 8px -6px rgba(0,0,0,.7)}
+.ctl input[type=search]{min-height:44px;padding:8px 12px}
+.ctl .sortlbl,.ctl select.sortsel{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);border:0;white-space:nowrap}
+.ctl .pills{margin-top:0;padding-bottom:0;gap:6px;scrollbar-width:none}.ctl .pills::-webkit-scrollbar{display:none}
+.ctl .pills button{min-height:44px;min-width:44px;padding:0 14px;font-size:15px;font-weight:800;display:inline-flex;align-items:center;color:#d5dcec}
+.ctl .pills button.on{color:#111}
+.ctl .srt button{font-size:15px}
+.ctl .ffil{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}.ctl .ffil::-webkit-scrollbar{display:none}.ctl .ffil .pills{display:contents}
+.ctl .cfs button{background:var(--card2)}.ctl .cfs button.on{background:var(--acc)}
+.tnote{font-size:14px;color:#d5dcec;margin:6px 2px 2px}.tnote b{color:var(--tx)}.tnote2{font-size:13px;color:var(--mut);margin:0 2px 6px}
+.tgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:4px;margin:4px 0}
+.trow{box-sizing:border-box;min-height:44px;margin:0;padding:0 4px 0 0;gap:2px;border:0;box-shadow:inset 0 0 0 1px var(--line);border-radius:12px;overflow:hidden}
+.trow .wstar{flex:none;width:44px;height:44px;min-width:44px;min-height:44px;padding:0;font-size:24px;color:#8b95ad;display:inline-flex;align-items:center;justify-content:center}.trow .wstar.on{color:var(--acc)}
+.trow .rkb{flex:none;min-width:30px;text-align:center;font-size:15px;font-weight:900;color:var(--acc);font-variant-numeric:tabular-nums}
+/* s26c14: two ranks per row, stacked: S = STOOPID rank, P = Power rank (KenPom) */
+.trow .rkb.rk2{display:flex;flex-direction:column;align-items:stretch;gap:1px;min-width:44px;font-size:12px;line-height:1.15;text-align:right}
+.trow .rk2 b{display:block;white-space:nowrap}.trow .rk2 small{font-size:9px;font-weight:700;opacity:.7;margin-right:2px}
+.trow .rk2 .rko{color:var(--mut,#9aa4b2);font-weight:800}
+.trow .tm{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:1px;align-items:flex-start;justify-content:center;padding:0 2px}
+.trow .tm .chip{font-size:16px;font-weight:800;padding:0 8px 0 2px;max-width:100%;min-width:0;overflow:hidden;line-height:1.15}
+.trow .tm .chip img,.trow .tm .chip .nologo{width:24px;height:24px}
+.trow .tm .chip .cl{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.trow .tm small.cf{display:block;max-width:100%;font-size:12.5px;line-height:1.1;color:#c3cde0;font-weight:700;padding-left:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.trow .tm small.cf .dr{font-size:12.5px;color:#9fe0aa}
+.trow .tr{flex:none;display:flex;flex-direction:column;align-items:flex-end;justify-content:center;padding:0 2px;font-variant-numeric:tabular-nums}
+.trow .tr .rec{font-size:17px;line-height:1.1;font-weight:900;color:var(--tx)}.trow .tr small{font-size:11.5px;line-height:1.1;font-weight:700;color:#aeb9d0}
+.trow .qbtn{flex:none;box-sizing:border-box;width:44px;height:44px;min-width:44px;min-height:44px;padding:0;border:6px solid transparent;background:var(--card2);background-clip:padding-box;box-shadow:inset 0 0 0 1px var(--line);border-radius:14px;font-size:14px;color:#d5dcec;display:inline-flex;align-items:center;justify-content:center}
+.trow .qbtn.on{background:var(--acc);color:#111;box-shadow:none}
+.trow .btn.pri.sm{flex:none;box-sizing:border-box;width:46px;min-height:44px;min-width:44px;padding:0;border:4px solid transparent;background-clip:padding-box;font-size:13px;font-weight:900;border-radius:14px}
+@media (min-width:700px){
+ .ctl{grid-template-columns:minmax(0,1fr) auto;grid-template-areas:"q tgl" "srt srt" "cfs cfs"}
+ .ctl input[type=search]{grid-area:q}.ctl .srt{grid-area:srt}
+ .ctl .ffil{display:contents}.ctl .ffil .pills{display:flex}.ctl .cfs::-webkit-scrollbar{display:block;height:6px}
+ .ctl .tgl{grid-area:tgl;justify-content:flex-end}.ctl .cfs{grid-area:cfs;flex-wrap:nowrap;overflow-x:auto;scrollbar-width:thin;padding-bottom:4px}
+ #tlist .tgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:4px 8px}
+}
+@media (min-width:1040px){
+ .ctl{grid-template-columns:300px auto minmax(0,1fr);grid-template-areas:"q srt tgl" "cfs cfs cfs"}
+ #tlist .tgrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
+@media (prefers-reduced-motion:reduce){.ctl .ffil,.ctl .pills{scroll-behavior:auto}}
+
+/* ---- Teams tab: banner, "Pick a team" button and Online card collapse into compact one-line rows so the list starts higher ---- */
+body[data-tab=teams] #banner:has(#oncard){display:flex;flex-wrap:wrap;align-items:center;gap:0 8px}
+body[data-tab=teams] #oncard{flex:1 1 0;min-width:0;box-sizing:border-box;min-height:44px;margin:4px 0;padding:3px 10px;gap:8px;border-radius:12px}
+body[data-tab=teams] #oncard .av,body[data-tab=teams] #oncard .lbl{display:none}
+body[data-tab=teams] #oncard .nm{font-size:15px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body[data-tab=teams] #oncard .sb{font-size:12px;margin-top:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+body[data-tab=teams] #oncard .cd{font-size:20px;line-height:1.05}body[data-tab=teams] #oncard .cd small{font-size:9px}
+body[data-tab=teams] #banner .pickbtn{flex:none;width:auto;box-sizing:border-box;min-height:44px;min-width:44px;margin:4px 0;padding:0 14px;font-size:15px}
+body[data-tab=teams] #banner .note,body[data-tab=teams] #banner .cflict{flex:1 1 100%;margin:4px 0}
+body[data-tab=teams] #presence .pr{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin:2px 0;padding:3px 8px;min-height:30px;gap:5px}
+body[data-tab=teams] #presence .pr::-webkit-scrollbar{display:none}
+body[data-tab=teams] #presence .pc{flex:none;white-space:nowrap;padding:1px 8px 1px 2px}
+body[data-tab=teams] #presence .pr .prl{flex:none}
+
+/* ---- school links (ESPN team pages): U.teamLink / U.teamChip ---- */
+a.tlink{color:inherit;text-decoration:none;-webkit-tap-highlight-color:rgba(255,210,63,.25)}
+a.tlink:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:12px}
+a.tlink:hover .chip{filter:brightness(1.12)}
+a.tlink:not(.tm):not(.tl):not(.bcl){display:inline-flex;align-items:center;min-height:44px;max-width:100%;box-sizing:border-box}
+a.tlink.bcl{display:flex;align-items:center;justify-content:center;width:100%;min-height:44px;box-sizing:border-box}
+.board td a.tlink.bcl .chip{max-width:88px;overflow:hidden}
+a.tlink.tm{text-decoration:none}
+.trow a.tm{display:flex;min-height:44px;box-sizing:border-box}
+.trow a.tm .chip{pointer-events:none}
+a.tl{display:inline-block;padding:12px 2px;margin:-12px 0;text-decoration:underline dotted;text-underline-offset:3px;color:inherit;font-weight:700}
+.row.nw a.tlink{min-width:0}
+.hl a.tlink{min-height:44px}
+
+/* ---- Draft recap page (recap.html / js/recap.js) ---- */
+.rsec{margin:14px 0}.rsec>h2{font-size:19px;margin:0 0 6px}.rcnote{margin:0 2px 8px}
+.rccount{font-size:16px;margin:2px 0 8px}.rccount b{color:var(--acc);font-size:20px}
+.rcempty{margin:0}
+.rcmine{margin:6px 0;padding:14px}.rcgrow{display:flex;gap:12px;align-items:center}
+.rcgrade{flex:none;min-width:72px;height:72px;padding:0 8px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:38px;font-weight:900;color:#111;letter-spacing:-.02em;box-sizing:border-box}
+.rcgrade.g-Ap{background:#4ade80}.rcgrade.g-A{background:#86efac}.rcgrade.g-B{background:#ffd23f}.rcgrade.g-C{background:#fb923c}.rcgrade.g-D{background:#f87171}
+.rcsum{font-size:15px;line-height:1.5;margin:12px 0}
+.deepbtn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;width:100%;box-sizing:border-box}
+.rcdeep{margin-top:12px}.rcdeep p{margin:0 0 10px;font-size:15px;line-height:1.55;color:#dfe5f1}
+.rdgrp{margin:0 0 10px}
+.rdh{position:sticky;top:0;z-index:3;margin:0;padding:6px 10px;background:#151a25;border:1px solid var(--line);border-radius:10px 10px 0 0;font-size:14px;color:var(--acc)}.rdh small{color:var(--mut);font-weight:600}
+.dolist,.ordlist{list-style:none;margin:0;padding:0}
+.dolist{display:grid;grid-template-columns:minmax(0,1fr);border:1px solid var(--line);border-top:0;border-radius:0 0 10px 10px;overflow:hidden}
+.dorow{display:flex;align-items:center;gap:8px;min-height:44px;padding:0 10px;border-top:1px solid var(--line);background:var(--card);box-sizing:border-box}.dorow:first-child{border-top:0}
+.dorow.mine,.orow.mine,.ordlist li.mine{background:#1f2616;box-shadow:inset 3px 0 0 var(--acc)}.dorow.skip{opacity:.5}
+.dn{flex:none;min-width:34px;color:var(--acc);font-weight:900;font-variant-numeric:tabular-nums}
+.dm{flex:1 1 0;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.dm small{display:block;color:var(--mut);font-size:12px}
+.dc{flex:none;max-width:58%;min-width:0;display:flex;justify-content:flex-end}.dc .chip{max-width:100%;overflow:hidden}
+.ordlist{display:grid;grid-template-columns:minmax(0,1fr);gap:4px}.ordlist li{display:flex;align-items:center;gap:8px;min-height:44px;padding:0 10px;background:var(--card);border:1px solid var(--line);border-radius:10px}
+.hlcols{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}.hlcol h3{margin:0 0 2px;font-size:15px}
+.orows{display:grid;grid-template-columns:minmax(0,1fr);gap:6px}
+.orow{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 10px}
+.orow .on b{display:block}.orow .on small{display:block;color:var(--mut);font-size:12px}
+.orow .os{display:flex;flex-wrap:wrap;gap:2px 12px;font-size:13px;color:#c3cde0;margin-top:4px}.orow .os b{color:var(--tx)}
+.orow .ol{margin-top:2px;font-size:13px}
+.cch{display:flex;flex-wrap:wrap;gap:4px 6px;margin-top:4px}.cc2{font-size:13px;padding:2px 9px;border-radius:99px;background:var(--card2);border:1px solid var(--line)}.cc2 b{color:var(--acc)}.cheavy{margin-top:3px}
+.tstats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:0 0 8px}.tstat{margin:0;padding:10px}.tstat b{display:block;font-size:20px}.tstat small{color:var(--mut)}
+.awgrid{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;margin-bottom:6px}.aw{margin:0}.awt{font-weight:900;color:var(--acc);font-size:16px}.awv{margin-top:6px;font-weight:700}
+.rcbig{margin-top:22px}.rcbig .endbig{width:100%;min-height:72px;font-size:22px;font-weight:900}.rcline{text-align:center;margin:8px 4px 0;font-size:15px;color:#d5dcec}
+.rcfoot{border-top:1px solid var(--line);padding-top:12px;margin-top:22px}.rcfoot .exportrow{margin:10px 0 0;justify-content:flex-start}
+@media (min-width:700px){
+ .dolist{grid-template-columns:repeat(2,minmax(0,1fr))}.dolist .dorow:nth-child(2){border-top:0}.dolist .dorow:nth-child(even){border-left:1px solid var(--line)}
+ .ordlist{grid-template-columns:repeat(4,minmax(0,1fr))}.hlcols{grid-template-columns:1fr 1fr;gap:16px}
+ .orows{grid-template-columns:repeat(2,minmax(0,1fr))}.awgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .deepbtn{width:auto;min-width:200px}.rcbig .endbig{max-width:640px;margin:0 auto}
+}
+@media (min-width:1040px){.orows{grid-template-columns:repeat(2,minmax(0,1fr))}.awgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.recapp .dc a.tlink{min-height:44px}
+@media (min-width:900px){body.recapp .wrap{max-width:1100px}}
+.rcbig .endbig{display:flex;align-items:center;justify-content:center}
+#rc_room,#rcshare{min-height:44px;min-width:44px;display:inline-flex;align-items:center;justify-content:center}
+/* redraft page: a very long one-word name wraps instead of widening the page (QA L7) */
+#rapp{overflow-wrap:anywhere}#rapp .grow,#rapp .row>*{min-width:0}
+/* s24: Pick stuck banner (draft server not answering for a pick slot) */
+.stuckbar{border-color:#c0392b;background:#3a1a14;color:#ffd9d2;font-size:14px;line-height:1.35;font-weight:600}.stuckbar b{color:#fff}
+.stuckbar .row{display:flex;gap:8px;flex-wrap:wrap}.stuckbar .btn.sm{min-height:44px;min-width:44px;padding:0 14px;font-size:15px}
+
+/* s23: error-state links and the Redraft drop list teams are real tap targets (>= 44 px) */
+#nf a:not(.btn){display:inline-flex;align-items:center;min-height:44px;min-width:44px;box-sizing:border-box}
+#rdowner label a.tlink,#rdowner label a.tlink.tl{display:inline-flex;align-items:center;min-height:44px;box-sizing:border-box}
+a.btn{min-height:44px}
+
+/* ---- s23: Teams tab filter chips wrap (no sideways scroll). Search, then ONE wrapping flow: sort chips + Hide drafted / Starred / Queue + "Conference: X ▾".
+   The conference list (32 chips) opens as a panel under the sticky header that wraps and scrolls up/down only, so the header stays about 3 chip rows tall. ---- */
+.ctl{overflow:visible}
+.ctl .cwrap{display:flex;flex-wrap:wrap;gap:2px 6px;align-items:center}
+.ctl .cwrap .pills{display:contents}
+.ctl .pills button{padding:0 11px;font-size:14px;white-space:nowrap}
+.ctl .srt button{font-size:14px}
+.ctl .cfs{position:absolute;left:0;right:0;top:100%;z-index:6;display:flex;flex-wrap:wrap;gap:6px;box-sizing:border-box;max-height:min(58vh,440px);overflow-x:hidden;overflow-y:auto;padding:8px;background:var(--card);border:1px solid var(--line);border-radius:0 0 14px 14px;box-shadow:0 12px 24px -8px rgba(0,0,0,.8);overscroll-behavior:contain}
+.ctl .cfs[hidden]{display:none}
+.ctl .cfs button{flex:none;min-height:44px;min-width:44px;padding:0 12px;font-size:14px;font-weight:800;white-space:nowrap;border:1px solid var(--line);border-radius:99px;background:var(--card2);color:#d5dcec;display:inline-flex;align-items:center}
+.ctl .cfs button.on{background:var(--acc);color:#111;border-color:var(--acc)}
+@media (min-width:700px){
+ .ctl .pills button{font-size:15px;padding:0 14px}.ctl .srt button{font-size:15px}
+ .ctl{grid-template-columns:minmax(0,1fr);grid-template-areas:none}
+ .ctl input[type=search],.ctl .cwrap{grid-area:auto}
+}
+@media (min-width:1040px){
+ .ctl{grid-template-columns:320px minmax(0,1fr);align-items:start}
+}
+@media (max-width:360px){.ctl .cwrap{column-gap:4px}.ctl .pills button{padding:0 8px;font-size:13.5px}.ctl .srt button{font-size:13.5px}}
+
+/* ---- s23: end of draft. Room: one compact card with three equal buttons. Recap: full-screen confetti banner, League grades list, What's next ---- */
+.banner.finalbn{display:block}
+.banner.finalbn .lbl{font-size:12px;letter-spacing:.06em}
+.endbtns3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:10px;width:100%}
+.endbtns3 .btn{min-height:48px;display:flex;align-items:center;justify-content:center;text-align:center;padding:4px 6px;font-size:15px;font-weight:800;line-height:1.15}
+/* s25: compact end card (~25% of the viewport at 390px) so the tabs below show without scrolling */
+.rchero{position:relative;overflow:hidden;min-height:0;max-height:none;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:4px;padding:12px 14px;margin:0 0 16px;border-radius:18px;background:radial-gradient(circle at 50% 30%,#2a2f45,#10131a 70%);border:1px solid var(--line)}
+.rchero .rcemo{font-size:24px;line-height:1}
+.rchero .rclbl{font-weight:900;letter-spacing:.08em;color:var(--acc);font-size:12px}
+.rchero .rcmsg{font-size:clamp(17px,4.6vw,24px);line-height:1.2;margin:0;max-width:760px}
+.rchero .rcdown{min-height:44px;display:inline-flex;align-items:center;margin-top:4px;padding:0 18px}
+.confetti{position:absolute;inset:0;pointer-events:none}
+.confetti i{position:absolute;top:-20px;width:9px;height:15px;border-radius:2px;opacity:.9;animation:cfall 4.2s linear infinite}
+@keyframes cfall{0%{transform:translateY(-20px) rotate(0)}100%{transform:translateY(105svh) rotate(540deg)}}
+@media (prefers-reduced-motion:reduce){.confetti{display:none}}
+.rcrank{font-size:17px;margin:8px 0 2px}.rcrank b{color:var(--acc)}
+.rcchips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.rcjump{margin-top:10px}.rcjump .btn{min-height:44px;display:flex;align-items:center;justify-content:center}
+.grlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.grli{border:1px solid var(--line);border-radius:12px;background:var(--card);overflow:hidden}
+.grli.mine{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc) inset}
+.grrow{all:unset;box-sizing:border-box;display:grid;grid-template-columns:38px 46px minmax(0,1fr) auto 18px;align-items:center;gap:8px;width:100%;min-height:56px;padding:6px 10px;cursor:pointer}
+.grrow:focus-visible{outline:2px solid var(--acc);outline-offset:-2px}
+.grk{font-weight:900;color:#c7cede}
+.grrow .rcgrade.sm{min-width:0;padding:0;border-radius:10px;width:40px;height:40px;font-size:18px;display:flex;align-items:center;justify-content:center}
+.grt{min-width:0}.grt b,.grt small{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.grt small{color:#9aa3b5}
+.grb{font-size:13px;text-align:right;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.grb small{display:block;font-size:11px}
+.grc{transition:transform .2s}.grli.open .grc{transform:rotate(180deg)}
+.grdet{padding:2px 12px 12px}.grpicks{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0}
+.rcnext{display:grid;gap:10px}
+.rcshare{margin-top:12px}.rcshare .btn{min-height:48px}
+.rcmore{margin-top:12px}.rcmore summary{min-height:44px;display:flex;align-items:center;cursor:pointer;font-weight:800}
+.rcmore a{word-break:break-all}
+@media (min-width:700px){.rcnext{grid-template-columns:1fr 1fr}.grb{max-width:200px}}
+@media (max-width:360px){.grrow{grid-template-columns:32px 42px minmax(0,1fr) 16px}.grb{display:none}.endbtns3 .btn{font-size:14px}}
+.grpicks a,.grpicks .tlink{min-height:44px;display:inline-flex;align-items:center;box-sizing:border-box}
+/* s24 mock drafts */
+.practicebn{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:baseline;background:repeating-linear-gradient(135deg,#3b2a05 0 12px,#2d2004 12px 24px);border:2px dashed #ffd23f;color:#ffe9a3;border-radius:12px;padding:9px 12px;margin:8px 0}
+.practicebn b{color:#ffd23f;letter-spacing:.08em;font-size:13px}.practicebn span{font-size:13px}
+.pill.prac{background:#ffd23f;color:#111;font-weight:800}
+.vsbots{margin:6px 0;padding:6px 10px;border-radius:8px;background:rgba(255,210,63,.12);color:#ffe9a3;font-size:13px;font-weight:700}
+#trymock{margin-top:10px}
+.rcnav{position:sticky;top:0;z-index:5;display:flex;gap:6px;overflow-x:auto;padding:6px 2px;margin:6px 0 10px;background:var(--bg,#10131a);scrollbar-width:none}
+.rcnav a{flex:0 0 auto;min-height:44px;display:inline-flex;align-items:center;padding:0 12px;border-radius:99px;border:1px solid var(--line,#2a3142);color:var(--tx,#eee);text-decoration:none;font-size:13px;font-weight:800;white-space:nowrap}
+.rcnav a[aria-current]{background:var(--acc,#ffd23f);color:#111;border-color:transparent}
+.rsec{scroll-margin-top:64px}
+/* s25 shared links card (setup + room) */
+.lcbtns{display:grid;grid-template-columns:1fr 1fr;gap:8px}.lcbtns .btn{width:100%;text-align:center;padding:12px}
+@media(min-width:700px){.lcbtns{grid-template-columns:repeat(4,1fr)}}
+.rcquip{font-style:italic;color:var(--acc);margin-top:2px}
+/* s25: recap tab bar never scrolls sideways: equal buttons, 4 per row on phones (3 under 360px), one wrapping row on desktop */
+.rcnav{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px;overflow:visible;position:static}
+.rcnav a{flex:none;min-width:0;justify-content:center;text-align:center;padding:2px 4px;border-radius:10px;font-size:12px;line-height:1.15;white-space:normal;overflow-wrap:anywhere}
+@media(max-width:359px){.rcnav{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(min-width:900px){.rcnav{display:flex;flex-wrap:wrap;position:sticky}.rcnav a{flex:1 1 auto;white-space:nowrap;padding:0 10px}}
+.rchero .rccount{font-size:14px;line-height:1.25}.rchero .rccount b{font-size:16px}.rchero .small{font-size:12px}
+@media(max-width:899px){.rcnav a{overflow-wrap:normal;word-break:normal;padding:2px 1px;font-size:11.5px;letter-spacing:-.01em}}
+.rchero .rctop{display:flex;align-items:center;gap:8px;justify-content:center;flex-wrap:wrap}.rchero .rcemo{font-size:20px}
+.rchero .rccount{margin:0;font-size:13px}.rchero .rccount b{font-size:15px}
+@media(max-width:899px){.rchero .rcmsg{font-size:16.5px}}
+/* s25b recap layout */
+.rcgline{margin:0 0 6px;color:var(--mut);font-size:14px}
+.rchow{margin:0 0 10px}.rchow summary{min-height:44px;display:inline-flex;align-items:center;color:var(--acc);font-weight:800;cursor:pointer}
+.mplist,.cblist{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.mprow{display:flex;gap:10px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 10px}
+@media(min-width:900px){.mplist{grid-template-columns:1fr 1fr}}
+.rccoach{margin-bottom:12px}.rccoach h3{margin:0 0 6px}.rctake{font-weight:800;margin:0 0 8px}.cbline{line-height:1.35}.cbline .rcquip{display:block}
+.rcextra>summary{min-height:48px;display:flex;align-items:center;padding:0 14px;border:1px solid var(--line);border-radius:12px;background:var(--card);font-weight:800;cursor:pointer}
+.rcextra[open]>summary{margin-bottom:12px}
+/* s25b home: Archive / Restore beside each league row */
+.mrw{display:flex;gap:8px;align-items:center}.mrw .mrow{flex:1;min-width:0}.mrw .arch{min-height:44px;min-width:44px;flex:none}
+#archived>summary{min-height:44px;display:flex;align-items:center;font-weight:800;cursor:pointer}
+/* s25-full share rows: wrap into equal buttons, 44px targets */
+.srow{display:flex;flex-wrap:wrap;gap:8px}.srow>.btn{flex:1 1 calc(50% - 8px);min-height:44px;display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+@media(min-width:700px){.srow>.btn{flex:1 1 0}}.srow>.btn.ok{border-color:#3fb950;color:#3fb950}
+/* s25-full load flash: while html.loading, only the loader is visible (no tabs, views, banners, pop-ups or sheets) */
+/* s25m: the "Loading the draft room…" spinner is ~3x bigger (54px ring, 45px text at desktop); clamp() shrinks it to fit 320px with no overflow; the duplicate copy of this block (was ~line 542) removed */
+.loader{display:none}html.loading .loader{display:flex;flex-direction:column;position:fixed;inset:0;align-items:center;justify-content:center;gap:clamp(12px,4vw,24px);padding:0 12px;box-sizing:border-box;text-align:center;color:var(--mut,#9aa4b2);font-size:clamp(20px,6vw,45px);line-height:1.2;z-index:50}
+html.loading #top,html.loading #tabs,html.loading .wrap,html.loading #overlay,html.loading #sheetwrap,html.loading #pickov,html.loading .toast{visibility:hidden!important}
+.lspin{width:clamp(40px,14vw,54px);height:clamp(40px,14vw,54px);box-sizing:border-box;flex:none;border-radius:50%;border:clamp(6px,2.2vw,9px) solid currentColor;border-right-color:transparent;animation:lspin .8s linear infinite}@keyframes lspin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){.lspin{animation:none}}
+
+/* s25-full row-tap pick rows: the whole row is the target (>= 60px), ESPN is a separate small link */
+.trow[data-k]{min-height:60px}.trow.go{cursor:pointer}.trow.go:active,.trow.go:focus-visible{outline:2px solid var(--acc);outline-offset:-2px}
+.trow .espn{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-width:44px;min-height:44px;font-size:11px;font-weight:700;color:var(--mut,#9aa4b2);text-decoration:none;border-radius:8px}
+
+/* s25-full confirm-pick box (Paul): centred modal with a dimmed backdrop, only slightly bigger than the old sheet; buttons >= 48px */
+.sheetbg.cmodal{align-items:center;padding:16px;box-sizing:border-box}
+.sheetbg.cmodal .sheet{border:2px solid var(--acc);border-radius:18px;max-width:460px;padding:20px 18px;box-shadow:0 12px 40px rgba(0,0,0,.5)}
+.sheetbg.cmodal .sheet h2{font-size:22px}
+.sheetbg.cmodal .sheet .chip{font-size:1.12em}
+.sheetbg.cmodal .sheet .btn{min-height:52px;font-size:16px}
+
+/* s25-full picks-away line (Paul): own line, accent yellow, bold, 1.25x body */
+#oncard .away-big{display:block;color:var(--acc);font-weight:900;font-size:1.25rem;line-height:1.25;margin-top:4px}
+
+/* s25-full recap compact banner + What's next row (Paul via NCAA) */
+.rchero{padding:8px 12px;gap:2px;margin:0 0 10px}
+.rchero .rctop{gap:6px;font-size:12px}.rchero .rcemo{font-size:16px;line-height:1}.rchero .rclg{font-size:12px;color:var(--mut)}
+.rchero .rcmsg{font-size:20px!important;line-height:1.2}
+@media(min-width:900px){.rchero .rcmsg{font-size:22px!important}}
+.rchero .confetti i{animation-duration:1.5s;animation-iteration-count:1;animation-fill-mode:forwards}
+.rcnextrow{margin:0 0 10px}.rcnextrow .rcrow{display:flex;flex-wrap:wrap;gap:8px}.rcnextrow .rcrow>.btn{flex:1 1 0;min-height:44px;display:inline-flex;align-items:center;justify-content:center;white-space:nowrap;padding:0 12px}
+.rchowd>summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:700}
+
+/* s25-full one compact invite card (Paul FINAL SPEC) */
+.invc{padding:10px 12px}.invc .invr1{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.invc .invlbl{flex:1 1 auto;font-size:15px}
+.invc .invr1 .btn,.invc .invr2 .btn,.invc .invmore .btn{min-height:44px;padding:0 14px;flex:0 0 auto}
+.invc .invr2{display:flex;align-items:center;gap:12px;margin-top:8px}.invc .invr2 .lnkbtn{min-height:44px}
+.invc .invmore{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}.invc .invmore[hidden]{display:none}
+.invc .invbtns{display:flex;gap:8px;flex:0 0 auto}
+
+/* s25-full Auto-pick switch under the On the clock card */
+.atog{display:flex;align-items:center;gap:8px;min-height:44px;margin:6px 2px 0;font-weight:700;font-size:14px}
+/* s25-full queue beside the Teams list (Paul) */
+.tqwrap{display:block}.qpanel{margin:0 0 8px}.qpanel[hidden]{display:none}
+.qpanel .qbar{width:100%;min-height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:inherit;font-weight:800;font-size:15px}
+.qpanel #qbody{padding:6px 2px}.qpanel .qrow{display:flex;align-items:center;gap:6px;min-height:48px}.qpanel .qtm{flex:1 1 auto;min-width:0;overflow:hidden}
+.qpanel .qb{min-width:44px;min-height:44px;padding:0}
+@media(min-width:900px){.tqwrap{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:12px;align-items:start}.tqwrap .qpanel{order:2;position:sticky;top:8px;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px;margin:0;max-height:80vh;overflow:auto}.tqwrap .qpanel h3{margin:0 0 6px;font-size:15px}}
+/* s25-full compact Teams search (Paul): 44 px tall (our tap-target floor, matches the Power sort pill), 16px text so iOS does not zoom, less padding */
+.ctl input[type=search]{height:44px;min-height:44px;padding:0 12px;font-size:16px;box-sizing:border-box}
+.tnote{font-size:12px;margin:4px 2px}
+@media(max-width:899px){.tqwrap{display:flex;flex-direction:column}.tqwrap .qpanel{order:-1}}
+#banner .atog{flex:1 1 100%;width:100%}
+/* s25-full profile buttons (Paul): equal size, one row, labels on one line; stacked full width under 420px */
+#youcard .pbtns{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}#youcard .pbtns>.btn{min-height:44px;white-space:nowrap;display:flex;align-items:center;justify-content:center;padding:0 8px;margin:0;font-size:13px}
+@media(max-width:419px){#youcard .pbtns{grid-template-columns:1fr}}
+
+/* s25-full Rules button + page */
+.rulesbtn{min-height:44px;min-width:44px;padding:0 10px;font-size:13px}#lobbycard{position:relative}#lobbycard .rulesbtn{position:absolute;top:10px;right:10px}
+.sheetbg.rulesbg{align-items:stretch}.sheetbg.rulesbg .sheet{max-width:760px;border-radius:0;max-height:100vh;max-height:100dvh;height:100%}
+.rulespage .phead{display:flex;justify-content:space-between;align-items:center;position:sticky;top:-16px;background:var(--card);padding:8px 0;z-index:2}.rulespage .phead small{display:block;color:var(--mut)}
+.rulespage h3{font-size:16px;margin:14px 0 4px}.rulespage .rn{color:var(--acc)}.rulespage p{margin:4px 0;font-size:15px;line-height:1.45}
+
+/* s25-full lobby compact (Paul via NCAA) */
+#youcard.ycompact{padding:10px 12px}#youcard.ycompact .pbtns{margin-top:8px!important;gap:6px}#youcard.ycompact .pbtns>.btn{font-size:12.5px;padding:0 6px}#youcard.ycompact>.small{margin-top:4px!important;font-size:12px}
+@media(max-width:419px){#youcard .pbtns{grid-template-columns:repeat(3,minmax(0,1fr))}}@media(max-width:299px){#youcard .pbtns{grid-template-columns:1fr}}
+#linkscard.lcompact{padding:10px 12px}#linkscard.lcompact h3{margin:0 8px 2px 0}#linkscard .lk{margin:6px 0 2px}
+#linkscard .lrow{display:flex;align-items:center;gap:6px}#linkscard .lrow .urlbox{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin:0;min-height:44px;display:flex;align-items:center;box-sizing:border-box}
+#linkscard .lrow .btn{flex:0 0 auto;min-height:44px;padding:0 10px}#linkscard .lextra{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}#linkscard .lextra .btn{min-height:44px}
+/* s25-full: Queued filter chip (pill, not a tab) */
+.ctl .qchip{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;border-radius:999px;border:1.5px dashed var(--mut,#888);background:transparent;color:inherit;font-size:13px;font-weight:700;cursor:pointer;flex:0 0 auto}
+.ctl .qchip::before{content:'☐ ';margin-right:4px}.ctl .qchip.on{border-style:solid;border-color:var(--acc);background:var(--acc);color:#111}.ctl .qchip.on::before{content:'✓ '}
+.ctl .cwrap{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+/* s25-full: Board pills ~12% bigger (font 12.5 -> 14px, logo 22 -> 25px), still inside the cell */
+.board td .chip{font-size:14px;gap:4px;padding:2px 7px 2px 2px}.board td .chip img,.board td .chip .nologo{width:25px;height:25px}
+/* s25-full: Teams rows are the tap target on your turn, with hover and press states; off-turn a tap does nothing */
+.trow.go[data-a=draftrow]{cursor:pointer;transition:background .12s,transform .06s}.trow.go[data-a=draftrow]:hover{background:#232a3b}.trow.go[data-a=draftrow]:active{background:#2e3650;transform:scale(.99)}/* only on your turn (or commish picking for someone); off-turn rows are plain */
+/* s25-full: recap What's next stays ONE row down to 320px */
+#rc_site .rcrow{display:flex;flex-wrap:nowrap;gap:6px}#rc_site .rcrow>a,#rc_site .rcrow>button{flex:1 1 0;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding-left:6px;padding-right:6px;font-size:13px;min-height:44px}
+@media(max-width:400px){#rc_site .rcrow>a,#rc_site .rcrow>button{font-size:12px;padding-left:4px;padding-right:4px}}
+/* s25-full: draft-complete cheer mute toggle */
+#donecard{position:relative}#donecard .cheermute{position:absolute;top:8px;right:8px;min-height:44px;min-width:44px;padding:0 12px;font-size:13px}
+/* s25-full: recap Full draft order rounds as collapsible headers */
+#rc_order .tiny{font-size:11px;margin:0 0 6px}#rc_order details.rdgrp{border:1px solid var(--line);border-radius:12px;margin:0 0 6px;overflow:hidden}
+#rc_order details.rdgrp>summary.rdh{min-height:44px;display:flex;align-items:center;justify-content:space-between;padding:0 12px;cursor:pointer;font-weight:800;font-size:15px;list-style:none;margin:0}
+#rc_order details.rdgrp>summary.rdh::-webkit-details-marker{display:none}#rc_order details.rdgrp>summary.rdh::after{content:'▾';transition:transform .15s;color:var(--mut)}#rc_order details.rdgrp:not([open])>summary.rdh::after{transform:rotate(-90deg)}
+#rc_order details.rdgrp>.dolist{margin:0;padding:0 8px 8px}
+#recaphead .cheermute{min-height:44px;min-width:44px;padding:0 10px;font-size:12px;margin-left:auto}
+#linkscard .lextra{flex-wrap:nowrap}#linkscard .lextra .btn{flex:1 1 0;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 8px}
+@media(max-width:359px){#linkscard .lextra .btn{font-size:12px;padding:0 4px}}
+/* s25-full QA: every draft-room button is a 44px tap target at every width (e.g. 'Make the auto-pick now' was 30.8px at 1280) */
+body.room [data-a=idclose],body.room [data-a=vo],body.room [data-a=csub]{min-height:44px}body.room label.sw{min-height:44px;display:flex;align-items:center}
+/* s25-full QA (qa-2): the room keeps the page still itself (Teams spacer + anchor restore); the browser's own scroll anchoring would move scrollY when a drafted row above the screen is removed */
+html:has(body.room),body.room{overflow-anchor:none}.tspacer{pointer-events:none}
+
+/* s25m (QA BUG-1): the "2 picks away" alert floats over the page (fixed) instead of being inserted in the flow, so nothing below it moves (was ~64 px) */
+#alertbar .alertbar{position:fixed;top:calc(8px + env(safe-area-inset-top,0px));left:50%;transform:translateX(-50%);width:min(560px,calc(100% - 24px));box-sizing:border-box;margin:0;z-index:44;box-shadow:0 6px 18px rgba(0,0,0,.45);pointer-events:none}
+/* s25m (QA BUG-2): profile button labels wrap onto 2 lines below 360px (where rules-lobby.css ellipsized them) instead of being cut off (one row, 44 px floor kept) */
+@media(max-width:359px){body.room #youcard .pbtns>.btn{white-space:normal;text-align:center;line-height:1.15;overflow-wrap:break-word;text-overflow:clip;overflow:visible;display:flex;align-items:center;justify-content:center}}
+
+/* s26mo3: queue drag grip (touch-action:none so a finger drag reorders instead of scrolling) + Show picked chip */
+.qpanel .qgrip{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-width:32px;min-height:44px;font-size:18px;color:var(--mut,#888);cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+.qpanel .qrow.qdrag{position:relative;z-index:6;background:var(--card2,#222);box-shadow:0 4px 12px rgba(0,0,0,.5)}
+
+/* s26c9 (Paul): compact post-draft More tab. Everything is scoped to body.pdmore (More tab + draft complete), so pre-draft and in-draft are untouched. Tap targets stay >=44px. */
+body.pdmore #view>.card{margin:8px 0}
+body.pdmore .banner.finalbn{padding:8px 12px}body.pdmore .banner.finalbn .nm{font-size:18px;line-height:1.2}
+body.pdmore .endbtns3{margin-top:6px;gap:6px}body.pdmore .endbtns3 .btn{min-height:44px;font-size:14px}
+body.pdmore #youcard.pd{padding:8px 12px}body.pdmore #youcard.pd .pbtns{margin-top:6px!important;gap:6px}body.pdmore #youcard.pd .pbtns>.btn{min-height:44px}
+body.pdmore #youcard.pd>.small{margin-top:4px!important;font-size:11.5px;line-height:1.3}
+body.pdmore #linkscard.pd{padding:8px 12px}
+body.pdmore #linkscard.pd .pdhead{display:flex;align-items:baseline;flex-wrap:wrap;gap:4px 10px;margin-bottom:4px}body.pdmore #linkscard.pd .pdhead h3{margin:0}body.pdmore #linkscard.pd .pdhead .code{font-size:14px}
+body.pdmore #linkscard.pd .pdrow{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:6px;align-items:center;margin:0 0 4px;border-top:1px solid var(--line,rgba(255,255,255,.06));padding-top:4px}
+body.pdmore #linkscard.pd .pdrow:first-of-type{border-top:0;padding-top:0}
+body.pdmore #linkscard.pd .pdlbl{font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+body.pdmore #linkscard.pd .pdrow .btn{min-height:44px;min-width:64px;padding:0 10px;margin:0}
+body.pdmore #linkscard.pd .lextra{margin-top:4px}
+@media(max-width:359px){body.pdmore #linkscard.pd .pdrow .btn{min-width:56px;padding:0 6px}body.pdmore #linkscard.pd .pdlbl{font-size:13px}}
+
+/* s26c9 (Paul): compact post-draft Board. One merged FINAL card (#finalbanner #donecard) with a single wrapping row of smaller buttons (>=44px). */
+#finalbanner .dcx,#finalbanner .dccheer{display:none}
+body[data-tab=board] #finalbanner .dccheer{display:block;float:right;margin:0 0 4px 8px}
+body[data-tab=board] #finalbanner .dccheer .btn,body[data-tab=board] #finalbanner .dccheer button{min-height:44px}
+body[data-tab=board] .banner.finalbn{padding:8px 12px}body[data-tab=board] .banner.finalbn .nm{font-size:18px;line-height:1.2}
+body[data-tab=board] #finalbanner .endbtns3{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+body[data-tab=board] #finalbanner .endbtns3>.btn{flex:1 1 120px;min-width:0;min-height:44px;font-size:13.5px;padding:4px 8px;margin:0}
+body[data-tab=board] #finalbanner .endbtns3>.dcx{display:flex;font-weight:700;font-size:13px}
+body[data-tab=board] #finalbanner #redraftroomlink{flex-basis:170px}
+@media(max-width:419px){body[data-tab=board] #finalbanner .endbtns3>.btn{flex:1 1 calc(33.33% - 6px);font-size:13px;padding:4px 4px}body[data-tab=board] #finalbanner .endbtns3>.dcx{flex-basis:calc(50% - 6px)}body[data-tab=board] #finalbanner #redraftroomlink{flex-basis:100%}}
+@media(max-width:359px){body[data-tab=board] #finalbanner .endbtns3>.btn{font-size:12px}}
+.pdbx>.card{padding:8px 12px;margin:8px 0}
+.pdbx #nextcard h3,.pdbx #watchcard h3{margin:0 0 2px!important;font-size:15px}
+.pdbx .nextlist{margin:0;padding-left:18px;line-height:1.3}.pdbx .nextlist li{margin:1px 0}
+.pdbx #watchcard .small{line-height:1.3}.pdbx #watchcard .row{margin-top:6px!important;gap:6px}.pdbx #watchcard .btn{min-height:44px;padding:0 10px}
+.pdbx #hometip{line-height:1.3;font-size:12.5px}
+/* s26c9: '<League name> League site →': the name truncates with an ellipsis, the ' League site →' suffix always stays visible */
+.sitebtn{display:inline-flex;align-items:center;max-width:100%;min-width:0;overflow:hidden;white-space:nowrap;vertical-align:middle}
+.sitebtn .snm{flex:0 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.sitebtn .sfx{flex:0 0 auto;white-space:nowrap}
+.btn.sitebtn{display:flex;justify-content:center}
+#sitelink.sitebtn{max-width:min(260px,50vw)}
+@media(max-width:419px){#finalbanner .endbtns3>.sitebtn{flex-direction:column;line-height:1.15}#finalbanner .endbtns3>.sitebtn .snm{max-width:100%}}
+.sitebtn .snm+.sfx{margin-left:.3em}
+@media(max-width:419px){#finalbanner .endbtns3>.sitebtn .snm+.sfx{margin-left:0}#finalbanner .endbtns3>.sitebtn .sfx{font-size:12px}}
+@media(max-width:359px){#finalbanner .endbtns3>.sitebtn .sfx{font-size:11px;letter-spacing:-.2px}}
+#leaguehome2.sitebtn{display:inline-flex;max-width:100%;box-sizing:border-box;min-height:44px}
+body[data-tab=board] #finalbanner .bm{overflow:hidden}
+#finalbanner #donecard{position:static}#finalbanner #donecard .cheermute{position:static}@media(max-width:419px){#finalbanner #donecard .cheermute{padding:0 8px;font-size:12px}}
+body[data-tab=board] #finalbanner{position:relative}body[data-tab=board] #finalbanner .dccheer{float:none;position:absolute;top:6px;right:8px;margin:0}
+body[data-tab=board] #finalbanner .bm{overflow:visible;padding-right:118px;min-height:44px}
+@media(max-width:419px){body[data-tab=board] #finalbanner .bm{padding-right:100px}}
+/* s26c9 lobby: 📋 Draft Rules + 📖 League Rules (lobby card + header), compact Invite managers row (Mock Draft primary) */
+#lobbycard .lrbtns{position:absolute;top:8px;right:8px;display:flex;gap:6px}#lobbycard .lrbtns .rulesbtn{position:static;margin:0}#lobbycard h2{padding-right:0}
+#lobbycard .lrbtns+.small{padding-right:250px}
+@media(max-width:599px){#lobbycard .lrbtns{position:static;justify-content:flex-end;flex-wrap:wrap;margin:-4px -4px 4px 0}#lobbycard .lrbtns+.small{padding-right:0}}
+.toprow .rulesbtn.lrules{margin-left:6px;display:inline-flex;align-items:center;text-decoration:none}
+a.rulesbtn{display:inline-flex;align-items:center;justify-content:center;text-decoration:none;box-sizing:border-box}
+@media(max-width:419px){.toprow .rulesbtn{padding:0 8px;font-size:12.5px}}
+.invc{padding:8px 12px}.invc .invr1{gap:6px 8px}.invc .invlbl{flex:1 0 auto;font-size:15px}
+.invc .invbtns{flex:1 1 auto;justify-content:flex-end;flex-wrap:wrap;gap:6px}
+.invc .invr1 .btn{padding:0 12px}.invc .invmockb{font-weight:900;font-size:15px;padding:0 18px!important;box-shadow:0 0 0 2px rgba(255,204,51,.25)}
+.invc .invr2{margin-top:4px}
+@media(max-width:419px){.invc .invbtns{width:100%;flex:1 1 100%;flex-wrap:nowrap}.invc .invbtns .btn{flex:1 1 auto;padding:0 8px!important;font-size:13px;white-space:nowrap}.invc .invmockb{font-size:14px}.invc .invr1{row-gap:4px}}
+@media(max-width:359px){.invc .invbtns{flex-wrap:wrap}.invc .invmockb{flex:1 1 100%!important;order:-1}}
+/* s26c9 lobby countdown hero */
+#lobbycd .cdlbl{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--mut);margin-top:4px}
+#lobbycd .cdhero{display:flex;align-items:flex-start;justify-content:center;gap:clamp(2px,1vw,10px);margin:4px 0 2px;white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--acc);max-width:100%;overflow:hidden}
+#lobbycd .cdg{display:flex;flex-direction:column;align-items:center;min-width:0}
+#lobbycd .cdg b{font-size:clamp(38px,12vw,76px);line-height:1;font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+#lobbycd .cdg small{font-size:11px;font-weight:800;letter-spacing:.12em;color:var(--mut);margin-top:4px}
+#lobbycd .cdsep{font-size:clamp(30px,9vw,64px);line-height:1;font-weight:900;opacity:.7}
+#lobbycd .cdhero:has(.cdg:nth-child(7)) .cdg b{font-size:clamp(30px,9.5vw,72px)}#lobbycd .cdhero:has(.cdg:nth-child(7)) .cdsep{font-size:clamp(24px,7vw,58px)}
+#lobbycd .cdwhen{text-align:center;font-weight:600}
+@media(min-width:900px){#lobbycd .cdg b{font-size:72px}}
+/* s26c9 viewer highlight (display only; no highlight for spectators) */
+.youtag{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:6px;background:var(--acc);color:#111;font-size:10px;font-weight:900;letter-spacing:.08em;line-height:1.4;vertical-align:middle}
+#who.you{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc),0 0 10px rgba(255,204,51,.35)}#who.you .whonm{font-weight:900;font-size:1.08em}
+.pc.you{border:2px solid var(--acc);box-shadow:0 0 8px rgba(255,204,51,.35);font-weight:900;font-size:1.05em}
+.opills button.you{border:2px solid var(--acc);box-shadow:0 0 8px rgba(255,204,51,.35);font-weight:900;font-size:1.05em}
+.mrow.you{background:rgba(255,204,51,.07);box-shadow:inset 3px 0 0 var(--acc);border-radius:8px;padding-left:6px}.mrow.you .nm{font-size:1.1em;font-weight:900}
+.myhead{padding:16px}.myhead .mhteam{font-size:22px;line-height:1.2;overflow-wrap:anywhere}.myhead .mhname{font-size:15px;font-weight:700}
+.myhead.you{border:2px solid var(--acc);box-shadow:0 0 14px rgba(255,204,51,.25)}.myhead.you .mhname{color:var(--tx)}
+@media(max-width:359px){.myhead .mhteam{font-size:19px}}
+body.inlobby #rulesbtn_hdr,body.inlobby #leaguerules_hdr{display:none}/* s26c9: in the lobby both Rules buttons sit on the lobby card */
+#lobbycard:has(.cdhero) #startsline{display:none}/* the start time moves under the countdown */
+.opills button.on .youtag,.btn.pri .youtag{background:#111;color:var(--acc)}
+#lobbycd .cdlbl{text-align:center}
+.r2miss{margin:4px 0 0;padding-left:22px}.r2miss li{margin:2px 0}
+body.drdone #rulesbtn_hdr,body.drdone #leaguerules_hdr{display:none}/* s26c9 (Paul b): post-draft header has no Rules buttons (they are in More) */
+#rulescard .rlrow{display:flex;gap:6px;flex-wrap:wrap}#rulescard .rlrow .btn{flex:1 1 140px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;text-decoration:none}
+body.pdmore #rulescard{padding:8px 12px}body.pdmore #rulescard h3{margin:0 0 6px}
+/* s26c14: Rules tab */
+.rulestab .r2head [data-dr2=close]{display:none}.rulestab .rltab{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:8px 0}.rulestab .r2page{max-width:760px;margin:0 auto}
+.rulestab .r2page .r2head{position:static}
+/* s26c14 (Paul): Draft button + bigger Queue button, separate (>=8px gap), 48px tall; the row itself is not a tap target */
+.trow .tbtns{flex:none;display:flex;align-items:center;gap:10px;margin-left:4px}
+.trow .dbtn{flex:none;box-sizing:border-box;min-width:58px;height:48px;padding:0 10px;border:0;border-radius:12px;background:var(--acc);color:#111;font:inherit;font-size:14px;font-weight:900;cursor:pointer}
+.trow .dbtn:active{transform:scale(.97)}.trow .dbtn:focus-visible{outline:2px solid #fff;outline-offset:2px}
+.trow .tbtns .qbtn{width:58px;min-width:58px;height:48px;min-height:48px;border:0;border-radius:12px;padding:0;display:inline-flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05;background:var(--card2);box-shadow:inset 0 0 0 1.5px #5b6680;color:#e6ebf5}
+.trow .tbtns .qbtn b{font-size:16px;font-weight:900}.trow .tbtns .qbtn small{font-size:10px;font-weight:800;opacity:.85}
+.trow .tbtns .qbtn.on{background:var(--acc);color:#111;box-shadow:none}
+.trow.go{cursor:default}
+@media (max-width:360px){.trow .tbtns{gap:8px}.trow .dbtn{min-width:52px;padding:0 6px;font-size:13px}.trow .tbtns .qbtn{width:52px;min-width:52px}.trow .tr small{display:none}}
+@media (max-width:350px){.tabs button,.tabs a{font-size:10px;padding-left:0;padding-right:0;letter-spacing:-.2px}.trow .tr{display:none}.trow .rkb.rk2{min-width:38px}}
+/* DR2 s26c14 recap2col: Your grade / League grades / Awards in two columns from 900px (one column below). CSS only, no wrapper:
+   the recap #app becomes a 2-column grid; every other section spans both columns. Only on a real recap (League grades shown). */
+@media (min-width:900px){
+ #app:has(>#rc_grades:not([hidden])){display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:18px;align-items:start}
+ #app:has(>#rc_grades:not([hidden]))>*{grid-column:1/-1;min-width:0}
+ #app:has(>#rc_grades:not([hidden]))>.rsec:not(.rcnextrow){margin:0 0 14px}/* grid items do not collapse margins: keep the one-column spacing */
+ #app:has(>#rc_grades:not([hidden]))>#powerrecap_s{grid-column:1;margin-top:0}
+ #app:has(>#rc_grades:not([hidden]))>#rc_grades{grid-column:2;grid-row:span 2;margin-top:0}
+ #app:has(>#rc_grades:not([hidden]))>#rc_awards{grid-column:1;margin-top:0}
+ #app:has(>#rc_grades:not([hidden])) #awgrid.awgrid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr))}
+}
+/* DR2: "Go to <League name> League" never overflows: one line with an ellipsis in the What's next row; wraps on the mock setup page */
+#rc_site .rcrow>a .dr2lbl{display:block;min-width:0;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#mockapp #mockback{white-space:normal;overflow-wrap:anywhere;max-width:100%}
+/* DR2: Conference breakdown shows every conference; chips wrap and never push the card wider */
+#crows .cch{min-width:0;max-width:100%}#crows .cc2{max-width:100%;overflow-wrap:anywhere;white-space:normal}
+/* DR2: below 900px the What's next row wraps and shows the full league name (no ellipsis); order and styles unchanged */
+@media (max-width:899.98px){
+ #rc_site .rcrow{flex-wrap:wrap}
+ #rc_site .rcrow>a,#rc_site .rcrow>button{flex:1 1 auto;overflow:visible;white-space:normal;text-overflow:clip;height:auto;min-height:44px;line-height:1.25;padding-top:6px;padding-bottom:6px;text-align:center}
+ #rc_site .rcrow>a .dr2lbl{white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere}
+}
+/* DR2: the league button text always fits: no uppercase, wraps (up to 2+ lines), button grows; no ellipsis at any width */
+#rc_site .rcrow>#rcsite{text-transform:none;white-space:normal;overflow:visible;text-overflow:clip;height:auto;min-height:44px;line-height:1.25;padding-top:6px;padding-bottom:6px;text-align:center}
+#rc_site .rcrow>#rcsite .dr2lbl{text-transform:none;white-space:normal;overflow:visible;text-overflow:clip;overflow-wrap:anywhere}
+/* DR2: recap loader = 3 bouncing basketballs (emoji, pure CSS) with the loading text as a caption; static under reduced motion */
+.dr2load{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:22px 12px;text-align:center;max-width:100%;overflow:hidden}
+.dr2balls{display:flex;gap:14px;height:56px;align-items:flex-end}
+.dr2balls>span{display:inline-block;font-size:30px;line-height:1;animation:dr2bounce .9s ease-in-out infinite}
+.dr2balls>span:nth-child(2){animation-delay:.15s}.dr2balls>span:nth-child(3){animation-delay:.3s}
+.dr2cap{font-size:14px;overflow-wrap:anywhere}
+@keyframes dr2bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-22px)}}
+@media (prefers-reduced-motion:reduce){.dr2balls>span{animation:none}}
+/* s27 (Paul): the name pill is the Draft action on your turn (no separate Draft box) */
+.trow .tm.dbtn{flex:1 1 0;min-width:0;height:auto;min-height:48px;display:flex;flex-direction:column;gap:2px;align-items:flex-start;justify-content:center;padding:4px 8px;margin:0 2px;border:2px solid var(--acc);border-radius:12px;background:rgba(255,210,63,.12);color:inherit;text-align:left;font-weight:inherit}
+.trow .tm.dbtn small{color:var(--mut)}
+@media (max-width:360px){.trow .tm.dbtn{min-width:0;padding:3px 6px;font-size:inherit}}
+
+/* s28 item 1: Pick a team header pinned at the top of the sheet, with the live pick clock next to Close */
+#pickov .phead{position:sticky;top:0;z-index:5;background:#10131a;margin:0 -12px;padding:8px 14px;box-shadow:0 1px 0 rgba(255,255,255,.08)}#pickov .phead>div{flex:1;min-width:0}
+#pickov .pcd{font:700 20px/1 ui-monospace,SFMono-Regular,Menlo,monospace;font-variant-numeric:tabular-nums;padding:6px 10px;border-radius:10px;background:rgba(255,255,255,.07);white-space:nowrap}#pickov .pcd.low{color:#ff6b6b;background:rgba(255,80,80,.15)}#pickov .pcd.paused{font-size:14px;color:var(--mut)}#pickov .pcd[hidden]{display:none}
+/* s28 item 4: 'Draft starts in' countdown card */
+.banner.prestart{border:2px solid var(--acc)}.banner.prestart .nm{font-size:22px}.banner.prestart #precd{font-variant-numeric:tabular-nums;color:var(--acc)}.banner.prestart .bm{flex:1;min-width:0}.banner.prestart .btn{min-height:44px;white-space:nowrap}
+#pickov .ctl{top:var(--pheadh,60px)}#pickov .tqwrap .qpanel{top:calc(var(--pheadh,60px) + 8px)}
+/* s28 (b): at 390 the top-bar pill shows only the team name */
+@media(max-width:520px){#who .whosub{display:none}}

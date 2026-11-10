@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://a.espncdn.com; connect-src 'self' https://textdb.dev; object-src 'none'; base-uri 'self'; form-action 'self'; frame-src 'none'">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#10131a">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="icons/icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Stoopids Hoops">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="format-detection" content="telephone=no">
+<link rel="stylesheet" href="css/app.css">
+<title>How to run a league · Stoopids Hoops</title>
+  </head>
+<body>
+<div id="top"></div>
+<div class="wrap" id="app">
+<div class="landing" id="helppage">
+<h1>How to run a league</h1>
+<p class="mut">Short and plain. A league has <b>5 or 6 managers</b> (the commissioner chooses). The sixth can stay an empty seat until the draft.</p>
+<div class="row" id="helpjump"><a class="btn sm" href="#commissioner">Commissioner</a><a class="btn sm" href="#managers">Managers</a><a class="btn sm" href="#spectators">Watching</a><a class="btn sm" href="#after">After</a><a class="btn sm" href="#limits">Known limits</a></div>
+
+<h2 id="commissioner" style="margin-top:22px">Commissioner</h2>
+<div class="card" id="h_commissioner">
+<ol class="steps">
+<li><b>Create:</b> on the home page tap <b>Create a league</b> and answer each question. Check the summary, then confirm.</li>
+<li><b>Share:</b> send the <b>Invite link</b> (or the QR code) to your 7 friends. Save your <b>private commissioner link</b>. It cannot be recovered, so do not share it.</li>
+<li><b>Order:</b> in the lobby tap <b>Randomize</b>, spin the wheel (one spin only; everyone sees it), or move people yourself.</li>
+<li><b>Start draft:</b> it works when every seat is filled, or the commissioner starts with empty seats that will be auto-picked. The lobby says “Waiting for N more managers” until then. You can also start at the time you set.</li>
+<li><b>During the draft</b> (<b>More</b> in the room): <b>Pause</b>, <b>Undo</b> the last pick, or <b>Mark away</b> so auto-pick covers someone who is gone. Locked out? Open your commissioner link again.</li>
+</ol></div>
+
+<h2 id="managers" style="margin-top:22px">Managers</h2>
+<div class="card" id="h_managers">
+<ol class="steps">
+<li><b>Join:</b> open the invite link, add your team name and your name. A photo is optional.</li>
+<li><b>Save your private manager link.</b> It brings you back into your team on a new phone or after closing the page.</li>
+<li><b>Pick:</b> keep the room open. On your turn tap <b>Pick a team</b>, choose one and confirm. Add teams to your queue with <b>Q+</b>.</li>
+<li><b>Auto-pick:</b> switch it on under <b>My Team</b> and the app picks for you if you run out of time.</li>
+</ol>
+<h3 style="margin-top:12px">How your queue works</h3>
+<p style="margin:0;line-height:1.4">Your queue never picks by itself. On your turn you pick. If your clock runs out (league auto-pick on), or you turn on Auto-pick for me (picks right away when your turn comes), we take your top available queued team, then the best-ranked team left.</p>
+</div>
+
+<h2 id="spectators" style="margin-top:22px">Watching</h2>
+<div class="card" id="h_spec"><p style="margin:0">Anyone with the spectator link can watch the board and chat. A spectator cannot pick.</p></div>
+
+<h2 id="after" style="margin-top:22px">After the draft</h2>
+<div class="card" id="h_after"><p style="margin:0">The <b>Draft recap</b> shows every roster, the Power rankings and lets you export CSV or JSON. <b>League site</b> appears by itself when the draft ends, with Standings, Games, Rosters, Bets, All teams, Redraft, Archive and Rules. Use <b>Draft room</b> and <b>Draft recap</b> there to go back and forth.</p><p style="margin:8px 0 0"><b>Redraft, January 20, 2027:</b> tap <b>Redraft</b> on the League site. Each owner may drop up to 2 teams. The draft follows the standings as of that date, and the last-place owner chooses where to pick.</p><p style="margin:8px 0 0"><b>Bets:</b> pushup challenges between managers. The other manager accepts, and the loser owes pushups.</p></div>
+
+<h2 id="limits" style="margin-top:22px">Known limits</h2>
+<div class="card note" id="h_limits" style="margin-top:12px">
+<ul class="steps">
+<li>A page must be open for the clock, auto-start and auto-pick to work.</li>
+<li>Links are a friendly lock, not real security.</li>
+<li>League data is kept in a public shared store, so share links only with people you trust.</li>
+</ul></div>
+
+<p style="margin-top:18px"><a class="btn pri block" href="index.html" id="helphome">Back to the home page</a></p>
+</div>
+</div>
+<script src="js/version.js"></script>
+<script src="js/qr.min.js"></script>
+<script src="js/core.js"></script>
+<script src="js/store.js"></script>
+<script src="assets/teams.js"></script>
+<script src="js/power-apply.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/help.js"></script>
+</body>
+</html>
