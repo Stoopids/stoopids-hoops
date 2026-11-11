@@ -59,6 +59,10 @@ rep("D=window."+dn+";{const R=window.HOOPS_DRAFT27_RESULTS.draft;D27_OWNERS=R.ma
 rep("function s24Url(h,share){const q=new URLSearchParams();if(DEMO)q.set('demo','1');if(!share&&ADMIN)q.set('admin','1');const s=q.toString();return location.pathname+(s?'?'+s:'')+(h?'#'+h:'')}",
     "function hoopsLeagueId(){try{const q=new URLSearchParams(location.search).get('l');if(q&&/^[A-Za-z0-9]{2,40}$/.test(q))return q}catch(e){}const id=window.HOOPS&&HOOPS.id;return (id&&/^[A-Za-z0-9]{2,40}$/.test(id))?id:''}\nfunction s24Url(h,share){const q=new URLSearchParams();const l=hoopsLeagueId();if(l)q.set('l',l);if(DEMO)q.set('demo','1');if(typeof VIEW_ONLY!=='undefined'&&VIEW_ONLY)q.set('view','1');if(!share&&ADMIN)q.set('admin','1');const s=q.toString();return location.pathname+(s?'?'+s:'')+(h?'#'+h:'')}",
     why='keep ?l= in the address bar so a refresh stays on this league')
+rep("function b27PoolShell(){return `<div class=\"card b27-form\">${typeof SHARED_UI!=='undefined'&&SHARED_UI.entryHead?SHARED_UI.entryHead('wiu'):''}${b27KindTabs('')}</div>`}",
+    "function b27PoolShell(){if(U.confirm){const cf=b27PoolConfirmHtml();if(!cf){U.confirm=false;return b27PoolForm(b27Who())}return typeof s26kModal==='function'?s26kModal(cf):cf}return b27PoolForm(b27Who())}",
+    why='Write it Up Pool / buy-in must expand the pool form, not just flip the toggle')
+
 rep('<p class="d27sub">8 owners · snake draft', '<p class="d27sub">${D27_OWNERS} owners · ${esc((DRAFT27_RESULTS.draft||{}).type||\'snake\')} draft', why='draft results subtitle')
 # 2) textdb records -> this league's shoops1- keys
 rep("url:'https://textdb.dev/api/data/stoopids-presence-23658198955328729a557ddb'", "url:HOOPS.url('stoopids-presence-0')", why='presence key')
