@@ -2639,14 +2639,14 @@ function vShare(){const u=s29ShUrl();
    <select id="s29shSel" onchange="S29SH=this.value;render()"><option value=""${S29SH?'':' selected'}>Whole site</option>${s29ShTabs().map(([k,l])=>`<option value="${esc(k)}"${k===S29SH?' selected':''}>${esc(l)}</option>`).join('')}</select>
    <button type="button" class="rkseg-b on s29sh-b" id="s29shBtn" onclick="s29ShareGo(this)">${s24CanShare()?'Share':'Copy link'}</button>
    <div class="s29sh-u" id="s29shUrl">${esc(u)}</div><p class="mut" style="margin:6px 0 0;font-size:12px">View-only link: people who open it can look around but can't add or change bets.</p>${/*<S29E-MGR>*/(typeof VIEW_ONLY!=='undefined'&&VIEW_ONLY)?'':`<div class="s29e-mgr" style="margin-top:14px;padding-top:10px;border-top:1px solid var(--line);font-size:13px"><b>Managers: use the regular link</b><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:4px"><span class="s29sh-u" id="s29eMgrUrl" style="margin:0">${esc(s29eMgrUrl())}</span><button type="button" class="s27-copy" id="s29eMgrBtn" style="margin-left:0" onclick="s29eMgrCopy(this)">Copy</button></div></div>`/*</S29E-MGR>*/}</div>`}
-/*<S29E-MGR>*/function s29eMgrUrl(){return location.origin+location.pathname.replace(/index\.html$/,'')}   // plain site URL: origin+pathname only (never view=1, admin, key or any other param)
+/*<S29E-MGR>*/function s29eMgrUrl(){const base=location.origin+location.pathname.replace(/index\.html$/,'');const l=hoopsLeagueId();return l?base+(base.indexOf('?')>=0?'&':'?')+'l='+encodeURIComponent(l):base}   // this league's page (?l=); never view=1, admin, key or token
 function s29eMgrCopy(btn){if(typeof VIEW_ONLY!=='undefined'&&VIEW_ONLY)return;s27CopyText(s29eMgrUrl(),()=>{if(!btn)return;btn.textContent='Copied';btn.classList.add('on');clearTimeout(btn._t);btn._t=setTimeout(()=>{btn.textContent='Copy';btn.classList.remove('on')},1600)})}/*</S29E-MGR>*/
 function s29ShareGo(btn){const url=s29ShUrl(),ok=()=>{if(!btn)return;btn.textContent='Copied';clearTimeout(btn._t);btn._t=setTimeout(()=>{btn.textContent=s24CanShare()?'Share':'Copy link'},1600)};
   if(s24CanShare()){navigator.share({title:'STOOPIDS',url}).catch(e=>{if(!(e&&e.name==='AbortError'))s27CopyText(url,ok)})}else s27CopyText(url,ok)}
 /*</S29B-SHARE>*/
 /*<STEP12-HSHARE>*/ // header Share promises a view-only link, so it is ?view=1 only. No sender name, admin flag, or token. The ordinary page (no view=1) lets a visitor pick a manager name. That pick is not a login.
-function s12PublicUrl(){let u;try{u=new URL(location.href)}catch(e){return location.origin+location.pathname+'?view=1'}
-  u.search='';u.searchParams.set('view','1');if(!/^#[A-Za-z0-9_\/-]*$/.test(u.hash))u.hash='';return u.origin+u.pathname+u.search+(u.hash||'')}
+function s12PublicUrl(){let u;try{u=new URL(location.href)}catch(e){const l=hoopsLeagueId();return location.origin+location.pathname+'?'+(l?'l='+encodeURIComponent(l)+'&':'')+'view=1'}
+  u.search='';const l=hoopsLeagueId();if(l)u.searchParams.set('l',l);u.searchParams.set('view','1');if(!/^#[A-Za-z0-9_\/-]*$/.test(u.hash))u.hash='';return u.origin+u.pathname+u.search+(u.hash||'')}
 function s12ApplyGuest(){/* A normal visit may pick a name. Do not lock that visit. ?view=1 is locked at load and stays read-only, even if a name is already saved. */}
 function s12ShareSite(btn){const old=document.getElementById('s12menu');if(old){old.remove();return}
   const m=document.createElement('div');m.id='s12menu';m.className='s12menu';m.setAttribute('role','menu');
@@ -3935,11 +3935,12 @@ function s24Read(h){const m=/^#?([a-z0-9-]+)(?:\/([A-Za-z0-9_-]{1,40}))?(?:$|[&?
   return {t,sub:m[2]&&(t==='bets27'||t==='games')?m[2]:null}}
 const s24RouteHash=()=>s24HashOf(tab)+(S24.sub&&S24.done!==tab+'/'+S24.sub?'/'+S24.sub:'');/*<S26V> a used deep link never stays in the URL </S26V>*/
 /* address-bar / href URL: path + (?demo=1) + (?admin=1 only in the address bar of an admin, never in shared links) + hash */
-function s24Url(h,share){const q=new URLSearchParams();if(DEMO)q.set('demo','1');if(!share&&ADMIN)q.set('admin','1');const s=q.toString();return location.pathname+(s?'?'+s:'')+(h?'#'+h:'')}
+function hoopsLeagueId(){try{const q=new URLSearchParams(location.search).get('l');if(q&&/^[A-Za-z0-9]{2,40}$/.test(q))return q}catch(e){}const id=window.HOOPS&&HOOPS.id;return (id&&/^[A-Za-z0-9]{2,40}$/.test(id))?id:''}
+function s24Url(h,share){const q=new URLSearchParams();const l=hoopsLeagueId();if(l)q.set('l',l);if(DEMO)q.set('demo','1');if(typeof VIEW_ONLY!=='undefined'&&VIEW_ONLY)q.set('view','1');if(!share&&ADMIN)q.set('admin','1');const s=q.toString();return location.pathname+(s?'?'+s:'')+(h?'#'+h:'')}
 const s24Href=t=>s24Url(s24HashOf(t),true);
 function s24ShareUrl(kind,id){const h=kind&&s24IdOK(String(id))?(kind==='games'?'games/':s24HashOf('bets27')+'/')+id:s24HashOf(tab);return s29ViewUrl(h)}
 /*<S29B-SHARE>*/ // every shared link is view-only: ?view=1 + #tab, nothing else (never admin=1, k=, a key, PIN or token)
-function s29ViewUrl(h){h=String(h||'').replace(/[^A-Za-z0-9_\/-]/g,'');return location.origin+location.pathname+'?view=1'+(h?'#'+h:'')}/*</S29B-SHARE>*/
+function s29ViewUrl(h){h=String(h||'').replace(/[^A-Za-z0-9_\/-]/g,'');const q=new URLSearchParams();const l=hoopsLeagueId();if(l)q.set('l',l);q.set('view','1');return location.origin+location.pathname+'?'+q.toString()+(h?'#'+h:'')}/*</S29B-SHARE>*/
 /*<S26W-MANIFEST>*/ // Install / Add to home screen from any tab opens that tab: the manifest link points at a per-tab manifest whose start_url is ./#<tab>
 const S26W_MT=["standings", "games", "bets", "bets-2025-26", "teams", "draft", "recap", "howto", "rules", "archive", "share", "profile", "postseason", "redraft", "rosters", "points"];function s26wMan(h){try{h=String(h||'').split('/')[0];const l=document.querySelector('link[rel=manifest]');if(!l)return;const want=S26W_MT.includes(h)?'manifest-'+h+'.webmanifest':'manifest.webmanifest';if(l.getAttribute('href')!==want)l.setAttribute('href',want)}catch(e){}}/*</S26W-MANIFEST>*/
 function s24Put(push){try{s26wMan(s24HashOf(tab));const want=s24Url(s24RouteHash());try{sessionStorage.setItem((HK+'tab'),s24HashOf(tab))}catch(_){}if(location.pathname+location.search+location.hash===want)return;history[push?'pushState':'replaceState'](null,'',want)}catch(e){}}
