@@ -986,7 +986,7 @@ html body .card.oc .chips.school-grid .chip .cr{grid-column:2!important;grid-row
 </section><!--</CHAT>-->
 <footer id="foot"></footer>
 <script src="shared/ui.js?v=1.65.0"></script>
-<script src="js/version.js"></script><script src="js/core.js"></script><script src="js/scoring.js"></script><script src="js/league-d.js"></script><script src="js/store.js"></script><script src="assets/teams.js"></script><script src="js/power-apply.js"></script><script src="js/league.js"></script><script src="js/hoops-stoopids.js"></script><script>HOOPS.dataName="STOOPIDS_DATA";</script>
+<script src="js/version.js"></script><script src="js/core.js"></script><script src="js/scoring.js"></script><script src="js/league-d.js"></script><script src="js/league-sched.js"></script><script src="js/store.js"></script><script src="assets/teams.js"></script><script src="js/power-apply.js"></script><script src="js/league.js"></script><script src="js/hoops-stoopids.js"></script><script>HOOPS.dataName="STOOPIDS_DATA";</script>
 <script>
 /*<S25-SHARED>*/
 /* shared-s25.js : STOOPIDS s25 shared core (auto-settle reading + result math + ESPN matching, settle sounds, settle memes, taglines, reactions).
@@ -1516,9 +1516,29 @@ function lvApply(ev){
   return before!==after;
 }
 /* a batch of ESPN events -> overlay + stats */
+function lvOwners(tid){tid=String(tid||'');if(!tid||!D||!D.owners)return[];const o=D.owners.find(ow=>(ow.teams||[]).some(x=>String(x.tid)===tid));return o&&o.name?[o.name]:[]}
+function lvShortOf(id,fb){const t=(D&&D.teams&&D.teams[id])||{};return t.short||t.abbr||t.name||fb||''}
+function lvFromEvent(e){const ev=lvParse(e);if(!ev||!ev.home||!ev.away||!ev.home.id||!ev.away.id)return null;if(ev.status==='other')return null;
+  const raw=(e.competitions||[])[0]||{},comp=id=>(raw.competitors||[]).find(x=>String((x.team||{}).id)===String(id))||{};
+  const short=id=>{const tm=(comp(id).team||{});return lvShortOf(id,tm.abbreviation||tm.shortDisplayName||tm.location||'')};
+  const side=s=>{const ow=lvOwners(s.id);return{id:String(s.id),score:s.score,seed:s.seed||null,short:short(s.id),owners:ow,pool:!!ow.length,win:!!s.win}};
+  const note=(((raw.notes||[])[0])||{}).headline||'',stype=(e.season||{}).type;let kind='reg',round='';
+  if(stype===5||/play-?in/i.test(note)){kind='playin';round=note||'Play-In'}
+  else if(/NBA Cup/i.test(note)&&(/quarter|semi|champ/i.test(note))){kind='cup';round=/champ/i.test(note)?'Cup Championship':/semi/i.test(note)?'Cup Semifinals':'Cup Quarterfinals'}
+  else if(stype===3){kind='playoff';round=note.split(' - ').pop()||note}
+  const start=ev.start||e.date||null,day=start?lvEtDay(start):(e.date||'').slice(0,10);
+  const g={id:String(ev.id),day,start,status:ev.status,kind,round,neutral:!!raw.neutralSite,home:side(ev.home),away:side(ev.away),line:null,upset:null,src:'espn'};
+  g.h2h=!!(g.home.owners.length&&g.away.owners.length&&g.home.owners[0]!==g.away.owners[0]);
+  g.civil=!!(g.home.owners.length&&g.away.owners.length&&g.home.owners[0]===g.away.owners[0]);return g}
+function lvAdd(g){if(!D||!g)return false;D.games=D.games||[];if(D.games.some(x=>String(x.id)===String(g.id)))return false;D.games.push(g);
+  const row=(us,them,site)=>({id:g.id,day:g.day,start:g.start,status:g.status,kind:g.kind,round:g.round,site,opp:them.short,oppId:them.id,us:us.score,them:them.score,res:g.status==='final'&&us.score!=null&&them.score!=null&&us.score!==them.score?(us.score>them.score?'W':'L'):null,src:'espn'});
+  const addTG=(us,them,site)=>{const id=String(us.id);if(!D.team_games)D.team_games={};(D.team_games[id]=D.team_games[id]||[]).push(row(us,them,site))};
+  addTG(g.home,g.away,'H');addTG(g.away,g.home,'A');if(D.meta)D.meta.games_loaded=(D.games||[]).length;return true}
 function lvRun(events){
   let matched=0,changed=0;const ov={};
-  (events||[]).forEach(e=>{const ev=lvParse(e);if(!ev)return;const g=lvFind(ev);if(!g)return;matched++;
+  (events||[]).forEach(e=>{const ev=lvParse(e);if(!ev)return;let g=lvFind(ev);
+    if(!g){const ng=lvFromEvent(e);if(ng&&lvAdd(ng)){g=ng;changed++}}
+    if(!g)return;matched++;
     if(lvApply(ev))changed++;
     if(ev.status==='live'||ev.status==='final'||ev.status==='postponed'||ev.status==='canceled')ov[ev.id]=ev;else if(ev.status==='scheduled')delete LV.ov[ev.id]});
   LV.ov=Object.assign(LV.ov,ov);
@@ -1540,11 +1560,17 @@ function lvHot(g,now){
   const t=g.start?Date.parse(g.start):NaN;if(isNaN(t)||isTBD(g))return false;
   return t-now<=LVC.aheadMs&&now-t<=LVC.behindMs;
 }
+function lvEtDay(x){try{const d=x instanceof Date?x:new Date(x);return isNaN(d)? '':ETK.format(d)}catch(e){return ''}}
 function lvDays(now){
-  const today=ETK.format(new Date(now)),hot=((D&&D.games)||[]).filter(g=>lvHot(g,now)),set=[...new Set(hot.map(g=>g.day).filter(Boolean))];
-  if(!set.length)return [today];
-  set.sort((a,b)=>Math.abs(Date.parse(a)-Date.parse(today))-Math.abs(Date.parse(b)-Date.parse(today)));
-  return set.slice(0,LVC.maxDays).sort();
+  const today=lvEtDay(now),tom=lvEtDay(now+24*3600000),nxt=lvEtDay(now+48*3600000),set=new Set([today,tom,nxt].filter(Boolean));
+  ((D&&D.games)||[]).forEach(g=>{
+    const t=g.start?Date.parse(g.start):NaN,d=!isNaN(t)?lvEtDay(t):(g.day||'');
+    if(!d)return;
+    if(lvHot(g,now)){set.add(d);return}
+    if(g.status!=='final'&&!isNaN(t)&&now-t>=0&&now-t<=7*86400000)set.add(d)
+  });
+  const pref=d=>d===today?0:d===tom?1:d===nxt?2:3;
+  return [...set].sort((a,b)=>pref(a)-pref(b)||(Date.parse(a)-Date.parse(today))-(Date.parse(b)-Date.parse(today))).slice(0,Math.max(LVC.maxDays,4)).sort();
 }
 const lvActive=now=>((D&&D.games)||[]).some(g=>lvHot(g,now));
 function lvDelay(now){
@@ -4404,7 +4430,7 @@ function s24FilterBar(bets,me,ph){const p=s24FP(),st=s24FSt(),ac=s24FAc(),wh=s24
 let ST_CHK=0;function stRefresh(btn){/*REFRESH-NOW shared*/if(window.SHARED_UI&&SHARED_UI.refreshNow){ST_CHK=Date.now();LV.fails=0;LV.paused=false;return SHARED_UI.refreshNow('.segref:not(.gref)',[()=>new Promise(r=>load(r)),()=>lvCheck(true)],()=>render())}if(btn){btn.disabled=true;btn.textContent='Refreshing\u2026'}ST_CHK=Date.now();try{lvManual()}catch(e){}load();setTimeout(()=>{try{const u=document.getElementById('stUpd'),d=genDate();if(u)u.textContent='Updated '+(d?relAgo(Date.now()-d.getTime()):'')+(window.SHARED_UI&&SHARED_UI.checkedText?SHARED_UI.checkedText(ST_CHK):' \u00b7 checked just now');const b=document.querySelector('.segref');if(b){b.disabled=false;b.innerHTML='&#8635; Refresh'}}catch(e){}},1500)}/*</ST-REFRESH>*/
 function load(cb){
   const s=document.createElement('script');s.src='js/version.js?v='+Date.now();
-  s.onload=async()=>{try{await HOOPS.load()}catch(e){if(!D){$('#main').innerHTML=HOOPS.landingHtml();if(typeof cb==='function')cb();return}}D=window.STOOPIDS_DATA;{const R=window.HOOPS_DRAFT27_RESULTS.draft;D27_OWNERS=R.managers||D27_OWNERS;D27_ROUNDS=R.rounds||D27_ROUNDS;D27_TOTAL=D27_OWNERS*D27_ROUNDS}D._base=D.bets;applyShared();/*<REFRESH-NOW>*/try{lvReapply()}catch(e){}/*</REFRESH-NOW>*/try{cmLoad()}catch(e){}render();try{presInit()}catch(e){}try{chatInit()}catch(e){}/*<REFRESH-NOW>*/try{lvInit()}catch(e){}/*</REFRESH-NOW>*/
+    s.onload=async()=>{try{HOOPS.onSched=function(data){D=data||HOOPS.D;try{lvReapply()}catch(e){}try{render()}catch(e){}};await HOOPS.load()}catch(e){if(!D){$('#main').innerHTML=HOOPS.landingHtml();if(typeof cb==='function')cb();return}}D=HOOPS.D||window[HOOPS.dataName];{const R=window.HOOPS_DRAFT27_RESULTS.draft;D27_OWNERS=R.managers||D27_OWNERS;D27_ROUNDS=R.rounds||D27_ROUNDS;D27_TOTAL=D27_OWNERS*D27_ROUNDS}D._base=D.bets;applyShared();/*<REFRESH-NOW>*/try{lvReapply()}catch(e){}/*</REFRESH-NOW>*/try{cmLoad()}catch(e){}render();try{presInit()}catch(e){}try{chatInit()}catch(e){}/*<REFRESH-NOW>*/try{lvInit()}catch(e){}/*</REFRESH-NOW>*/
     /*<BETS-2627>*/try{b27Init()}catch(e){}/*</BETS-2627>*//*<S24-EDIT>*/try{s24AfterLoad()}catch(e){}/*</S24-EDIT>*/if(typeof cb==='function')cb()};   /* chatInit = CHAT hook */
   s.onerror=()=>{if(typeof cb==='function')cb();if(!D)$('#main').innerHTML='<div class="card">Couldn\u2019t load the latest data. Try reloading the page.'+(ADMIN?' (data.js missing: run <code>python3 refresh.py</code> first.)':'')+'</div>'};
   document.head.appendChild(s);

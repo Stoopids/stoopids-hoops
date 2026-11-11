@@ -59,8 +59,15 @@ function loadAllFromCache(){ST.ids.forEach(id=>{const c=readCache(id);if(c)ST.ca
 function games(){const seen=new Map();ST.ids.forEach(id=>{(ST.cache[id]||[]).forEach(g=>{if(!seen.has(g.id)||(g.status!=='scheduled'&&seen.get(g.id).status==='scheduled'))seen.set(g.id,g)})});return Array.from(seen.values())}
 const same=(a,b)=>{if(String(a.id)===String(b.id))return true;const p=g=>[String(g.home.id),String(g.away.id)].sort().join('|');if(p(a)!==p(b))return false;const x=Date.parse(a.start),y=Date.parse(b.start);return !isNaN(x)&&!isNaN(y)?Math.abs(x-y)<=C.pairMs:a.day===b.day}
 /* scores.json (SC) + schedule games: the file wins for any game it has, the schedule adds the rest. Returns a scores-shaped object, or SC itself when there is nothing to add. */
-function merge(SC){if(!ST.opts||(ST.opts.enabled&&!ST.opts.enabled()))return SC;const es=games();if(!es.length)return SC;const fg=(SC&&SC.games)||[];const byId=new Set(fg.map(g=>String(g.id)));
-  const add=es.filter(g=>!byId.has(String(g.id))&&!fg.some(f=>same(f,g)));if(!add.length)return SC;
+const RANK={scheduled:0,other:0,live:1,final:2,postponed:1,canceled:1};
+function merge(SC){if(!ST.opts||(ST.opts.enabled&&!ST.opts.enabled()))return SC;const es=games();if(!es.length)return SC;const fg0=(SC&&SC.games)||[];
+  const findE=f=>es.find(g=>same(f,g));
+  const fg=fg0.map(f=>{const e=findE(f);if(!e)return f;if(f.status==='final')return f;const er=RANK[e.status],fr=RANK[f.status];if(er==null||(fr!=null&&er<fr))return f;if(er===fr&&e.status==='scheduled')return Object.assign({},f,{start:e.start||f.start,day:e.day||f.day});
+    const home=Object.assign({},f.home,{score:e.home.score!=null?e.home.score:f.home.score}),away=Object.assign({},f.away,{score:e.away.score!=null?e.away.score:f.away.score});
+    return Object.assign({},f,{status:e.status,start:e.start||f.start,day:e.day||f.day,kind:e.kind||f.kind,round:e.round||f.round,home,away})});
+  const byId=new Set(fg.map(g=>String(g.id)));
+  const add=es.filter(g=>!byId.has(String(g.id))&&!fg.some(f=>same(f,g)));
+  if(!add.length&&fg.every((g,i)=>g===fg0[i]))return SC;
   return Object.assign({format:1,sample:false,label:'',season:'2026-27',as_of:null},SC||{},{games:fg.concat(add)})}
 const has=()=>games().length>0;
 function relAgo(ms){const m=Math.floor(Math.max(0,ms)/60000);if(m<1)return 'just now';if(m<60)return m+' min ago';const h=Math.floor(m/60);if(h<24)return h+(h===1?' hour':' hours')+' ago';const d=Math.floor(h/24);return d+(d===1?' day':' days')+' ago'}

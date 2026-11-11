@@ -1,0 +1,89 @@
+.titlebar h1 { font-size: clamp(34px, 10.5vw, 72px); }
+.s27-pres { font-size: clamp(17px, 5.25vw, 36px); font-weight: 900; letter-spacing: 0.08em; line-height: 1.1; font-variant: small-caps; text-transform: lowercase; margin: 0px 0px 4px; color: var(--mut); text-align: center; }
+.hero { position: relative; aspect-ratio: 992 / 340; background: url("assets/hero-wide.jpg?v=4") center 14% / cover no-repeat; border-radius: 0px 0px 18px 18px; overflow: hidden; }
+.titlebar { padding: 12px 14px 4px; text-align: left; }
+.titlebar .tag { margin: 6px 0px 0px; color: rgb(231, 236, 246); }
+@media (max-width: 640px) .hero { aspect-ratio: 16 / 10; background-image: url("assets/hero-mobile.jpg?v=4"); background-position: center 8%; }
+.hero { aspect-ratio: auto; height: clamp(110px, 15vw, 160px); background-position: center 32%; }
+@media (max-width: 640px) .hero { aspect-ratio: auto; height: clamp(84px, 29vw, 118px); background-position: center 18%; }
+html body #onlStrip.onl-fixed { position: fixed; z-index: 29; left: 12px; right: 160px; bottom: max(12px,env(safe-area-inset-bottom,0px)); margin: 0px; width: auto; }
+.titlebar { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 12px 14px 4px; }
+.titlebar h1 { text-align: center; color: var(--acc); }
+.titlebar h1 span { color: var(--acc); }
+.titlebar .tag { margin: 0px; line-height: 1.15; text-align: center; max-width: 100%; overflow-wrap: anywhere; }
+nav a.nt .s29nb, nav .nm-b > .s29nb, .nm-i > .s29nb { position: absolute; top: 1px; right: 2px; min-width: 15px; background: rgb(255, 212, 0); color: rgb(17, 17, 17); border-radius: 99px; font-size: 9px; font-weight: 900; line-height: 1; padding: 2px 4px; text-align: center; pointer-events: none; }
+nav .nm-b.on > .s29nb, .nm-i.on > .s29nb { background: rgb(17, 17, 17); color: rgb(255, 212, 0); }
+.s12-share { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 4px; min-height: 36px; padding: 0px 12px; border-radius: 999px; border: 1px solid var(--line); background: var(--card2); color: var(--tx,#eef1f7); font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-language-override: inherit; font-size: 13px; font-weight: 700; cursor: pointer; white-space: nowrap; }
+.s12-share:hover { border-color: var(--acc); }
+.s12-share.on { background: var(--acc); color: rgb(17, 17, 17); border-color: var(--acc); }
+@media (max-width: 480px) .s12-share { min-height: 36px; padding: 0px 9px; font-size: 12px; }
+.hero { height: clamp(130px, 22vw, 235px); background-position: center 40%; }
+@media (max-width: 640px) .hero { height: clamp(104px, 37vw, 150px); background-position: center 22%; }
+@media (min-width: 641px) .gtop, footer, .hero, header, #hero { max-width: var(--nav-max); }
+.hero { height: clamp(96px, 14vw, 170px) !important; aspect-ratio: auto !important; }
+.titlebar { padding: 6px 12px 0px !important; }
+.titlebar h1, #ltitle { line-height: 1.05; margin: 0px !important; }
+.s27-pres, #lpres { margin: 0px !important; }
+nav, #nav, #ltabs { padding-top: 3px !important; padding-bottom: 3px !important; margin-bottom: 0px !important; }
+.onl { max-width: 100%; margin: 8px 0px; padding: 6px 8px; display: flex; flex-wrap: nowrap; gap: 8px; align-items: center; justify-content: flex-start; overflow: auto hidden; border: 1px solid var(--line,#2d3548); border-radius: 12px; background: var(--card,#1b2130); font-size: 14px; line-height: 1.2; box-sizing: border-box; }
+.onl-g { display: inline-flex; align-items: center; gap: 6px; flex: 0 0 auto; }
+.onl-h { font-weight: 800; font-size: 14px; margin-right: 2px; }
+.onl-now .onl-h { color: rgb(134, 239, 172); }
+.onl-was .onl-h { color: var(--mut,#9aa); }
+.onl-none { color: var(--mut,#9aa); font-size: 14px; }
+.onl-p { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 999px; background: rgba(127, 127, 127, 0.12); white-space: nowrap; font-size: 14px; }
+.onl-p .pd { width: 8px; height: 8px; border-radius: 50%; background: rgb(34, 197, 94); display: inline-block; box-shadow: rgba(34, 197, 94, 0.25) 0px 0px 0px 2px; }
+.onl-p .pd.off { background: rgb(107, 114, 128); box-shadow: none; }
+.onl-p small { opacity: 0.85; font-size: 13px; }
+@media (max-width: 640px) .onl { font-size: 14px; gap: 6px; }
+@media (max-width: 640px) .onl-p { padding: 4px 8px; font-size: 14px; }
+.card.oc .who > b .onlb { position: absolute; right: -13px; top: 50%; width: 8px; height: 8px; margin-top: -4px; border-radius: 50%; background: rgb(34, 197, 94); box-shadow: rgb(34, 197, 94) 0px 0px 6px; font-size: 0px; overflow: hidden; }
+@media (min-width: 701px) html body #nav > a, html body #nav > button, html body #ltabs > a, html body #ltabs > button { min-height: 46px !important; height: 46px !important; font-size: 15px !important; font-weight: 600 !important; box-sizing: border-box !important; }
+@media (min-width: 701px) html body #nav > a .nl, html body #nav > button .nl, html body #ltabs > a .nl, html body #ltabs > button .nl { font-size: 15px !important; font-weight: 600 !important; }
+@media (min-width: 701px) html body #nav > a .ni, html body #nav > button .ni, html body #ltabs > a .ni, html body #ltabs > button .ni { font-size: 17px !important; }
+@media (max-width: 700px) html body #nav > a, html body #nav > button, html body #ltabs > a, html body #ltabs > button { min-height: 44px !important; height: 44px !important; box-sizing: border-box !important; }
+@media (max-width: 700px) html body #nav > a .nl, html body #ltabs > a .nl { font-size: 14px !important; font-weight: 700 !important; }
+@media (max-width: 700px) html body #nav > a .ni, html body #ltabs > a .ni { font-size: 15px !important; }
+@media (min-width: 701px) html body #nav > a, html body #nav > button, html body #ltabs > a, html body #ltabs > button { min-height: 38px !important; height: 38px !important; font-size: 14px !important; }
+@media (min-width: 701px) html body #nav > a .nl, html body #nav > button .nl, html body #ltabs > a .nl, html body #ltabs > button .nl { font-size: 14px !important; }
+@media (min-width: 701px) html body #nav > a .ni, html body #nav > button .ni, html body #ltabs > a .ni, html body #ltabs > button .ni { font-size: 15px !important; }
+html body #nav > a.nt, html body #nav > a.nd, html body #nav > button, html body nav#ltabs > a.tb, html body nav#ltabs > a.nd, html body nav#ltabs > button, html body #ltabs > a, html body #ltabs > button { min-height: 48px !important; height: auto !important; box-sizing: border-box !important; font-size: 15px !important; font-weight: 700 !important; padding: 8px 10px !important; line-height: 1.1 !important; }
+html body #nav > a.nt .nl, html body #nav > a.nd .nl, html body #nav > button .nl, html body nav#ltabs > a.tb .nl, html body nav#ltabs > a.nd .nl, html body #ltabs > a .nl, html body #ltabs > button .nl { font-size: 15px !important; font-weight: 700 !important; }
+html body #nav > a.nt .ni, html body #nav > a.nd .ni, html body #nav > button .ni, html body nav#ltabs > a.tb .ni, html body nav#ltabs > a.nd .ni, html body #ltabs > a .ni, html body #ltabs > button .ni { font-size: 18px !important; }
+@media (max-width: 640px) html body #nav > a.nt, html body #nav > a.nd, html body #nav > button, html body nav#ltabs > a.tb, html body nav#ltabs > a.nd, html body nav#ltabs > button, html body #ltabs > a, html body #ltabs > button { min-height: 50px !important; padding: 6px 4px !important; font-size: 13px !important; }
+@media (max-width: 640px) html body #nav > a.nt .nl, html body nav#ltabs > a.tb .nl, html body #ltabs > a .nl { font-size: 13px !important; }
+@media (max-width: 640px) html body #nav > a.nt .ni, html body nav#ltabs > a.tb .ni, html body #ltabs > a .ni { font-size: 17px !important; }
+html body nav#nav, html body nav#ltabs { box-sizing: border-box !important; width: 100% !important; max-width: var(--nav-max,1080px) !important; margin-left: auto !important; margin-right: auto !important; padding-left: 16px !important; padding-right: 16px !important; }
+html body nav#nav > a, html body nav#ltabs > a { box-sizing: border-box !important; height: 48px !important; min-height: 48px !important; max-height: none !important; padding: 0px 8px !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; }
+@media (max-width: 700px) html body nav#nav.nm5 > a, html body nav#nav.nm5 > .nm-b, html body nav#ltabs.nm5 > a, html body nav#ltabs.nm5 > .nm-b { box-sizing: border-box !important; height: 50px !important; min-height: 50px !important; max-height: 50px !important; padding: 4px !important; display: inline-flex !important; align-items: center !important; justify-content: center !important; }
+html body .titlebar { position: relative; }
+html body .s12-hd .s12-share, html body .titlebar > .s12-share { position: absolute; top: 6px; right: 12px; z-index: 20; }
+@media (max-width: 700px) html body #onlStrip.onl-fixed { left: 8px !important; right: calc(max(12px,env(safe-area-inset-right,0px)) + 8px + var(--chat-btn,122px)) !important; height: 44px !important; max-height: 44px !important; font-size: 14px !important; overflow-x: auto !important; }
+html body nav#nav { position: sticky !important; top: 0px !important; z-index: 40 !important; background: var(--bg,#0e121b) !important; }
+@media (max-width: 700px) nav#nav.nm5, nav#ltabs.nm5 { display: grid !important; grid-template-columns: repeat(5, minmax(0px, 1fr)) !important; flex-wrap: nowrap !important; overflow: visible !important; }
+@media (max-width: 700px) nav#nav.nm5 > .nm-x, nav#ltabs.nm5 > .nm-x { display: none !important; }
+@media (max-width: 700px) nav#nav.nm5 > .nm-b, nav#ltabs.nm5 > .nm-b { display: flex; }
+.nm-b { display: none; position: relative; flex-direction: column; align-items: center; justify-content: center; gap: 2px; min-width: 0px; min-height: 46px; padding: 4px; background: var(--card,#1b2030); color: var(--tx,#eee); border: 1px solid var(--line,#333); border-radius: 10px; font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-language-override: inherit; font-size: 12px; font-weight: 800; cursor: pointer; }
+.nm-b .ni { font-size: 15px; line-height: 1; }
+.nm-b.on, .nm-b[aria-expanded="true"] { background: var(--pill,#FFD400); color: var(--pill-ink,#111); border-color: var(--pill,#FFD400); }
+.nm-bd { position: fixed; inset: 0px; z-index: 9998; background: rgba(0, 0, 0, 0.55); display: flex; align-items: flex-end; justify-content: center; }
+.nm-bd[hidden] { display: none; }
+.nm-sh { width: 100%; max-width: 520px; max-height: 70vh; overflow-y: auto; overscroll-behavior: contain; background: var(--card,#1b2030); border: 1px solid var(--line,#333); border-radius: 16px 16px 0px 0px; padding: 10px 12px calc(14px + env(safe-area-inset-bottom)); }
+.nm-h { display: flex; justify-content: space-between; align-items: center; font-weight: 800; margin: 2px 2px 8px; }
+.nm-h button { background: none; border: 0px; color: var(--tx,#eee); font-size: 18px; cursor: pointer; padding: 4px 8px; }
+.nm-i { position: relative; display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; background: transparent; color: var(--tx,#eee); border: 1px solid var(--line,#333); border-radius: 10px; padding: 12px; margin: 0px 0px 6px; font-style: inherit; font-variant: inherit; font-stretch: inherit; line-height: inherit; font-family: inherit; font-optical-sizing: inherit; font-size-adjust: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-language-override: inherit; font-size: 15px; font-weight: 700; cursor: pointer; }
+.nm-i.on { background: var(--pill,#FFD400); color: var(--pill-ink,#111); border-color: var(--pill,#FFD400); }
+.nm-b > .s29nb, .nm-i > .s29nb { position: absolute; top: 1px; right: 2px; min-width: 15px; background: rgb(255, 212, 0); color: rgb(17, 17, 17); border-radius: 99px; font-size: 9px; font-weight: 900; line-height: 1; padding: 2px 4px; text-align: center; pointer-events: none; }
+.nm-b.on > .s29nb, .nm-i.on > .s29nb { background: rgb(17, 17, 17); color: rgb(255, 212, 0); }
+html body #onlStrip.onl { flex-wrap: nowrap !important; justify-content: flex-start !important; overflow-x: auto !important; max-width: 100% !important; }
+html body #onlStrip .onl-p, html body #onlStrip .onl-h { flex: 0 0 auto; }
+@media (min-width: 701px) html body nav#nav > a[data-tab="tally"] { display: none !important; }
+@media (max-width: 700px) html body #onlStrip.onl-fixed { left: 8px !important; right: 132px !important; bottom: max(8px,env(safe-area-inset-bottom,0px)) !important; width: auto !important; height: 44px !important; min-height: 44px !important; max-height: 44px !important; margin: 0px !important; padding: 0px 8px !important; display: flex !important; align-items: center !important; flex-wrap: nowrap !important; overflow: auto hidden !important; box-sizing: border-box !important; font-size: 14px !important; }
+@media (max-width: 700px) html body #onlStrip.onl-fixed .onl-h, html body #onlStrip.onl-fixed .onl-p, html body #onlStrip.onl-fixed .onl-p small { font-size: 14px !important; line-height: 1.2 !important; }
+@media (max-width: 700px) html body #onlStrip.onl-fixed { right: calc(max(12px,env(safe-area-inset-right,0px)) + 8px + var(--chat-btn,122px)) !important; }
+@media (max-width: 700px) html body nav#nav > a:not([data-tab="standings"]):not([data-tab="games"]):not([data-tab="bets"]):not([data-tab="bets27"]):not([data-tab="teams"]) { display: none !important; }
+html body nav#nav { position: sticky !important; top: 0px !important; z-index: 40 !important; background: var(--bg,#0e121b) !important; }
+#navHold { height: 0px; margin: 0px; padding: 0px; border: 0px; overflow: hidden; pointer-events: none; line-height: 0; }
+body.hdr-away nav#nav { position: fixed !important; top: 0px !important; left: 0px !important; right: 0px !important; margin: 0px auto !important; width: 100% !important; max-width: var(--nav-max,1080px) !important; z-index: 40 !important; background: var(--bg,#0e121b) !important; }
+.hero { cursor: pointer; }
+.hero.hero-open { height: min(72vh, 560px) !important; }

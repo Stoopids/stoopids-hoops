@@ -46,7 +46,12 @@ H.load=async function(){
   try{const cm=localStorage.getItem('shoops.cm.'+id);H.cmOk=!!(cm&&await FBN.checkPass(L.meta,cm))}catch(e){H.cmOk=false}
   H.cmName=(MG.find(m=>m.mid===L.meta.cm)||MG[0]||{}).name||'';
   let SC=null,TN=null;try{SC=await getJ('data/scores.json');if(SC&&SC.sample)SC=null}catch(e){}try{TN=await getJ('data/tournament.json');if(TN&&TN.sample)TN=null}catch(e){}
-  const st=L.state||{},roster=(st.roster||st.real||st.picks||[]).filter(p=>p&&p.tid!=null);
+  const st=L.state||{},roster=((st.roster&&st.roster.length)?st.roster:(st.real&&st.real.length)?st.real:st.picks)||[];
+  const rosterF=roster.filter(p=>p&&p.tid!=null);
+  H._ctx={L,MG,keyOf,mOf,st,roster:rosterF,TN};
+  if(window.LSCHED){LSCHED.init({ids:()=>POOL.slice(),enabled:()=>true,onUpdate:()=>{H.applySched()}});SC=LSCHED.merge(SC)}
+  H._ctx.SC=SC;H.publish(SC);if(window.LSCHED)LSCHED.start();return H.D};
+H.publish=function(SC){const C=H._ctx;if(!C)return null;SC=SC||C.SC;C.SC=SC;const L=C.L,MG=C.MG,keyOf=C.keyOf,mOf=C.mOf,st=C.st,roster=C.roster,TN=C.TN;
   const B=FBNLeagueD.build({leagueName:L.meta.name,managers:MG,roster,order:st.order||L.meta.order,teams:TEAMS,SC,TN,demo:false,season:'2026-27'});
   const nm=mid=>keyOf[mid]||'';const games=(B.games||[]).map(g=>{const sd=s=>Object.assign({},s,{pool:!!s.owners.length,owners:s.owners.length?[nm((roster.find(p=>String(p.tid)===String(s.id))||{}).owner)]:[]});
     const o=Object.assign({},g,{home:sd(g.home),away:sd(g.away),line:g.line||null,upset:null,src:'espn'});o.h2h=!!(o.home.owners.length&&o.away.owners.length&&o.home.owners[0]!==o.away.owners[0]);o.civil=!!(o.home.owners.length&&o.away.owners.length&&o.home.owners[0]===o.away.owners[0]);return o});
@@ -56,7 +61,7 @@ H.load=async function(){
       return{tid:String(t.tid),window:{start:null,end:null},status:'active',wins_counted:t.wins||0,by,total:(t.wins||0)+(t.tpts||0),items}});
     const by={};Object.keys(o.by_cat||{}).forEach(k=>{if(o.by_cat[k])by[k]=o.by_cat[k]});return{name:key,team_name:o.team_name||key,emoji:o.emoji||'🏀',total:o.total||0,by_cat:by,teams,rank:o.rank,_mid:o.mid}});
   owners.sort((a,b)=>a.rank-b.rank);
-  /* display names: team on top, the manager's real name under it (STOOPIDS OWNER_DISP), from the joins; nothing hardcoded */
+  /* display names: team on top, the manager's real name under it ([REDACTED] OWNER_DISP), from the joins; nothing hardcoded */
   const OD=window.HOOPS_OWNER_DISP;Object.keys(OD).forEach(k=>delete OD[k]);owners.forEach(o=>{OD[o.name]={team:o.team_name||o.name,person:o.name}});
   const records={};Object.keys(B.records||{}).forEach(t=>{records[t]=Object.assign({conf_w:0,conf_l:0},B.records[t])});
   const checklist={};Object.keys(B.checklist||{}).forEach(t=>{const c=B.checklist[t]||{};checklist[t]=Object.assign({},c)});
@@ -73,13 +78,14 @@ H.load=async function(){
     bets:{currency:{code:'',display_unit:1,suffix:'',prefix:''},people:[],bets:[],tallies:{all:{all:{ids:[],matrix:{}}}},fines:{},coverage:{total:0,settled:0,settled_with_assumptions:0,wash:0,open:0,unparsed:0,with_money:0,with_items:0},imported_at:null},
     games,cat_labels:CAT_LABELS,windows:{},ranks};
   owners.forEach(o=>{D.windows[o.name]=o.teams.map(t=>({tid:t.tid,start:null,end:null,sheet_name:(TEAMS[t.tid]||{}).short||t.tid}))});
-  /* Recap > Draft results: STOOPIDS DRAFT27 slots / order / picks from this league's draft */
+  /* Recap > Draft results: [REDACTED] DRAFT27 slots / order / picks from this league's draft */
   const n=MG.length,picks=(st.picks||[]).filter(p=>p&&p.tid!=null),order=(st.order||L.meta.order||[]).filter(m=>keyOf[m]);
   const D27=window.HOOPS_DRAFT27;D27.slots.length=0;Object.keys(D27.order).forEach(k=>delete D27.order[k]);order.forEach(mid=>{D27.slots.push([keyOf[mid],mid]);D27.order[keyOf[mid]]=picks.filter(p=>p.owner===mid).map(p=>String(p.tid))});
   const R=window.HOOPS_DRAFT27_RESULTS;R.league=L.meta.name;R.completed_at=(L.meta.status==='complete'&&L.meta.endedAt)?new Date(L.meta.endedAt).toISOString():null;R.draft_date=L.meta.startedAt?new Date(L.meta.startedAt).toISOString():null;R.draft={type:(L.meta.settings||{}).type||'snake',rounds:(L.meta.settings||{}).rounds||Math.ceil(picks.length/Math.max(1,n)),managers:n};
   R.order=order.map((mid,i)=>({manager:keyOf[mid],mid,slot:i+1,owner_name:keyOf[mid],team_name:(mOf[keyOf[mid]]||{}).team||keyOf[mid]}));
   R.picks=picks.map((p,i)=>({overall:i+1,round:Math.floor(i/Math.max(1,n))+1,pick:i%Math.max(1,n)+1,manager:keyOf[p.owner],teamId:String(p.tid),team:(TEAMS[p.tid]||{}).short||String(p.tid)}));
   if(H.dataName)window[H.dataName]=D;H.D=D;return D};
+H.applySched=function(){if(!window.LSCHED||!H._ctx)return H.D;H.publish(LSCHED.merge(H._ctx.SC));if(typeof H.onSched==='function')try{H.onSched(H.D)}catch(e){}return H.D};
 /* commissioner passcode (this league's meta.pass; same check as the draft room) */
 /* h1 = league name in the STOOPIDS two-tone title style (last word in the accent span, like STOOP<span>IDS</span>); shrinks to fit one line */
 H.setTitle=function(name){const h=document.getElementById('hoopsLg');if(!h)return;const n=String(name||'Stoopids Hoops').trim().toUpperCase().replace(/\s+/g,' ');const i=n.lastIndexOf(' ');

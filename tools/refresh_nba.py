@@ -7,7 +7,7 @@ numeric ESPN team id). On a BPI fetch failure the existing power.json / teams.js
 fallback ranks are left in place. Does NOT write SYNTHETIC/demo files.
 
 Usage:
-  python3 tools/refresh_nba.py                # last 7 days + today (scoreboard) + BPI
+  python3 tools/refresh_nba.py                # last 7 days through next 14 days (scoreboard, Eastern today) + BPI
   python3 tools/refresh_nba.py --power-only   # ESPN BPI into data/power.json (and teams.js ranks)
   python3 tools/refresh_nba.py --start 2025-10-21 --end 2026-06-26 --merge
   python3 tools/refresh_nba.py --out /tmp/nba-data
@@ -21,6 +21,7 @@ Cup knockout is still type 2; detected from notes ("NBA Cup - Semifinals", etc.)
 """
 from __future__ import annotations
 import argparse, json, re, sys, urllib.request
+from zoneinfo import ZoneInfo
 from datetime import date, datetime, timedelta
 from pathlib import Path
 
@@ -120,8 +121,8 @@ def parse_event(ev, pool: set[str]):
         return None
     day = start[:10]
     try:
-        # ESPN dates are UTC ISO; game day is the calendar date in the payload
-        day = datetime.fromisoformat(start.replace("Z", "+00:00")).date().isoformat()
+        # ESPN timestamps are UTC; NBA game day is the US Eastern calendar date
+        day = datetime.fromisoformat(start.replace("Z", "+00:00")).astimezone(ZoneInfo("America/New_York")).date().isoformat()
     except Exception:
         pass
     return {
@@ -557,9 +558,9 @@ def main():
     apply_bpi_to_teams_js(root / "assets/teams.js", power or {}, stoopids=stoopids, standings=(last_doc or {}).get("standings"))
     if args.power_only:
         return
-    today = date.today()
+    today = datetime.now(ZoneInfo("America/New_York")).date()
     start = date.fromisoformat(args.start) if args.start else today - timedelta(days=7)
-    end = date.fromisoformat(args.end) if args.end else today
+    end = date.fromisoformat(args.end) if args.end else today + timedelta(days=14)
     games = fetch_days(start, end, pool)
     if args.merge:
         prev = outdir / "scores.json"

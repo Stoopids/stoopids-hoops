@@ -1,5 +1,5 @@
 d41d8cd98f00b204e9800998ecf8427e  .nojekyll
-5cf3aaef2383e23a49125928a9685403  CHANGED-FILES.md
+d5599473e4802f8b04737b2021b96066  CHANGED-FILES.md
 fc4c2520be569d292be962f8ba4efdeb  LICENSE-third-party.txt
 8b5625f976836aad6af5f60e27144a46  README.md
 6e71fc07a94b28f030a54f9dc981573d  STOOPIDS-TEMPLATE.md
@@ -37,12 +37,12 @@ cb2f334310b363a0e1c6d957ba52bc4e  import/stoopids-draft-results.json
 7b5dbb270fa200d81d936dc9c0ae4332  join.html
 d2081ac0a18f07a9fcafd65bc2f943af  js/core.js
 919176badbe78c5adc6fb7ce260cf723  js/help.js
-006b4ef809c01271e5b68d4bd7464916  js/hoops-stoopids.js
+faf8016a516fd362bf8d65bf35f82864  js/hoops-stoopids.js
 0e122ac687e4b2d381136fa161a0dba2  js/index.js
 d2fe9a238ac5cbd4cd207e4357d6b198  js/join.js
 4a248be8d04087454c6a2a5c53e65219  js/league-bets.js
 3f8c8f86dde0f75d98b71796bfbd2bdd  js/league-d.js
-ffbd9b41d526cedd442d6f018833af45  js/league-sched.js
+30ab935990cc18a79e2dcc4513b44210  js/league-sched.js
 0fae7fed36bd70a9dec21701cd95d04a  js/league.js
 5b1cc54fe15d9ac2fe89661275f38af0  js/leaguehome.js
 5aac49616b9f1b8f70625d76ce716f23  js/links-card.js
@@ -62,8 +62,8 @@ ade6fadbb2f4be5a575390360ff3af5b  js/qr.min.js
 4c6278d218b3092ecb311378e48f9cbb  js/store.js
 b31b8d130f47a378f2358995614b9470  js/time.js
 4d504bf1ee1831973176394e76f994f6  js/ui.js
-3baf59ce6373ee5866d2359253a68af2  js/version.js
-4e2ca6d61d0d9fc4e7ff1589d3d1ecea  league.html
+63849a5b370b208d0f896126765541ea  js/version.js
+06d33481645b2c25ed537b9a8af93dd7  league.html
 bfecc7dd0f1bda7d2eba6a98a31acf30  manifest.webmanifest
 3b25eb7bcd546e190180401ab0cd8833  mock.html
 4aa29b791ef8afea1136539675db73df  recap.html
@@ -72,9 +72,9 @@ bfecc7dd0f1bda7d2eba6a98a31acf30  manifest.webmanifest
 0abcaa0775f7e3d21e6561e1b07ccc36  setup.html
 441fdaab0f155a04edca55cc8191e07c  shared/ui.css
 20e521bd045d8ff49ead0a01e6bfef7a  shared/ui.js
-0e29729b7997132317d086068a54e6d3  sw.js
+d2507a3b402824c63bb3e6bfc850f909  sw.js
 dbc1acbbc855aa2997faf2d9331135b5  time.html
-1c4869cead9ab758c5325aa44c3ed066  tools/build_league_from_stoopids.py
+da201d910ed1a779b58cabf89a08e5de  tools/build_league_from_stoopids.py
 eee8a26eb834ea3667a3220d21d9c65d  tools/hoops_sh9_fixes.html
 564a76fc93bd657cffacd255c20ebb3e  tools/mock_textdb.js
-636d0753d17ce3c75551ccacb706f1c2  tools/refresh_nba.py
+b72bae2b59d12eb6e6c61e008b1baefb  tools/refresh_nba.py

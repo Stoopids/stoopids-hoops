@@ -45,7 +45,7 @@ dn = re.search(r'D=window\.(\w+_DATA);', s).group(1)
 # 1) data layer: Hoops modules + adapter load before the page script; D comes from the Hoops league instead of data.js
 rep('<script src="archive.js?v=1"></script>',
     '<script src="js/version.js"></script><script src="js/core.js"></script><script src="js/scoring.js"></script><script src="js/league-d.js"></script>'
-    '<script src="js/store.js"></script><script src="assets/teams.js"></script><script src="js/power-apply.js"></script><script src="js/league.js"></script>'
+    '<script src="js/league-sched.js"></script><script src="js/store.js"></script><script src="assets/teams.js"></script><script src="js/power-apply.js"></script><script src="js/league.js"></script>'
     '<script src="js/hoops-stoopids.js"></script><script>HOOPS.dataName=' + json.dumps(dn) + ';</script>',
     why='Hoops data layer instead of archive.js (no past Hoops seasons yet: Archive shows its empty state)')
 rep("const s=document.createElement('script');s.src=(DEMO?'demo/':'')+'data.js?v='+Date.now();\n  s.onload=()=>{D=window.",
@@ -53,6 +53,8 @@ rep("const s=document.createElement('script');s.src=(DEMO?'demo/':'')+'data.js?v
     why='load(): build D from the Hoops league (re-read every 2 min, so drafted rosters appear automatically)')
 rep("const D27_START='2026-11-01T13:00:00Z',D27_OWNERS=8,D27_ROUNDS=8,D27_TOTAL=D27_OWNERS*D27_ROUNDS;", "const D27_START='2000-01-01T00:00:00Z';let D27_OWNERS=8,D27_ROUNDS=8,D27_TOTAL=D27_OWNERS*D27_ROUNDS;", why='draft size from the Hoops league (set in load)')
 rep("D=window."+dn+";", "D=window."+dn+";{const R=window.HOOPS_DRAFT27_RESULTS.draft;D27_OWNERS=R.managers||D27_OWNERS;D27_ROUNDS=R.rounds||D27_ROUNDS;D27_TOTAL=D27_OWNERS*D27_ROUNDS}", why='draft size from the Hoops league')
+rep("s.onload=async()=>{try{await HOOPS.load()}", "s.onload=async()=>{try{HOOPS.onSched=function(data){D=data||HOOPS.D;try{lvReapply()}catch(e){}try{render()}catch(e){}};await HOOPS.load()}", why='rebuild D when the in-browser ESPN schedule finishes')
+rep("D=window."+dn+";{const R=window.HOOPS_DRAFT27_RESULTS.draft;D27_OWNERS=R.managers||D27_OWNERS;D27_ROUNDS=R.rounds||D27_ROUNDS;D27_TOTAL=D27_OWNERS*D27_ROUNDS}", "D=HOOPS.D||window[HOOPS.dataName];{const R=window.HOOPS_DRAFT27_RESULTS.draft;D27_OWNERS=R.managers||D27_OWNERS;D27_ROUNDS=R.rounds||D27_ROUNDS;D27_TOTAL=D27_OWNERS*D27_ROUNDS}", why='use HOOPS.D after schedule merge')
 rep('<p class="d27sub">8 owners · snake draft', '<p class="d27sub">${D27_OWNERS} owners · ${esc((DRAFT27_RESULTS.draft||{}).type||\'snake\')} draft', why='draft results subtitle')
 # 2) textdb records -> this league's shoops1- keys
 rep("url:'https://textdb.dev/api/data/stoopids-presence-23658198955328729a557ddb'", "url:HOOPS.url('stoopids-presence-0')", why='presence key')
