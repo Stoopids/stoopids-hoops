@@ -30,7 +30,7 @@ const POOL_TXT={toggle:'Pool / buy-in',toggleBet:'One side vs another',youIn:'(y
   fPay:'Payouts when done (total received), e.g. ana:80, ben:20',s1:'What’s the pool?',s2:'Who’s in?',s3:'Buy-in per person',s4:'Payouts by place',termsPh:'e.g. season-long tournament pool',buyPh:'e.g. 50',
   potLine:'Pot: {n} × {buy} = {pot}',potWait:'Pot: pick who’s in and a buy-in',addPlace:'+ Add place',payOpt:'Optional: leave blank to fill in when it’s over.',sumLine:'Adds up to {sum} of {pot}',
   ePlaceSum:'Payouts add up to {sum} but the pot is {pot} ({diff} {way}).',short:'short',over:'over',ePlaceNum:'Use whole numbers for the payouts (like 400).',pickWho:'Who finished where?',pickOne:'Pick…',ePickAll:'Pick someone for every place.',payLine:'Payouts: {x}',
-  helpPl:'Amounts only; you pick who finished where when you settle it. They must add up to the pot.',build:'Build',
+  helpPl:'Amounts only; you pick who finished where when you settle it. They must add up to the pot.',build:'Write It Up',
   eTerms:'Write the terms of the pool first.',ePeople:'a pool needs 2+ participants',eBuy:'pool needs a buy-in like 50',eBuyMin:'buy-in must be a whole number of at least {min} (like 50)',eBadPay:"can't read one of the payouts (try 80, 20)",eFmt:'Write each payout as name:amount, like ana:80.',
   eSum:'payouts add up to {sum} but the pot is {total}',eUnknown:'Unknown name "{x}". Use these short names for payouts: {keys}',eNotIn:'"{x}" is not in this pool.',eDup:'"{x}" is listed twice.',eEmptyPay:'Fill in the payouts first.',
   confirmTitle:'Check it, then confirm',sum:'Pool of {names} · buy-in {buy} each · total {tot}',open:'Payouts left open: it stays open until someone fills them in below.',
@@ -38,7 +38,7 @@ const POOL_TXT={toggle:'Pool / buy-in',toggleBet:'One side vs another',youIn:'(y
   placed:'Built! Pool #{n} is open until the payouts are entered. You can undo it for 30 seconds.',
   word:'Pool',stOpen:'Open',stDone:'Settled',stVoid:'Cancelled',who:'{n} managers',with:'With: {names}',line:'Buy-in each {buy} · total {tot}',noPay:'Payouts not entered yet.',
   save:'Save payouts',again:'Tap again to confirm',cancel:'Cancel this pool',undo:'↩ Undo this pool (30 s)',result:'Result',saved:'Saved.',
-  only:'Only the person who placed this bet can settle it.',cantSave:'Couldn’t save. Check your connection and tap Build again (it won’t double-post).'};
+  only:'Only the person who placed this bet can settle it.',cantSave:'Couldn’t save. Check your connection and tap Write It Up again (it won’t double-post).'};
 const PT=(k,v)=>String(POOL_TXT[k]).replace(/\{(\w+)\}/g,(_,n)=>v&&n in v?v[n]:'');
 const PLACES=['Winner','2nd','3rd','4th','5th','6th','7th','8th','9th','10th'];const placeName=i=>PLACES[i]||((i+1)+'th');
 const poolNum=x=>{x=String(x==null?'':x).trim();if(!/^\d{1,7}$/.test(x))return null;const v=parseInt(x,10);return v<=POOL_MAX?v:null};
@@ -362,7 +362,7 @@ const kindTabs=()=>`<div class="tabs b27-kind" role="group" aria-label="Bet type
    fills the New bet form (bettors, odds, bet text through readBet = the auto-settle reader, amount only when it is in the line) and shows ONE summary line
    'Ken bets Paul: Duke +4 vs Virginia, 2-1' with a single Confirm. A field it cannot fill is asked inline (quick buttons); Confirm stays disabled until answered.
    Never guesses a name. Nothing is written before Confirm; Confirm = the normal New bet save (confirmPlace + formOK). ---------- */
-const PZ_EX='ken v paul 2-1 odds, duke +4 v Virginia';
+const PZ_EX='ken v paul 2-1 odds, knicks +4 v Celtics';
 const pzN=s=>String(s||'').toLowerCase().replace(/[^a-z0-9 ]/g,' ').replace(/\s+/g,' ').trim();
 function pzWho(q){q=pzN(q);if(!q)return{none:true};const O=owners();const keys=o=>{const n=pzN(o.name),t=pzN(o.team),k=[n,t,...n.split(' '),...t.split(' ')];if(/^test /.test(n))k.push(n.slice(5));return k.filter(Boolean)};
   const ex=O.filter(o=>keys(o).includes(q));if(ex.length===1)return{mid:ex[0].mid};if(ex.length>1)return{cands:ex.map(o=>o.mid)};
@@ -416,13 +416,13 @@ function formHtml(me){const f=S.f,oth=others();const err=formOK();
   return`<div class="card b27-form" id="b27Form"><b>New bet</b> <span class="note">· you are <b>${esc(nm(me))}</b></span>${qbHint()}${S.edited||!PF()?'':pasteHtml(me)}${S.edited?`<div class="note b27-edhint" role="status" id="b27EdHint">✏️ Filled in from Bet #${esc(S.edited)} (withdrawn). Change it, then place it again.</div>`:kindTabs()}
    <div class="b27-q">1. Who are you betting against? <span class="note">Tap one or more. Several = one bet each.</span></div><div class="b27-opps" role="group" aria-label="Opponents" style="--n:${oth.length}">${oth.map(o=>chip(o,'opp',!f.open&&f.opps.includes(o.mid))).join('')}</div>
    <div class="b27-selbar"><button type="button" class="b27-sm" data-lb="oppall">Select all</button><button type="button" class="b27-sm" data-lb="oppclear">Clear</button><span class="cnt" id="b27SelCnt" aria-live="polite">${f.open?'Open to anyone':f.opps.length?f.opps.length+' selected':'None selected'}</span></div>
-   <div class="b27-q"><label for="b27Text">2. What’s the bet? <span class="note">I say…</span></label></div><input id="b27Text" class="sb-in b27-in" maxlength="${C.maxText}" autocomplete="off" enterkeyhint="go" placeholder="e.g. Kansas -4 beats Duke" value="${esc(f.text)}">
+   <div class="b27-q"><label for="b27Text">2. What’s the bet? <span class="note">I say…</span></label></div><input id="b27Text" class="sb-in b27-in" maxlength="${C.maxText}" autocomplete="off" enterkeyhint="go" placeholder="e.g. Knicks -4 beats Celtics" value="${esc(f.text)}">
    <div class="b27-q">3. Amount <span class="note">(minimum ${C.min})</span></div><div class="b27-amts" role="group" aria-label="Amount">${C.amounts.map(a=>`<button type="button" class="b27-amt" data-lb="amt" data-v="${a}" aria-pressed="${!f.amtCustom&&a===f.amt}">${a}</button>`).join('')}<button type="button" class="b27-amt cu" data-lb="amtcustom" aria-pressed="${f.amtCustom}">Custom</button></div>
    <div id="b27Aw" class="b27-cw"${f.amtCustom?'':' hidden'}><label for="b27Ao" class="sr">Custom amount</label><input id="b27Ao" class="sb-in b27-in" inputmode="numeric" pattern="[0-9]*" autocomplete="off" maxlength="6" placeholder="Whole number, ${C.min} to ${C.max}" value="${esc(f.amtTxt)}"><div id="b27Ae" class="b27-bad-t" role="alert">${esc(f.amtErr)}</div></div>
    <div class="b27-q">4. Odds <span class="note">(if you’re right, they owe amount × first ÷ second)</span></div><div class="b27-chips" role="group" aria-label="Odds">${C.odds.map(([a,b])=>`<button type="button" class="b27-chip" data-lb="odds" data-v="${a}-${b}" aria-pressed="${!f.custom&&!!f.odds&&f.odds[0]===a&&f.odds[1]===b}">${a===1&&b===1?'Even':a+'-'+b}</button>`).join('')}<button type="button" class="b27-chip" data-lb="oddscustom" aria-pressed="${f.custom}">Custom…</button></div>
    <div id="b27Cw" class="b27-cw"${f.custom?'':' hidden'}><label for="b27Co" class="sr">Custom odds</label><input id="b27Co" class="sb-in b27-in" inputmode="text" autocomplete="off" maxlength="9" placeholder="e.g. 7-2 or 10-1" value="${esc(f.customTxt)}"><div id="b27Ce" class="b27-bad-t" role="alert">${esc(f.oddsErr)}</div></div>
    <div class="b27-livebox" id="b27Live" aria-live="polite">${liveHtml()}</div><div class="b27-sum" id="b27Sum">${esc(summary())}</div><div id="b27AutoN">${autoNoteForm()}</div><div class="b27-bad-t" id="b27Hint"></div>
-   <button type="button" id="b27Place" class="btn b27-big" data-lb="place"${err?' disabled aria-disabled="true"':''}>Place bet</button></div>`}
+   <button type="button" id="b27Place" class="btn b27-big" data-lb="place"${err?' disabled aria-disabled="true"':''}>Write It Up</button></div>`}
 /* ----- pool form: 1 terms, 2 who's in, 3 buy-in (live pot line), 4 payouts by place (amounts only; optional) ----- */
 const poolParts=()=>{const me=meMid();return owners().map(o=>o.mid).filter(m=>m===me||S.p.pp.includes(m))};
 function poolCheck(){const e={},parts=poolParts(),p=S.p;

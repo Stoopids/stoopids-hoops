@@ -307,11 +307,11 @@ nav button .nl.m,nav a.tb .nl.m,nav a.nd .nl.m{display:none}
 .b27-chip.op .nm .tl{display:block;overflow:hidden;text-overflow:ellipsis}.b27-chip.op .nm .tnr{font-size:.8em}.b27-chip.op[aria-pressed=true] .nm .tnr{color:inherit;opacity:.75}   /* s28b: team name line first, real name under it */
 .b27-chip.op .nm .sh,.b27-chip.op .nm .xs{display:none}
 @media (max-width:899px){.b27-chip.op .nm .f{display:none}.b27-chip.op .nm .sh{display:inline}.b27-opps .b27-chip{font-size:12.5px}}
-@media (max-width:599px){.b27-chip.op .nm .sh{display:none}.b27-chip.op .nm .xs{display:inline}.b27-opps{gap:3px}.b27-opps .b27-chip{min-height:52px;padding:4px 0;border-width:1.5px;border-radius:9px;font-size:10px;letter-spacing:-.02em}.b27-chip.op .em{font-size:16px}.b27-chip.op .ck{top:1px;right:3px;font-size:9px}}   /* phones: all 7 chips stay on ONE row (equal 1/7 columns, short names, small type) */
+@media (max-width:599px){.b27-opps{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.b27-chip.op .nm .f{display:none}.b27-chip.op .nm .sh{display:inline}.b27-chip.op .nm .xs{display:none}.b27-opps .b27-chip{min-height:64px;padding:6px 4px;border-width:1.5px;border-radius:9px;font-size:12px;letter-spacing:0}.b27-chip.op .em{font-size:18px}.b27-chip.op .ck{top:2px;right:5px;font-size:11px}}   /* phones: even 3-col grid of equal tiles; All/Clear sit in the selbar under the grid */
 @media (max-width:399px){.b27-amt.cu{font-size:11px;letter-spacing:-.03em;white-space:nowrap;min-width:0;overflow:hidden}}
-@media (max-width:359px){.b27-opps .b27-chip{font-size:9px}.b27-chip.op .em{font-size:14px}}
+@media (max-width:359px){.b27-opps{grid-template-columns:repeat(2,minmax(0,1fr))}.b27-opps .b27-chip{font-size:12px}.b27-chip.op .em{font-size:16px}}
 .b27-selbar{display:flex;flex-wrap:nowrap;align-items:center;gap:8px;margin-top:8px}
-.b27-selbar .b27-sm{min-height:44px;min-width:88px;white-space:nowrap;padding:0 12px;border-radius:10px;border:2px solid var(--line);background:var(--card2);color:var(--tx);font:inherit;font-weight:700;font-size:14px;cursor:pointer}
+.b27-selbar .b27-sm{min-height:44px;min-width:88px;white-space:nowrap;padding:0 14px;border-radius:10px;border:2px solid var(--line);background:var(--card2);color:var(--tx);font:inherit;font-weight:700;font-size:14px;cursor:pointer}
 .b27-selbar .cnt{font-size:13px;color:var(--mut);margin-left:auto;white-space:normal;min-width:0;overflow-wrap:anywhere}
 /*</MULTI-BET>*/
 /*<OWES-TABLE>*/
@@ -434,7 +434,7 @@ nav button .nb,nav a.tb .nb{position:absolute;top:-5px;right:6px;background:var(
 .b27-hist li.fx-confirmed{color:var(--good,#4ade80)}.b27-hist li.fx-pending{color:var(--acc,#ffd23f)}
 .b27-edhint{margin:6px 0;padding:6px 10px;border-left:3px solid var(--acc,#ffd23f);background:rgba(255,210,63,.08);border-radius:6px}
 /* s24: below 380px seven opponents on one row gave chips under 44px wide (37px at 320, 42px at 360); wrap to 4 per row and 3 pushup buttons per row so every tap target is >= 44px */
-@media (max-width:379px){.b27-opps{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}.b27-opps .b27-chip{font-size:11px}.b27-chip.op .nm .xs{display:inline}.b27-amts{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:379px){.b27-amts{grid-template-columns:repeat(3,1fr)}}
 /* s24: share / copy-link buttons and the deep-link highlight */
 .lshare{display:flex;justify-content:flex-end;margin:0 0 6px}
 .lshare .cpt{min-height:44px;padding:0 14px;font-size:14px}
