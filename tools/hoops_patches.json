@@ -1,0 +1,276 @@
+{
+ "page": [
+  {
+   "tag": "HOOPS",
+   "why": "PWA: register the Hoops service worker (STOOPIDS unregisters)",
+   "old": "  if('serviceWorker' in navigator&&navigator.serviceWorker.getRegistrations)navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(x){x.unregister()})}).catch(function(){});",
+   "new": "  if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').then(function(reg){if(reg.waiting)reg.waiting.postMessage('skip');if(reg.installing)reg.installing.addEventListener('statechange',function(){if(this.state==='installed')this.postMessage('skip')})}).catch(function(){});\n    var reloaded=false;navigator.serviceWorker.addEventListener('controllerchange',function(){if(reloaded)return;reloaded=true;location.reload()})}"
+  },
+  {
+   "tag": "PAUL-d",
+   "why": "fmtDate: no weekday",
+   "old": "/* 'YYYY-MM-DD' -> 'Nov 2, 2026' (or 'Mon, Nov 2, 2026' with wd) */\nfunction fmtDate(k,wd){const m=/^(\\d{4})-(\\d{2})-(\\d{2})/.exec(k||'');if(!m)return k||'';const d=new Date(Date.UTC(+m[1],+m[2]-1,+m[3],12));return (wd?DOW[d.getUTCDay()]+', ':'')+MON[+m[2]-1]+' '+(+m[3])+', '+m[1]}",
+   "new": "/* 'YYYY-MM-DD' -> 'Nov 2, 2026' (no weekday) */\nfunction fmtDate(k,wd){const m=/^(\\d{4})-(\\d{2})-(\\d{2})/.exec(k||'');if(!m)return k||'';return MON[+m[2]-1]+' '+(+m[3])+', '+m[1]}"
+  },
+  {
+   "tag": "PAUL-d",
+   "why": "comment: no weekday",
+   "old": "/* \"Tue, Oct 27, 2026, 9:14 PM WIB\" from the build time (UTC), in the viewer's zone */",
+   "new": "/* \"Oct 27, 2026, 9:14 PM WIB\" from the build time (UTC), in the viewer's zone */"
+  },
+  {
+   "tag": "PAUL-d",
+   "why": "last-updated stamp: no weekday",
+   "old": "/*<LOCAL-TIME>*/const LSTAMP=new Intl.DateTimeFormat('en-US',{weekday:'short',year:'numeric',month:'numeric',day:'numeric',hour:'numeric',minute:'2-digit',hour12:true});\nfunction stampET(){const d=genDate();if(!d)return (D.meta&&D.meta.generated_at_wib)||'';const p={};LSTAMP.formatToParts(d).forEach(x=>p[x.type]=x.value);return p.weekday+', '+MON[+p.month-1]+' '+(+p.day)+', '+p.year+', '+p.hour+':'+p.minute+' '+p.dayPeriod}   // name kept; shows the viewer's zone/*</LOCAL-TIME>*/",
+   "new": "/*<LOCAL-TIME>*/const LSTAMP=new Intl.DateTimeFormat('en-US',{year:'numeric',month:'numeric',day:'numeric',hour:'numeric',minute:'2-digit',hour12:true});\nfunction stampET(){const d=genDate();if(!d)return (D.meta&&D.meta.generated_at_wib)||'';const p={};LSTAMP.formatToParts(d).forEach(x=>p[x.type]=x.value);return MON[+p.month-1]+' '+(+p.day)+', '+p.year+', '+p.hour+':'+p.minute+' '+p.dayPeriod}   // name kept; shows the viewer's zone/*</LOCAL-TIME>*/"
+  },
+  {
+   "tag": "NBA",
+   "why": "live ESPN NBA scores: add games missing from the baked schedule",
+   "old": "/* a batch of ESPN events -> overlay + stats */",
+   "new": "/* a batch of ESPN events -> overlay + stats */\nfunction lvOwners(tid){tid=String(tid||'');if(!tid||!D||!D.owners)return[];const o=D.owners.find(ow=>(ow.teams||[]).some(x=>String(x.tid)===tid));return o&&o.name?[o.name]:[]}\nfunction lvShortOf(id,fb){const t=(D&&D.teams&&D.teams[id])||{};return t.short||t.abbr||t.name||fb||''}\nfunction lvFromEvent(e){const ev=lvParse(e);if(!ev||!ev.home||!ev.away||!ev.home.id||!ev.away.id)return null;if(ev.status==='other')return null;\n  const raw=(e.competitions||[])[0]||{},comp=id=>(raw.competitors||[]).find(x=>String((x.team||{}).id)===String(id))||{};\n  const short=id=>{const tm=(comp(id).team||{});return lvShortOf(id,tm.abbreviation||tm.shortDisplayName||tm.location||'')};\n  const side=s=>{const ow=lvOwners(s.id);return{id:String(s.id),score:s.score,seed:s.seed||null,short:short(s.id),owners:ow,pool:!!ow.length,win:!!s.win}};\n  const note=(((raw.notes||[])[0])||{}).headline||'',stype=(e.season||{}).type;let kind='reg',round='';\n  if(stype===5||/play-?in/i.test(note)){kind='playin';round=note||'Play-In'}\n  else if(/NBA Cup/i.test(note)&&(/quarter|semi|champ/i.test(note))){kind='cup';round=/champ/i.test(note)?'Cup Championship':/semi/i.test(note)?'Cup Semifinals':'Cup Quarterfinals'}\n  else if(stype===3){kind='playoff';round=note.split(' - ').pop()||note}\n  const start=ev.start||e.date||null,day=start?lvEtDay(start):(e.date||'').slice(0,10);\n  const g={id:String(ev.id),day,start,status:ev.status,kind,round,neutral:!!raw.neutralSite,home:side(ev.home),away:side(ev.away),line:null,upset:null,src:'espn'};\n  g.h2h=!!(g.home.owners.length&&g.away.owners.length&&g.home.owners[0]!==g.away.owners[0]);\n  g.civil=!!(g.home.owners.length&&g.away.owners.length&&g.home.owners[0]===g.away.owners[0]);return g}\nfunction lvAdd(g){if(!D||!g)return false;D.games=D.games||[];if(D.games.some(x=>String(x.id)===String(g.id)))return false;D.games.push(g);\n  const row=(us,them,site)=>({id:g.id,day:g.day,start:g.start,status:g.status,kind:g.kind,round:g.round,site,opp:them.short,oppId:them.id,us:us.score,them:them.score,res:g.status==='final'&&us.score!=null&&them.score!=null&&us.score!==them.score?(us.score>them.score?'W':'L'):null,src:'espn'});\n  const addTG=(us,them,site)=>{const id=String(us.id);if(!D.team_games)D.team_games={};(D.team_games[id]=D.team_games[id]||[]).push(row(us,them,site))};\n  addTG(g.home,g.away,'H');addTG(g.away,g.home,'A');if(D.meta)D.meta.games_loaded=(D.games||[]).length;return true}"
+  },
+  {
+   "tag": "NBA",
+   "why": "live ESPN NBA scores: add missing games",
+   "old": "  (events||[]).forEach(e=>{const ev=lvParse(e);if(!ev)return;const g=lvFind(ev);if(!g)return;matched++;",
+   "new": "  (events||[]).forEach(e=>{const ev=lvParse(e);if(!ev)return;let g=lvFind(ev);\n    if(!g){const ng=lvFromEvent(e);if(ng&&lvAdd(ng)){g=ng;changed++}}\n    if(!g)return;matched++;"
+  },
+  {
+   "tag": "NBA+PAUL-c",
+   "why": "old form note: Write It Up; NBA example",
+   "old": "   <div class=\"note\">Fill in the terms, hit \"Build\". Leave the result blank for an open bet; settle it later below.</div>\n   <textarea maxlength=\"140\" id=\"sb_text\" class=\"sb-ta\" placeholder=\"Terms, in words (e.g. Kurmoji bets Ken 100K that Duke covers -4.5)\">${esc(f.text||'')}</textarea>`;",
+   "new": "   <div class=\"note\">Fill in the terms, hit \"Write It Up\". Leave the result blank for an open bet; settle it later below.</div>\n   <textarea maxlength=\"140\" id=\"sb_text\" class=\"sb-ta\" placeholder=\"Terms, in words (e.g. Kurmoji bets Ken 100K that Knicks cover -4.5)\">${esc(f.text||'')}</textarea>`;"
+  },
+  {
+   "tag": "PAUL-d",
+   "why": "draft time: no weekday",
+   "old": "  return ' · drafted '+esc(new Date(t).toLocaleString(undefined,{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}))}",
+   "new": "  return ' · drafted '+esc(new Date(t).toLocaleString(undefined,{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}))}"
+  },
+  {
+   "tag": "HOOPS",
+   "why": "manager link keeps ?l=<league>",
+   "old": "/*<S29E-MGR>*/function s29eMgrUrl(){return location.origin+location.pathname.replace(/index\\.html$/,'')}   // plain site URL: origin+pathname only (never view=1, admin, key or any other param)",
+   "new": "/*<S29E-MGR>*/function s29eMgrUrl(){const base=location.origin+location.pathname.replace(/index\\.html$/,'');const l=hoopsLeagueId();return l?base+(base.indexOf('?')>=0?'&':'?')+'l='+encodeURIComponent(l):base}   // this league's page (?l=); never view=1, admin, key or token"
+  },
+  {
+   "tag": "HOOPS",
+   "why": "public link keeps ?l=<league>",
+   "old": "function s12PublicUrl(){let u;try{u=new URL(location.href)}catch(e){return location.origin+location.pathname+'?view=1'}\n  u.search='';u.searchParams.set('view','1');if(!/^#[A-Za-z0-9_\\/-]*$/.test(u.hash))u.hash='';return u.origin+u.pathname+u.search+(u.hash||'')}",
+   "new": "function s12PublicUrl(){let u;try{u=new URL(location.href)}catch(e){const l=hoopsLeagueId();return location.origin+location.pathname+'?'+(l?'l='+encodeURIComponent(l)+'&':'')+'view=1'}\n  u.search='';const l=hoopsLeagueId();if(l)u.searchParams.set('l',l);u.searchParams.set('view','1');if(!/^#[A-Za-z0-9_\\/-]*$/.test(u.hash))u.hash='';return u.origin+u.pathname+u.search+(u.hash||'')}"
+  },
+  {
+   "tag": "NBA",
+   "why": "tip example with NBA teams",
+   "old": "const S27_TIPS={who:'Tap one or more managers. Several = one bet, one result.',text:'Write it as you say it: \"Kansas -4 beats Duke\".',amt:()=>'Minimum '+PULK.minAmt,/*<STEP12-TIPS>*/pterms:'Say what the pool is, e.g. “STOOPIDS season-long tournament pool”.',ppl:'You’re in automatically. Tap everyone else who’s in.',buy:()=>'Buy-in per person, minimum '+PULK.minAmt+'. The pot is buy-in × people in.',pay:'Amounts only; you pick who finished where when you settle it. They must add up to the pot. Optional: leave blank to fill in when it’s over.',/*</STEP12-TIPS>*/odds:'If you’re right, they owe amount × first ÷ second. Even = 1-1.',rqwho:'Tap one or more managers.',rqamt:()=>'Amount for each acceptance. Minimum '+PULK.minAmt+'.',rqodds:'Per acceptance: if you are right, they owe amount × first ÷ second. Even = 1-1. Nothing is posted until you send the request.',rqmany:'How many Stoops can accept. Each acceptance is its own bet. This does not pick a winner.',rqexp:'The invitation closes then. It does not settle the bet or pick a winner.',auto:'A clear game bet (team, spread or total, date) can be matched to an ESPN final. After the final, scores propose the result. You confirm it; nothing settles on its own.',manual:'Unclear bets: you enter the result yourself after the game.',when:'Sorting only. It does not settle the bet, pick a winner, or close a request.'};",
+   "new": "const S27_TIPS={who:'Tap one or more managers. Several = one bet, one result.',text:'Write it as you say it: \"Knicks -4 beats Celtics\".',amt:()=>'Minimum '+PULK.minAmt,/*<STEP12-TIPS>*/pterms:'Say what the pool is, e.g. “STOOPIDS season-long tournament pool”.',ppl:'You’re in automatically. Tap everyone else who’s in.',buy:()=>'Buy-in per person, minimum '+PULK.minAmt+'. The pot is buy-in × people in.',pay:'Amounts only; you pick who finished where when you settle it. They must add up to the pot. Optional: leave blank to fill in when it’s over.',/*</STEP12-TIPS>*/odds:'If you’re right, they owe amount × first ÷ second. Even = 1-1.',rqwho:'Tap one or more managers.',rqamt:()=>'Amount for each acceptance. Minimum '+PULK.minAmt+'.',rqodds:'Per acceptance: if you are right, they owe amount × first ÷ second. Even = 1-1. Nothing is posted until you send the request.',rqmany:'How many Stoops can accept. Each acceptance is its own bet. This does not pick a winner.',rqexp:'The invitation closes then. It does not settle the bet or pick a winner.',auto:'A clear game bet (team, spread or total, date) can be matched to an ESPN final. After the final, scores propose the result. You confirm it; nothing settles on its own.',manual:'Unclear bets: you enter the result yourself after the game.',when:'Sorting only. It does not settle the bet, pick a winner, or close a request.'};"
+  },
+  {
+   "tag": "PAUL-c",
+   "why": "help: button says Write It Up",
+   "old": "  <div class=\"card\"><b>Write it Up</b><p>Use this when the bet is already agreed. It goes straight onto <b>All Bets</b>. Pick who you’re against, write the bet, choose the amount and the odds, then <b>5. When can this be settled?</b> That date, <b>End of season</b>, or <b>Not sure yet</b> is for sorting only. Tap <b>Place bet</b>, check it, then <b>Yes, place it</b>.</p></div>",
+   "new": "  <div class=\"card\"><b>Write it Up</b><p>Use this when the bet is already agreed. It goes straight onto <b>All Bets</b>. Pick who you’re against, write the bet, choose the amount and the odds, then <b>5. When can this be settled?</b> That date, <b>End of season</b>, or <b>Not sure yet</b> is for sorting only. Tap <b>Write It Up</b>, check it, then <b>Yes, place it</b>.</p></div>"
+  },
+  {
+   "tag": "PAUL-c",
+   "why": "save error names the Write It Up button",
+   "old": "    if(e&&e.message==='late'){const o=U.doc.bets.find(x=>x.id===U.editOf);U.editOf=null;U.confirm=false;U.busy=false;U.msg='Too late to edit: bet'+(o?' #'+o.n:'')+' was already settled or cancelled. Nothing was saved; your changes are still in the form.';U.msgBad=true;b27Poll();render();return}/*</S24-EDIT>*/U.msg=e&&e.message==='full'?'The bets ledger is full.':/*<SAFE-RACE>*/e&&e.message==='conflict'?'Couldn’t save, try again. Someone else was saving at the same moment.':/*</SAFE-RACE>*/'Couldn’t save. Check your connection and tap Place bet again (it won’t double-post).';U.msgBad=true;U.confirm=true}",
+   "new": "    if(e&&e.message==='late'){const o=U.doc.bets.find(x=>x.id===U.editOf);U.editOf=null;U.confirm=false;U.busy=false;U.msg='Too late to edit: bet'+(o?' #'+o.n:'')+' was already settled or cancelled. Nothing was saved; your changes are still in the form.';U.msgBad=true;b27Poll();render();return}/*</S24-EDIT>*/U.msg=e&&e.message==='full'?'The bets ledger is full.':/*<SAFE-RACE>*/e&&e.message==='conflict'?'Couldn’t save, try again. Someone else was saving at the same moment.':/*</SAFE-RACE>*/'Couldn’t save. Check your connection and tap Write It Up again (it won’t double-post).';U.msgBad=true;U.confirm=true}"
+  },
+  {
+   "tag": "PAUL-c",
+   "why": "pool save error names the Write It Up button",
+   "old": "  toast:'{who} just built a pool with {names}', cantSave:'Couldn’t save. Check your connection and tap Build again (it won’t double-post).'",
+   "new": "  toast:'{who} just built a pool with {names}', cantSave:'Couldn’t save. Check your connection and tap Write It Up again (it won’t double-post).'"
+  },
+  {
+   "tag": "PAUL-a",
+   "why": "pool card pill: Unsettled",
+   "old": "  const stTxt=st==='void'?POOL_TXT.stVoid:b.back?POOL_TXT.stDone:POOL_TXT.stOpen;",
+   "new": "  const stTxt=st==='void'?POOL_TXT.stVoid:b.back?POOL_TXT.stDone:POOL_TXT.stUnsettled;"
+  },
+  {
+   "tag": "PAUL-a",
+   "why": "pool card payouts with $; no \"not entered\" note when payouts are planned",
+   "old": "  /*<S26F-POOL>*/if(b.places)h+=`<div class=\"b27-m\">${esc(PT('payLine',{x:b.places.map((a,i)=>s26fPlaceName(i)+' '+b27Num(a)).join(' · ')}))}</div>`;/*</S26F-POOL>*/\n  if(st==='open'&&!b.back)h+=`<div class=\"note\" style=\"margin-top:6px\">${esc(POOL_TXT.noPay)}</div>`;",
+   "new": "  /*<S26F-POOL>*/if(b.places)h+=`<div class=\"b27-m\">${esc(PT('payLine',{x:b.places.map((a,i)=>s26fPlaceName(i)+' $'+b27Num(a)).join(' · ')}))}</div>`;/*</S26F-POOL>*/\n  if(st==='open'&&!b.back&&!b.places)h+=`<div class=\"note\" style=\"margin-top:6px\">${esc(POOL_TXT.noPay)}</div>`;"
+  },
+  {
+   "tag": "PAUL-d",
+   "why": "bet day/when bits: no weekday",
+   "old": "function b27DayBit(iso){if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(iso||''))return '';const d=new Date(iso+'T12:00:00');if(isNaN(d))return '';const wd=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()],mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];return wd+' '+mo+' '+d.getDate()}\nfunction b27WhenBit(iso){const d=new Date(iso);if(!iso||isNaN(d))return '';const wd=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()],mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];return wd+' '+mo+' '+d.getDate()}",
+   "new": "function b27DayBit(iso){if(!/^\\d{4}-\\d{2}-\\d{2}$/.test(iso||''))return '';const p=iso.split('-'),mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][+p[1]-1];return mo?mo+' '+Number(p[2]):''}\nfunction b27WhenBit(iso){if(!iso)return '';if(/^\\d{4}-\\d{2}-\\d{2}$/.test(iso))return b27DayBit(iso);const d=new Date(iso);if(isNaN(d))return '';return (window.SHARED_UI&&SHARED_UI.etDate)?SHARED_UI.etDate(d):new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',timeZone:'America/New_York'}).format(d)}"
+  },
+  {
+   "tag": "PAUL-c",
+   "why": "1v1 button says Write It Up",
+   "old": "     <button type=\"button\" id=\"b27Place\" class=\"btn b27-big\" onclick=\"b27Place()\"${b27FormOK()?' disabled':''}>${U.editOf?'Update bet':'Place bet'}</button></div>`;",
+   "new": "     <button type=\"button\" id=\"b27Place\" class=\"btn b27-big\" onclick=\"b27Place()\"${b27FormOK()?' disabled':''}>${U.editOf?'Update bet':'Write It Up'}</button></div>`;"
+  },
+  {
+   "tag": "HOOPS",
+   "why": "view link keeps ?l=<league>",
+   "old": "function s29ViewUrl(h){h=String(h||'').replace(/[^A-Za-z0-9_\\/-]/g,'');return location.origin+location.pathname+'?view=1'+(h?'#'+h:'')}/*</S29B-SHARE>*/",
+   "new": "function s29ViewUrl(h){h=String(h||'').replace(/[^A-Za-z0-9_\\/-]/g,'');const q=new URLSearchParams();const l=hoopsLeagueId();if(l)q.set('l',l);q.set('view','1');return location.origin+location.pathname+'?'+q.toString()+(h?'#'+h:'')}/*</S29B-SHARE>*/"
+  },
+  {
+   "tag": "HOOPS",
+   "why": "remember last league/tab for the Hoops home page",
+   "old": "function s24Put(push){try{s26wMan(s24HashOf(tab));const want=s24Url(s24RouteHash());try{sessionStorage.setItem((HK+'tab'),s24HashOf(tab))}catch(_){}if(location.pathname+location.search+location.hash===want)return;history[push?'pushState':'replaceState'](null,'',want)}catch(e){}}",
+   "new": "function s24Put(push){try{s26wMan(s24HashOf(tab));const want=s24Url(s24RouteHash());try{sessionStorage.setItem((HK+'tab'),s24HashOf(tab))}catch(_){}try{sessionStorage.setItem('shoops.launched','1')}catch(_){}try{const lid=hoopsLeagueId(),t=s24HashOf(tab);if(lid&&!DEMO&&/^[a-z]{3,12}$/.test(t))localStorage.setItem('shoops.lastsite',JSON.stringify({id:lid,t:t,at:Date.now()}));if(window.HOOPS&&HOOPS.saveLastSite)HOOPS.saveLastSite(t)}catch(_){}if(location.pathname+location.search+location.hash===want)return;history[push?'pushState':'replaceState'](null,'',want)}catch(e){}}"
+  },
+  {
+   "tag": "PAUL-d",
+   "why": "posted stamp: ET, no weekday",
+   "old": "function s29ePosted(b){if(!b||!b.postedBy)return '';const t=b.postedAt||b.created_at;let w='';try{w=new Date(t).toLocaleString([], {weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'})}catch(e){}",
+   "new": "function s29ePosted(b){if(!b||!b.postedBy)return '';const t=b.postedAt||b.created_at;let w='';try{w=(window.SHARED_UI&&SHARED_UI.etStamp)?SHARED_UI.etStamp(t):new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZone:'America/New_York'}).format(new Date(t))}catch(e){}"
+  },
+  {
+   "tag": "PAUL-d",
+   "why": "request game time: ET, no weekday",
+   "old": "  when(o){if(!o.g||!o.g.start)return '';try{return new Date(o.g.start).toLocaleString([], {weekday:'short',hour:'numeric',minute:'2-digit'})}catch(e){return ''}}",
+   "new": "  when(o){if(!o.g||!o.g.start)return '';try{return (window.SHARED_UI&&SHARED_UI.etStamp)?SHARED_UI.etStamp(o.g.start):new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZone:'America/New_York'}).format(new Date(o.g.start))}catch(e){return ''}}"
+  },
+  {
+   "tag": "NBA",
+   "why": "paste example with NBA teams",
+   "old": "  let h=`<div class=\"card s29e-paste\" id=\"s29ePaste\"><label for=\"s29eIn\"><b>Paste a bet</b> <span class=\"note\">· e.g. “ken v paul 2-1 odds, duke +4 v Virginia”</span></label><textarea id=\"s29eIn\" class=\"sb-in b27-in s29e-in\" rows=\"2\" maxlength=\"300\" placeholder=\"Paste the WhatsApp line here\">${esc(U.pzTxt||'')}</textarea><div class=\"b27-act s29e-act\"><button type=\"button\" class=\"btn sec\" id=\"s29eRead\" onclick=\"s29eRead()\">Read it</button>${p?'<button type=\"button\" class=\"btn sec\" onclick=\"s29eClear()\">Clear</button>':''}</div>`;",
+   "new": "  let h=`<div class=\"card s29e-paste\" id=\"s29ePaste\"><label for=\"s29eIn\"><b>Paste a bet</b> <span class=\"note\">· e.g. “ken v paul 2-1 odds, knicks +4 v Celtics”</span></label><textarea id=\"s29eIn\" class=\"sb-in b27-in s29e-in\" rows=\"2\" maxlength=\"300\" placeholder=\"Paste the WhatsApp line here\">${esc(U.pzTxt||'')}</textarea><div class=\"b27-act s29e-act\"><button type=\"button\" class=\"btn sec\" id=\"s29eRead\" onclick=\"s29eRead()\">Read it</button>${p?'<button type=\"button\" class=\"btn sec\" onclick=\"s29eClear()\">Clear</button>':''}</div>`;"
+  },
+  {
+   "tag": "PAUL-a",
+   "why": "pool card/copy word Unsettled; card line \"Buy-in $50 each · Total $300\"",
+   "old": "  word:'Pool', stOpen:'Open', stDone:'Settled', stVoid:'Cancelled', who:'{n} managers', with:'With: {names}',\n  line:'Buy-in each {buy} · total {tot}', noPay:'Payouts not entered yet.',",
+   "new": "  word:'Pool', stOpen:'Open', stUnsettled:'Unsettled', stDone:'Settled', stVoid:'Cancelled', who:'{n} managers', with:'With: {names}',\n  line:'Buy-in ${buy} each · Total ${tot}', noPay:'Payouts not entered yet.',"
+  },
+  {
+   "tag": "PAUL-d",
+   "why": "open-bet Copy: date without weekday",
+   "old": "  const iso=(rd&&rd.d)||(SHARED_UI.whenKind(b)==='date'?b.est:'');let when='';if(iso&&/^\\d{4}-\\d{2}-\\d{2}$/.test(iso)){const d=new Date(iso+'T12:00:00');const wd=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()],mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];when=wd+' '+mo+' '+d.getDate()}",
+   "new": "  const iso=(rd&&rd.d)||(SHARED_UI.whenKind(b)==='date'?b.est:'');let when='';if(iso&&/^\\d{4}-\\d{2}-\\d{2}$/.test(iso))when=b27DayBit(iso);"
+  },
+  {
+   "tag": "NBA",
+   "why": "live ESPN NBA scores: poll today/tomorrow/next day (ET) and recent unfinished games",
+   "old": "  const today=ETK.format(new Date(now)),hot=((D&&D.games)||[]).filter(g=>lvHot(g,now)),set=[...new Set(hot.map(g=>g.day).filter(Boolean))];\n  if(!set.length)return [today];\n  set.sort((a,b)=>Math.abs(Date.parse(a)-Date.parse(today))-Math.abs(Date.parse(b)-Date.parse(today)));\n  return set.slice(0,LVC.maxDays).sort();",
+   "new": "function lvEtDay(x){try{const d=x instanceof Date?x:new Date(x);return isNaN(d)? '':ETK.format(d)}catch(e){return ''}}\n  const today=lvEtDay(now),tom=lvEtDay(now+24*3600000),nxt=lvEtDay(now+48*3600000),set=new Set([today,tom,nxt].filter(Boolean));\n  ((D&&D.games)||[]).forEach(g=>{\n    const t=g.start?Date.parse(g.start):NaN,d=!isNaN(t)?lvEtDay(t):(g.day||'');\n    if(!d)return;\n    if(lvHot(g,now)){set.add(d);return}\n    if(g.status!=='final'&&!isNaN(t)&&now-t>=0&&now-t<=7*86400000)set.add(d)\n  });\n  const pref=d=>d===today?0:d===tom?1:d===nxt?2:3;\n  return [...set].sort((a,b)=>pref(a)-pref(b)||(Date.parse(a)-Date.parse(today))-(Date.parse(b)-Date.parse(today))).slice(0,Math.max(LVC.maxDays,4)).sort();"
+  },
+  {
+   "tag": "NBA",
+   "why": "1v1 bet example with NBA teams",
+   "old": "placeholder=\"e.g. Kansas -4 beats Duke\"",
+   "new": "placeholder=\"e.g. Knicks -4 beats Celtics\""
+  },
+  {
+   "tag": "PAUL-c+NBA",
+   "why": "pool intro names the Write It Up button; NBA example",
+   "old": "  intro:'Fill in the terms, hit \"Build\". Leave the result blank for an open bet; settle it later below.',\n  terms:'Terms, in words (e.g. Kurmoji bets Ken 100K that Duke covers -4.5)',",
+   "new": "  intro:'Fill in the terms, hit \"Write It Up\". Leave the result blank for an open bet; settle it later below.',\n  terms:'Terms, in words (e.g. Kurmoji bets Ken 100K that Knicks cover -4.5)',"
+  },
+  {
+   "tag": "PAUL-c",
+   "why": "pool button says Write It Up",
+   "old": "  build:'Build',\n",
+   "new": "  build:'Write It Up',\n"
+  },
+  {
+   "tag": "PAUL-a+PAUL-d",
+   "why": "pool copy: Unsettled; posted date in ET with no weekday",
+   "old": "st=b.status==='void'?'Cancelled':b.back?'Settled':'Open';\n  const pay=b.places&&b.places.length?'Payouts: '+b.places.map((a,i)=>s26fPlaceName(i)+' '+money(a)).join(' · '):'Payouts not entered yet.';\n  const when=b27PoolPostedDay(Date.parse(b.postedAt||b.created_at));",
+   "new": "st=b.status==='void'?'Cancelled':b.back?'Settled':'Unsettled';\n  const pay=b.places&&b.places.length?'Payouts: '+b.places.map((a,i)=>s26fPlaceName(i)+' '+money(a)).join(' · '):'Payouts not entered yet.';\n  const when=(ms=>!ms||isNaN(ms)?'':new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',timeZone:'America/New_York'}).format(new Date(ms)))(Date.parse(b.postedAt||b.created_at));"
+  },
+  {
+   "tag": "PAUL-a",
+   "why": "pool picker: Select all / Clear sit in the 4-across grid as a cell (the STOOPIDS 1v1 picker tile), not under it",
+   "old": "}).join('')}</div><div class=\"s26tools\">${b27UtilTile('onclick=\"b27PoolAll()\"','onclick=\"b27PoolClear()\"')}</div>",
+   "new": "}).join('')}${b27UtilTile('onclick=\"b27PoolAll()\"','onclick=\"b27PoolClear()\"')}</div>"
+  },
+  {
+   "tag": "PAUL-a",
+   "why": "pool form: settle-date step (STOOPIDS whenBox; End Of Season by default)",
+   "old": "   <button type=\"button\" id=\"b27Place\" class=\"btn b27-big\" onclick=\"b27Place()\">${esc(POOL_TXT.build)}</button></div>`}",
+   "new": "   <div class=\"s26st\">${SHARED_UI.whenBox({e:esc,kind:U.whenPick?U.wk:'season',est:U.est,seasonId:b27Season(),step:'5',game:true,inputId:'b27PoolEst',pick:id=>`onclick=\"b27When('${id}')\"`,dateAttr:'onchange=\"U.est=this.value;U.whenPick=true\"'})}</div>\n   <button type=\"button\" id=\"b27Place\" class=\"btn b27-big\" onclick=\"b27Place()\">${esc(POOL_TXT.build)}</button></div>`}"
+  },
+  {
+   "tag": "PAUL-a",
+   "why": "pool record keeps its settle date",
+   "old": "status:'open'/*<S29E-POSTED>*/,postedBy:me,postedAt:new Date().toISOString()/*</S29E-POSTED>*/},r.places?{places:r.places}:{})}",
+   "new": "status:'open'/*<S29E-POSTED>*/,postedBy:me,postedAt:new Date().toISOString()/*</S29E-POSTED>*/},r.places?{places:r.places}:{},b27WhenFields({wk:U.whenPick?U.wk:'season',est:U.est,sid:b27Season()}))}"
+  },
+  {
+   "tag": "PAUL-d",
+   "why": "bet copy \"Posted\" date in ET",
+   "old": "const b27Day=ms=>new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',year:'numeric'}).format(new Date(ms));",
+   "new": "const b27Day=ms=>new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'America/New_York'}).format(new Date(ms));"
+  },
+  {
+   "tag": "PAUL-c",
+   "why": "after Write It Up (1v1): open All Bets on the new bet, highlighted",
+   "old": "U.msgBad=false;/*<S25C-FX>*/s25PlacedFx(m&&m.id)/*</S25C-FX>*/}",
+   "new": "U.msgBad=false;/*<S25C-FX>*/s25PlacedFx(m&&m.id)/*</S25C-FX>*/;if(m&&!edOf)setTimeout(()=>{try{gOpenBet(m.id)}catch(e){}},0)}"
+  },
+  {
+   "tag": "PAUL-c",
+   "why": "after Write It Up (pool): open All Bets on the new pool, highlighted",
+   "old": "/*<S25C-FX>*/s25PlacedFx(nb.id);/*</S25C-FX>*/",
+   "new": "/*<S25C-FX>*/s25PlacedFx(nb.id);/*</S25C-FX>*/setTimeout(()=>{try{gOpenBet(nb.id)}catch(e){}},0);"
+  },
+  {
+   "tag": "PAUL-1",
+   "why": "agreed/unsettled card Copy is a written-up bet, so it uses 💥 like the Write It Up copy (💣 stays only on requests awaiting acceptance)",
+   "old": "return ['\\uD83D\\uDCA3 $'+b.amt+' '+PN(b.backer)+' v '+who+od+' \\uD83D\\uDCA3'",
+   "new": "return ['\\uD83D\\uDCA5 $'+b.amt+' '+PN(b.backer)+' v '+who+od+' \\uD83D\\uDCA5'"
+  },
+  {
+   "tag": "PAUL-4",
+   "why": "settled Copy heading: 🎉 at both ends instead of 💥 (a wash keeps its 💦)",
+   "old": "const mark=st==='push'?'💦':'💥',",
+   "new": "const mark=st==='push'?'💦':'🎉',"
+  },
+  {
+   "tag": "PAUL-3",
+   "why": "pool save message is exactly 'Pool #n posted 💥'",
+   "old": "placed:'Built! Pool #{n} is open until the payouts are entered. You can undo it for 5 minutes.', placedDone:'Built! Pool #{n} counts now. You can undo it for 5 minutes.',",
+   "new": "placed:'Pool #{n} posted 💥', placedDone:'Pool #{n} posted 💥',"
+  },
+  {
+   "tag": "PAUL-3",
+   "why": "pool save message: no 'Message copied' tail (the copy-failed warning stays)",
+   "old": "U.msg=PT(m&&m.back?'placedDone':'placed',{n:m?m.n:''})+(copied?' Message copied. Paste it in WhatsApp.':",
+   "new": "U.msg=PT(m&&m.back?'placedDone':'placed',{n:m?m.n:''})+(copied?'':"
+  }
+ ],
+ "ui": [
+  {
+   "tag": "NBA",
+   "why": "tip example with NBA teams",
+   "old": "text:'Write it as you say it: \"Kansas -4 beats Duke\".'",
+   "new": "text:'Write it as you say it: \"Knicks -4 beats Celtics\".'"
+  },
+  {
+   "tag": "PAUL-b",
+   "why": "request text: add the game in brackets only when the bet does not already name both teams",
+   "old": "txt:tt+' ('+A.tname(g.away)+' vs '+A.tname(g.home)+', '+A.dateET(g)+')'};",
+   "new": "txt:(function(a,h,d){var l=tt.toLowerCase();return l.indexOf(a.toLowerCase())>=0&&l.indexOf(h.toLowerCase())>=0?tt+', '+d:tt+' ('+a+' vs '+h+'), '+d})(A.tname(g.away),A.tname(g.home),A.dateET(g))};"
+  },
+  {
+   "tag": "NBA",
+   "why": "request example with an NBA team",
+   "old": "placeholder=\"e.g. Virginia -3\"",
+   "new": "placeholder=\"e.g. Knicks -4\""
+  },
+  {
+   "tag": "PAUL-d",
+   "why": "request expiry date: no weekday",
+   "old": "var wd=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'][d.getDay()],mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];return wd+' '+mo+' '+d.getDate()}}return ''}",
+   "new": "var mo=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][d.getMonth()];return mo+' '+d.getDate()}}return ''}"
+  },
+  {
+   "tag": "PAUL-b",
+   "why": "copy text: teams on one line, then \"Nov 12, 2-1\" (just the date when odds are even), no \"at\"",
+   "old": "    function descLine(r){var t=String(r.txt||r.lab||'').replace(/\\s+/g,' ').trim(),o=r.odds||[1,1];\n      if(+o[0]===+o[1])return t;\n      var od=o[0]+'-'+o[1];if(t.toLowerCase().indexOf(od.toLowerCase())>=0)return t;return (t?t+' ':'')+'at '+od}",
+   "new": "    function descLine(r){var t=String(r.txt||r.lab||'').replace(/\\s+/g,' ').trim(),o=r.odds||[1,1];\n      var d=String(r.date||'').replace(/^(Sun|Mon|Tue|Wed|Thu|Fri|Sat)\\w*,?\\s+/,'').trim(),od=+o[0]===+o[1]?'':o[0]+'-'+o[1];if(d){var q=', '+String(r.date);if(t.slice(-q.length)===q)t=t.slice(0,-q.length).trim()}else{var dm=/,\\s+(?:(?:Sun|Mon|Tue|Wed|Thu|Fri|Sat)\\w*,?\\s+)?((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\\w*\\s+\\d{1,2})$/.exec(t);if(dm){d=dm[1];t=t.slice(0,dm.index).trim()}}\n      if(od&&t.toLowerCase().indexOf(od.toLowerCase())>=0)od='';return [t,d&&od?d+', '+od:(d||od)].filter(Boolean).join('\\n')}"
+  }
+ ]
+}

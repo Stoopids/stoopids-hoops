@@ -157,14 +157,22 @@ import subprocess
 T = json.loads(subprocess.check_output(['node', '-e', "global.window=global;require(process.argv[1]);process.stdout.write(JSON.stringify(window.TEAMS_DATA))", os.path.join(ROOT, 'assets', 'teams.js')]))
 rows = [{'school': r[1], 'tid': r[0], 'net': (T['meta'].get(r[0]) or {}).get('wr'), 'conf': ((T['meta'].get(r[0]) or {}).get('c', '') + ' · ' + (T['meta'].get(r[0]) or {}).get('d', '')).strip(' ·')} for r in T['teams']]
 json.dump({'format': 1, 'season': 'Last season win rank (25-26)', 'as_of': T.get('built', ''), 'rows': [x for x in rows if isinstance(x['net'], int)]}, open(os.path.join(ROOT, 'data', 'hoops-net.json'), 'w'), indent=0)
-# sh9 (Paul): bet-number jump, frozen Bets / Games rows. Kept in tools/hoops_sh9_fixes.html until STOOPIDS ships its own fixes.
-rep('</script>\n</body>', '</script>\n' + open(os.path.join(ROOT, 'tools', 'hoops_sh9_fixes.html'), encoding='utf-8').read() + '</body>', why='sh9 fixes: bet-number jump + frozen Bets / Games rows')
+# sh9 fixes (tools/hoops_sh9_fixes.html) are no longer injected: the STOOPIDS page now ships its own bet-number jump + frozen Bets / Games rows (gOpenBet).
+# 8) stoopids-bets: the only Hoops changes on top of the STOOPIDS code, each one exact-text and bounded (tools/hoops_patches.json).
+#    tag NBA = NBA data/teams, HOOPS = this league's id / app shell, PAUL-a..d = Paul-approved additions (pools, copy text, Write It Up, dates).
+PATCHES = json.load(open(os.path.join(ROOT, 'tools', 'hoops_patches.json'), encoding='utf-8'))
+for x in PATCHES['page']:
+    rep(x['old'], x['new'], why='[' + x['tag'] + '] ' + x['why'])
 open(os.path.join(ROOT, 'league.html'), 'w', encoding='utf-8').write(s)
 # shared/ui.js + ui.css: STOOPIDS' own shared module, copied verbatim except the rankings footnote link (NBA BPI instead of the college AP poll)
 os.makedirs(os.path.join(ROOT, 'shared'), exist_ok=True)
 u = open(os.path.join(SRC, 'shared', 'ui.js'), encoding='utf-8').read()
 a = '# Rankings: <a href="https://www.espn.com/mens-college-basketball/rankings" target="_blank" rel="noopener">AP Top 25 (ESPN)</a>'
 if u.count(a) != 1: raise SystemExit('shared/ui.js footnote moved')
-open(os.path.join(ROOT, 'shared', 'ui.js'), 'w', encoding='utf-8').write(u.replace(a, '# Rankings: <a href="https://www.espn.com/nba/bpi" target="_blank" rel="noopener">BPI (ESPN)</a>')); LOG.append(('shared/ui.js: rankings footnote -> ESPN NBA BPI', 1))
+u = u.replace(a, '# Rankings: <a href="https://www.espn.com/nba/bpi" target="_blank" rel="noopener">BPI (ESPN)</a>'); LOG.append(('shared/ui.js: rankings footnote -> ESPN NBA BPI', 1))
+for x in PATCHES['ui']:
+    if u.count(x['old']) != 1: raise SystemExit('shared/ui.js: expected 1 x ' + repr(x['old'][:80]) + ', found ' + str(u.count(x['old'])))
+    u = u.replace(x['old'], x['new']); LOG.append(('shared/ui.js [' + x['tag'] + '] ' + x['why'], 1))
+open(os.path.join(ROOT, 'shared', 'ui.js'), 'w', encoding='utf-8').write(u)
 shutil.copy(os.path.join(SRC, 'shared', 'ui.css'), os.path.join(ROOT, 'shared', 'ui.css')); LOG.append(('shared/ui.css: verbatim', 1))
 print('league.html built from STOOPIDS index.html with', len(LOG), 'swaps:'); [print(' -', w, c) for w, c in LOG]

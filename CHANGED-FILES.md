@@ -1,3 +1,58 @@
+# sh23 (build 2026-11-12sh23): Bets tab rebuilt from the STOOPIDS bet code, with only the NBA, Hoops and Paul-approved changes
+
+Base: sh22 (plus the later scores refreshes on main). The Bets tab (league.html bets section and shared/ui.js) is now the STOOPIDS bet code (Stoopids/stoopids 5cbc626) copied byte for byte by tools/build_league_from_stoopids.py, then changed only by the tagged, exact-match patches in tools/hoops_patches.json (the build stops if any patch does not match exactly once). shared/ui.css is STOOPIDS' file unchanged. The older Hoops hand patches (tools/hoops_sh9_fixes.html injection and the sh19-sh22 bets edits) are replaced by this list. Unchanged as before: textdb keys stay shoops1-<league>-..., identity stays the Hoops per-league name, NBA teams and schedule. Tags: NBA = NBA data/teams, HOOPS = this league's link/app shell, PAUL-a pools, PAUL-b 1v1 copy text, PAUL-c Write It Up, PAUL-d dates (no weekday names, US Eastern dates in bet and copy texts), PAUL-1/3/4 Paul's sh23 review (emoji and pool save message).
+
+Patches in league.html:
+- 1. [HOOPS] PWA: register the Hoops service worker (STOOPIDS unregisters)
+- 2. [PAUL-d] fmtDate: no weekday
+- 3. [PAUL-d] comment: no weekday
+- 4. [PAUL-d] last-updated stamp: no weekday
+- 5. [NBA] live ESPN NBA scores: add games missing from the baked schedule
+- 6. [NBA] live ESPN NBA scores: add missing games
+- 7. [NBA+PAUL-c] old form note: Write It Up; NBA example
+- 8. [PAUL-d] draft time: no weekday
+- 9. [HOOPS] manager link keeps ?l=<league>
+- 10. [HOOPS] public link keeps ?l=<league>
+- 11. [NBA] tip example with NBA teams
+- 12. [PAUL-c] help: button says Write It Up
+- 13. [PAUL-c] save error names the Write It Up button
+- 14. [PAUL-c] pool save error names the Write It Up button
+- 15. [PAUL-a] pool card pill: Unsettled
+- 16. [PAUL-a] pool card payouts with $; no "not entered" note when payouts are planned
+- 17. [PAUL-d] bet day/when bits: no weekday
+- 18. [PAUL-c] 1v1 button says Write It Up
+- 19. [HOOPS] view link keeps ?l=<league>
+- 20. [HOOPS] remember last league/tab for the Hoops home page
+- 21. [PAUL-d] posted stamp: ET, no weekday
+- 22. [PAUL-d] request game time: ET, no weekday
+- 23. [NBA] paste example with NBA teams
+- 24. [PAUL-a] pool card/copy word Unsettled; card line "Buy-in $50 each · Total $300"
+- 25. [PAUL-d] open-bet Copy: date without weekday
+- 26. [NBA] live ESPN NBA scores: poll today/tomorrow/next day (ET) and recent unfinished games
+- 27. [NBA] 1v1 bet example with NBA teams
+- 28. [PAUL-c+NBA] pool intro names the Write It Up button; NBA example
+- 29. [PAUL-c] pool button says Write It Up
+- 30. [PAUL-a+PAUL-d] pool copy: Unsettled; posted date in ET with no weekday
+- 31. [PAUL-a] pool picker: Select all / Clear sit in the 4-across grid as a cell (the STOOPIDS 1v1 picker tile), not under it
+- 32. [PAUL-a] pool form: settle-date step (STOOPIDS whenBox; End Of Season by default)
+- 33. [PAUL-a] pool record keeps its settle date
+- 34. [PAUL-d] bet copy "Posted" date in ET
+- 35. [PAUL-c] after Write It Up (1v1): open All Bets on the new bet, highlighted
+- 36. [PAUL-c] after Write It Up (pool): open All Bets on the new pool, highlighted
+- 37. [PAUL-1] agreed/unsettled card Copy is a written-up bet, so it uses 💥 like the Write It Up copy (💣 stays only on requests awaiting acceptance)
+- 38. [PAUL-4] settled Copy heading: 🎉 at both ends instead of 💥 (a wash keeps its 💦)
+- 39. [PAUL-3] pool save message is exactly 'Pool #n posted 💥'
+- 40. [PAUL-3] pool save message: no 'Message copied' tail (the copy-failed warning stays)
+
+Patches in shared/ui.js (besides the NBA rankings footnote link):
+- 1. [NBA] tip example with NBA teams
+- 2. [PAUL-b] request text: add the game in brackets only when the bet does not already name both teams
+- 3. [NBA] request example with an NBA team
+- 4. [PAUL-d] request expiry date: no weekday
+- 5. [PAUL-b] copy text: teams on one line, then "Nov 12, 2-1" (just the date when odds are even), no "at"
+
+Removed: tests/test_nba_wiu.js and tests/test_nba_sh22_copy.js (they tested the old hand patches). Added: tests/e2e_stoopids_bets.js (synthetic league in the local mock store). js/league-bets.js and js/leaguehome.js are not loaded by any page and are left as they are. Archives tab work stays local and is not in this commit.
+
 # sh22 (build 2026-11-12sh22): request copy drops repeated game context; odds on their own line; dates only, ET in bet/copy text
 
 Base: sh21 (plus the later scores refresh on main). Paul adjusted a Games-card quick bet on Request and the copied text repeated the matchup — “Dallas +9.5 vs Minnesota -9.5, Thu Nov 12 (Dallas vs Minnesota, Thu Nov 12) at 2-1”. Cause: once the written text no longer exactly matched a quick-bet chip, pick() treated it as hand-typed and always appended “(Away vs Home, date)”, and descLine glued “ at 2-1” onto the same line. Fix: that parenthetical is added only when the text does not already name both teams and the date (spread, over/under, winner, and hand-typed all checked). All 1v1 copy texts (Request, placed, open, settled; quick bet and hand-typed) put non-even odds on their own line under the teams line, with no “at”. Dates on the Hoops site no longer include weekday names (Mon–Sun); game cards and times stay in the viewer’s local zone, while bet texts and copy texts (1v1 and pool, including Posted and game-tied settle dates) use the US Eastern (America/New_York) calendar date, e.g. “Nov 12”. Pool card wording, payouts, and $ lines are unchanged except those dates. Archives tab work stays local and is not in this commit. Request-card layout cleanup is also local and is not in this commit.
