@@ -15,7 +15,7 @@
     },
     "4": {
       "w": 1,
-      "l": 8,
+      "l": 9,
       "playoffSeed": 14,
       "conference": "East"
     },
@@ -26,15 +26,21 @@
       "conference": "East"
     },
     "11": {
-      "w": 3,
+      "w": 4,
       "l": 8,
-      "playoffSeed": 12,
+      "playoffSeed": 10,
+      "conference": "East"
+    },
+    "27": {
+      "w": 4,
+      "l": 8,
+      "playoffSeed": 11,
       "conference": "East"
     },
     "19": {
       "w": 3,
       "l": 7,
-      "playoffSeed": 11,
+      "playoffSeed": 12,
       "conference": "East"
     },
     "30": {
@@ -43,40 +49,34 @@
       "playoffSeed": 9,
       "conference": "East"
     },
-    "27": {
-      "w": 4,
-      "l": 7,
-      "playoffSeed": 10,
-      "conference": "East"
-    },
-    "14": {
+    "28": {
       "w": 5,
       "l": 6,
       "playoffSeed": 7,
       "conference": "East"
     },
-    "5": {
+    "14": {
       "w": 5,
       "l": 6,
       "playoffSeed": 8,
       "conference": "East"
     },
-    "28": {
-      "w": 5,
-      "l": 5,
+    "5": {
+      "w": 6,
+      "l": 6,
       "playoffSeed": 6,
       "conference": "East"
     },
     "18": {
       "w": 6,
-      "l": 4,
-      "playoffSeed": 4,
+      "l": 5,
+      "playoffSeed": 5,
       "conference": "East"
     },
     "1": {
       "w": 7,
       "l": 5,
-      "playoffSeed": 5,
+      "playoffSeed": 4,
       "conference": "East"
     },
     "8": {
@@ -92,7 +92,7 @@
       "conference": "East"
     },
     "2": {
-      "w": 9,
+      "w": 10,
       "l": 2,
       "playoffSeed": 1,
       "conference": "East"
@@ -176,15 +176,15 @@
       "conference": "West"
     },
     "24": {
-      "w": 9,
+      "w": 10,
       "l": 2,
-      "playoffSeed": 2,
+      "playoffSeed": 1,
       "conference": "West"
     },
     "13": {
       "w": 10,
       "l": 2,
-      "playoffSeed": 1,
+      "playoffSeed": 2,
       "conference": "West"
     }
   },
@@ -3619,19 +3619,19 @@
       "id": "401909966",
       "day": "2026-11-11",
       "start": "2026-11-12T00:00Z",
-      "status": "live",
+      "status": "final",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "11",
-        "score": 26,
+        "score": 114,
         "seed": null,
         "short": "IND"
       },
       "away": {
         "id": "27",
-        "score": 25,
+        "score": 101,
         "seed": null,
         "short": "WSH"
       },
@@ -3643,26 +3643,27 @@
         "fav_name": "IND",
         "aml": 130,
         "hml": -154,
-        "p": "DraftKings"
+        "p": "DraftKings",
+        "type": "close"
       }
     },
     {
       "id": "401909967",
       "day": "2026-11-11",
       "start": "2026-11-12T00:00Z",
-      "status": "live",
+      "status": "final",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "18",
-        "score": 16,
+        "score": 107,
         "seed": null,
         "short": "NY"
       },
       "away": {
         "id": "5",
-        "score": 25,
+        "score": 115,
         "seed": null,
         "short": "CLE"
       },
@@ -3674,26 +3675,27 @@
         "fav_name": "NY",
         "aml": 180,
         "hml": -217,
-        "p": "DraftKings"
+        "p": "DraftKings",
+        "type": "close"
       }
     },
     {
       "id": "401909968",
       "day": "2026-11-11",
       "start": "2026-11-12T00:00Z",
-      "status": "live",
+      "status": "final",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "28",
-        "score": 27,
+        "score": 93,
         "seed": null,
         "short": "TOR"
       },
       "away": {
         "id": "2",
-        "score": 23,
+        "score": 98,
         "seed": null,
         "short": "BOS"
       },
@@ -3705,26 +3707,27 @@
         "fav_name": "BOS",
         "aml": -197,
         "hml": 165,
-        "p": "DraftKings"
+        "p": "DraftKings",
+        "type": "close"
       }
     },
     {
       "id": "401909969",
       "day": "2026-11-11",
       "start": "2026-11-12T01:00Z",
-      "status": "scheduled",
+      "status": "final",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "4",
-        "score": null,
+        "score": 119,
         "seed": null,
         "short": "CHI"
       },
       "away": {
         "id": "24",
-        "score": null,
+        "score": 124,
         "seed": null,
         "short": "SA"
       },
@@ -3732,30 +3735,31 @@
         "fav": "24",
         "dog": "4",
         "sp": 15.5,
-        "ou": 235.5,
+        "ou": 237.5,
         "fav_name": "SA",
         "aml": -1180,
         "hml": 740,
-        "p": "DraftKings"
+        "p": "DraftKings",
+        "type": "close"
       }
     },
     {
       "id": "401909970",
       "day": "2026-11-11",
       "start": "2026-11-12T01:00Z",
-      "status": "scheduled",
+      "status": "live",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "29",
-        "score": null,
+        "score": 118,
         "seed": null,
         "short": "MEM"
       },
       "away": {
         "id": "7",
-        "score": null,
+        "score": 121,
         "seed": null,
         "short": "DEN"
       },
@@ -3774,19 +3778,19 @@
       "id": "401909971",
       "day": "2026-11-11",
       "start": "2026-11-12T01:00Z",
-      "status": "scheduled",
+      "status": "live",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "15",
-        "score": null,
+        "score": 100,
         "seed": null,
         "short": "MIL"
       },
       "away": {
         "id": "13",
-        "score": null,
+        "score": 118,
         "seed": null,
         "short": "LAL"
       },
@@ -3794,7 +3798,7 @@
         "fav": "13",
         "dog": "15",
         "sp": 14.5,
-        "ou": 229.5,
+        "ou": 230.5,
         "fav_name": "LAL",
         "aml": -930,
         "hml": 620,
@@ -3805,19 +3809,19 @@
       "id": "401909972",
       "day": "2026-11-11",
       "start": "2026-11-12T01:00Z",
-      "status": "scheduled",
+      "status": "live",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "3",
-        "score": null,
+        "score": 97,
         "seed": null,
         "short": "NO"
       },
       "away": {
         "id": "17",
-        "score": null,
+        "score": 135,
         "seed": null,
         "short": "BKN"
       },
@@ -3825,7 +3829,7 @@
         "fav": "3",
         "dog": "17",
         "sp": 2.5,
-        "ou": 229.5,
+        "ou": 228.5,
         "fav_name": "NO",
         "aml": 120,
         "hml": -142,
@@ -3836,19 +3840,19 @@
       "id": "401909973",
       "day": "2026-11-11",
       "start": "2026-11-12T02:00Z",
-      "status": "scheduled",
+      "status": "live",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "26",
-        "score": null,
+        "score": 59,
         "seed": null,
         "short": "UTAH"
       },
       "away": {
         "id": "19",
-        "score": null,
+        "score": 66,
         "seed": null,
         "short": "ORL"
       },
@@ -3856,7 +3860,7 @@
         "fav": "19",
         "dog": "26",
         "sp": 4.5,
-        "ou": 214.5,
+        "ou": 215.5,
         "fav_name": "ORL",
         "aml": -179,
         "hml": 150,
@@ -3867,19 +3871,19 @@
       "id": "401909974",
       "day": "2026-11-11",
       "start": "2026-11-12T02:30Z",
-      "status": "scheduled",
+      "status": "live",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "10",
-        "score": null,
+        "score": 44,
         "seed": null,
         "short": "HOU"
       },
       "away": {
         "id": "9",
-        "score": null,
+        "score": 31,
         "seed": null,
         "short": "GS"
       },
@@ -3889,8 +3893,8 @@
         "sp": 6.5,
         "ou": 219.5,
         "fav_name": "HOU",
-        "aml": 217,
-        "hml": -264,
+        "aml": 205,
+        "hml": -249,
         "p": "DraftKings"
       }
     },
@@ -3898,19 +3902,19 @@
       "id": "401909975",
       "day": "2026-11-11",
       "start": "2026-11-12T03:00Z",
-      "status": "scheduled",
+      "status": "live",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "22",
-        "score": null,
+        "score": 16,
         "seed": null,
         "short": "POR"
       },
       "away": {
         "id": "25",
-        "score": null,
+        "score": 23,
         "seed": null,
         "short": "OKC"
       },
@@ -3965,6 +3969,16 @@
         "score": null,
         "seed": null,
         "short": "DET"
+      },
+      "line": {
+        "fav": "8",
+        "dog": "27",
+        "sp": 9.5,
+        "ou": 220.5,
+        "fav_name": "DET",
+        "aml": -369,
+        "hml": 293,
+        "p": "DraftKings"
       }
     },
     {
@@ -3986,6 +4000,16 @@
         "score": null,
         "seed": null,
         "short": "DAL"
+      },
+      "line": {
+        "fav": "16",
+        "dog": "6",
+        "sp": 5.5,
+        "ou": 226.5,
+        "fav_name": "MIN",
+        "aml": 164,
+        "hml": -196,
+        "p": "DraftKings"
       }
     },
     {
@@ -4007,6 +4031,16 @@
         "score": null,
         "seed": null,
         "short": "CHA"
+      },
+      "line": {
+        "fav": "21",
+        "dog": "30",
+        "sp": 7.5,
+        "ou": 213.5,
+        "fav_name": "PHX",
+        "aml": 202,
+        "hml": -245,
+        "p": "DraftKings"
       }
     },
     {
