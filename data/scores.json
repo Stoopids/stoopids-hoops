@@ -3990,7 +3990,7 @@
         "fav": "8",
         "dog": "27",
         "sp": 10.5,
-        "ou": 221.5,
+        "ou": 222.5,
         "fav_name": "DET",
         "aml": -438,
         "hml": 341,
@@ -4078,6 +4078,16 @@
         "score": null,
         "seed": null,
         "short": "NY"
+      },
+      "line": {
+        "fav": "18",
+        "dog": "11",
+        "sp": 6.5,
+        "ou": 221.5,
+        "fav_name": "NY",
+        "aml": -241,
+        "hml": 199,
+        "p": "DraftKings"
       }
     },
     {
@@ -4120,6 +4130,16 @@
         "score": null,
         "seed": null,
         "short": "CLE"
+      },
+      "line": {
+        "fav": "14",
+        "dog": "5",
+        "sp": 1.5,
+        "ou": 237.5,
+        "fav_name": "MIA",
+        "aml": 105,
+        "hml": -124,
+        "p": "DraftKings"
       }
     },
     {
