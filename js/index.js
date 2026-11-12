@@ -1,8 +1,9 @@
 (function(){const F=FBN,U=UI,esc=U.esc;
-/* s24 unified resume (draft room + League site): the home-screen app always launches here. On the FIRST page of an app session only (sessionStorage shoops.launched,
-   shared with league.html), reopen whichever was used last, within 14 days: the draft room / recap tab (shoops.lastnav) or the League site tab (shoops.lastsite, League-owned writer).
+/* s24 unified resume (draft room + League site): the home-screen app always launches here. On the FIRST page of an app session (sessionStorage shoops.launched,
+   shared with league.html) in the installed app, or on a reload of this page, reopen whichever was used last, within 14 days: the draft room / recap tab (shoops.lastnav) or the League site tab (shoops.lastsite, League-owned writer).
    Never a mock (the league is checked; offline, this device is trusted), never identity in the hash. Every later visit to Home stays on Home, so there is no loop. */
-const RL=U.firstPage&&U.isStandalone()?U.lastPlace():null;
+const navType=(()=>{try{const n=performance.getEntriesByType('navigation')[0];return(n&&n.type)||''}catch(e){return ''}})();
+const RL=(U.firstPage&&U.isStandalone())||navType==='reload'?U.lastPlace():null;
 if(RL){document.getElementById('app').innerHTML='<div class="card mut" id="relaunching" role="status">Opening your league…</div>';
   /* s24c: U.lastPlace() already refused mock ids LOCALLY (MK prefix, the kind field, this device's mock lists), so a 503 or offline never opens a mock.
      The store only confirms: a league it says is a mock or deleted is forgotten. If the store fails, the local decision stands. */

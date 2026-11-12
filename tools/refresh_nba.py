@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Refresh Stoopids Hoops data/*.json from ESPN's public NBA JSON.
 
-Writes scores.json (games + current standings/playoffSeed), last_season.json (final 2025-26 records for Win rank), tournament.json (official
+Writes scores.json (games + current standings/playoffSeed + ESPN scoreboard lines when posted), last_season.json (final 2025-26 records for Win rank), tournament.json (official
 seeds once the play-in is done), and data/power.json (ESPN BPI ranks, mapped by
 numeric ESPN team id). On a BPI fetch failure the existing power.json / teams.js
 fallback ranks are left in place. Does NOT write SYNTHETIC/demo files.
@@ -82,6 +82,78 @@ def kind_round(ev, comp) -> tuple[str, str]:
         return "playoff", tail
     return "reg", ""
 
+def _num(v):
+    if v is None or v == "":
+        return None
+    try:
+        return float(str(v).replace("+", "").replace("o", "").replace("u", "").replace("O", "").replace("U", ""))
+    except (TypeError, ValueError):
+        return None
+
+def _ml(v):
+    n = _num(v)
+    if n is None:
+        return None
+    return int(round(n))
+
+def parse_line(comp, home, away):
+    """Map ESPN scoreboard competitions[0].odds into the g.line object the Games tab reads (fav, sp, ou, dog, fav_name, aml, hml, p)."""
+    odds = comp.get("odds") or []
+    if not odds:
+        return None
+    o = sorted(odds, key=lambda x: ((x.get("provider") or {}).get("priority") or 99))[0]
+    hid = str((home.get("team") or {}).get("id") or "")
+    aid = str((away.get("team") or {}).get("id") or "")
+    ho, ao = o.get("homeTeamOdds") or {}, o.get("awayTeamOdds") or {}
+    fav = hid if ho.get("favorite") else (aid if ao.get("favorite") else None)
+    dog = aid if fav == hid else (hid if fav == aid else None)
+
+    def close_spread(side):
+        raw = (((o.get("pointSpread") or {}).get(side) or {}).get("close") or {}).get("line")
+        n = _num(raw)
+        return abs(n) if n is not None else None
+
+    sp = close_spread("home") if fav == hid else (close_spread("away") if fav == aid else None)
+    if sp is None:
+        hs = _num(o.get("spread"))
+        if hs is not None:
+            sp = abs(hs)
+    ou = _num(o.get("overUnder"))
+    if ou is None:
+        tot = (((o.get("total") or {}).get("over") or {}).get("close") or {}).get("line")
+        ou = _num(tot)
+    def ml(side):
+        raw = (((o.get("moneyline") or {}).get(side) or {}).get("close") or {}).get("odds")
+        if raw is None:
+            raw = (((o.get("moneyline") or {}).get(side) or {}).get("open") or {}).get("odds")
+        return _ml(raw)
+    fav_name = None
+    if fav == hid:
+        fav_name = (home.get("team") or {}).get("abbreviation") or (ho.get("team") or {}).get("abbreviation")
+    elif fav == aid:
+        fav_name = (away.get("team") or {}).get("abbreviation") or (ao.get("team") or {}).get("abbreviation")
+    prov = o.get("provider") or {}
+    out = {}
+    if fav:
+        out["fav"] = fav
+    if dog:
+        out["dog"] = dog
+    if sp is not None:
+        out["sp"] = sp
+    if ou is not None:
+        out["ou"] = ou
+    if fav_name:
+        out["fav_name"] = str(fav_name)
+    aml, hml = ml("away"), ml("home")
+    if aml is not None:
+        out["aml"] = aml
+    if hml is not None:
+        out["hml"] = hml
+    name = prov.get("name") or prov.get("displayName")
+    if name:
+        out["p"] = str(name)
+    return out or None
+
 def parse_event(ev, pool: set[str]):
     comps = ev.get("competitions") or []
     if not comps:
@@ -125,7 +197,7 @@ def parse_event(ev, pool: set[str]):
         day = datetime.fromisoformat(start.replace("Z", "+00:00")).astimezone(ZoneInfo("America/New_York")).date().isoformat()
     except Exception:
         pass
-    return {
+    g = {
         "id": str(ev.get("id")),
         "day": day,
         "start": start,
@@ -136,6 +208,44 @@ def parse_event(ev, pool: set[str]):
         "home": h,
         "away": a,
     }
+    line = parse_line(c, home, away)
+    if line:
+        g["line"] = line
+    return g
+
+def backfill_lines(games: list[dict], today: date) -> int:
+    """Scoreboard drops the odds list once a game is live; the summary pickcenter still has the line."""
+    n = 0
+    for g in games:
+        if g.get("line"):
+            continue
+        day = g.get("day") or ""
+        try:
+            near = abs((date.fromisoformat(day) - today).days) <= 1 if day else False
+        except ValueError:
+            near = False
+        # only the nearby slate (and any live game): do not hit summary for the rest of the season
+        if not (g.get("status") == "live" or near):
+            continue
+        if not g.get("id"):
+            continue
+        try:
+            js = get(f"{BASE}/summary?event={g['id']}")
+        except Exception as e:
+            print(f"warn line {g['id']}: {e}", file=sys.stderr)
+            continue
+        pc = js.get("pickcenter") or js.get("odds") or []
+        if not pc:
+            continue
+        home = {"team": {"id": str((g.get("home") or {}).get("id") or ""), "abbreviation": (g.get("home") or {}).get("short")}}
+        away = {"team": {"id": str((g.get("away") or {}).get("id") or ""), "abbreviation": (g.get("away") or {}).get("short")}}
+        line = parse_line({"odds": pc if isinstance(pc, list) else [pc]}, home, away)
+        if line:
+            if g.get("status") == "final" and "type" not in line:
+                line["type"] = "close"
+            g["line"] = line
+            n += 1
+    return n
 
 def fetch_days(start: date, end: date, pool: set[str]) -> list[dict]:
     games, seen = [], set()
@@ -562,10 +672,18 @@ def main():
     start = date.fromisoformat(args.start) if args.start else today - timedelta(days=7)
     end = date.fromisoformat(args.end) if args.end else today + timedelta(days=14)
     games = fetch_days(start, end, pool)
+    filled = backfill_lines(games, today)
+    if filled:
+        print(f"filled {filled} missing lines from ESPN game summary")
     if args.merge:
         prev = outdir / "scores.json"
         if prev.exists():
             old = json.loads(prev.read_text())
+            old_by = {g["id"]: g for g in (old.get("games") or []) if g.get("id")}
+            for g in games:
+                og = old_by.get(g.get("id"))
+                if og and og.get("line") and not g.get("line"):
+                    g["line"] = og["line"]
             have = {g["id"] for g in games}
             for g in old.get("games") or []:
                 if g.get("id") not in have:

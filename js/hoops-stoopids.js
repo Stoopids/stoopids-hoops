@@ -4,7 +4,34 @@
    shape that STOOPIDS' refresh.py writes to data.js. It also: checks the manager's own private link (no act-as-anyone), checks the commissioner passcode
    (league meta.pass) and does the commissioner 'Make a new link for [manager]' tool. Nothing here writes outside the shoops1-<league> keys. */
 (function(){'use strict';
-const q=new URLSearchParams(location.search);const id=String(q.get('l')||'').trim().replace(/[^A-Za-z0-9]/g,'').slice(0,40);
+const q=new URLSearchParams(location.search);let id=String(q.get('l')||'').trim().replace(/[^A-Za-z0-9]/g,'').slice(0,40);
+/* If the URL lost ?l= (stale rewrite, PWA start, truncated open), reopen the last league on this device instead of the home landing. */
+function lastOpenedLeague(){
+  const ok=x=>!!(x&&typeof x==='string'&&/^[A-Za-z0-9]{2,40}$/.test(x));
+  const tabOf=t=>/^[a-z]{3,12}$/.test(String(t||''))?String(t):'';
+  try{
+    const b=JSON.parse(localStorage.getItem('shoops.lastsite')||'null');
+    if(b&&!b.mock&&ok(b.id)&&(Date.now()-(+b.at||0)<14*864e5))return{id:String(b.id).replace(/[^A-Za-z0-9]/g,'').slice(0,40),tab:tabOf(b.t)};
+  }catch(e){}
+  try{
+    const a=JSON.parse(localStorage.getItem('shoops.leagues')||'null');
+    if(Array.isArray(a)){
+      const L=a.find(x=>x&&ok(x.id));
+      if(L){let tab='';try{tab=tabOf(sessionStorage.getItem('shoops1.'+String(L.id).toLowerCase()+'.tab'))}catch(e){}return{id:L.id,tab}}
+    }
+  }catch(e){}
+  return null;
+}
+if(!id){
+  const last=lastOpenedLeague();
+  if(last){
+    const u=new URL(location.href);
+    u.searchParams.set('l',last.id);
+    if((!u.hash||u.hash.length<2)&&last.tab)u.hash='#'+last.tab;
+    location.replace(u.pathname+u.search+u.hash);
+    return;
+  }
+}
 const H=window.HOOPS={id,me:null,mid:null,cmOk:false,cmName:'',meta:null,L:null,err:'',nl:{url:'',who:'',busy:false,msg:''},dataName:'',
   draftUrl:'room.html?l='+encodeURIComponent(id),homeUrl:'index.html'};
 window.HK='shoops1.'+id.toLowerCase()+'.';   /* this page's localStorage keys (STOOPIDS 'stoopids_*' keys renamed per league; never shared with the real STOOPIDS site on the same origin) */
@@ -36,6 +63,7 @@ H.load=async function(){
   if(!id){H.err='nolink';H.setTitle('Stoopids Hoops');throw new Error('no league code')}
   const L=await FBNLeague.load(id,{pool:POOL});if(!L.meta){H.err='notfound';H.setTitle('Stoopids Hoops');throw new Error('league not found')}
   H.remember(L.meta.name);
+  try{const t=(location.hash||'').replace(/^#/,'').split('/')[0];localStorage.setItem('shoops.lastsite',JSON.stringify({id,t:/^[a-z]{3,12}$/.test(t)?t:'standings',at:Date.now()}))}catch(e){}
   H.L=L;H.meta=L.meta;
   /* heading: STOOPIDS PRESENTS <league name the commish set at league setup> (shoops1- league record) */
   H.setTitle(L.meta.name);const MG=L.managers.filter(m=>m&&m.mid);const keys=uniqNames(MG);const keyOf={},mOf={};MG.forEach((m,i)=>{keyOf[m.mid]=keys[i];mOf[keys[i]]=m});H.keyOf=keyOf;H.mOf=mOf;
@@ -115,5 +143,7 @@ document.addEventListener('click',e=>{const t=e.target&&e.target.closest?e.targe
   if(t.closest('#cmGiveShow')){e.preventDefault();H.nl.give=true;H.rerender();return}if(t.closest('#cmGiveCopy')){e.preventDefault();const i=document.getElementById('cmGiveUrl');const b=t.closest('#cmGiveCopy');if(i){const ok=()=>{b.textContent='Copied ✓'};try{navigator.clipboard.writeText(i.value).then(ok,()=>{i.select();document.execCommand('copy');ok()})}catch(x){}}return}
   if(t.closest('#cmGiveShare')){e.preventDefault();const i=document.getElementById('cmGiveUrl');if(i&&navigator.share)navigator.share({title:'Commissioner link',url:i.value}).catch(()=>{});return}
   if(t.closest('#cmNewCopy')){e.preventDefault();H.copyNew(t.closest('#cmNewCopy'));return}if(t.closest('#cmNewShare')){e.preventDefault();H.shareNew()}});
+H.saveLastSite=function(tab){if(!id)return;const t=String(tab||(location.hash||'').replace(/^#/,'').split('/')[0]||'standings');try{localStorage.setItem('shoops.lastsite',JSON.stringify({id,t:/^[a-z]{3,12}$/.test(t)?t:'standings',at:Date.now()}))}catch(e){}};
+addEventListener('hashchange',function(){try{H.saveLastSite()}catch(e){}});
 H.rerender=function(){try{window.render&&window.render()}catch(e){}try{if(typeof render==='function')render()}catch(e){}};
 })();

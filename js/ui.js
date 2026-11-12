@@ -170,6 +170,7 @@ UI.lastPlace=function(){const c=[];const ok=t=>/^[a-z]{2,16}$/.test(String(t||''
   const a=UI.lsJSON('lastnav',null);if(a&&(a.kind==='room'||a.kind==='recap')&&!a.mock&&ok(a.tab)&&!UI.isMockId(a.id)){const id=FBN.parseCode(String(a.id||''));const path=UI.cleanPath(a.path||'');
     if(id&&path&&path.indexOf('l='+id)>=0&&path.indexOf(a.kind+'.html')>=0)c.push({kind:a.kind,id,url:path+'#tab='+a.tab,ts:+a.ts||0})}
   const b=UI.lsJSON('lastsite',null);if(b&&!b.mock&&!UI.isMockId(b.id)){const id=FBN.parseCode(String(b.id||''));if(id&&/^[a-z]{3,12}$/.test(String(b.t||'')))c.push({kind:'league',id,url:UI.pageUrl('league.html',{l:id})+'#'+b.t,ts:+b.at||0})}
+  (UI.myLeagues()||[]).forEach(L=>{if(!L||L.mock)return;const id=FBN.parseCode(String(L.id||''));if(!id||UI.isMockId(id))return;c.push({kind:'league',id,url:UI.pageUrl('league.html',{l:id}),ts:+L.ts||0})});
   const now=Date.now();const v=c.filter(x=>x.ts>0&&now-x.ts<UI.RESUME_MS&&x.ts<=now+6e4&&!UI.isArchived(x.id)).sort((x,y)=>y.ts-x.ts);return v[0]||null};
 (function(){const U=window.UI;const esc=U.esc;
 /* s25-full invite / share row, used on every invite or share spot (setup links, room invite card + sheet, the links card).

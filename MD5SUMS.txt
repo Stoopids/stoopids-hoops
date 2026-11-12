@@ -1,5 +1,5 @@
 d41d8cd98f00b204e9800998ecf8427e  .nojekyll
-7cb6a880d4db6b84dabaf10ec69fba65  CHANGED-FILES.md
+5effea804a138a0fcb793e2c7c2e26fc  CHANGED-FILES.md
 fc4c2520be569d292be962f8ba4efdeb  LICENSE-third-party.txt
 8b5625f976836aad6af5f60e27144a46  README.md
 6e71fc07a94b28f030a54f9dc981573d  STOOPIDS-TEMPLATE.md
@@ -23,7 +23,7 @@ f79524b3395d608617b78d6120b92dc9  data/hoops-net.json
 2931bf38f01c5f4dc10f27d05bf98f9f  data/net.json
 58e0494c51d30eb3494f7c9198986bb9  data/power-rankings.json
 6be75d464effedc91923f92e974f7181  data/power.json
-061de23fb057fcc3c1a416bc01db8e49  data/scores.json
+5c53e013eabc129814080c4adf468856  data/scores.json
 bfdf0c9e64998f56d308dbaaca17d3d8  data/stoopids.json
 14f5840b8e762f1a467b4bfd4a6743fd  data/synthetic/README.txt
 41c6a31523988efaddef299025ecb3f0  data/tournament.json
@@ -37,8 +37,8 @@ cb2f334310b363a0e1c6d957ba52bc4e  import/stoopids-draft-results.json
 7b5dbb270fa200d81d936dc9c0ae4332  join.html
 d2081ac0a18f07a9fcafd65bc2f943af  js/core.js
 919176badbe78c5adc6fb7ce260cf723  js/help.js
-faf8016a516fd362bf8d65bf35f82864  js/hoops-stoopids.js
-0e122ac687e4b2d381136fa161a0dba2  js/index.js
+a39052440df9a22d212e0a600b863b8d  js/hoops-stoopids.js
+eb381865e82ce954e3cd858e091f5381  js/index.js
 d2fe9a238ac5cbd4cd207e4357d6b198  js/join.js
 4a248be8d04087454c6a2a5c53e65219  js/league-bets.js
 3f8c8f86dde0f75d98b71796bfbd2bdd  js/league-d.js
@@ -61,9 +61,9 @@ ade6fadbb2f4be5a575390360ff3af5b  js/qr.min.js
 8bdd1fd8d7928c3c7e085de801925234  js/shared-s25.js
 4c6278d218b3092ecb311378e48f9cbb  js/store.js
 b31b8d130f47a378f2358995614b9470  js/time.js
-4d504bf1ee1831973176394e76f994f6  js/ui.js
-f97da6499047b6173d0c5b46cb65cf53  js/version.js
-7b6dc4653ef02675ffdc30108715b9d4  league.html
+4c6bad30d300b491b9c0cdc077808a8d  js/ui.js
+0810f7aefcf4c74daa5e69b0850b2e81  js/version.js
+15f1e09ff9ef151a129514f0894dfd1b  league.html
 bfecc7dd0f1bda7d2eba6a98a31acf30  manifest.webmanifest
 3b25eb7bcd546e190180401ab0cd8833  mock.html
 4aa29b791ef8afea1136539675db73df  recap.html
@@ -72,9 +72,9 @@ bfecc7dd0f1bda7d2eba6a98a31acf30  manifest.webmanifest
 0abcaa0775f7e3d21e6561e1b07ccc36  setup.html
 441fdaab0f155a04edca55cc8191e07c  shared/ui.css
 20e521bd045d8ff49ead0a01e6bfef7a  shared/ui.js
-6efe6410d685dd4d9d7392f7e0fbde7c  sw.js
+502b919b1111f3d9c46ce3963e9cf90f  sw.js
 dbc1acbbc855aa2997faf2d9331135b5  time.html
 12e698a77aafb85ceac512a72e592015  tools/build_league_from_stoopids.py
 eee8a26eb834ea3667a3220d21d9c65d  tools/hoops_sh9_fixes.html
 564a76fc93bd657cffacd255c20ebb3e  tools/mock_textdb.js
-b72bae2b59d12eb6e6c61e008b1baefb  tools/refresh_nba.py
+4fa88ba9eef4ea6e92a6f81de5992cef  tools/refresh_nba.py

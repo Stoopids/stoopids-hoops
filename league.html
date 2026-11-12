@@ -24,7 +24,8 @@
   document.addEventListener('DOMContentLoaded',function(){W.top()});addEventListener('load',function(){W.top()});
   addEventListener('pageshow',function(e){if(e.persisted){W.t0=Date.now();W.deep=false;W.user=false}W.top()});
   var iv=setInterval(function(){if(Date.now()-W.t0>3500){clearInterval(iv);return}W.top()},100);
-  if('serviceWorker' in navigator&&navigator.serviceWorker.getRegistrations)navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(x){x.unregister()})}).catch(function(){});
+  if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').then(function(reg){if(reg.waiting)reg.waiting.postMessage('skip');if(reg.installing)reg.installing.addEventListener('statechange',function(){if(this.state==='installed')this.postMessage('skip')})}).catch(function(){});
+    var reloaded=false;navigator.serviceWorker.addEventListener('controllerchange',function(){if(reloaded)return;reloaded=true;location.reload()})}
 })();
 </script><!--</S26W-TOP>-->
 <!--<VIEW-ONLY>--><script>
@@ -3943,7 +3944,7 @@ function s24ShareUrl(kind,id){const h=kind&&s24IdOK(String(id))?(kind==='games'?
 function s29ViewUrl(h){h=String(h||'').replace(/[^A-Za-z0-9_\/-]/g,'');const q=new URLSearchParams();const l=hoopsLeagueId();if(l)q.set('l',l);q.set('view','1');return location.origin+location.pathname+'?'+q.toString()+(h?'#'+h:'')}/*</S29B-SHARE>*/
 /*<S26W-MANIFEST>*/ // Install / Add to home screen from any tab opens that tab: the manifest link points at a per-tab manifest whose start_url is ./#<tab>
 const S26W_MT=["standings", "games", "bets", "bets-2025-26", "teams", "draft", "recap", "howto", "rules", "archive", "share", "profile", "postseason", "redraft", "rosters", "points"];function s26wMan(h){try{h=String(h||'').split('/')[0];const l=document.querySelector('link[rel=manifest]');if(!l)return;const want=S26W_MT.includes(h)?'manifest-'+h+'.webmanifest':'manifest.webmanifest';if(l.getAttribute('href')!==want)l.setAttribute('href',want)}catch(e){}}/*</S26W-MANIFEST>*/
-function s24Put(push){try{s26wMan(s24HashOf(tab));const want=s24Url(s24RouteHash());try{sessionStorage.setItem((HK+'tab'),s24HashOf(tab))}catch(_){}if(location.pathname+location.search+location.hash===want)return;history[push?'pushState':'replaceState'](null,'',want)}catch(e){}}
+function s24Put(push){try{s26wMan(s24HashOf(tab));const want=s24Url(s24RouteHash());try{sessionStorage.setItem((HK+'tab'),s24HashOf(tab))}catch(_){}try{sessionStorage.setItem('shoops.launched','1')}catch(_){}try{const lid=hoopsLeagueId(),t=s24HashOf(tab);if(lid&&!DEMO&&/^[a-z]{3,12}$/.test(t))localStorage.setItem('shoops.lastsite',JSON.stringify({id:lid,t:t,at:Date.now()}));if(window.HOOPS&&HOOPS.saveLastSite)HOOPS.saveLastSite(t)}catch(_){}if(location.pathname+location.search+location.hash===want)return;history[push?'pushState':'replaceState'](null,'',want)}catch(e){}}
 function s24NavClick(e,t){if(e&&(e.button>0||e.metaKey||e.ctrlKey||e.shiftKey||e.altKey))return true;if(e&&e.preventDefault)e.preventDefault();tab=t;S24.sub=null;render();if(t==='bets27'||t==='bets')betsLand();else{if(window.hdrShow)window.hdrShow();window.scrollTo(0,0)}return false}
 function s24OnNav(){const r=s24Read(location.hash);/*<S26W>*/try{if(r&&r.sub&&window.S26W)S26W.deep=true}catch(_){}/*</S26W>*/if(!r&&location.hash.length>1)return;const R=r||{t:'standings',sub:null};if(R.t===tab&&R.sub===S24.sub)return;/*<S26W>*/if(R.t===tab&&!R.sub&&S24.sub&&S24.done===tab+'/'+S24.sub)return;/*</S26W> the deep link just cleaned its own hash: popstate after hashchange must not undo the jump */
   tab=R.t;S24.sub=R.sub;S24.prep=null;S24.done=null;S24.nf=null;S24.last=tab;try{sessionStorage.setItem((HK+'tab'),s24HashOf(tab))}catch(_){}
