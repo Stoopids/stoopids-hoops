@@ -267,7 +267,7 @@ const betText=b=>{/* s28j: per-bet Copy = the reference s29e copy-card format (p
     const pool=b.kind==='pool',other=b.acc||b.to,on=b.to==='*'&&!b.acc?'anyone':(pool&&b.parts?b.parts.map(nm).join(', '):nm(other));
     const stw=b.status==='settled'?(b.res==='p'?'Wash':'Settled'):(b.status==='withdrawn'||b.status==='declined'||b.status==='cancelled')?'Cancelled':'Open';
     const won=b.status==='settled'&&!pool&&b.res!=='p'?' · '+(b.res==='b'?nm(b.by):on)+' won':'';
-    const day=t=>{try{return new Date(+t).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}catch(e){return''}};
+    const day=t=>{try{return (window.SHARED_UI&&SHARED_UI.etDate)?SHARED_UI.etDate(+t):new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',timeZone:'America/New_York'}).format(new Date(+t))}catch(e){return''}};
     const lg=(String(document.title||'').split(' · ')[0]||'').trim();
     const L=[(pool?'Pool':'Bet')+' #'+b.n+' · '+stw+won,String(b.text||'')];
     if(pool){const n=(b.parts||[]).length;L.push('Buy-in '+num(b.amt)+' · '+n+' managers · Total '+num(b.amt*n));L.push('Members: '+(b.parts||[]).map(nm).join(', '))}
@@ -385,7 +385,7 @@ function pzRead(txt){const raw=String(txt||'').replace(/[’`]/g,"'").replace(/\
   r.claim=rest?readBet(rest):null;r.text=rest?pzPhrase(r.claim,rest.charAt(0).toUpperCase()+rest.slice(1)):'';
   r.ok=!!((hm||r.one)&&(r.a||r.aQ)&&(r.b||r.bQ))&&(!!r.text||!!r.odds);return r}
 function pzGames(c){if(!c)return[];return((H&&H.games&&H.games())||[]).filter(g=>g&&g.home&&g.away&&g.status!=='final'&&[String(g.home.id),String(g.away.id)].includes(String(c.a))&&[String(g.home.id),String(g.away.id)].includes(String(c.b)))}
-const pzGameTxt=g=>tName(String(g.away.id))+' at '+tName(String(g.home.id))+' · '+new Intl.DateTimeFormat('en-US',{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}).format(new Date(g.start));
+const pzGameTxt=g=>tName(String(g.away.id))+' at '+tName(String(g.home.id))+' · '+new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}).format(new Date(g.start));
 const pzOdds=o=>o?(o[0]===1&&o[1]===1?'evens':o[0]+'-'+o[1]):'?';
 /* the one summary line: '<A> bets <B>: <pick> vs <opponent>, <odds>[, <amount> pushups]' */
 function pzSummary(a,b,text,odds,amt){return nm(a)+' bets '+nm(b)+': '+text+', '+pzOdds(odds)+(Number.isInteger(amt)?', '+num(amt)+' pushups':'')}
@@ -412,7 +412,7 @@ function pasteHtml(me){const z=S.pz||{txt:''};const r=z.r;let body='';
       <button type="button" class="btn b27-big" id="b27PzOk" data-lb="pzconfirm"${err||S.busy?' disabled aria-disabled="true"':''}>${S.busy?'Saving…':'Confirm'}</button>${!miss.length&&err?`<div class="b27-bad-t">${esc(err)}</div>`:''}`}
   return`<div class="b27-pz" id="b27Pz"><label for="b27PzT" class="b27-q">Paste a bet <span class="note">e.g. ${esc(PZ_EX)}</span></label><textarea id="b27PzT" class="sb-in b27-in b27-pz-t" rows="2" maxlength="300" autocomplete="off" placeholder="${esc(PZ_EX)}">${esc(z.txt||'')}</textarea><button type="button" class="btn sec b27-b" id="b27PzRead" data-lb="pzread">Read it</button>${body}</div>`}
 /* s28j: 'Posted by <name> · Nov 3, 7:00 PM WIB' = LTIME.stamp (the League's one time helper: device zone + short label); the same string goes into the copied text */
-const postedTxt=b=>b&&b.postedBy?'Posted by '+nm(b.postedBy)+' · '+(window.LTIME&&LTIME.stamp?LTIME.stamp(b.postedAt):new Date(b.postedAt).toLocaleString()):'';
+const postedTxt=b=>b&&b.postedBy?'Posted by '+nm(b.postedBy)+' · '+((window.SHARED_UI&&SHARED_UI.etStamp)?SHARED_UI.etStamp(b.postedAt):new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',hour:'numeric',minute:'2-digit',timeZone:'America/New_York'}).format(new Date(b.postedAt))):'';
 function postedHtml(b){return b&&b.postedBy?`<div class="mut b27-posted" data-posted="1">${esc(postedTxt(b))}</div>`:''}
 function formHtml(me){const f=S.f,oth=others(),oppUtil=gridUtil(oth.length,'data-lb="oppall"','data-lb="oppclear"',f.open?'Open to anyone':f.opps.length?f.opps.length+' selected':'None selected');const err=formOK();
   return`<div class="card b27-form" id="b27Form"><b>New bet</b> <span class="note">· you are <b>${esc(nm(me))}</b></span>${qbHint()}${S.edited||!PF()?'':pasteHtml(me)}${S.edited?`<div class="note b27-edhint" role="status" id="b27EdHint">✏️ Filled in from Bet #${esc(S.edited)} (withdrawn). Change it, then place it again.</div>`:kindTabs()}
@@ -774,7 +774,7 @@ function badge(){try{if(!H||H.demo||S.state!=='ok'||S.stale)return 0;const raw=l
    Tapping a side only PREFILLS the New bet form (opponent, text, pushups, Even odds) and switches to the Bets tab. Nothing is saved until Place bet and then Yes, place it. The other manager still has to accept. */
 const qbOwn=s=>{const n=s&&s.owners&&s.owners[0];const o=n==null?null:owners().find(x=>x.name===n);return o?o.mid:null};
 const qbNm=(s,ctx)=>String((ctx&&ctx.name?ctx.name(s):'')||s.short||s.name||s.id);
-function qbDate(g){try{if(g.start&&!isNaN(Date.parse(g.start)))return LTIME.dayDate(LTIME.dayKey(g.start));return /^\d{4}-\d{2}-\d{2}$/.test(g.day||'')?LTIME.dayDate(g.day):''}catch(e){return''}}   /* local date of the tip (Sat Nov 7) */
+function qbDate(g){try{const etk=new Intl.DateTimeFormat('en-CA',{timeZone:'America/New_York'});if(g.start&&!isNaN(Date.parse(g.start)))return (window.LTIME&&LTIME.dayDate?LTIME.dayDate(etk.format(new Date(g.start))):SHARED_UI.etDate(g.start));return /^\d{4}-\d{2}-\d{2}$/.test(g.day||'')?(window.LTIME&&LTIME.dayDate?LTIME.dayDate(g.day):g.day):''}catch(e){return''}}   /* US Eastern game date of the tip (Nov 7), no weekday */
 function qbOk(g){if(!H||H.demo||!g||g.status!=='scheduled'||!g.home||!g.away||!meMid())return false;
   const a=g.away.owners||[],h=g.home.owners||[];if(!a.length||!h.length||a.some(n=>h.includes(n)))return false;
   if(!qbOwn(g.away)||!qbOwn(g.home))return false;const t=Date.parse(g.start);if(!isNaN(t)&&t<=Date.now())return false;return true}

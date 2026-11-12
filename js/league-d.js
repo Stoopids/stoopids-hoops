@@ -107,18 +107,18 @@ if(typeof module!=='undefined'&&module.exports)module.exports=A;else root.FBNLea
 (function(){const g=typeof window!=='undefined'?window:(typeof globalThis!=='undefined'?globalThis:null);if(!g)return;
   const mk=o=>{try{return new Intl.DateTimeFormat('en-US',o)}catch(e){return new Intl.DateTimeFormat('en-US')}};
   const FZS=[...new Set([].concat((typeof navigator!=='undefined'&&navigator.languages)||[],'en-US'))].map(l=>{try{return new Intl.DateTimeFormat(l,{timeZoneName:'short'})}catch(e){return null}}).filter(Boolean),FT=mk({hour:'numeric',minute:'2-digit',hour12:true}),FK=new Intl.DateTimeFormat('en-CA',{year:'numeric',month:'2-digit',day:'2-digit'}),
-    FD=mk({weekday:'short',month:'short',day:'numeric'}),FDY=mk({weekday:'short',month:'short',day:'numeric',year:'numeric'}),FMD=mk({month:'short',day:'numeric'}),FW=mk({weekday:'short'});
+    FD=mk({month:'short',day:'numeric'}),FDY=mk({month:'short',day:'numeric',year:'numeric'}),FMD=mk({month:'short',day:'numeric'});
   const D=x=>x instanceof Date?x:new Date(x),okD=d=>!isNaN(d.getTime());
   const T={
     zone(x){const d0=x==null?new Date():D(x),d=okD(d0)?d0:new Date();let first='';for(const f of FZS){try{const p=f.formatToParts(d).find(q=>q.type==='timeZoneName'),v=p?p.value:'';if(!first)first=v;if(v&&!/^(GMT|UTC)[+-]/.test(v))return v}catch(e){}}return first},   /* a named short zone (WIB, PST) when any device locale has one, else GMT+7 */
     time(x){const d=D(x);return okD(d)?FT.format(d):''},              /* 7:00 PM (s28j item 12: no zone label anywhere) */
     stamp(x){const d=D(x);return okD(d)?FMD.format(d)+', '+FT.format(d):''},   /* Nov 3, 7:00 PM */
-    wdTime(x){const d=D(x);return okD(d)?FW.format(d)+' '+FT.format(d):''},     /* Tue 7:00 PM */
+    wdTime(x){const d=D(x);return okD(d)?FMD.format(d)+' '+FT.format(d):''},     /* Nov 12 7:00 PM */
     dayKey(x){const d=D(x);if(!okD(d))return'';const p={};FK.formatToParts(d).forEach(q=>p[q.type]=q.value);return p.year+'-'+p.month+'-'+p.day},   /* local YYYY-MM-DD */
     dayNum(k){const m=/^(\d{4})-(\d{2})-(\d{2})/.exec(k||'');return m?Math.round(Date.UTC(+m[1],+m[2]-1,+m[3])/864e5):NaN},
     daysSince(k0,x){return T.dayNum(T.dayKey(x))-T.dayNum(k0)},                     /* whole local days from key k0 to the local date of x */
-    dayDate(k){const m=/^(\d{4})-(\d{2})-(\d{2})/.exec(k||'');return m?FD.format(new Date(+m[1],+m[2]-1,+m[3],12)).replace(/,/g,''):(k||'')},   /* Fri Oct 30 */
-    dayLabel(k,now){const n=T.dayNum(k)-T.dayNum(T.dayKey(now==null?Date.now():now));const m=/^(\d{4})-(\d{2})-(\d{2})/.exec(k||''),ds=m?FDY.format(new Date(+m[1],+m[2]-1,+m[3],12)):(k||'');   /* Mon, Mar 29, 2027 */
+    dayDate(k){const m=/^(\d{4})-(\d{2})-(\d{2})/.exec(k||'');return m?FD.format(new Date(+m[1],+m[2]-1,+m[3],12)).replace(/,/g,''):(k||'')},   /* Oct 30 */
+    dayLabel(k,now){const n=T.dayNum(k)-T.dayNum(T.dayKey(now==null?Date.now():now));const m=/^(\d{4})-(\d{2})-(\d{2})/.exec(k||''),ds=m?FDY.format(new Date(+m[1],+m[2]-1,+m[3],12)):(k||'');   /* Mar 29, 2027 */
     return n===0?'Today · '+ds:n===1?'Tomorrow · '+ds:n===-1?'Yesterday · '+ds:ds}};
   g.LTIME=T})();
 /* s25 LRANK: league rank helper. No NCAA/AP request (this is an NBA app). Optional NET still comes from the staged local data/net.json if present. Real data only: a team with no rank renders nothing. */

@@ -88,14 +88,14 @@ F.zonedToUtc=function(y,mo,d,h,mi,tz){let guess=Date.UTC(y,mo-1,d,h,mi);for(let 
 F.parseLocalInput=function(str,tz){const m=/^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})$/.exec(String(str||''));if(!m)return null;const v=F.zonedToUtc(+m[1],+m[2],+m[3],+m[4],+m[5],tz);return isFinite(v)?v:null};
 F.localInputValue=function(ms,tz){const p=parts(ms,tz);const z=n=>String(n).padStart(2,'0');return p.y+'-'+z(p.mo)+'-'+z(p.d)+'T'+z(p.h)+':'+z(p.mi)};
 F.offsetLabel=function(ms,tz){const m=F.tzOffsetMin(ms,tz);const s=m<0?'-':'+';const a=Math.abs(m);const h=Math.floor(a/60),mm=a%60;return 'UTC'+s+h+(mm?':'+String(mm).padStart(2,'0'):'')};
-F.fmtWhen=function(ms,tz,o){o=o||{};return new Intl.DateTimeFormat(o.locale||'en-US',{timeZone:tz,weekday:'short',month:o.year?'long':'short',day:'numeric',year:o.year?'numeric':undefined,hour:'numeric',minute:'2-digit'}).format(new Date(ms)).replace(',',',')};
+F.fmtWhen=function(ms,tz,o){o=o||{};return new Intl.DateTimeFormat(o.locale||'en-US',{timeZone:tz,month:o.year?'long':'short',day:'numeric',year:o.year?'numeric':undefined,hour:'numeric',minute:'2-digit'}).format(new Date(ms)).replace(',',',')};
 /* s25b: the viewer's short zone name from Intl (PDT, GMT+7, GMT+1 …) for ms in tz; never a hard-coded zone */
 F.zoneAbbr=function(ms,tz){try{const p=new Intl.DateTimeFormat('en-US',{timeZone:tz,timeZoneName:'short'}).formatToParts(new Date(ms)).find(x=>x.type==='timeZoneName');return p?p.value:F.offsetLabel(ms,tz)}catch(e){return F.offsetLabel(ms,tz)}};
 F.zoneLabel=function(ms,tz){const a=F.zoneAbbr(ms,tz),o=F.offsetLabel(ms,tz);return /^(GMT|UTC)/.test(a)?a:a+' · '+o};
 F.fmtClock=function(ms,tz){try{return new Intl.DateTimeFormat('en-US',{timeZone:tz,hour:'numeric',minute:'2-digit'}).format(new Date(ms))+' '+F.zoneAbbr(ms,tz)}catch(e){return ''}};
-F.fmtLong=function(ms,tz){try{const d=new Date(ms);return new Intl.DateTimeFormat('en-US',{timeZone:tz,weekday:'long',month:'long',day:'numeric',year:'numeric'}).format(d)+' at '+F.fmtClock(ms,tz)}catch(e){return ''}};
-F.fmtUtc=function(ms){const d=new Date(ms);const z=n=>String(n).padStart(2,'0');return d.toUTCString().slice(0,16)+', '+z(d.getUTCHours())+':'+z(d.getUTCMinutes())+' UTC'};
-/* "Starts Sat, October 31, 2026 at 8:00 PM your time (UTC+7)" ; commissioner zone line is added when it differs */
+F.fmtLong=function(ms,tz){try{const d=new Date(ms);return new Intl.DateTimeFormat('en-US',{timeZone:tz,month:'long',day:'numeric',year:'numeric'}).format(d)+' at '+F.fmtClock(ms,tz)}catch(e){return ''}};
+F.fmtUtc=function(ms){const d=new Date(ms);const z=n=>String(n).padStart(2,'0');return new Intl.DateTimeFormat('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'}).format(d)+', '+z(d.getUTCHours())+':'+z(d.getUTCMinutes())+' UTC'};
+/* "Starts October 31, 2026 at 8:00 PM your time (UTC+7)" ; commissioner zone line is added when it differs */
 F.startsLine=function(ms,viewerTz,commishTz){const own='Starts '+F.fmtWhen(ms,viewerTz,{year:1})+' your time ('+F.zoneLabel(ms,viewerTz)+')';
   if(commishTz&&commishTz!==viewerTz&&F.tzOffsetMin(ms,commishTz)!==F.tzOffsetMin(ms,viewerTz))return{you:own,commish:'Commissioner’s time: '+F.fmtWhen(ms,commishTz,{year:1})+' ('+F.tzCity(commishTz)+', '+F.zoneLabel(ms,commishTz)+')',utc:F.fmtUtc(ms)};
   return{you:own,commish:commishTz?'Commissioner’s zone: '+F.tzCity(commishTz)+' ('+F.offsetLabel(ms,commishTz)+')':'',utc:F.fmtUtc(ms)}};

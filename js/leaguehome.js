@@ -117,19 +117,19 @@ const rec=tid=>{const r=(D.records||{})[tid]||{w:0,l:0};return r.w+'-'+r.l};
 const chipRec=(tid,o)=>chip(tid,o).replace(/<\/(a|span)>$/,(m0,tg)=>'<span class="cr" title="Season record (W-L)">'+rec(tid)+'</span></'+tg+'>');
 const sign=n=>n>0?'+'+n:String(n);
 const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-function fmtDate(k,wd){const m=/^(\d{4})-(\d{2})-(\d{2})/.exec(k||'');if(!m)return k||'';const d=new Date(Date.UTC(+m[1],+m[2]-1,+m[3],12));return (wd?DOW[d.getUTCDay()]+', ':'')+MON[+m[2]-1]+' '+(+m[3])+', '+m[1]}
+function fmtDate(k,wd){const m=/^(\d{4})-(\d{2})-(\d{2})/.exec(k||'');if(!m)return k||'';return MON[+m[2]-1]+' '+(+m[3])+', '+m[1]}
 /* times: the viewer's own time zone, labelled */
 const TZ_NAME=(()=>{try{return LTIME.zone()||U.tz()}catch(e){return U.tz()}})();   /* s25: one helper (LTIME in js/league-d.js) for every League time */
 const FT=new Intl.DateTimeFormat('en-US',{hour:'numeric',minute:'2-digit',hour12:true});
 const FK={format:d=>LTIME.dayKey(d)};   /* local calendar date YYYY-MM-DD */
-const FSTAMP=new Intl.DateTimeFormat('en-US',{weekday:'short',year:'numeric',month:'numeric',day:'numeric',hour:'numeric',minute:'2-digit',hour12:true});
+const FSTAMP=new Intl.DateTimeFormat('en-US',{year:'numeric',month:'numeric',day:'numeric',hour:'numeric',minute:'2-digit',hour12:true});
 function etKey(g){if(g.start){const d=new Date(g.start);if(!isNaN(d))return FK.format(d)}return g.day}
-const etLabel=k=>LTIME.dayLabel(k);   /* Today · Fri Oct 30 / Tomorrow · … / Sat Oct 31, by the viewer's local date */
+const etLabel=k=>LTIME.dayLabel(k);   /* Today · Oct 30, 2026 / Tomorrow · … / Oct 31, 2026, by the viewer's local date */
 /* ESPN's "no tip time yet" placeholders are midnight and 11:59 PM on its US-East feed clock, i.e. 04:00/05:00 or 03:59/04:59 UTC (checked in UTC, no fixed zone) */
 function isTBD(g){if(!g.start)return true;const d=new Date(g.start);if(isNaN(d))return true;const h=d.getUTCHours(),m=d.getUTCMinutes();return (m===0&&(h===4||h===5))||(m===59&&(h===3||h===4))}
 function etTime(g){return isTBD(g)?'time TBD':LTIME.time(g.start)}
 function genDate(){const u=D&&D.meta&&D.meta.generated_at_utc,d=u?new Date(u):null;return d&&!isNaN(d)?d:null}
-function stampLocal(){const d=genDate();if(!d)return '';const p={};FSTAMP.formatToParts(d).forEach(x=>p[x.type]=x.value);return p.weekday+', '+MON[+p.month-1]+' '+(+p.day)+', '+p.year+', '+p.hour+':'+p.minute+' '+p.dayPeriod}
+function stampLocal(){const d=genDate();if(!d)return '';const p={};FSTAMP.formatToParts(d).forEach(x=>p[x.type]=x.value);return MON[+p.month-1]+' '+(+p.day)+', '+p.year+', '+p.hour+':'+p.minute+' '+p.dayPeriod}
 /* ---------- s25: rotating tagline in the header slot: index = floor(days since 2026-11-01 / 2) mod list length, by the viewer's LOCAL date (s25),
    so everyone sees the same line on the same date and it changes every 2 days. The list is ONE data array; the shared list is not approved yet,
    so it holds a single neutral placeholder line (add approved lines here only). ---------- */
@@ -632,7 +632,7 @@ window.addEventListener('hashchange',()=>{if(PH&&!BO.booted)placeholder(PH[0],PH
    table (FBNScore S.POINTS) instead of a built league, so it needs no rosters or picks; plus the league settings and season dates from the meta. */
 function preRules(m){const keep=D;let h='';try{D={meta:{points:Object.assign({win:1},S.POINTS)},upsets:[]};h=vRules()}catch(e){h='<div class="card"><b>📖 League rules</b></div>'}finally{D=keep}
   const st=(m&&m.settings)||{};const at=+st.startAt||0;const nm=A.disp((m&&m.name)||'',A.isTestLeague(m&&m.name));
-  const li=[['League',nm],['Managers',st.managers||F.MANAGERS],['Rounds',st.rounds],['Pick clock',st.clockSecs?st.clockSecs+' s':''],['Draft starts',at?new Date(at).toLocaleString([],{weekday:'short',month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}):''],['Season','26-27 NBA regular season, NBA Cup, play-in and playoffs'],['Redraft',F.REDRAFT.asOfLabel]].filter(x=>x[1]!=null&&x[1]!=='');
+  const li=[['League',nm],['Managers',st.managers||F.MANAGERS],['Rounds',st.rounds],['Pick clock',st.clockSecs?st.clockSecs+' s':''],['Draft starts',at?new Date(at).toLocaleString([],{month:'short',day:'numeric',hour:'numeric',minute:'2-digit'}):''],['Season','26-27 NBA regular season, NBA Cup, play-in and playoffs'],['Redraft',F.REDRAFT.asOfLabel]].filter(x=>x[1]!=null&&x[1]!=='');
   return `<h2>📖 Rules</h2><div class="card" id="presettings"><b>League settings</b><ul class="it">${li.map(x=>`<li><b>${esc(x[0])}:</b> ${esc(String(x[1]))}</li>`).join('')}</ul></div>`+h}
 /* s28j item 11: standings place = the reference site exactly (port of /workspace/s29d/stage/score.py 388-393 + index.html:1364 rankTxt, read-only source):
    stable sort by -total (ties keep league config order), rank = i+1 if total != previous total else previous rank (competition 1,1,3); no tiebreak beyond points.

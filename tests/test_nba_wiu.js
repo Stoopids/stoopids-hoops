@@ -17,7 +17,7 @@ const uicss = read('shared/ui.css');
 const bets = read('js/league-bets.js');
 const ver = read('js/version.js');
 
-ok('build is sh21', /FBN_BUILD='2026-11-12sh21'/.test(ver), ver.slice(0, 80));
+ok('build is sh22', /FBN_BUILD='2026-11-12sh22'/.test(ver), ver.slice(0, 80));
 ok('picker CSS is 4 equal columns', /grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/.test(css) && /grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/.test(html) && /html body \.b27-opps,html body \.rq-to\{grid-template-columns:repeat\(4,minmax\(0,1fr\)\)!important/.test(uicss));
 ok('grid util always appends Select all and Clear as end tiles', /return\{inn:b27UtilBtn\(all,'Select all'\)\+b27UtilBtn\(clear,'Clear'\)/.test(html) && /return\{inn:allB\+clearB,below:/.test(ui));
 ok('pool default ticks only the creator and lists every owner', /U\.pp=me\?\[me\]:\[\]/.test(html) && /function b27PoolForm\(me\)\{const names=b27OwnerNames\(\)/.test(html));
