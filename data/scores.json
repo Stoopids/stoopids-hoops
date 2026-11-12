@@ -128,7 +128,7 @@
       "conference": "West"
     },
     "7": {
-      "w": 5,
+      "w": 6,
       "l": 4,
       "playoffSeed": 10,
       "conference": "West"
@@ -136,19 +136,19 @@
     "6": {
       "w": 7,
       "l": 4,
-      "playoffSeed": 9,
+      "playoffSeed": 8,
       "conference": "West"
     },
     "29": {
       "w": 7,
-      "l": 3,
-      "playoffSeed": 7,
+      "l": 4,
+      "playoffSeed": 9,
       "conference": "West"
     },
     "22": {
       "w": 7,
       "l": 3,
-      "playoffSeed": 8,
+      "playoffSeed": 7,
       "conference": "West"
     },
     "16": {
@@ -3747,7 +3747,7 @@
       "id": "401909970",
       "day": "2026-11-11",
       "start": "2026-11-12T01:00Z",
-      "status": "live",
+      "status": "final",
       "kind": "reg",
       "round": "",
       "neutral": false,
@@ -3759,7 +3759,7 @@
       },
       "away": {
         "id": "7",
-        "score": 121,
+        "score": 123,
         "seed": null,
         "short": "DEN"
       },
@@ -3771,26 +3771,27 @@
         "fav_name": "DEN",
         "aml": -161,
         "hml": 136,
-        "p": "DraftKings"
+        "p": "DraftKings",
+        "type": "close"
       }
     },
     {
       "id": "401909971",
       "day": "2026-11-11",
       "start": "2026-11-12T01:00Z",
-      "status": "live",
+      "status": "final",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "15",
-        "score": 100,
+        "score": 112,
         "seed": null,
         "short": "MIL"
       },
       "away": {
         "id": "13",
-        "score": 118,
+        "score": 123,
         "seed": null,
         "short": "LAL"
       },
@@ -3802,7 +3803,8 @@
         "fav_name": "LAL",
         "aml": -930,
         "hml": 620,
-        "p": "DraftKings"
+        "p": "DraftKings",
+        "type": "close"
       }
     },
     {
@@ -3815,13 +3817,13 @@
       "neutral": false,
       "home": {
         "id": "3",
-        "score": 97,
+        "score": 104,
         "seed": null,
         "short": "NO"
       },
       "away": {
         "id": "17",
-        "score": 135,
+        "score": 140,
         "seed": null,
         "short": "BKN"
       },
@@ -3846,13 +3848,13 @@
       "neutral": false,
       "home": {
         "id": "26",
-        "score": 59,
+        "score": 69,
         "seed": null,
         "short": "UTAH"
       },
       "away": {
         "id": "19",
-        "score": 66,
+        "score": 71,
         "seed": null,
         "short": "ORL"
       },
@@ -3877,13 +3879,13 @@
       "neutral": false,
       "home": {
         "id": "10",
-        "score": 44,
+        "score": 49,
         "seed": null,
         "short": "HOU"
       },
       "away": {
         "id": "9",
-        "score": 31,
+        "score": 45,
         "seed": null,
         "short": "GS"
       },
@@ -3908,13 +3910,13 @@
       "neutral": false,
       "home": {
         "id": "22",
-        "score": 16,
+        "score": 28,
         "seed": null,
         "short": "POR"
       },
       "away": {
         "id": "25",
-        "score": 23,
+        "score": 32,
         "seed": null,
         "short": "OKC"
       },

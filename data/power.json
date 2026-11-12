@@ -2,7 +2,7 @@
   "format": 1,
   "source": "ESPN BPI",
   "season": "2026-27",
-  "fetched": "2026-11-12T03:26:11Z",
+  "fetched": "2026-11-12T03:34:18Z",
   "updated": "2026-11-12T00:59Z",
   "url": "https://site.web.api.espn.com/apis/fitt/v3/sports/basketball/nba/powerindex?region=us&lang=en&contentorigin=espn&limit=30",
   "ranks": {
