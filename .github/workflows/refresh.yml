@@ -1,0 +1,21 @@
+# GitHub Pages + scheduled refresh of NBA scores and lines (data/ only).
+name: refresh-stoopids-hoops
+on:
+  schedule:
+    # Every 10 min (~144 runs/day). One ESPN scoreboard read plus a commit only when data/ changed.
+    # No new token: the repo GITHUB_TOKEN (contents: write) is enough.
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: python3 tools/refresh_nba.py --merge
+      - run: |
+          git config user.name stoopids-bot
+          git config user.email bot@users.noreply.github.com
+          git add data/
+          git diff --cached --quiet || (git commit -m "refresh" && git pull --rebase -X theirs origin main && git push)
