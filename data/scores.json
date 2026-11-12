@@ -3643,7 +3643,7 @@
         "fav_name": "IND",
         "aml": 130,
         "hml": -154,
-        "p": "Draft Kings",
+        "p": "DraftKings",
         "type": "close"
       }
     },
@@ -3675,7 +3675,7 @@
         "fav_name": "NY",
         "aml": 180,
         "hml": -217,
-        "p": "Draft Kings",
+        "p": "DraftKings",
         "type": "close"
       }
     },
@@ -3707,7 +3707,7 @@
         "fav_name": "BOS",
         "aml": -197,
         "hml": 165,
-        "p": "Draft Kings",
+        "p": "DraftKings",
         "type": "close"
       }
     },
@@ -3739,7 +3739,7 @@
         "fav_name": "SA",
         "aml": -1180,
         "hml": 740,
-        "p": "Draft Kings",
+        "p": "DraftKings",
         "type": "close"
       }
     },
@@ -3771,7 +3771,7 @@
         "fav_name": "DEN",
         "aml": -161,
         "hml": 136,
-        "p": "Draft Kings",
+        "p": "DraftKings",
         "type": "close"
       }
     },
@@ -3803,7 +3803,7 @@
         "fav_name": "LAL",
         "aml": -930,
         "hml": 620,
-        "p": "Draft Kings",
+        "p": "DraftKings",
         "type": "close"
       }
     },
@@ -3835,7 +3835,7 @@
         "fav_name": "NO",
         "aml": 120,
         "hml": -142,
-        "p": "Draft Kings",
+        "p": "DraftKings",
         "type": "close"
       }
     },
@@ -3867,7 +3867,7 @@
         "fav_name": "ORL",
         "aml": -179,
         "hml": 150,
-        "p": "Draft Kings",
+        "p": "DraftKings",
         "type": "close"
       }
     },
@@ -3899,7 +3899,7 @@
         "fav_name": "HOU",
         "aml": 205,
         "hml": -249,
-        "p": "Draft Kings",
+        "p": "DraftKings",
         "type": "close"
       }
     },
@@ -3931,7 +3931,7 @@
         "fav_name": "POR",
         "aml": 124,
         "hml": -147,
-        "p": "Draft Kings",
+        "p": "DraftKings",
         "type": "close"
       }
     },
@@ -3959,11 +3959,11 @@
         "fav": "20",
         "dog": "28",
         "sp": 8.5,
-        "ou": 221.5,
+        "ou": 222.5,
         "fav_name": "PHI",
-        "aml": 286,
-        "hml": -359,
-        "p": "Draft Kings"
+        "aml": 276,
+        "hml": -344,
+        "p": "DraftKings"
       }
     },
     {
@@ -3992,9 +3992,9 @@
         "sp": 10.5,
         "ou": 220.5,
         "fav_name": "DET",
-        "aml": -440,
-        "hml": 343,
-        "p": "Draft Kings"
+        "aml": -467,
+        "hml": 360,
+        "p": "DraftKings"
       }
     },
     {
@@ -4021,11 +4021,11 @@
         "fav": "16",
         "dog": "6",
         "sp": 5.5,
-        "ou": 227.5,
+        "ou": 226.5,
         "fav_name": "MIN",
-        "aml": 179,
-        "hml": -216,
-        "p": "Draft Kings"
+        "aml": 185,
+        "hml": -223,
+        "p": "DraftKings"
       }
     },
     {
@@ -4056,7 +4056,7 @@
         "fav_name": "PHX",
         "aml": 201,
         "hml": -244,
-        "p": "Draft Kings"
+        "p": "DraftKings"
       }
     },
     {
