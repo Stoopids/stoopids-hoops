@@ -2,11 +2,16 @@
 """Build Stoopids Hoops league.html = STOOPIDS index.html copied verbatim, plus ONLY these NBA / data-layer swaps.
 Source (read-only): /workspace/stoopids-src (Stoopids/stoopids). Every swap below is an exact-text replace that must match
 the expected number of times, so a STOOPIDS update that moves code fails loudly instead of silently diverging.
+Base: STOOPIDS commit BASE (read with git show from the STOOPIDS checkout, so its working tree / later commits never leak in).
 Run: python3 tools/build_league_from_stoopids.py [stoopids_src_dir]"""
-import re, sys, os, json, shutil
+import re, sys, os, json, shutil, subprocess
+BASE = 'c3dd7d9'   # sh24: current live STOOPIDS (shared/ui.js?v=1.66.6); sh23 was 5cbc626
 SRC = sys.argv[1] if len(sys.argv) > 1 else '/workspace/stoopids-src'
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-s = open(os.path.join(SRC, 'index.html'), encoding='utf-8').read()
+def src(rel):
+    if os.path.isdir(os.path.join(SRC, '.git')): return subprocess.check_output(['git', '-C', SRC, 'show', BASE + ':' + rel]).decode('utf-8')
+    return open(os.path.join(SRC, rel), encoding='utf-8').read()   # an exported copy of BASE
+s = src('index.html')
 LOG = []
 def rep(old, new, n=1, why=''):
     global s
@@ -47,7 +52,7 @@ rep('<script src="archive.js?v=1"></script>',
     '<script src="js/version.js"></script><script src="js/core.js"></script><script src="js/scoring.js"></script><script src="js/league-d.js"></script>'
     '<script src="js/league-sched.js"></script><script src="js/store.js"></script><script src="assets/teams.js"></script><script src="js/power-apply.js"></script><script src="js/league.js"></script>'
     '<script src="js/hoops-stoopids.js"></script><script>HOOPS.dataName=' + json.dumps(dn) + ';</script>',
-    why='Hoops data layer instead of archive.js (no past Hoops seasons yet: Archive shows its empty state)')
+    why='Hoops data layer instead of archive.js (past seasons: js/hoops-archive.js, patch PAUL-e)')
 rep("const s=document.createElement('script');s.src=(DEMO?'demo/':'')+'data.js?v='+Date.now();\n  s.onload=()=>{D=window.",
     "const s=document.createElement('script');s.src='js/version.js?v='+Date.now();\n  s.onload=async()=>{try{await HOOPS.load()}catch(e){if(!D){$('#main').innerHTML=HOOPS.landingHtml();if(typeof cb==='function')cb();return}}D=window.",
     why='load(): build D from the Hoops league (re-read every 2 min, so drafted rosters appear automatically)')
@@ -166,7 +171,7 @@ for x in PATCHES['page']:
 open(os.path.join(ROOT, 'league.html'), 'w', encoding='utf-8').write(s)
 # shared/ui.js + ui.css: STOOPIDS' own shared module, copied verbatim except the rankings footnote link (NBA BPI instead of the college AP poll)
 os.makedirs(os.path.join(ROOT, 'shared'), exist_ok=True)
-u = open(os.path.join(SRC, 'shared', 'ui.js'), encoding='utf-8').read()
+u = src('shared/ui.js')
 a = '# Rankings: <a href="https://www.espn.com/mens-college-basketball/rankings" target="_blank" rel="noopener">AP Top 25 (ESPN)</a>'
 if u.count(a) != 1: raise SystemExit('shared/ui.js footnote moved')
 u = u.replace(a, '# Rankings: <a href="https://www.espn.com/nba/bpi" target="_blank" rel="noopener">BPI (ESPN)</a>'); LOG.append(('shared/ui.js: rankings footnote -> ESPN NBA BPI', 1))
@@ -174,5 +179,5 @@ for x in PATCHES['ui']:
     if u.count(x['old']) != 1: raise SystemExit('shared/ui.js: expected 1 x ' + repr(x['old'][:80]) + ', found ' + str(u.count(x['old'])))
     u = u.replace(x['old'], x['new']); LOG.append(('shared/ui.js [' + x['tag'] + '] ' + x['why'], 1))
 open(os.path.join(ROOT, 'shared', 'ui.js'), 'w', encoding='utf-8').write(u)
-shutil.copy(os.path.join(SRC, 'shared', 'ui.css'), os.path.join(ROOT, 'shared', 'ui.css')); LOG.append(('shared/ui.css: verbatim', 1))
+open(os.path.join(ROOT, 'shared', 'ui.css'), 'w', encoding='utf-8').write(src('shared/ui.css')); LOG.append(('shared/ui.css: verbatim', 1))
 print('league.html built from STOOPIDS index.html with', len(LOG), 'swaps:'); [print(' -', w, c) for w, c in LOG]

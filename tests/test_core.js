@@ -391,7 +391,7 @@ t('s25b zone labels come from Intl (viewer device zone); US DST change Nov 1 202
  assert.equal(F.parseLocalInput('2026-11-01T20:00',la),Date.UTC(2026,10,2,4,0));assert.equal(F.parseLocalInput('2026-10-31T20:00',la),Date.UTC(2026,10,1,3,0));
  assert.equal(F.zoneAbbr(Date.UTC(2026,10,2,4,0),la),'PST');assert.equal(F.zoneAbbr(Date.UTC(2026,10,1,3,0),la),'PDT');assert.equal(F.zoneAbbr(0,'Asia/Jakarta'),'GMT+7');
  assert.equal(F.fmtLong(Date.UTC(2026,10,2,4,0),la),'Sunday, November 1, 2026 at 8:00 PM PST');
- const fs=require('fs'),path=require('path');const root=path.join(__dirname,'..');const OWN=['index.html','setup.html','join.html','room.html','recap.html','time.html','redraft.html','mock.html',...['core','store','ui','setup','join','room','recap','index','time','redraft','mock','links-card','scoring','help'].map(n=>'js/'+n+'.js')];
+ const fs=require('fs'),path=require('path');const root=path.join(__dirname,'..');const OWN=['index.html','setup.html','join.html','room.html','recap.html','time.html','mock.html',...['core','store','ui','setup','join','room','recap','index','time','mock','links-card','scoring','help'].map(n=>'js/'+n+'.js')];
  OWN.forEach(f=>{const p=path.join(root,f);if(!fs.existsSync(p))return;const t=fs.readFileSync(p,'utf8');assert.ok(!/America\/New_York|\bET\b/.test(t.replace(/\/\*[\s\S]*?\*\//g,'')),f+' has a hard-coded ET zone')})});
 t('s25-full F.consumeUrlSecret: League call shape (one name -> string) and bare route hashes (#bets) survive',()=>{
  const mk=(href)=>{const u=new URL(href);const w={location:{pathname:u.pathname,search:u.search,hash:u.hash},history:{state:null,replaceState:(s,t,p)=>{w.to=p}}};return w};

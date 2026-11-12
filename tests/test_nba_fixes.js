@@ -27,10 +27,9 @@ ok('upcoming games chronological by day then start',up.map(g=>g.id).join()==='3,
 
 ok('F.espnUrl points at NBA team pages',F.espnUrl('25')==='https://www.espn.com/nba/team/_/id/25'&&F.espnUrl('abc')===null&&F.espnUrl(25)===null);
 const pr=fs.readFileSync(path.join(root,'js/power-render.js'),'utf8');
-const lh=fs.readFileSync(path.join(root,'js/leaguehome.js'),'utf8');
+// sh24: js/leaguehome.js deleted (dead file, no page loaded it); its ESPN-link check is gone with it
 const ld=fs.readFileSync(path.join(root,'js/league-d.js'),'utf8');
 ok('power-render fallback ESPN links are NBA, not college',/https:\/\/www\.espn\.com\/nba\/team\/_\/id\/'/.test(pr)&&!/mens-college-basketball\/team/.test(pr));
-ok('leaguehome fallback ESPN links are NBA, not college',/https:\/\/www\.espn\.com\/nba\/team\/_\/id\/'/.test(lh)&&!/mens-college-basketball\/team/.test(lh));
 ok('league-d.js does not request NCAA AP rankings',!/mens-college-basketball\/rankings/.test(ld)&&!/site\.api\.espn\.com\/apis\/site\/v2\/sports\/basketball\/mens-college-basketball/.test(ld));
 
 const _ts=fs.readFileSync(path.join(root,'assets/teams.js'),'utf8');

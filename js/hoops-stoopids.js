@@ -35,7 +35,14 @@ if(!id){
 const H=window.HOOPS={id,me:null,mid:null,cmOk:false,cmName:'',meta:null,L:null,err:'',nl:{url:'',who:'',busy:false,msg:''},dataName:'',
   draftUrl:'room.html?l='+encodeURIComponent(id),homeUrl:'index.html'};
 window.HK='shoops1.'+id.toLowerCase()+'.';   /* this page's localStorage keys (STOOPIDS 'stoopids_*' keys renamed per league; never shared with the real STOOPIDS site on the same origin) */
-window.ARCHIVE={seasons:[]};   /* no finished Stoopids Hoops seasons yet: STOOPIDS' own empty Archive state */
+/*<PAUL-e>*/ /* Archive tab: this league's past seasons from js/hoops-archive.js (keyed by a hash of the league code; built from Paul's sheet by tools/archive_from_sheet.py).
+   Any other league keeps the empty Archive state. Sheet names are linked to this league's managers in load() (H.archiveLink), so nothing here names a manager. */
+const archKey=c=>{let h=0x811c9dc5;c=String(c||'').toUpperCase();for(let i=0;i<c.length;i++){h^=c.charCodeAt(i);h=Math.imul(h,0x01000193)>>>0}return ('0000000'+h.toString(16)).slice(-8)};
+window.ARCHIVE=(window.HOOPS_ARCHIVES&&window.HOOPS_ARCHIVES[archKey(id)])||{seasons:[]};
+H.archiveLink=function(names){const A=window.ARCHIVE;if(!A||!A.seasons||!A.seasons.length)return;const nk=x=>String(x||'').toLowerCase().replace(/[^a-z0-9]+/g,'');
+  const find=al=>{const want=(al||[]).map(nk).filter(Boolean);const hit=names.filter(n=>want.indexOf(nk(n))>=0);return hit.length===1?hit[0]:null};
+  (A.alltime||[]).forEach(p=>{const c=find(p.aliases);if(c)p.current_owner=c;else delete p.current_owner});
+  A.seasons.forEach(S=>(S.owners||[]).forEach(o=>{const p=(A.alltime||[]).find(x=>x.person===o.person);if(p&&p.current_owner)o.current_owner=p.current_owner;else delete o.current_owner}))};/*</PAUL-e>*/
 window.HOOPS_OWNER_DISP={};window.HOOPS_OLD_PN={};window.HOOPS_LEGACY_OWNER={};
 window.HOOPS_DRAFT27={season:'2026-27',slots:[],order:{}};
 window.HOOPS_DRAFT27_RESULTS={contract:'v1',season:'2026-27',league:'',build:'',draft:{type:'snake',rounds:0,managers:0},source:{},order:[],picks:[],grades:{}};
@@ -91,6 +98,7 @@ H.publish=function(SC){const C=H._ctx;if(!C)return null;SC=SC||C.SC;C.SC=SC;cons
   owners.sort((a,b)=>a.rank-b.rank);
   /* display names: team on top, the manager's real name under it ([REDACTED] OWNER_DISP), from the joins; nothing hardcoded */
   const OD=window.HOOPS_OWNER_DISP;Object.keys(OD).forEach(k=>delete OD[k]);owners.forEach(o=>{OD[o.name]={team:o.team_name||o.name,person:o.name}});
+  /*<PAUL-e>*/H.archiveLink(owners.map(o=>o.name));/*</PAUL-e>*/
   const records={};Object.keys(B.records||{}).forEach(t=>{records[t]=Object.assign({conf_w:0,conf_l:0},B.records[t])});
   const checklist={};Object.keys(B.checklist||{}).forEach(t=>{const c=B.checklist[t]||{};checklist[t]=Object.assign({},c)});
   const meta0=TD.meta||{};const ranks={teams:{},sources:{}};const sp=Object.keys(meta0).filter(k=>meta0[k]&&meta0[k].sp!=null).sort((a,b)=>meta0[b].sp-meta0[a].sp);

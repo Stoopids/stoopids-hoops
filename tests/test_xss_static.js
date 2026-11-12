@@ -19,7 +19,7 @@ for(const f of files){if(f==='js/shared-s25.js')continue;const src=fs.readFileSy
 function matchParen(x){let d=0;for(let i=0;i<x.length;i++){if(x[i]==='(')d++;else if(x[i]===')'){d--;if(d===0&&i<x.length-1)return false}}return d===0}
 const unreviewed=Object.keys(found).filter(x=>!SAFE_EXPR.has(x));
 if(process.argv.includes('--list'))console.log(JSON.stringify(Object.keys(found).sort(),null,1));
-{const lb=fs.readFileSync(path.join(root,'js/league-bets.js'),'utf8');ok('shared meme SVGs are used only as an <img> data URL (encodeURIComponent), never as markup',/'data:image\/svg\+xml;charset=utf-8,'\+encodeURIComponent\(SM\.svg\)/.test(lb)&&!/innerHTML[^;]*SM\.svg|\$\{SM\.svg\}/.test(lb))}
+// sh24: js/league-bets.js deleted (dead file, no page loaded it); its meme-SVG check is gone with it
 ok('every attribute interpolation is escaped or on the reviewed list',unreviewed.length===0,unreviewed.map(x=>x+'   in '+found[x].slice(0,3).join(', ')).join('\n      '));
 for(const f of files){const src=fs.readFileSync(path.join(root,f),'utf8');
   ok(f+': no inline handlers / javascript: / eval / document.write',!/[\s"'`]on[a-z]+\s*=\s*["'`$]/i.test(src)&&!/javascript:/i.test(src.replace(/\/\^javascript:[^\n]*/g,''))&&!/\beval\(|document\.write|new Function\(/.test(src));

@@ -1,3 +1,49 @@
+# sh24 (build 2026-11-12sh24): rebased on live STOOPIDS c3dd7d9; Archive tab; equal draft board; Pick a team for a manager; cleanups
+
+Base: sh23 (plus the later scores refreshes on main). league.html and shared/ui.js are now STOOPIDS c3dd7d9 (live, shared/ui.js?v=1.66.6) copied byte for byte by tools/build_league_from_stoopids.py (BASE pinned, read with git show), then only the tagged exact-match patches in tools/hoops_patches.json.
+
+Dropped (STOOPIDS now does it, or Paul chose STOOPIDS exactly): every PAUL-d no-weekday / ET-date patch, PAUL-b repeated-matchup patch, PAUL-a pool wording / payouts / picker (pool picker is STOOPIDS' 3 across) / settle-date / record patches, every PAUL-c "Write It Up" label patch (button stays STOOPIDS' "Write it up") and the PAUL-c "open All Bets after saving" patches.
+
+Patches in league.html:
+- 1. [HOOPS] PWA: register the Hoops service worker
+- 2. [NBA] live ESPN NBA scores: add games missing from the baked schedule
+- 3. [NBA] live ESPN NBA scores: add missing games
+- 4. [HOOPS] manager link keeps ?l=<league>
+- 5. [HOOPS] public link keeps ?l=<league>
+- 6. [NBA] old form note: NBA example (label as STOOPIDS)
+- 7. [NBA] tip example with NBA teams
+- 8. [HOOPS] view link keeps ?l=<league>
+- 9. [HOOPS] remember last league/tab for the Hoops home page
+- 10. [NBA] paste example with NBA teams
+- 11. [NBA] live ESPN NBA scores: poll today/tomorrow/next day (ET) and recent unfinished games
+- 12. [NBA] 1v1 bet example with NBA teams
+- 13. [PAUL-1] agreed/unsettled card Copy: 💥 at both ends
+- 14. [PAUL-4] settled Copy: 🎉 at both ends, no bombs (a wash keeps 💦)
+- 15. [NBA] pool intro: NBA example (label as STOOPIDS)
+- 16. [PAUL-3] pool save message is exactly "Pool #n posted 💥" (re-ported onto c3dd7d9 text)
+- 17. [PAUL-3] pool save message: no "Message copied" tail
+- 18. [HOOPS] shared/ui.js?v=1.66.6.sh24 cache-buster
+- 19. [PAUL-e] Archive: load js/hoops-archive.js
+- 20. [PAUL-e+NBA] Archive rosters header: Vegas / Pts
+- 21. [PAUL-e+NBA] Archive rosters: Vegas column = sheet's predicted wins
+- 22. [PAUL-e+NBA] Archive all-time note: NCAA 2019-20 line removed
+- 23. [PAUL-h] Rules scoring row: "Regular-season win (NBA Cup group and knockout games count too)"
+- 24. [PAUL-h] Rules: replace the What is automatic block with "Automatic (from ESPN): wins, playoff entry (seeds 1–8 in each conference after the play-in), playoff wins, NBA champ, NBA Cup Final 4, Cup knockout wins, Cup champ. By hand: corrections or rulings from the commissioner."
+- 25. [PAUL-h] Rules house interpretation: "Points stack: a champion also keeps its playoff entry, each playoff win and its regular-season wins."
+- 26. [PAUL-h] Rules house interpretation: "Postponed or canceled games score nothing unless they are played."
+
+Patches in shared/ui.js (besides the NBA rankings footnote link):
+- 1. [NBA] tip example with NBA teams
+- 2. [NBA] request example with an NBA team
+- 3. [PAUL-b] copy text: teams line, then "Nov 12, 2-1" on its own line (re-ported onto c3dd7d9 descLine, keeps STOOPIDS' showLine)
+
+Hoops-only files (not STOOPIDS copies):
+- [PAUL-e] js/hoops-archive.js (new, built by tools/archive_from_sheet.py from Paul's sheet, data/archive/2023-24.csv and 2024-25.csv; keyed by a hash of the league code so only that league shows it). js/hoops-stoopids.js picks it and links sheet names to the league's managers by name (no names in code), so goldN gives Kentut 🏆🏆.
+- [PAUL-f] draft room board (js/room.js boardTable + css/app.css): fixed equal columns, team names in one 2-line box; mobile fits 5-6 managers with logo over short name.
+- [PAUL-g] draft room More > Draft controls: "Pick a team for a manager" card (js/room.js + css/app.css). Saves through doPick as a commissioner pick; only the manager on the clock can be drafted for (others show their next pick #).
+- Removed: redraft.html, js/redraft.js (Hoops has no redraft), js/league-bets.js, js/leaguehome.js (no page loaded them); sw.js shell updated (+ js/hoops-archive.js). Tests removed with them: e2e_redraft, test_settle_v25, unit_place_s28j, test_tagline_s25, test_redraft_prac_s25, test_etday_s25; one dead-file check each dropped from test_nba_fixes and test_xss_static; redraft dropped from test_core's file list.
+- tests/e2e_stoopids_bets.js: expects STOOPIDS' "Write it up" and 3-across picker; no longer expects the jump to All Bets. tests/shots_sh24.js (new, synthetic screenshots + pick-tool check).
+
 # sh23 (build 2026-11-12sh23): Bets tab rebuilt from the STOOPIDS bet code, with only the NBA, Hoops and Paul-approved changes
 
 Base: sh22 (plus the later scores refreshes on main). The Bets tab (league.html bets section and shared/ui.js) is now the STOOPIDS bet code (Stoopids/stoopids 5cbc626) copied byte for byte by tools/build_league_from_stoopids.py, then changed only by the tagged, exact-match patches in tools/hoops_patches.json (the build stops if any patch does not match exactly once). shared/ui.css is STOOPIDS' file unchanged. The older Hoops hand patches (tools/hoops_sh9_fixes.html injection and the sh19-sh22 bets edits) are replaced by this list. Unchanged as before: textdb keys stay shoops1-<league>-..., identity stays the Hoops per-league name, NBA teams and schedule. Tags: NBA = NBA data/teams, HOOPS = this league's link/app shell, PAUL-a pools, PAUL-b 1v1 copy text, PAUL-c Write It Up, PAUL-d dates (no weekday names, US Eastern dates in bet and copy texts), PAUL-1/3/4 Paul's sh23 review (emoji and pool save message).

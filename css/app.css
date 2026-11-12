@@ -830,3 +830,24 @@ html body .sh-hdr.sh-compact a.sh-title{font-size:clamp(22px,5.5vw,32px)}
 .lcsmall{grid-template-columns:repeat(4,1fr)!important;gap:6px}.lcsmall .btn{padding:8px 4px;font-size:13px;min-height:40px}
 .remd summary,.morel summary{cursor:pointer;min-height:40px;display:flex;align-items:center;gap:8px}.remd{margin-top:8px}
 .morel{padding:10px 14px}.morel[open] summary{margin-bottom:8px}
+
+/*<PAUL-f> (Paul, sh24) draft board: every manager column the same width (fixed layout, fills the board) and every team name in the same 2-line box, so names, avatars and picks line up.
+  Mobile (5-6 managers): all columns fit the screen; a pick shows the logo over the short name. */
+table.board.bfix{table-layout:fixed;width:100%;min-width:calc(34px + var(--bn,6)*92px)}
+.board.bfix th.rh,.board.bfix td.rh{width:34px}
+.board.bfix th:not(.rh),.board.bfix td:not(.rh){min-width:0}
+.board.bfix thead th:not(.rh){vertical-align:top}
+.board.bfix th .bnm{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.2;height:2.4em;overflow-wrap:anywhere}
+.board.bfix th .tn{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:none;max-height:none;line-height:1.3}
+.board.bfix td .chip{max-width:100%}
+@media(max-width:699px){
+ table.board.bfix{min-width:calc(34px + var(--bn,6)*52px)}
+ .board.bfix th{font-size:10px;padding:5px 2px}.board.bfix th .tn{font-size:9px}
+ .board.bfix td{height:54px;padding:2px}
+ .board.bfix td .chip{flex-direction:column;gap:1px;padding:2px 3px;border-radius:9px;font-size:10px;line-height:1.1}
+ .board.bfix td .chip img,.board.bfix td .chip .nologo{width:20px;height:20px}
+}
+/*</PAUL-f>*/
+/*<PAUL-g> (Paul, sh24) Pick a team for a manager: selects fit the card on mobile */
+#cmpickcard .row{flex-wrap:wrap}#cmpickcard select{flex:1 1 180px;max-width:100%;min-width:0;text-overflow:ellipsis}
+/*</PAUL-g>*/
