@@ -47,4 +47,7 @@ const night=scores.games.filter(g=>g.day===today);
 assert.ok(night.length>=1, 'tonight has games on '+today);
 const lined=night.filter(g=>g.line&&g.line.sp!=null&&g.line.ou!=null);
 assert.equal(lined.length, night.length, 'every tonight game has a line ('+lined.length+'/'+night.length+')');
+const djs=fs.readFileSync(path.join(root,'js/league-d.js'),'utf8');
+assert.ok(djs.includes('if(L0.fav_name)o.line.fav_name=String(L0.fav_name)'), 'FBNLeagueD.build keeps fav_name so the card can show the favorite and spread');
 console.log('test_nba_lines: ok ('+lined.length+'/'+night.length+' on '+today+')');
+
