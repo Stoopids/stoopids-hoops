@@ -311,15 +311,18 @@ nav button .nl.m,nav a.tb .nl.m,nav a.nd .nl.m{display:none}
 @media (max-width:399px){.b27-amt.cu{font-size:11px;letter-spacing:-.03em;white-space:nowrap;min-width:0;overflow:hidden}}
 @media (max-width:359px){.b27-opps{grid-template-columns:repeat(2,minmax(0,1fr))}.b27-opps .b27-chip{font-size:12px}.b27-chip.op .em{font-size:16px}}
 
-/* sh20: always 3-col manager pickers so All/Clear remainder math holds; util row matches tile size */
-.b27-opps,.rq-to{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+/* sh21: 4-col manager pickers at every width; Select all + Clear are the last two tiles */
+.b27-opps,.rq-to{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+.b27-opps .b27-chip .nm,.rq-to .b27-chip .nm,.b27-opps .b27-chip .nm .f,.rq-to .b27-chip .nm .f{white-space:normal;overflow-wrap:anywhere;word-break:break-word;max-width:100%;line-height:1.15;text-align:center}
+.b27-opps .b27-chip .nm .f,.rq-to .b27-chip .nm .f{display:inline!important}
+.b27-opps .b27-chip .nm .sh,.b27-opps .b27-chip .nm .xs,.rq-to .b27-chip .nm .sh,.rq-to .b27-chip .nm .xs{display:none!important}
 .b27-opps .b27-util{min-height:64px;height:100%;display:flex;flex-direction:column;justify-content:stretch;gap:4px;min-width:0;box-sizing:border-box}
 .b27-opps .b27-util .s27-selb{flex:1 1 0;width:100%;min-height:0;margin:0;border-radius:9px;font-weight:700}
 .b27-selbar-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:6px;align-items:stretch}
 .b27-selbar-tiles .b27-util-chip,.b27-opps .b27-util-chip{min-height:64px;width:100%;box-sizing:border-box;font-weight:700}
 .b27-selbar-tiles .cnt,.b27-selcnt{display:flex;align-items:center;font-size:13px;color:var(--mut);min-width:0}
 .b27-selcnt{margin-top:6px}
-html body .b27-opps.b27-selbar-tiles,.b27-opps.b27-selbar-tiles{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px;margin-top:6px;align-items:stretch}
+html body .b27-opps.b27-selbar-tiles,.b27-opps.b27-selbar-tiles{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px;margin-top:6px;align-items:stretch}
 /* sh20: beat #main button 36px min-height so picker tiles and the All/Clear row match */
 @media (max-width:640px){
   #main .b27-opps .b27-chip,#lbody .b27-opps .b27-chip,

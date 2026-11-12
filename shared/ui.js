@@ -453,14 +453,10 @@ function oddsTxt(o){o=o||[1,1];return +o[0]===+o[1]?'even':o[0]+'-'+o[1]}
   SHARED_UI.whenShow=function(b,today){if(SHARED_UI.whenSettled(b))return 'done';return SHARED_UI.whenClass(b,today)};
   SHARED_UI.whenText=function(b){var k=SHARED_UI.whenKind(b),open=b&&b.status==='open'&&!SHARED_UI.whenSettled(b);if(k==='date'){var line='When: '+SHARED_UI.estLabel(b.est);if(open)line+=' · '+SHARED_UI.dueName(SHARED_UI.dueClass(b.est));return line}if(k==='season')return 'When: End of season'+(b.sid?' · '+b.sid:' · no season end date on file');if(k==='game')return 'When: End game';return 'When: Not sure yet'};
   SHARED_UI.gridUtil=function(n,all,clear,cnt){
-    var r=n%3;
     var allB='<button type="button" class="b27-chip op b27-util-chip" '+all+'><span class="nm"><span class="f">Select all</span><span class="sh">Select all</span><span class="xs">All</span></span></button>';
     var clearB='<button type="button" class="b27-chip op b27-util-chip" '+clear+'><span class="nm"><span class="f">Clear</span><span class="sh">Clear</span><span class="xs">Clear</span></span></button>';
-    var stack='<div class="b27-util" role="group" aria-label="Select people"><button type="button" class="s27-selb" '+all+'><span class="f">Select all</span><span class="s">All</span></button><button type="button" class="s27-selb" '+clear+'>Clear</button></div>';
     var c=cnt!=null&&cnt!==''?'<span class="cnt" id="b27SelCnt" aria-live="polite">'+cnt+'</span>':'';
-    if(r===0)return{inn:'',below:'<div class="b27-opps b27-selbar-tiles" role="group" aria-label="Select people">'+allB+clearB+'<div class="b27-selcnt">'+c+'</div></div>'};
-    if(r===1)return{inn:allB+clearB,below:c?'<div class="b27-selcnt">'+c+'</div>':''};
-    return{inn:stack,below:c?'<div class="b27-selcnt">'+c+'</div>':''};
+    return{inn:allB+clearB,below:c?'<div class="b27-selcnt">'+c+'</div>':''};
   };
   SHARED_UI.whenBox=function(o){o=o||{};var e=o.e||function(s){return String(s==null?'':s)},k=o.kind==='date'||o.kind==='season'||o.kind==='game'?o.kind:'unknown';
     var btn=function(id,lab){return '<button type="button" class="b27-chip" data-when="'+id+'" aria-pressed="'+(k===id?'true':'false')+'" '+(o.pick?o.pick(id):'')+'>'+e(lab)+'</button>'};

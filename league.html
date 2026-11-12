@@ -383,15 +383,18 @@ nav button .nu{position:absolute;top:1px;left:2px;min-width:15px;background:#ff3
 @media (max-width:399px){.b27-amt.cu{font-size:11px;letter-spacing:-.03em;white-space:nowrap;min-width:0;overflow:hidden}}
 @media (max-width:359px){.b27-opps{grid-template-columns:repeat(2,minmax(0,1fr))}.b27-opps .b27-chip{font-size:12px}.b27-chip.op .em{font-size:16px}}
 
-/* sh20: always 3-col manager pickers so All/Clear remainder math holds; util row matches tile size */
-.b27-opps,.rq-to{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+/* sh21: 4-col manager pickers at every width; Select all + Clear are the last two tiles */
+.b27-opps,.rq-to{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+.b27-opps .b27-chip .nm,.rq-to .b27-chip .nm,.b27-opps .b27-chip .nm .f,.rq-to .b27-chip .nm .f{white-space:normal;overflow-wrap:anywhere;word-break:break-word;max-width:100%;line-height:1.15;text-align:center}
+.b27-opps .b27-chip .nm .f,.rq-to .b27-chip .nm .f{display:inline!important}
+.b27-opps .b27-chip .nm .sh,.b27-opps .b27-chip .nm .xs,.rq-to .b27-chip .nm .sh,.rq-to .b27-chip .nm .xs{display:none!important}
 .b27-opps .b27-util{min-height:64px;height:100%;display:flex;flex-direction:column;justify-content:stretch;gap:4px;min-width:0;box-sizing:border-box}
 .b27-opps .b27-util .s27-selb{flex:1 1 0;width:100%;min-height:0;margin:0;border-radius:9px;font-weight:700}
 .b27-selbar-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:6px;align-items:stretch}
 .b27-selbar-tiles .b27-util-chip,.b27-opps .b27-util-chip{min-height:64px;width:100%;box-sizing:border-box;font-weight:700}
 .b27-selbar-tiles .cnt,.b27-selcnt{display:flex;align-items:center;font-size:13px;color:var(--mut);min-width:0}
 .b27-selcnt{margin-top:6px}
-html body .b27-opps.b27-selbar-tiles,.b27-opps.b27-selbar-tiles{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px;margin-top:6px;align-items:stretch}
+html body .b27-opps.b27-selbar-tiles,.b27-opps.b27-selbar-tiles{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:6px;margin-top:6px;align-items:stretch}
 /* sh20: beat #main button 36px min-height so picker tiles and the All/Clear row match */
 @media (max-width:640px){
   #main .b27-opps .b27-chip,#lbody .b27-opps .b27-chip,
@@ -3367,7 +3370,7 @@ function b27CustomOpen(){U.custom=true;b27CustomApply(U.customTxt,true);b27Sync(
 function b27CustomApply(t,quiet){U.customTxt=t;const r=b27ParseOdds(t);if(r.ok){U.odds=[r.a,r.b];U.oddsErr=''}else{U.odds=null;U.oddsErr=quiet&&!t?'':r.err}}
 function b27Text(t){U.text=t;b27Sync()}
 function b27PoolWhenLabel(b){if(!b||!(b.wk||b.est||b.sid))return 'End of season';const k=window.SHARED_UI&&SHARED_UI.whenKind?SHARED_UI.whenKind(b):b.wk;if(k==='game')return 'End of game';if(k==='date'&&b.est&&SHARED_UI.estLabel)return SHARED_UI.estLabel(b.est);if(k==='unknown')return 'Not sure yet';return 'End of season'}
-function b27PoolClipText(b){if(!b)return '';const parts=b.parts||[],amt=Math.round(+b.amt||0),N=parts.length,st=b.status==='void'?'Cancelled':(b.back?'Settled':'Open');
+function b27PoolClipText(b){if(!b)return '';const parts=b.parts||[],amt=Math.round(+b.amt||0),N=parts.length,st=b.status==='void'?'Cancelled':(b.back?'Settled':'Unsettled');
   const pay=(b.places&&b.places.length)?'Payouts: '+b.places.map((a,i)=>s26fPlaceName(i)+' $'+Math.round(+a||0)).join(' · '):'Payouts not entered yet.';
   const at=new Date(b.postedAt||b.created_at||Date.now());
   const posted=isNaN(at)?'' :at.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric',timeZone:'Asia/Jakarta'});
@@ -3391,7 +3394,7 @@ function b27Edit(){U.confirm=false;render()}
       return cur.concat(miss.map(b=>Object.assign({},b,{n:++n,created_at:at,settled_at:null})))},cur=>ids.every(id=>cur.some(b=>b.id===id))/*<S24-EDIT>*/&&(!edOf||!cur.some(c=>c.id===edOf&&c.status==='open'))/*</S24-EDIT>*/);
     ids.forEach(id=>U.mine.add(id));b27Apply(back);
     const mine=ids.map(id=>back.find(b=>b.id===id)).filter(Boolean);
-    {const m=mine[0],k=m?b27Opps(m).length:1;let copied=false;try{copied=clip?await b27CopyNow(clip):false}catch(err){copied=false}U.msg='Placed! Bet #'+(m?m.n:'')+(k>1?' against '+k+' managers ('+b27Num(U.amt)+' each)':'')+' is open. You can undo it for 5 minutes.';U.clip=clip||null;if(copied){U.msg+=' Message copied. Paste it in WhatsApp.'}else if(clip){U.msg+=' Could not copy it. Copy the message below.'}U.justPlaced=m&&m.id;U.msgBad=false;/*<S25C-FX>*/s25PlacedFx(m&&m.id)/*</S25C-FX>*/}
+    {const m=mine[0],k=m?b27Opps(m).length:1;let copied=false;try{copied=clip?await b27CopyNow(clip):false}catch(err){copied=false}U.msg='Bet\'s in! Bet #'+(m?m.n:'')+(k>1?' against '+k+' managers ('+b27Num(U.amt)+' each)':'')+' is open. You can undo it for 5 minutes.';U.clip=clip||null;if(copied){U.msg+=' Message copied. Paste it in WhatsApp.'}else if(clip){U.msg+=' Could not copy it. Copy the message below.'}try{OB_VIEW='all'}catch(e){}U.justPlaced=m&&m.id;U.msgBad=false;/*<S25C-FX>*/s25PlacedFx(m&&m.id)/*</S25C-FX>*/}
     U.undoG=null;/*<S24-EDIT>*/if(edOf){const o=back.find(x=>x.id===edOf);U.msg+=o?' It replaces bet #'+o.n+' (now cancelled).':'';U.editOf=null}/*</S24-EDIT>*/
     U.opps=[];U.backer=null;U.pz=null;U.amt=null;U.amtCustom=false;U.amtTxt='';U.amtErr='';U.odds=[1,1];U.custom=false;U.customTxt='';U.oddsErr='';U.text='';U.est='';U.wk='game';U.whenPick=false;U.confirm=false;U.fids={};U.gid=null;/*<S25E-RD>*/U.rdEd=null;U.rdOpen=false;/*</S25E-RD>*/
     clearTimeout(U.undoT);U.undoT=setTimeout(()=>{if(tab==='bets27')render()},PULK.undoMs+300);
@@ -3449,8 +3452,8 @@ const POOL_TXT={
   confirmTitle:'Check it, then confirm', sum:'Pool of {names} · buy-in {buy} each · total {tot}', open:'Payouts left open: it stays open until someone fills them in below.',
   row:'{name}: gets {got}, net {net}', settleUp:'{from} owes {to} {n}', go:'✅ Yes, build it', change:'← Change',
   placed:'Built! Pool #{n} is open until the payouts are entered. You can undo it for 5 minutes.', placedDone:'Built! Pool #{n} counts now. You can undo it for 5 minutes.',
-  word:'Pool', stOpen:'Open', stDone:'Settled', stVoid:'Cancelled', who:'{n} managers', with:'With: {names}',
-  line:'Buy-in each {buy} · total {tot}', noPay:'Payouts not entered yet.',
+  word:'Pool', stOpen:'Open', stUnsettled:'Unsettled', stDone:'Settled', stVoid:'Cancelled', who:'{n} managers', with:'With: {names}',
+  line:'Buy-in ${buy} each · Total ${tot}', noPay:'Payouts not entered yet.',
   save:'Save payouts', again:'Tap again to confirm', cancel:'Cancel this pool', undo:'↩ Undo this pool (5 min)', adminCancel:'Cancel pool (admin)', result:'Result',
   already:'Already settled.', saved:'Saved.',
   tHead:'Pool settle-up', tNote:'From each settled pool, the biggest loser owes the biggest winner, then the next. Net per manager includes pools.', tTag:'Pool #{n}: {text}',
@@ -3552,10 +3555,8 @@ const b27UtilTile=(all,clear)=>`<div class="b27-util" role="group" aria-label="S
 const b27SelRow=(all,clear,cnt)=>`<div class="b27-selbar" role="group" aria-label="Select people"><button type="button" class="b27-sm" ${all}>Select all</button><button type="button" class="b27-sm" ${clear}>Clear</button>${cnt!=null?`<span class="cnt" id="b27SelCnt" aria-live="polite">${cnt}</span>`:''}</div>`;
 const b27UtilChip=(all,clear)=>`<div class="b27-util" role="group" aria-label="Select people"><button type="button" class="s27-selb" ${all}><span class="f">Select all</span><span class="s">All</span></button><button type="button" class="s27-selb" ${clear}>Clear</button></div>`;
 const b27UtilBtn=(attrs,lab)=>`<button type="button" class="b27-chip op b27-util-chip" ${attrs}><span class="nm"><span class="f">${lab}</span><span class="sh">${lab}</span><span class="xs">${lab==='Select all'?'All':lab}</span></span></button>`;
-const b27GridUtil=(n,all,clear,cnt)=>{const r=n%3,c=cnt!=null?`<span class="cnt" id="b27SelCnt" aria-live="polite">${cnt}</span>`:'';
-  if(r===0)return{inn:'',below:`<div class="b27-opps b27-selbar-tiles" role="group" aria-label="Select people">${b27UtilBtn(all,'Select all')}${b27UtilBtn(clear,'Clear')}<div class="b27-selcnt">${c}</div></div>`};
-  if(r===1)return{inn:b27UtilBtn(all,'Select all')+b27UtilBtn(clear,'Clear'),below:c?`<div class="b27-selcnt">${c}</div>`:''};
-  return{inn:b27UtilChip(all,clear),below:c?`<div class="b27-selcnt">${c}</div>`:''}};
+const b27GridUtil=(n,all,clear,cnt)=>{const c=cnt!=null?`<span class="cnt" id="b27SelCnt" aria-live="polite">${cnt}</span>`:'';
+  return{inn:b27UtilBtn(all,'Select all')+b27UtilBtn(clear,'Clear'),below:c?`<div class="b27-selcnt">${c}</div>`:''}};
 const b27SelAbove=(n,html)=>n%4?'' :html;
 const b27PoolParts=()=>b27OwnerNames().filter(n=>U.pp.includes(n));
 function b27PoolFormOK(){
@@ -3594,7 +3595,7 @@ async function b27PoolConfirm(){
   try{
     const back=await b27Write(cur=>{if(cur.some(c=>c.id===nb.id))return cur;if(cur.length+1>PULK.maxBets)throw new Error('full');const at=new Date().toISOString();return cur.concat([Object.assign({},nb,{n:b27MaxN(cur)+1,created_at:at,settled_at:/*<V25>*/nb.back?s25At():/*</V25>*/null})])},cur=>cur.some(b=>b.id===nb.id));
     U.mine.add(nb.id);b27Apply(back);const m=back.find(b=>b.id===nb.id);
-    {const clip=b27PoolClipText(m||nb);let copied=false;try{copied=clip?await b27CopyNow(clip):false}catch(err){copied=false}U.msg=PT(m&&m.back?'placedDone':'placed',{n:m?m.n:''});U.clip=clip||null;if(copied)U.msg+=' Message copied. Paste it in WhatsApp.';else if(clip)U.msg+=' Could not copy it. Copy the message below.';U.justPlaced=(m||nb).id;/*<S25C-FX>*/s25PlacedFx((m||nb).id);/*</S25C-FX>*/}U.msgBad=false;U.opps=[];U.pp=[];U.entry='';U.backTxt='';U.text='';U.places=['',''];U.showErr={};U.confirm=false;U.fids={};
+    {const clip=b27PoolClipText(m||nb);let copied=false;try{copied=clip?await b27CopyNow(clip):false}catch(err){copied=false}U.msg=PT(m&&m.back?'placedDone':'placed',{n:m?m.n:''});U.clip=clip||null;if(copied)U.msg+=' Message copied. Paste it in WhatsApp.';else if(clip)U.msg+=' Could not copy it. Copy the message below.';try{OB_VIEW='all'}catch(e){}U.justPlaced=(m||nb).id;/*<S25C-FX>*/s25PlacedFx((m||nb).id);/*</S25C-FX>*/}U.msgBad=false;U.opps=[];U.pp=[];U.entry='';U.backTxt='';U.text='';U.places=['',''];U.showErr={};U.confirm=false;U.fids={};
     clearTimeout(U.undoT);U.undoT=setTimeout(()=>{if(tab==='bets27')render()},PULK.undoMs+300);
   }catch(e){U.msg=e&&e.message==='full'?'The bets ledger is full.':PT('cantSave');U.msgBad=true;U.confirm=true}
   U.busy=false;render();
@@ -3616,11 +3617,11 @@ async function b27PoolSettle(id){
 }
 function b27PoolCard(b,me){
   const st=b.status,done=st==='open'&&!!b.back;
-  const stTxt=st==='void'?POOL_TXT.stVoid:b.back?POOL_TXT.stDone:POOL_TXT.stOpen;
+  const stTxt=st==='void'?POOL_TXT.stVoid:b.back?POOL_TXT.stDone:POOL_TXT.stUnsettled;
   let h=`<div class="card b27-c b27-pool"${/*<S24-EDIT>*/s24Attr('b',b.id)/*</S24-EDIT>*/}><div class="s24hd"><b>${esc(POOL_TXT.word)} #${b.n}</b> <span class="st ${st==='void'?'unparsed':done?'settled':'open'}">${esc(stTxt)}</span> <span class="mut" style="font-size:12px">${esc(b27Day(Date.parse(b.created_at)))}</span> <span class="mut" style="font-size:12px">· ${esc(PT('who',{n:b.parts.length}))}</span>${/*<S24-EDIT>*/s24LinkBtn('bets',b.id,'pool')/*</S24-EDIT>*/}</div>
    ${/*<S29E-POSTED>*/s29ePosted(b)/*</S29E-POSTED>*/}<div class="b27-t">${esc(b.text)}</div><div class="b27-m">${esc(PT('line',{buy:b27Num(b.amt),tot:b27Num(b.amt*b.parts.length)}))}</div><div class="b27-m">${esc(PT('with',{names:b.parts.map(PN).join(', ')}))}</div>`;
-  /*<S26F-POOL>*/if(b.places)h+=`<div class="b27-m">${esc(PT('payLine',{x:b.places.map((a,i)=>s26fPlaceName(i)+' '+b27Num(a)).join(' · ')}))}</div>`;/*</S26F-POOL>*/
-  if(st==='open'&&!b.back)h+=`<div class="note" style="margin-top:6px">${esc(POOL_TXT.noPay)}</div>`;
+  /*<S26F-POOL>*/if(b.places)h+=`<div class="b27-m">${esc(PT('payLine',{x:b.places.map((a,i)=>s26fPlaceName(i)+' $'+b27Num(a)).join(' · ')}))}</div>`;/*</S26F-POOL>*/
+  if(st==='open'&&!b.back&&!b.places)h+=`<div class="note" style="margin-top:6px">${esc(POOL_TXT.noPay)}</div>`;
   if(done)h+=`<div class="note" style="margin-top:6px"><b>${esc(POOL_TXT.result)}:</b></div>`+b27PoolResultLines(b.parts,b.amt,b.back).map((l,i)=>`<div class="${i>=b.parts.length?'b27-l':'b27-w'}" style="margin-top:2px">${esc(l)}</div>`).join('');
   /*<S25D-TS>*/h+='<div class="s25sp" aria-hidden="true"></div>'+s25dTsHtml(b);/*</S25D-TS>*/
   if(b27PoolCanSettle(b,me)&&b.places){if(!U.placeWho)U.placeWho={};h+=s26fSettleHtml(b)}
@@ -4298,7 +4299,7 @@ function s25ClampCheck(){document.querySelectorAll('[data-s25-t]').forEach(t=>{c
 
 /*<S25C-FX>*/
 /* bet-placed effect: called only from the two confirmed-save paths above; runs after the re-render so the new card exists */
-function s25PlacedFx(id){if(!id)return;setTimeout(()=>{const el=document.querySelector('[data-bid="'+id+'"]')||document.querySelector('.card.b27-ok');S25P.fx.push({id,at:Date.now(),r:el?S25.betPlaced(el,{muted:s25Muted()}):null})},0)}
+function s25PlacedFx(id){if(!id)return;setTimeout(()=>{const el=document.querySelector('[data-bid="'+id+'"]')||document.getElementById('bet-'+id);if(el){try{el.scrollIntoView({block:'center'})}catch(e){}}S25P.fx.push({id,at:Date.now(),r:el&&window.S25&&S25.betPlaced?S25.betPlaced(el,{muted:typeof s25Muted==='function'?s25Muted():false}):null})},0)}
 /*</S25C-FX>*/
 /*<S25C-RX>*/
 (function(){const r0=render;render=function(){const x=r0.apply(this,arguments);try{s25RxMount()}catch(e){}return x}})();
@@ -4876,7 +4877,7 @@ function s29eOpenCopy(b){if(!b)return '';const who=(b27Opps(b).map(PN).join(', '
   return ['\uD83D\uDCA3 $'+b.amt+' '+PN(b.backer)+' v '+who+od+' \uD83D\uDCA3',line2,(when?when+' \u00b7 ':'')+'Exp: '+exp].join('\n')}
 function s29eCopyText(b){if(!b)return '';if(b.status==='open'&&b.kind!=='pool')return s29eOpenCopy(b);const day=b27Day(Date.parse(b.created_at)),posted='Posted '+day+(b.postedBy?' by '+PN(b.postedBy):'')+' · STOOPIDS',L=[];
   const money=n=>'$'+b27Num(n);
-  if(b.kind==='pool'){const done=b.status==='open'&&!!b.back,stTxt=b.status==='void'?POOL_TXT.stVoid:b.back?POOL_TXT.stDone:POOL_TXT.stOpen;
+  if(b.kind==='pool'){const done=b.status==='open'&&!!b.back,stTxt=b.status==='void'?POOL_TXT.stVoid:b.back?POOL_TXT.stDone:POOL_TXT.stUnsettled;
     L.push(POOL_TXT.word+' #'+b.n+' · '+stTxt,b27Clean(b.text),'Buy-in '+money(b.amt)+' · '+PT('who',{n:b.parts.length})+' · Total '+money(b.amt*b.parts.length));
     if(b.places)L.push(PT('payLine',{x:b.places.map((a,i)=>s26fPlaceName(i)+' '+money(a)).join(' · ')}));
     if(done)b27PoolResultLines(b.parts,b.amt,b.back).forEach(l=>L.push(l));else if(b.status==='open'&&!b.places)L.push(POOL_TXT.noPay);

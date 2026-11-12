@@ -36,7 +36,7 @@ const POOL_TXT={toggle:'Pool / buy-in',toggleBet:'One side vs another',youIn:'(y
   confirmTitle:'Check it, then confirm',sum:'Pool of {names} · buy-in {buy} each · total {tot}',open:'Payouts left open: it stays open until someone fills them in below.',
   row:'{name}: gets {got}, net {net}',settleUp:'{from} owes {to} {n}',go:'✅ Yes, build it',change:'← Change',
   placed:'Built! Pool #{n} is open until the payouts are entered. You can undo it for 30 seconds.',
-  word:'Pool',stOpen:'Open',stDone:'Settled',stVoid:'Cancelled',who:'{n} managers',with:'With: {names}',line:'Buy-in each {buy} · total {tot}',noPay:'Payouts not entered yet.',
+  word:'Pool',stOpen:'Open',stUnsettled:'Unsettled',stDone:'Settled',stVoid:'Cancelled',who:'{n} managers',with:'With: {names}',line:'Buy-in ${buy} each · Total ${tot}',noPay:'Payouts not entered yet.',
   save:'Save payouts',again:'Tap again to confirm',cancel:'Cancel this pool',undo:'↩ Undo this pool (30 s)',result:'Result',saved:'Saved.',
   only:'Only the person who placed this bet can settle it.',cantSave:'Couldn’t save. Check your connection and tap Write It Up again (it won’t double-post).'};
 const PT=(k,v)=>String(POOL_TXT[k]).replace(/\{(\w+)\}/g,(_,n)=>v&&n in v?v[n]:'');
@@ -356,10 +356,8 @@ const nick=o=>{o=o||{};const t=String(o.team_name||o.team||'').replace(/^\s*Test
 /* ---------- s28: the partner's Bets page (vB27 / b27PoolForm / b27PoolCard / vTally), on the League bet store ---------- */
 /* s28b: chips = TEAM name on top (.tl), the real name under it (.tnr); real name hidden when it equals the team name (same rule as RNm() in leaguehome.js), 'Test ' stripped in league-d.js (test league only); the Tally keeps its own 'Test ' strip */
 const bTst=x=>String(x==null?'':x).replace(/^\s*Test\s+/i,'').trim(),bRNm=(o,st)=>{const f=st?bTst:(x=>String(x==null?'':x).trim()),t=f(o&&o.team_name),r=f(o&&o.name);return t&&r&&t!==r?r:''};
-const gridUtil=(n,all,clear,cnt)=>{const r=n%3,btn=(attrs,lab)=>`<button type="button" class="b27-chip op b27-util-chip" ${attrs}><span class="nm"><span class="f">${lab}</span><span class="sh">${lab}</span><span class="xs">${lab==='Select all'?'All':lab}</span></span></button>`,stack=`<div class="b27-util" role="group" aria-label="Select people"><button type="button" class="s27-selb" ${all}><span class="f">Select all</span><span class="s">All</span></button><button type="button" class="s27-selb" ${clear}>Clear</button></div>`,c=cnt!=null?`<span class="cnt" id="b27SelCnt" aria-live="polite">${cnt}</span>`:'';
-  if(r===0)return{inn:'',below:`<div class="b27-opps b27-selbar-tiles" role="group" aria-label="Select people">${btn(all,'Select all')}${btn(clear,'Clear')}<div class="b27-selcnt">${c}</div></div>`};
-  if(r===1)return{inn:btn(all,'Select all')+btn(clear,'Clear'),below:c?`<div class="b27-selcnt">${c}</div>`:''};
-  return{inn:stack,below:c?`<div class="b27-selcnt">${c}</div>`:''}};
+const gridUtil=(n,all,clear,cnt)=>{const btn=(attrs,lab)=>`<button type="button" class="b27-chip op b27-util-chip" ${attrs}><span class="nm"><span class="f">${lab}</span><span class="sh">${lab}</span><span class="xs">${lab==='Select all'?'All':lab}</span></span></button>`,c=cnt!=null?`<span class="cnt" id="b27SelCnt" aria-live="polite">${cnt}</span>`:'';
+  return{inn:btn(all,'Select all')+btn(clear,'Clear'),below:c?`<div class="b27-selcnt">${c}</div>`:''}};
 const chip=(o,k,on)=>`<button type="button" class="b27-chip op" data-lb="${k}" data-mid="${esc(o.mid)}" aria-label="${esc(o.team_name?o.team_name+' ('+o.name+')':o.name)}" aria-pressed="${on}"><span class="ck" aria-hidden="true">✓</span><span class="em" aria-hidden="true">${esc(o.emoji||'')}</span><span class="nm" aria-hidden="true"><span class="tl"><span class="f">${esc(o.team_name||o.name)}</span><span class="sh">${esc(shortName(o.team_name||o.name))}</span><span class="xs">${esc(tinyName(o.team_name||o.name))}</span></span>${bRNm(o)?`<small class="tnr">${esc(bRNm(o))}</small>`:''}</span></button>`;
 const kindTabs=()=>`<div class="tabs b27-kind" role="group" aria-label="Bet type" style="margin:8px 0"><button type="button" class="${S.kind!=='pool'?'on':''}" aria-pressed="${S.kind!=='pool'}" data-lb="kind" data-v="bet" id="b27KindBet">${esc(POOL_TXT.toggleBet)}</button><button type="button" class="${S.kind==='pool'?'on':''}" aria-pressed="${S.kind==='pool'}" data-lb="kind" data-v="pool" id="b27KindPool">${esc(POOL_TXT.toggle)}</button></div>`;
 /* ---------- s28j 'Paste a bet' (Paul via NCAA; spec /workspace/s28j-paste-bet-spec.md): a WhatsApp-style line such as 'ken v paul 2-1 odds, duke +4 v Virginia'
@@ -477,11 +475,11 @@ function poolParse(b,txt){const sz=b.amt*b.parts.length;if(!String(txt||'').trim
     const v=poolNum(vv);if(v===null)return{ok:false,err:PT('eBadPay')};back[who]=v}
   b.parts.forEach(p=>{if(!(p in back))back[p]=0});const tot=b.parts.reduce((a,p)=>a+back[p],0);if(tot!==sz)return{ok:false,err:PT('eSum',{sum:num(tot),total:num(sz)})};return{ok:true,back}}
 const poolCanSettle=(b,me)=>b.status==='open'&&!b.back&&!!me&&me===b.by;
-function poolCard(b,me){const st=b.status,done=st==='open'&&!!b.back,stTxt=st==='void'?POOL_TXT.stVoid:b.back?POOL_TXT.stDone:POOL_TXT.stOpen,ask=S.ask&&S.ask.id===b.id&&S.ask.w==='pool';
+function poolCard(b,me){const st=b.status,done=st==='open'&&!!b.back,stTxt=st==='void'?POOL_TXT.stVoid:b.back?POOL_TXT.stDone:POOL_TXT.stUnsettled,ask=S.ask&&S.ask.id===b.id&&S.ask.w==='pool';
   let h=`<div class="card b27-c b27-pool" data-bet="${esc(b.id)}" data-kind="pool"><div class="s24hd"><b>${esc(POOL_TXT.word)} #${b.n}</b> <span class="st ${st==='void'?'unparsed':done?'settled':'open'}">${esc(stTxt)}</span> <span class="mut" style="font-size:12px">${esc(day(b.ts))}</span> <span class="mut b27-pwho" style="font-size:12px">· ${esc(PT('who',{n:b.parts.length}))}</span>${linkBtn(b,'pool')}</div>${postedHtml(b)}
    <div class="b27-t">${esc(b.text)}</div><div class="b27-m">${esc(PT('line',{buy:num(b.amt),tot:num(b.amt*b.parts.length)}))}</div><div class="b27-m">${esc(PT('with',{names:b.parts.map(nm).join(', ')}))}</div>`;
-  if(b.places)h+=`<div class="b27-m">${esc(PT('payLine',{x:b.places.map((a,i)=>placeName(i)+' '+num(a)).join(' · ')}))}</div>`;
-  if(st==='open'&&!b.back)h+=`<div class="note" style="margin-top:6px">${esc(POOL_TXT.noPay)}</div>`;
+  if(b.places)h+=`<div class="b27-m">${esc(PT('payLine',{x:b.places.map((a,i)=>placeName(i)+' $'+num(a)).join(' · ')}))}</div>`;
+  if(st==='open'&&!b.back&&!b.places)h+=`<div class="note" style="margin-top:6px">${esc(POOL_TXT.noPay)}</div>`;
   if(done)h+=`<div class="note" style="margin-top:6px"><b>${esc(POOL_TXT.result)}:</b></div>`+poolResultLines(b.parts,b.amt,b.back).map((l,i)=>`<div class="${i>=b.parts.length?'b27-l':'b27-w'}" style="margin-top:2px">${esc(l)}</div>`).join('');
   h+='<div class="b27-sp" aria-hidden="true"></div>'+stampHtml(b);
   if(poolCanSettle(b,me)&&b.places){const sel=S.placeWho[b.id]||(S.placeWho[b.id]=[]);
