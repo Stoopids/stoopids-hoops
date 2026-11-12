@@ -200,7 +200,7 @@ U.halfLs=hsLs;U.halfScores=function(g,s,first,BOX){var tot=s.score!=null?esc(Str
         var now=Date.now(),dead=S.list.filter(function(r){return r.status==='open'&&!live(r,now)}).map(function(r){return r.id});
         if(dead.length&&A.canWrite())await write(function(c){return c.map(function(r){return dead.indexOf(r.id)>=0&&r.status==='open'&&!live(r,now)?Object.assign({},r,{status:tk(r).length>=slots(r)?'full':'closed',endedAt:now}):r})},function(c){return c.every(function(r){return dead.indexOf(r.id)<0||r.status!=='open'})})}
       catch(x){}S.loading=false;A.render()}
-    function chips(f){var list=A.others();return '<div class="b27-opps rq-to" role="group" aria-label="Open to" style="--n:'+list.length+'">'+list.map(function(o){var on=f.to.indexOf(o.id)>=0;return '<button type="button" class="b27-chip op" data-rq="to" data-v="'+e(o.id)+'" aria-pressed="'+on+'" aria-label="'+e(o.nick)+'"><span class="ck" aria-hidden="true">✓</span><span class="em" aria-hidden="true">'+e(o.emoji||'')+'</span><span class="nm" aria-hidden="true"><span class="f">'+e(o.nick)+'</span><span class="sh">'+e(SHARED_UI.shortName(o.nick))+'</span><span class="xs">'+e(SHARED_UI.tinyName(o.nick))+'</span></span></button>'}).join('')+'</div><div class="b27-selbar" role="group" aria-label="Select people"><button type="button" class="b27-sm" data-rq="all">Select all</button><button type="button" class="b27-sm" data-rq="clear">Clear</button></div>'}
+    function chips(f){var list=A.others();var util=SHARED_UI.gridUtil(list.length,'data-rq="all"','data-rq="clear"',null);return '<div class="b27-opps rq-to" role="group" aria-label="Open to" style="--n:'+list.length+'">'+list.map(function(o){var on=f.to.indexOf(o.id)>=0;return '<button type="button" class="b27-chip op" data-rq="to" data-v="'+e(o.id)+'" aria-pressed="'+on+'" aria-label="'+e(o.nick)+'"><span class="ck" aria-hidden="true">✓</span><span class="em" aria-hidden="true">'+e(o.emoji||'')+'</span><span class="nm" aria-hidden="true"><span class="f">'+e(o.nick)+'</span><span class="sh">'+e(SHARED_UI.shortName(o.nick))+'</span><span class="xs">'+e(SHARED_UI.tinyName(o.nick))+'</span></span></button>'}).join('')+util.inn+'</div>'+util.below}
     function card(r,now){var me=A.me(),inv=r.to.indexOf(me)>=0,dec=(r.dec||[]).indexOf(me)>=0,n=r.to.length,w=Math.min(r.exp,winStart(r,game(r.gid)));
       var nt=tk(r).length,mine=tk(r).indexOf(me)>=0;var sn=slots(r),who=n===1?'Open to '+e(A.nick(r.to[0])):sn<n?'Open to '+sn+' of '+n+' stoops':n>=A.others().length?'Open to all '+n+' stoops':'Open to '+n+' stoops';   /* STEP13-SLOTS */
       var stage=r.status==='open'?(nt?'Awaiting settlement':'Awaiting acceptance'):'';
@@ -452,6 +452,16 @@ function oddsTxt(o){o=o||[1,1];return +o[0]===+o[1]?'even':o[0]+'-'+o[1]}
   SHARED_UI.whenSettled=function(b){if(!b||typeof b!=='object')return false;if(b.kind==='pool'&&b.back)return true;return b.status==='backer'||b.status==='other'||b.status==='push'};
   SHARED_UI.whenShow=function(b,today){if(SHARED_UI.whenSettled(b))return 'done';return SHARED_UI.whenClass(b,today)};
   SHARED_UI.whenText=function(b){var k=SHARED_UI.whenKind(b),open=b&&b.status==='open'&&!SHARED_UI.whenSettled(b);if(k==='date'){var line='When: '+SHARED_UI.estLabel(b.est);if(open)line+=' · '+SHARED_UI.dueName(SHARED_UI.dueClass(b.est));return line}if(k==='season')return 'When: End of season'+(b.sid?' · '+b.sid:' · no season end date on file');if(k==='game')return 'When: End game';return 'When: Not sure yet'};
+  SHARED_UI.gridUtil=function(n,all,clear,cnt){
+    var r=n%3;
+    var allB='<button type="button" class="b27-chip op b27-util-chip" '+all+'><span class="nm"><span class="f">Select all</span><span class="sh">Select all</span><span class="xs">All</span></span></button>';
+    var clearB='<button type="button" class="b27-chip op b27-util-chip" '+clear+'><span class="nm"><span class="f">Clear</span><span class="sh">Clear</span><span class="xs">Clear</span></span></button>';
+    var stack='<div class="b27-util" role="group" aria-label="Select people"><button type="button" class="s27-selb" '+all+'><span class="f">Select all</span><span class="s">All</span></button><button type="button" class="s27-selb" '+clear+'>Clear</button></div>';
+    var c=cnt!=null&&cnt!==''?'<span class="cnt" id="b27SelCnt" aria-live="polite">'+cnt+'</span>':'';
+    if(r===0)return{inn:'',below:'<div class="b27-opps b27-selbar-tiles" role="group" aria-label="Select people">'+allB+clearB+'<div class="b27-selcnt">'+c+'</div></div>'};
+    if(r===1)return{inn:allB+clearB,below:c?'<div class="b27-selcnt">'+c+'</div>':''};
+    return{inn:stack,below:c?'<div class="b27-selcnt">'+c+'</div>':''};
+  };
   SHARED_UI.whenBox=function(o){o=o||{};var e=o.e||function(s){return String(s==null?'':s)},k=o.kind==='date'||o.kind==='season'||o.kind==='game'?o.kind:'unknown';
     var btn=function(id,lab){return '<button type="button" class="b27-chip" data-when="'+id+'" aria-pressed="'+(k===id?'true':'false')+'" '+(o.pick?o.pick(id):'')+'>'+e(lab)+'</button>'};
     var q=(o.step?String(o.step)+'. ':'')+'When can this be settled?';

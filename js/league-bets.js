@@ -26,12 +26,12 @@ const DISCLAIMER="Bets here are just for fun and are settled in pushups, not mon
 /* s28 POOL (partner <POOL> + <S26F-POOL>): one group entry; every participant puts in the same buy-in; payouts (by place, or name:amount) must add up to the pot; each person's net = got back - buy-in.
    All Pool wording lives here (the partner's POOL_TXT; only the examples are League numbers, since the League reads whole numbers only, no 250K / 1.2mil). {x} = filled in by PT(). */
 const POOL_MAX=1e6;
-const POOL_TXT={toggle:'Pool / buy-in',toggleBet:'One side vs another',youIn:'(you are in automatically)',
+const POOL_TXT={toggle:'Pool / buy-in',toggleBet:'One side vs another',youIn:'(you start ticked)',
   fPay:'Payouts when done (total received), e.g. ana:80, ben:20',s1:'What’s the pool?',s2:'Who’s in?',s3:'Buy-in per person',s4:'Payouts by place',termsPh:'e.g. season-long tournament pool',buyPh:'e.g. 50',
   potLine:'Pot: {n} × {buy} = {pot}',potWait:'Pot: pick who’s in and a buy-in',addPlace:'+ Add place',payOpt:'Optional: leave blank to fill in when it’s over.',sumLine:'Adds up to {sum} of {pot}',
   ePlaceSum:'Payouts add up to {sum} but the pot is {pot} ({diff} {way}).',short:'short',over:'over',ePlaceNum:'Use whole numbers for the payouts (like 400).',pickWho:'Who finished where?',pickOne:'Pick…',ePickAll:'Pick someone for every place.',payLine:'Payouts: {x}',
   helpPl:'Amounts only; you pick who finished where when you settle it. They must add up to the pot.',build:'Write It Up',
-  eTerms:'Write the terms of the pool first.',ePeople:'a pool needs 2+ participants',eBuy:'pool needs a buy-in like 50',eBuyMin:'buy-in must be a whole number of at least {min} (like 50)',eBadPay:"can't read one of the payouts (try 80, 20)",eFmt:'Write each payout as name:amount, like ana:80.',
+  eTerms:'Write the terms of the pool first.',ePeople:'a pool needs 2+ participants', ePeopleMe:'Tick yourself too — you stay in a pool you write up.',eBuy:'pool needs a buy-in like 50',eBuyMin:'buy-in must be a whole number of at least {min} (like 50)',eBadPay:"can't read one of the payouts (try 80, 20)",eFmt:'Write each payout as name:amount, like ana:80.',
   eSum:'payouts add up to {sum} but the pot is {total}',eUnknown:'Unknown name "{x}". Use these short names for payouts: {keys}',eNotIn:'"{x}" is not in this pool.',eDup:'"{x}" is listed twice.',eEmptyPay:'Fill in the payouts first.',
   confirmTitle:'Check it, then confirm',sum:'Pool of {names} · buy-in {buy} each · total {tot}',open:'Payouts left open: it stays open until someone fills them in below.',
   row:'{name}: gets {got}, net {net}',settleUp:'{from} owes {to} {n}',go:'✅ Yes, build it',change:'← Change',
@@ -101,7 +101,7 @@ function reduce(logs,mids,now){const set=new Set(mids),all=[];
       if(e.postedBy===mid){nb.postedBy=mid;nb.postedAt=Number(e.postedAt)||e.ts}if(fr&&e.to===mid){nb.acc=mid;nb.accTs=e.ts}if(!AF()&&e.to!=='*'){nb.status='open';nb.acc=e.to;nb.accTs=e.ts;nb.ackA=true}
       bets.set(e.id,nb);continue}
     if(e.k==='pl'){if(bets.has(e.id)||!e.parts.includes(mid)||!e.parts.every(p=>set.has(p)))continue;   /* s28 pool: the builder is always in it; numbered with the bets */
-      bets.set(e.id,Object.assign({kind:'pool',v25:true,id:e.id,n:++n,by:mid,parts:e.parts,amt:e.amt,places:e.places,text:e.text,rx:{},ts:e.ts,status:'open',back:null,reps:{},fixes:[],fix:null},e.postedBy===mid?{postedBy:mid,postedAt:Number(e.postedAt)||e.ts}:{}));continue}
+      bets.set(e.id,Object.assign({kind:'pool',v25:true,id:e.id,n:++n,by:mid,parts:e.parts,amt:e.amt,places:e.places,text:e.text,rx:{},ts:e.ts,status:'open',back:null,reps:{},fixes:[],fix:null},e.wk?{wk:e.wk}:{},e.est?{est:e.est}:{},e.sid?{sid:e.sid}:{},e.postedBy===mid?{postedBy:mid,postedAt:Number(e.postedAt)||e.ts}:{}));continue}
     const b=bets.get(e.id);if(!b)continue;
     if(e.k==='rx'){const m=b.rx[e.e]||(b.rx[e.e]={});m[mid]=e.on;continue}   /* s25 reactions: latest per manager + bet + emoji wins */
     if(b.kind==='pool'){   /* s28 pool: only the builder enters the payouts (once, they must add up to the pot) or cancels it (any time before the payouts; within 30 s = undo, also after) */
@@ -356,6 +356,10 @@ const nick=o=>{o=o||{};const t=String(o.team_name||o.team||'').replace(/^\s*Test
 /* ---------- s28: the partner's Bets page (vB27 / b27PoolForm / b27PoolCard / vTally), on the League bet store ---------- */
 /* s28b: chips = TEAM name on top (.tl), the real name under it (.tnr); real name hidden when it equals the team name (same rule as RNm() in leaguehome.js), 'Test ' stripped in league-d.js (test league only); the Tally keeps its own 'Test ' strip */
 const bTst=x=>String(x==null?'':x).replace(/^\s*Test\s+/i,'').trim(),bRNm=(o,st)=>{const f=st?bTst:(x=>String(x==null?'':x).trim()),t=f(o&&o.team_name),r=f(o&&o.name);return t&&r&&t!==r?r:''};
+const gridUtil=(n,all,clear,cnt)=>{const r=n%3,btn=(attrs,lab)=>`<button type="button" class="b27-chip op b27-util-chip" ${attrs}><span class="nm"><span class="f">${lab}</span><span class="sh">${lab}</span><span class="xs">${lab==='Select all'?'All':lab}</span></span></button>`,stack=`<div class="b27-util" role="group" aria-label="Select people"><button type="button" class="s27-selb" ${all}><span class="f">Select all</span><span class="s">All</span></button><button type="button" class="s27-selb" ${clear}>Clear</button></div>`,c=cnt!=null?`<span class="cnt" id="b27SelCnt" aria-live="polite">${cnt}</span>`:'';
+  if(r===0)return{inn:'',below:`<div class="b27-opps b27-selbar-tiles" role="group" aria-label="Select people">${btn(all,'Select all')}${btn(clear,'Clear')}<div class="b27-selcnt">${c}</div></div>`};
+  if(r===1)return{inn:btn(all,'Select all')+btn(clear,'Clear'),below:c?`<div class="b27-selcnt">${c}</div>`:''};
+  return{inn:stack,below:c?`<div class="b27-selcnt">${c}</div>`:''}};
 const chip=(o,k,on)=>`<button type="button" class="b27-chip op" data-lb="${k}" data-mid="${esc(o.mid)}" aria-label="${esc(o.team_name?o.team_name+' ('+o.name+')':o.name)}" aria-pressed="${on}"><span class="ck" aria-hidden="true">✓</span><span class="em" aria-hidden="true">${esc(o.emoji||'')}</span><span class="nm" aria-hidden="true"><span class="tl"><span class="f">${esc(o.team_name||o.name)}</span><span class="sh">${esc(shortName(o.team_name||o.name))}</span><span class="xs">${esc(tinyName(o.team_name||o.name))}</span></span>${bRNm(o)?`<small class="tnr">${esc(bRNm(o))}</small>`:''}</span></button>`;
 const kindTabs=()=>`<div class="tabs b27-kind" role="group" aria-label="Bet type" style="margin:8px 0"><button type="button" class="${S.kind!=='pool'?'on':''}" aria-pressed="${S.kind!=='pool'}" data-lb="kind" data-v="bet" id="b27KindBet">${esc(POOL_TXT.toggleBet)}</button><button type="button" class="${S.kind==='pool'?'on':''}" aria-pressed="${S.kind==='pool'}" data-lb="kind" data-v="pool" id="b27KindPool">${esc(POOL_TXT.toggle)}</button></div>`;
 /* ---------- s28j 'Paste a bet' (Paul via NCAA; spec /workspace/s28j-paste-bet-spec.md): a WhatsApp-style line such as 'ken v paul 2-1 odds, duke +4 v Virginia'
@@ -412,10 +416,9 @@ function pasteHtml(me){const z=S.pz||{txt:''};const r=z.r;let body='';
 /* s28j: 'Posted by <name> · Nov 3, 7:00 PM WIB' = LTIME.stamp (the League's one time helper: device zone + short label); the same string goes into the copied text */
 const postedTxt=b=>b&&b.postedBy?'Posted by '+nm(b.postedBy)+' · '+(window.LTIME&&LTIME.stamp?LTIME.stamp(b.postedAt):new Date(b.postedAt).toLocaleString()):'';
 function postedHtml(b){return b&&b.postedBy?`<div class="mut b27-posted" data-posted="1">${esc(postedTxt(b))}</div>`:''}
-function formHtml(me){const f=S.f,oth=others();const err=formOK();
+function formHtml(me){const f=S.f,oth=others(),oppUtil=gridUtil(oth.length,'data-lb="oppall"','data-lb="oppclear"',f.open?'Open to anyone':f.opps.length?f.opps.length+' selected':'None selected');const err=formOK();
   return`<div class="card b27-form" id="b27Form"><b>New bet</b> <span class="note">· you are <b>${esc(nm(me))}</b></span>${qbHint()}${S.edited||!PF()?'':pasteHtml(me)}${S.edited?`<div class="note b27-edhint" role="status" id="b27EdHint">✏️ Filled in from Bet #${esc(S.edited)} (withdrawn). Change it, then place it again.</div>`:kindTabs()}
-   <div class="b27-q">1. Who are you betting against? <span class="note">Tap one or more. Several = one bet each.</span></div><div class="b27-opps" role="group" aria-label="Opponents" style="--n:${oth.length}">${oth.map(o=>chip(o,'opp',!f.open&&f.opps.includes(o.mid))).join('')}</div>
-   <div class="b27-selbar"><button type="button" class="b27-sm" data-lb="oppall">Select all</button><button type="button" class="b27-sm" data-lb="oppclear">Clear</button><span class="cnt" id="b27SelCnt" aria-live="polite">${f.open?'Open to anyone':f.opps.length?f.opps.length+' selected':'None selected'}</span></div>
+   <div class="b27-q">1. Who are you betting against? <span class="note">Tap one or more. Several = one bet each.</span></div><div class="b27-opps" role="group" aria-label="Opponents" style="--n:${oth.length}">${oth.map(o=>chip(o,'opp',!f.open&&f.opps.includes(o.mid))).join('')}${oppUtil.inn}</div>${oppUtil.below}
    <div class="b27-q"><label for="b27Text">2. What’s the bet? <span class="note">I say…</span></label></div><input id="b27Text" class="sb-in b27-in" maxlength="${C.maxText}" autocomplete="off" enterkeyhint="go" placeholder="e.g. Knicks -4 beats Celtics" value="${esc(f.text)}">
    <div class="b27-q">3. Amount <span class="note">(minimum ${C.min})</span></div><div class="b27-amts" role="group" aria-label="Amount">${C.amounts.map(a=>`<button type="button" class="b27-amt" data-lb="amt" data-v="${a}" aria-pressed="${!f.amtCustom&&a===f.amt}">${a}</button>`).join('')}<button type="button" class="b27-amt cu" data-lb="amtcustom" aria-pressed="${f.amtCustom}">Custom</button></div>
    <div id="b27Aw" class="b27-cw"${f.amtCustom?'':' hidden'}><label for="b27Ao" class="sr">Custom amount</label><input id="b27Ao" class="sb-in b27-in" inputmode="numeric" pattern="[0-9]*" autocomplete="off" maxlength="6" placeholder="Whole number, ${C.min} to ${C.max}" value="${esc(f.amtTxt)}"><div id="b27Ae" class="b27-bad-t" role="alert">${esc(f.amtErr)}</div></div>
@@ -424,9 +427,9 @@ function formHtml(me){const f=S.f,oth=others();const err=formOK();
    <div class="b27-livebox" id="b27Live" aria-live="polite">${liveHtml()}</div><div class="b27-sum" id="b27Sum">${esc(summary())}</div><div id="b27AutoN">${autoNoteForm()}</div><div class="b27-bad-t" id="b27Hint"></div>
    <button type="button" id="b27Place" class="btn b27-big" data-lb="place"${err?' disabled aria-disabled="true"':''}>Write It Up</button></div>`}
 /* ----- pool form: 1 terms, 2 who's in, 3 buy-in (live pot line), 4 payouts by place (amounts only; optional) ----- */
-const poolParts=()=>{const me=meMid();return owners().map(o=>o.mid).filter(m=>m===me||S.p.pp.includes(m))};
-function poolCheck(){const e={},parts=poolParts(),p=S.p;
-  if(!clean(p.text))e.terms=PT('eTerms');if(parts.length<2)e.people=PT('ePeople');
+const poolParts=()=>owners().map(o=>o.mid).filter(m=>S.p.pp.includes(m));
+function poolCheck(){const e={},parts=poolParts(),p=S.p,me=meMid();
+  if(!clean(p.text))e.terms=PT('eTerms');if(me&&parts.length&&!parts.includes(me))e.people=PT('ePeopleMe');else if(parts.length<2)e.people=PT('ePeople');
   let amt=null;const bt=String(p.entry==null?'':p.entry).trim();
   if(!bt)e.buy=PT('eBuy');else{amt=poolNum(bt);if(amt===null||amt<C.min){e.buy=amt===null?PT('eBuy'):PT('eBuyMin',{min:C.min});amt=null}}
   const pot=amt!==null&&parts.length>=2?amt*parts.length:null;
@@ -447,14 +450,14 @@ function poolPaint(){const c=poolCheck(),sh=S.p.showErr||{},set=(id,t)=>{const e
   document.querySelectorAll('[data-lb=pp]').forEach(b=>b.setAttribute('aria-pressed',String(S.p.pp.includes(b.dataset.mid))));
   const sc=document.getElementById('b27SelCnt');if(sc&&S.kind==='pool')sc.textContent=S.p.pp.length?S.p.pp.length+' selected':'None selected';return c}
 const placeRows=()=>S.p.places.map((v,i)=>`<div class="s26pr"><label for="s26p${i}" class="s26pl">${esc(placeName(i))}</label><input id="s26p${i}" class="sb-in s26pi" data-place="${i}" inputmode="decimal" autocomplete="off" placeholder="0" value="${esc(v)}">${i>=2?`<button type="button" class="s26px" data-lb="delplace" data-i="${i}" aria-label="Remove ${esc(placeName(i))}">×</button>`:'<span class="s26px0"></span>'}</div>`).join('');
-function poolFormHtml(me){const oth=others(),p=S.p;setTimeout(()=>{try{poolPaint()}catch(e){}},0);
+function poolFormHtml(me){const all=owners(),p=S.p;if(!p.ppSeed){p.pp=me?[me]:[];p.ppSeed=true}if(!p.whenPick){p.wk='season';p.whenPick=true}const util=gridUtil(all.length,'data-lb="ppall"','data-lb="ppclear"',p.pp.length?p.pp.length+' selected':'None selected');setTimeout(()=>{try{poolPaint()}catch(e){}},0);
   return`<div class="card b27-form" id="b27Form" data-kind="pool"><b>New bet</b> <span class="note">· you are <b>${esc(nm(me))}</b></span>${kindTabs()}
    <div class="s26st"><label for="b27Text" class="b27-lb"><span class="s26n">1</span>${esc(PT('s1'))}</label><textarea id="b27Text" class="sb-in b27-in" rows="2" maxlength="${C.maxText}" placeholder="${esc(PT('termsPh'))}" aria-describedby="s26eTerms">${esc(p.text)}</textarea><div id="s26eTerms" class="s26err" role="alert"></div></div>
-   <div class="s26st"><div class="b27-lb" id="s26lPeople" tabindex="-1"><span class="s26n">2</span>${esc(PT('s2'))} <span class="note">${esc(POOL_TXT.youIn)}</span></div><div class="b27-opps" role="group" aria-labelledby="s26lPeople" style="--n:${oth.length}">${oth.map(o=>chip(o,'pp',p.pp.includes(o.mid))).join('')}</div>
-   <div class="b27-selbar"><button type="button" class="b27-sm" data-lb="ppall">Select all</button><button type="button" class="b27-sm" data-lb="ppclear">Clear</button><span class="cnt" id="b27SelCnt" aria-live="polite">${p.pp.length?p.pp.length+' selected':'None selected'}</span></div>
+   <div class="s26st"><div class="b27-lb" id="s26lPeople" tabindex="-1"><span class="s26n">2</span>${esc(PT('s2'))} <span class="note">${esc(POOL_TXT.youIn)}</span></div><div class="b27-opps" role="group" aria-labelledby="s26lPeople" style="--n:${all.length}">${all.map(o=>chip(o,'pp',p.pp.includes(o.mid))).join('')}${util.inn}</div>${util.below}
    <div id="s26ePeople" class="s26err" role="alert"></div></div>
    <div class="s26st"><label for="b27En" class="b27-lb"><span class="s26n">3</span>${esc(PT('s3'))}</label><input id="b27En" class="sb-in b27-in s26buy" inputmode="decimal" autocomplete="off" placeholder="${esc(PT('buyPh'))}" value="${esc(p.entry)}" aria-describedby="s26Pot s26eBuy"><div id="s26Pot" class="s26pot" aria-live="polite">${esc(potLine(poolCheck()))}</div><div id="s26eBuy" class="s26err" role="alert"></div></div>
    <div class="s26st"><div class="b27-lb"><span class="s26n">4</span>${esc(PT('s4'))}</div><div class="note">${esc(PT('helpPl'))}</div>${placeRows()}<button type="button" class="b27-sm s26add" data-lb="addplace"${p.places.length>=10?' disabled':''}>${esc(PT('addPlace'))}</button><div id="s26Sum" class="s26sum" aria-live="polite">${esc(sumLine(poolCheck()))}</div><div id="s26ePay" class="s26err" role="alert"></div></div>
+   ${typeof SHARED_UI!=='undefined'&&SHARED_UI.whenBox?SHARED_UI.whenBox({e:esc,kind:p.whenPick?p.wk:'season',est:p.est,seasonId:'',step:'5',game:true,inputId:'b27PoolEst',pick:id=>'data-lb="when" data-v="'+id+'"',dateAttr:''}):''}
    <button type="button" id="b27Place" class="btn b27-big" data-lb="poolplace">${esc(POOL_TXT.build)}</button></div>`}
 function poolResultLines(parts,amt,back){if(!back)return[PT('open')];const nets=parts.map(p=>[p,back[p]-amt]);
   return nets.map(([p,v])=>PT('row',{name:nm(p),got:num(back[p]),net:signed(v)})).concat(greedy(nets).map(x=>PT('settleUp',{from:nm(x.from),to:nm(x.to),n:num(x.num)})))}
@@ -492,7 +495,7 @@ function poolCard(b,me){const st=b.status,done=st==='open'&&!!b.back,stTxt=st===
 async function poolConfirm(){if(S.busy)return;const c=poolCheck(),e=firstErr(c);if(e){S.msg=e;S.bad=true;S.p.confirm=false;render(true);return}
   const sig='pool|'+c.parts.join('|')+'|'+c.amt+'|'+JSON.stringify(c.places)+'|'+clean(S.p.text);
   if(!S.pid||S.pid.sig!==sig)S.pid={sig,id:rid(),u:rid()};   /* same ids for the same pool, so a retry after a failed save never double-posts */
-  const ev=Object.assign({k:'pl',u:S.pid.u,ts:Date.now(),v:SV,id:S.pid.id,parts:c.parts,amt:c.amt,text:clean(S.p.text),postedBy:meMid(),postedAt:Date.now()},c.places?{places:c.places}:{});
+  const ev=Object.assign({k:'pl',u:S.pid.u,ts:Date.now(),v:SV,id:S.pid.id,parts:c.parts,amt:c.amt,text:clean(S.p.text),postedBy:meMid(),postedAt:Date.now()},c.places?{places:c.places}:{},(S.p.whenPick||S.p.wk)?{wk:S.p.wk||'season'}:{},S.p.est?{est:S.p.est}:{});
   const ok=await act([ev],'');
   if(ok){const b=compute().find(x=>x.id===ev.id);S.msg=PT('placed',{n:b?b.n:''});S.bad=false;S.p={text:'',pp:[],entry:'',places:['',''],showErr:{},confirm:false};S.pid=null;render(true);placedFx([ev.id])}
   else{if(S.bad&&!/full/.test(S.msg))S.msg=PT('cantSave');S.p.confirm=true;render(true)}}
@@ -660,9 +663,10 @@ function clampFix(){clampQ=false;document.querySelectorAll('.b27-c .b27-t').forE
 let clampRT=0;window.addEventListener('resize',()=>{clearTimeout(clampRT);clampRT=setTimeout(clampFix,150)});
 /* ---------- events ---------- */
 const ACT={
-  kind:el=>{const k=el.dataset.v==='pool'?'pool':'bet';if(S.kind===k)return;S.kind=k;S.msg='';S.f.confirm=false;S.p.confirm=false;render(true)},
+  kind:el=>{const k=el.dataset.v==='pool'?'pool':'bet';if(S.kind===k)return;S.kind=k;S.msg='';S.f.confirm=false;S.p.confirm=false;if(k==='pool'){const me=meMid();S.p.pp=me?[me]:[];S.p.ppSeed=true;if(!S.p.whenPick){S.p.wk='season';S.p.whenPick=true}}render(true)},
   pp:el=>{const m=el.dataset.mid,k=S.p.pp.indexOf(m);if(k>=0)S.p.pp.splice(k,1);else S.p.pp.push(m);poolPaint()},
-  ppall:()=>{S.p.pp=others().map(o=>o.mid);poolPaint()},
+  when:el=>{const k=el.dataset.v;S.p.whenPick=true;S.p.wk=k==='date'||k==='season'||k==='game'?k:'unknown';if(S.p.wk!=='date')S.p.est='';render(true)},
+  ppall:()=>{S.p.pp=owners().map(o=>o.mid);poolPaint()},
   ppclear:()=>{S.p.pp=[];poolPaint()},
   addplace:()=>{if(S.p.places.length<10)S.p.places.push('');render(true);const x=document.getElementById('s26p'+(S.p.places.length-1));if(x)try{x.focus({preventScroll:false})}catch(e){}},
   delplace:el=>{S.p.places.splice(+el.dataset.i,1);render(true)},
@@ -808,7 +812,7 @@ function bind(){
 document.addEventListener('click',e=>{const el=e.target.closest&&e.target.closest('[data-lb]');if(!el||!H||!document.getElementById('main')||!document.getElementById('main').contains(el))return;const f=ACT[el.dataset.lb];if(f){e.preventDefault();f(el,e)}});
   document.addEventListener('change',e=>{const t=e.target;if(!t||!H)return;if(t.dataset&&t.dataset.pw){(S.placeWho[t.dataset.pw]=S.placeWho[t.dataset.pw]||[])[+t.dataset.i]=t.value;S.poolErr[t.dataset.pw]='';S.ask=null;return}if(t.id==='b27FP'||t.id==='b27FS'){fLoad();const p=t.id==='b27FP'?t.value:S.fp,s=t.id==='b27FS'?t.value:S.fs;if(fSet(p,s)){render(true);setTimeout(()=>{const x=document.getElementById(t.id);if(x)x.focus({preventScroll:true})},0)}}});
   let PZT=0;if(PF())document.addEventListener('input',e=>{const t=e.target;if(t&&t.id==='b27PzT'&&H){if(!S.pz)S.pz={txt:''};S.pz.txt=t.value;if(e.inputType==='insertFromPaste'||S.pz.read){clearTimeout(PZT);PZT=setTimeout(()=>{const x=document.getElementById('b27PzT');if(!x)return;const c=x.selectionStart;ACT.pzread();const y=document.getElementById('b27PzT');if(y){y.focus({preventScroll:true});try{y.setSelectionRange(c,c)}catch(_){}}},e.inputType==='insertFromPaste'?50:500)}return}if(t&&t.id==='b27FQ'&&H){fLoad();const v=t.value,c=t.selectionStart;if(fSet(S.fp,S.fs,false,v)){render(true);const x=document.getElementById('b27FQ');if(x){x.value=v;x.focus({preventScroll:true});try{x.setSelectionRange(c,c)}catch(_){}}}return}if(!t||!H)return;if(t.dataset&&t.dataset.place!=null){S.p.places[+t.dataset.place]=t.value;poolPaint();return}if(t.dataset&&t.dataset.pt){S.poolTxt[t.dataset.pt]=t.value;S.poolErr[t.dataset.pt]='';S.ask=null;return}if(!t.id)return;
-    if(S.kind==='pool'&&!S.edited&&t.id==='b27Text'){S.p.text=t.value;poolPaint();return}if(t.id==='b27En'){S.p.entry=t.value;poolPaint();return}
+    if(S.kind==='pool'&&!S.edited&&t.id==='b27Text'){S.p.text=t.value;poolPaint();return}if(t.id==='b27En'){S.p.entry=t.value;poolPaint();return}if(t.id==='b27PoolEst'){S.p.est=t.value;S.p.whenPick=true;return}
     if(t.id==='b27Text'){S.f.text=t.value;sync()}else if(t.id==='b27Ao'){applyAmt(t.value);sync()}else if(t.id==='b27Co'){applyOdds(t.value);sync()}});
   document.addEventListener('keydown',e=>{if(e.key==='Escape'&&S.q.g&&H&&document.getElementById('main')&&!(e.target&&/INPUT|TEXTAREA|SELECT/.test(e.target.tagName))){const g=S.q.g;S.q.g=null;redraw();setTimeout(()=>{try{const b=document.querySelector('.qb-btn[data-g="'+g+'"]');if(b)b.focus({preventScroll:true})}catch(_){}},20);return}if(e.key==='Escape'&&H&&document.querySelector('.s26k-m')&&!S.busy){e.preventDefault();S.f.confirm=false;S.p.confirm=false;render(true);return}
     if(e.key==='Enter'&&e.target&&/^b27(Text|Ao|Co)$/.test(e.target.id)&&!(S.kind==='pool'&&!S.edited)){e.preventDefault();ACT.place()}});

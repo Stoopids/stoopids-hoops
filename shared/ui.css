@@ -381,7 +381,7 @@ html body .tabs.ob-seg>button{min-width:0;width:100%;white-space:normal;line-hei
 /* STEP10: half page and narrower: Stoop buttons (Request "Who is it open to?", Write it Up opponents, pool people) stack as 2 rows of 4 */
 @media (max-width:899px){html body .b27-opps{grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}html body .b27-opps .b27-chip{min-height:52px;font-size:12.5px}html body .b27-chip.op .nm .xs{display:none}html body .b27-chip.op .nm .sh{display:inline}}
 @media (max-width:599px){html body .b27-opps,html body .rq-to{grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px!important}html body .b27-opps .b27-chip,html body .rq-to .b27-chip{min-height:64px!important;font-size:12px!important}html body .b27-chip.op .nm .xs{display:none!important}html body .b27-chip.op .nm .sh{display:inline!important}html body .b27-chip.op .nm .f{display:none!important}}
-@media (max-width:359px){html body .b27-opps,html body .rq-to{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media (max-width:359px){html body .b27-opps,html body .rq-to{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
 /* STEP10: Request "1. Who is it open to?" + All/Clear: always one row, buttons side by side (never stacked) */
 html body .rq-qrow{flex-wrap:nowrap!important}html body .rq-qrow>.s27-sel,html body .rq-qrow>.b27-selbar{display:flex!important;flex-direction:row!important;flex-wrap:nowrap!important;grid-template-rows:none!important;grid-auto-flow:column!important;align-items:center;gap:6px!important;margin:0 0 0 auto!important;flex:none!important;width:auto!important}html body .rq-qrow .s27-selb{width:auto!important;min-height:32px}
 /* STEP10b: Select all / Clear sit tight right beside "1. Who is it open to?" (left-aligned group, one line) */
@@ -495,6 +495,24 @@ html body .b27-opps>.b27-util{display:flex;flex-direction:column;justify-content
 html body .b27-util .s27-selb{flex:1 1 0;width:100%;min-height:0;margin:0;padding:0 4px;border-radius:12px;font-size:12px;line-height:1.05}
 @media (max-width:599px){html body .b27-opps>.b27-util{min-height:52px;gap:3px}html body .b27-util .s27-selb{border-radius:9px;font-size:11px}}
 /*</PARITY-LAYOUT>*/
+/* sh20: 3-col pickers at every width so All/Clear remainder math holds; util row matches tile size */
+html body .b27-opps,html body .rq-to{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+html body .b27-selbar-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:6px;align-items:stretch}
+html body .b27-selbar-tiles .b27-util-chip,html body .b27-opps .b27-util-chip{min-height:64px;width:100%;box-sizing:border-box;font-weight:700}
+html body .b27-selbar-tiles .cnt,html body .b27-selcnt{display:flex;align-items:center;font-size:13px;color:var(--mut);min-width:0}
+html body .b27-selcnt{margin-top:6px}
+html body .b27-opps.b27-selbar-tiles,.b27-opps.b27-selbar-tiles{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px;margin-top:6px;align-items:stretch}
+/* sh20: beat #main button 36px min-height so picker tiles and the All/Clear row match */
+@media (max-width:640px){
+  #main .b27-opps .b27-chip,#lbody .b27-opps .b27-chip,
+  #main .b27-selbar-tiles .b27-chip,#lbody .b27-selbar-tiles .b27-chip,
+  #main .rq-to .b27-chip,#lbody .rq-to .b27-chip{min-height:64px!important}
+}
+
+html body .b27-selbar-tiles .b27-selcnt,.b27-selbar-tiles .b27-selcnt{display:flex;align-items:center;justify-content:flex-start;margin:0;padding:0 6px;font-size:13px;color:var(--mut)}
+
+@media (max-width:599px){html body .b27-selbar-tiles .b27-util-chip,html body .b27-opps .b27-util-chip{min-height:64px}}
+
 /* Quick bet uses the Request a bet blue (#1e3a8a), not the yellow tab. */
 html body .gm .qb-btn,html body .ggrid .qb-btn,html body .gbtns .qb-btn{background:#1e3a8a!important;color:#fff!important;border-color:#1e3a8a!important}
 html body .gm .qb-btn[aria-expanded=true],html body .ggrid .qb-btn[aria-expanded=true]{background:#1e3a8a!important;color:#fff!important}

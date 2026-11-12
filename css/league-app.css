@@ -310,6 +310,25 @@ nav button .nl.m,nav a.tb .nl.m,nav a.nd .nl.m{display:none}
 @media (max-width:599px){.b27-opps{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}.b27-chip.op .nm .f{display:none}.b27-chip.op .nm .sh{display:inline}.b27-chip.op .nm .xs{display:none}.b27-opps .b27-chip{min-height:64px;padding:6px 4px;border-width:1.5px;border-radius:9px;font-size:12px;letter-spacing:0}.b27-chip.op .em{font-size:18px}.b27-chip.op .ck{top:2px;right:5px;font-size:11px}}   /* phones: even 3-col grid of equal tiles; All/Clear sit in the selbar under the grid */
 @media (max-width:399px){.b27-amt.cu{font-size:11px;letter-spacing:-.03em;white-space:nowrap;min-width:0;overflow:hidden}}
 @media (max-width:359px){.b27-opps{grid-template-columns:repeat(2,minmax(0,1fr))}.b27-opps .b27-chip{font-size:12px}.b27-chip.op .em{font-size:16px}}
+
+/* sh20: always 3-col manager pickers so All/Clear remainder math holds; util row matches tile size */
+.b27-opps,.rq-to{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+.b27-opps .b27-util{min-height:64px;height:100%;display:flex;flex-direction:column;justify-content:stretch;gap:4px;min-width:0;box-sizing:border-box}
+.b27-opps .b27-util .s27-selb{flex:1 1 0;width:100%;min-height:0;margin:0;border-radius:9px;font-weight:700}
+.b27-selbar-tiles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:6px;align-items:stretch}
+.b27-selbar-tiles .b27-util-chip,.b27-opps .b27-util-chip{min-height:64px;width:100%;box-sizing:border-box;font-weight:700}
+.b27-selbar-tiles .cnt,.b27-selcnt{display:flex;align-items:center;font-size:13px;color:var(--mut);min-width:0}
+.b27-selcnt{margin-top:6px}
+html body .b27-opps.b27-selbar-tiles,.b27-opps.b27-selbar-tiles{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:6px;margin-top:6px;align-items:stretch}
+/* sh20: beat #main button 36px min-height so picker tiles and the All/Clear row match */
+@media (max-width:640px){
+  #main .b27-opps .b27-chip,#lbody .b27-opps .b27-chip,
+  #main .b27-selbar-tiles .b27-chip,#lbody .b27-selbar-tiles .b27-chip,
+  #main .rq-to .b27-chip,#lbody .rq-to .b27-chip{min-height:64px!important}
+}
+
+html body .b27-selbar-tiles .b27-selcnt,.b27-selbar-tiles .b27-selcnt{display:flex;align-items:center;justify-content:flex-start;margin:0;padding:0 6px;font-size:13px;color:var(--mut)}
+
 .b27-selbar{display:flex;flex-wrap:nowrap;align-items:center;gap:8px;margin-top:8px}
 .b27-selbar .b27-sm{min-height:44px;min-width:88px;white-space:nowrap;padding:0 14px;border-radius:10px;border:2px solid var(--line);background:var(--card2);color:var(--tx);font:inherit;font-weight:700;font-size:14px;cursor:pointer}
 .b27-selbar .cnt{font-size:13px;color:var(--mut);margin-left:auto;white-space:normal;min-width:0;overflow-wrap:anywhere}
