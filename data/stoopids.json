@@ -2,7 +2,7 @@
   "format": 1,
   "source": "ESPN BPI projections",
   "season": "2026-27",
-  "fetched": "2026-11-13T22:59:44Z",
+  "fetched": "2026-11-13T23:41:19Z",
   "updated": "2026-11-13T20:05Z",
   "url": "https://site.web.api.espn.com/apis/fitt/v3/sports/basketball/nba/powerindex?region=us&lang=en&contentorigin=espn&limit=30",
   "note": "Expected points = proj. regular-season wins + 2\u00d7P(make playoffs) + 2\u00d7E[playoff wins] + 4\u00d7P(champion). NBA Cup points omitted: ESPN BPI has no Cup odds.",
