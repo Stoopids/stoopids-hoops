@@ -3939,19 +3939,19 @@
       "id": "401909976",
       "day": "2026-11-12",
       "start": "2026-11-13T00:00Z",
-      "status": "scheduled",
+      "status": "live",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "20",
-        "score": null,
+        "score": 60,
         "seed": null,
         "short": "PHI"
       },
       "away": {
         "id": "28",
-        "score": null,
+        "score": 60,
         "seed": null,
         "short": "TOR"
       },
@@ -3970,19 +3970,19 @@
       "id": "401909977",
       "day": "2026-11-12",
       "start": "2026-11-13T00:00Z",
-      "status": "scheduled",
+      "status": "live",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "27",
-        "score": null,
+        "score": 61,
         "seed": null,
         "short": "WSH"
       },
       "away": {
         "id": "8",
-        "score": null,
+        "score": 64,
         "seed": null,
         "short": "DET"
       },
@@ -4001,19 +4001,19 @@
       "id": "401909978",
       "day": "2026-11-12",
       "start": "2026-11-13T01:00Z",
-      "status": "scheduled",
+      "status": "live",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "16",
-        "score": null,
+        "score": 6,
         "seed": null,
         "short": "MIN"
       },
       "away": {
         "id": "6",
-        "score": null,
+        "score": 5,
         "seed": null,
         "short": "DAL"
       },
@@ -4021,7 +4021,7 @@
         "fav": "16",
         "dog": "6",
         "sp": 5.5,
-        "ou": 225.5,
+        "ou": 226.5,
         "fav_name": "MIN",
         "aml": 185,
         "hml": -223,
@@ -4114,10 +4114,10 @@
         "fav": "19",
         "dog": "15",
         "sp": 9.5,
-        "ou": 223.5,
+        "ou": 222.5,
         "fav_name": "ORL",
-        "aml": 257,
-        "hml": -319,
+        "aml": 293,
+        "hml": -368,
         "p": "DraftKings"
       }
     },
@@ -4144,11 +4144,11 @@
       "line": {
         "fav": "14",
         "dog": "5",
-        "sp": 1.5,
-        "ou": 237.5,
+        "sp": 2.5,
+        "ou": 236.5,
         "fav_name": "MIA",
-        "aml": 106,
-        "hml": -126,
+        "aml": 105,
+        "hml": -124,
         "p": "DraftKings"
       }
     },
