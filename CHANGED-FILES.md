@@ -1,3 +1,15 @@
+# sh25 (build 2026-11-13sh25): remove the Bets disclaimer from every Bets view
+
+Base: sh24, still pinned to STOOPIDS c3dd7d9. Latest STOOPIDS main (c6501d1, 21 commits ahead) still has the disclaimer, and also has later Stoopid Bet / toast / Profile work, so this is not a rebase.
+
+[PAUL-i] (4 exact-text patches in tools/hoops_patches.json, applied by tools/build_league_from_stoopids.py):
+- drop the BETS_DISCLAIMER const
+- drop b27Fine() and the #b27Note / .b27-fine box
+- stop appending that box on Request, Write it Up, All Bets and Tally
+- drop the unused .b27-fine CSS so no empty box or leftover gap
+
+Setup, join and the other HTML/JS pages never had this disclaimer. shared/ui.js is unchanged.
+
 # sh24 (build 2026-11-12sh24): rebased on live STOOPIDS c3dd7d9; Archive tab; equal draft board; Pick a team for a manager; cleanups
 
 Base: sh23 (plus the later scores refreshes on main). league.html and shared/ui.js are now STOOPIDS c3dd7d9 (live, shared/ui.js?v=1.66.6) copied byte for byte by tools/build_league_from_stoopids.py (BASE pinned, read with git show), then only the tagged exact-match patches in tools/hoops_patches.json.

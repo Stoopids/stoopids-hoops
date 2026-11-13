@@ -155,6 +155,30 @@
    "why": "Rules house interpretation: postponed or canceled games wording Paul approved",
    "old": "Postponed or canceled games give nothing.",
    "new": "Postponed or canceled games score nothing unless they are played."
+  },
+  {
+   "tag": "PAUL-i",
+   "why": "remove the Bets disclaimer const (BETS_DISCLAIMER)",
+   "old": "const BETS_DISCLAIMER=\"Bets here are just for fun and are settled in pullups, not money. Betting is Stoopid, and we don't endorse or facilitate gambling for money.\";   // the ONLY place the unit word appears in the tab; rendered once above the form\n",
+   "new": ""
+  },
+  {
+   "tag": "PAUL-i",
+   "why": "remove b27Fine() so the #b27Note / .b27-fine box is not built",
+   "old": "function b27Fine(){\n  const live=U.state==='ok'?' <span class=\"good\">\\u25cf live</span> \\u00b7 anyone with the link can add bets (no logins). Play nice.':U.state==='error'?' <span class=\"bad\">\\u25cf can\\u2019t reach the bets ledger right now</span>':'';\n  return `<div class=\"b27-fine\" id=\"b27Note\">${esc(BETS_DISCLAIMER)} This page just <b>records</b> who bet what and who owes whom.${live}</div>`}\n",
+   "new": ""
+  },
+  {
+   "tag": "PAUL-i",
+   "why": "stop appending the disclaimer box on Request, Write it Up, All Bets and Tally",
+   "old": "    if(OB_VIEW==='tally')return obToggle()+vTally()+b27Fine();\n    return obToggle()+(entry?entryPair():((typeof RQ!=='undefined'&&RQ?RQ.pinned(false,true):'')+vB27()))+b27Fine()};VIEWS.bets=()=>obToggle()+vBets();",
+   "new": "    if(OB_VIEW==='tally')return obToggle()+vTally();\n    return obToggle()+(entry?entryPair():((typeof RQ!=='undefined'&&RQ?RQ.pinned(false,true):'')+vB27()))};VIEWS.bets=()=>obToggle()+vBets();"
+  },
+  {
+   "tag": "PAUL-i",
+   "why": "drop unused .b27-fine CSS so no empty box or leftover gap",
+   "old": "html body .b27-fine{width:100%;max-width:100%;box-sizing:border-box;margin:12px 0 8px;padding:8px 12px;border:1px solid var(--line,#2d3548);border-radius:10px;background:var(--card,#1b2030);color:var(--mut,#9aa3b5);font-size:13px;line-height:1.35}\nhtml body .b27-fine b{color:var(--tx,#eee)}\n",
+   "new": ""
   }
  ],
  "ui": [

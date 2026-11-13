@@ -1,5 +1,5 @@
 d41d8cd98f00b204e9800998ecf8427e  .nojekyll
-2949e8f2c99156e1c8cab05c4e3309ff  CHANGED-FILES.md
+4a895f6175c88b8a530171f7e214e41d  CHANGED-FILES.md
 fc4c2520be569d292be962f8ba4efdeb  LICENSE-third-party.txt
 8b5625f976836aad6af5f60e27144a46  README.md
 6e71fc07a94b28f030a54f9dc981573d  STOOPIDS-TEMPLATE.md
@@ -62,8 +62,8 @@ f58840a96eb98dc88eacab0197550114  js/room.js
 4c6278d218b3092ecb311378e48f9cbb  js/store.js
 b31b8d130f47a378f2358995614b9470  js/time.js
 4c6bad30d300b491b9c0cdc077808a8d  js/ui.js
-414901a36d771c2632bb59b77e72b5c2  js/version.js
-fa1c24bfc6815d0d01e79a12f30953e6  league.html
+d06a7ad9b90d8eec78b3ae65a87bef07  js/version.js
+128b28a37540c6263a341943d30a3dee  league.html
 bfecc7dd0f1bda7d2eba6a98a31acf30  manifest.webmanifest
 3b25eb7bcd546e190180401ab0cd8833  mock.html
 4aa29b791ef8afea1136539675db73df  recap.html
@@ -71,11 +71,11 @@ bfecc7dd0f1bda7d2eba6a98a31acf30  manifest.webmanifest
 0abcaa0775f7e3d21e6561e1b07ccc36  setup.html
 441fdaab0f155a04edca55cc8191e07c  shared/ui.css
 8655d04bf0f77a18a84f4e806165a70b  shared/ui.js
-d1269c078dbb330098d1836c9553e152  sw.js
+33bc0d3cd859f8acea6d83287cb92aac  sw.js
 dbc1acbbc855aa2997faf2d9331135b5  time.html
 1db7e5ab7831ad9605374541b442eb4e  tools/archive_from_sheet.py
 1fc039ed68b08077b9c9d77fab413cf1  tools/build_league_from_stoopids.py
-026cea5c2c2f17902e3290dfcd20061b  tools/hoops_patches.json
+aa0bb7adfdc0e8ac6b6bc68a60edab3a  tools/hoops_patches.json
 eee8a26eb834ea3667a3220d21d9c65d  tools/hoops_sh9_fixes.html
 564a76fc93bd657cffacd255c20ebb3e  tools/mock_textdb.js
 4fa88ba9eef4ea6e92a6f81de5992cef  tools/refresh_nba.py
