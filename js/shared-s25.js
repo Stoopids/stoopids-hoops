@@ -42,7 +42,7 @@ S25.tagline=function(now,list){list=list||S25.TAGLINES;return list[S25.tagIndex(
 S25.REACTIONS=['👍','👎','🤪','🔥','😂','🍆'];
 
 /* ===== Reading (parser) ===== */
-S25.ESPN='https://site.api.espn.com/apis/site/v2/sports/';
+S25.ESPN='https://site.web.api.espn.com/apis/site/v2/sports/';
 S25.SPORTS={
   mcbb:{path:'basketball/mens-college-basketball',q:'&groups=50&limit=400',lbl:'College hoops (M)'},
   wcbb:{path:'basketball/womens-college-basketball',q:'&groups=50&limit=400',lbl:'College hoops (W)'},

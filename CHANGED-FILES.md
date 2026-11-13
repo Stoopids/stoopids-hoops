@@ -1,3 +1,13 @@
+# sh26 (build 2026-11-13sh26): live health-check fixes (BUG-1..4)
+
+Base: sh25, still pinned to STOOPIDS c3dd7d9. Latest STOOPIDS main still uses site.api.espn.com for the in-page live poll and still fetches config.json (they ship that file). STOOPIDS refresh.py already writes a full generated_at_utc ISO timestamp.
+
+- BUG-1 [hoops_patches.json]: the in-page live poll (and the other browser ESPN site/v2 calls) now use site.web.api.espn.com. site.api.espn.com (what STOOPIDS still uses) answers curl with Access-Control-Allow-Origin: * but fails in Chromium with net::ERR_FAILED; site.web.api.espn.com returns the same scoreboard JSON, also with Access-Control-Allow-Origin: *, and works in the browser from localhost (and should from github.io — same ACAO * for that Origin). The Actions */10 cron was delayed by GitHub to ~40-75 min; the workflow now asks for */5 (tightest first-party cadence). No paid or third-party ping.
+
+- BUG-2 [hoops_patches.json]: skip the leftover config.json fetch (Hoops has no such file, so every tab got a 404). Bets already use textdb.
+- BUG-3: refresh_nba.py writes scores.generated_at_utc as a full ISO UTC timestamp; hoops-stoopids.js (and league-d.js) use that for D.meta.generated_at_utc so Standings says "Updated N min/hours ago" instead of "1 day ago" from a date-only as_of. as_of stays the Eastern calendar date.
+- BUG-4 [hoops_patches.json]: static h1 is "STOOPIDS HOOPS" (two-tone, same as setTitle's default) so the STOOPIDS mark never flashes before the league name loads.
+
 # sh25 (build 2026-11-13sh25): remove the Bets disclaimer from every Bets view
 
 Base: sh24, still pinned to STOOPIDS c3dd7d9. Latest STOOPIDS main (c6501d1, 21 commits ahead) still has the disclaimer, and also has later Stoopid Bet / toast / Profile work, so this is not a rebase.

@@ -104,7 +104,7 @@ H.publish=function(SC){const C=H._ctx;if(!C)return null;SC=SC||C.SC;C.SC=SC;cons
   const meta0=TD.meta||{};const ranks={teams:{},sources:{}};const sp=Object.keys(meta0).filter(k=>meta0[k]&&meta0[k].sp!=null).sort((a,b)=>meta0[b].sp-meta0[a].sp);
   POOL.forEach(t=>{const m=meta0[t]||{};ranks.teams[t]={ap:rankLabel(m.o),net:rankLabel(m.wr),kenpom:m.sp!=null?Math.round(+m.sp):null,stoopid:rankLabel(m.sr!=null?m.sr:m.p),stoopid_current:rankLabel(m.sr!=null?m.sr:m.p)}});
   const P=Object.assign({},(window.FBNScore&&FBNScore.POINTS)||{});
-  const now=new Date(),gen=SC&&SC.as_of?SC.as_of:now.toISOString();
+  const now=new Date(),gen=SC&&SC.generated_at_utc?SC.generated_at_utc:now.toISOString();   /*<BUG-3>*/ /* as_of is a date-only Eastern day; a full ISO UTC stamp is what Standings' Updated line needs */ /*</BUG-3>*/
   const D={meta:{app:'Stoopids Hoops',league:L.meta.name,season:'2026-27',mode:'live',today_et:now.toISOString().slice(0,10),generated_at_utc:gen,generated_at_wib:'',games_loaded:games.length,final_games:games.filter(g=>g.status==='final').length,
       roster_source:'draft room',sheet_ok:true,sheet_error:null,standings_ok:true,fetch:{days_total:0,days_fetched:0,days_cached:0,days_espn_failed:0,days_ncaa_fallback:0,days_failed_both:0},odds:{games_needing_line:0,lines_found:0,missing_line_ids:[]},
       assets:{missing_color:[],missing_alt_color:[],missing_logo:[]},warnings:[],sources:{scores:'ESPN NBA scoreboard',rosters:'Stoopids Hoops draft room'},

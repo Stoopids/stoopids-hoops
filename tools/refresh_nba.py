@@ -702,7 +702,8 @@ def main():
         "sample": False,
         "label": "",
         "season": "2026-27",
-        "as_of": today.isoformat(),
+        "as_of": today.isoformat(),  # Eastern calendar date (day buckets)
+        "generated_at_utc": datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),  # BUG-3: full ISO UTC so "Updated" is not "1 day ago"
         "source": "espn",
         "seed_lock": locked,
         "standings": standings,

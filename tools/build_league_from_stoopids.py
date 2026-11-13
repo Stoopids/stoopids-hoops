@@ -167,7 +167,7 @@ json.dump({'format': 1, 'season': 'Last season win rank (25-26)', 'as_of': T.get
 #    tag NBA = NBA data/teams, HOOPS = this league's id / app shell, PAUL-a..d = Paul-approved additions (pools, copy text, Write It Up, dates).
 PATCHES = json.load(open(os.path.join(ROOT, 'tools', 'hoops_patches.json'), encoding='utf-8'))
 for x in PATCHES['page']:
-    rep(x['old'], x['new'], why='[' + x['tag'] + '] ' + x['why'])
+    rep(x['old'], x['new'], n=x.get('n',1), why='[' + x['tag'] + '] ' + x['why'])
 open(os.path.join(ROOT, 'league.html'), 'w', encoding='utf-8').write(s)
 # shared/ui.js + ui.css: STOOPIDS' own shared module, copied verbatim except the rankings footnote link (NBA BPI instead of the college AP poll)
 os.makedirs(os.path.join(ROOT, 'shared'), exist_ok=True)

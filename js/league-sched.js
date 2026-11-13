@@ -1,6 +1,6 @@
 /* League site schedule (s21): fills the Games / Standings / Rosters / Postseason views by itself, with no maintainer step.
-   For each school in this league (the 64 picked schools) it GET-fetches the school's ESPN schedule from site.api.espn.com (already in the CSP connect-src; GET only, no key, no images):
-     https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/<espn id>/schedule?season=<year>&seasontype=2     (regular season incl. conference tournaments)
+   For each school in this league (the 64 picked schools) it GET-fetches the school's ESPN schedule from site.web.api.espn.com (already in the CSP connect-src; GET only, no key, no images):
+     https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/teams/<espn id>/schedule?season=<year>&seasontype=2     (regular season incl. conference tournaments)
      ... and seasontype=3 as well from March on (postseason: only the NCAA tournament games are used, the way tools/refresh_data.py does).
    Each event is turned into the same game object as data/scores.json (id, day, start, status, kind, round, neutral, home/away {id,score,seed,short}), the games of all schools are de-duplicated by ESPN event id,
    and merge(SC) adds them to the scores.json games: when scores.json has the SAME game (same id, or same two teams within 18 h) the FILE wins, ESPN only fills the rest.
@@ -9,7 +9,7 @@
    Never blocks rendering: the page draws from scores.json + the cache first and redraws once when the cycle ends.  window.LSCHED = {init,start,merge,games,has,line,state,parse,ttlFor,_cfg}. */
 (function(){
 'use strict';
-const C={base:'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/teams/',conc:4,gapMs:90,timeoutMs:10000,ttlLive:30*60000,ttlIdle:6*3600000,failBase:2*60000,failMax:30*60000,maxErrStop:8,pairMs:18*3600000,pre:'shoops.sched.v1.'};
+const C={base:'https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/teams/',conc:4,gapMs:90,timeoutMs:10000,ttlLive:30*60000,ttlIdle:6*3600000,failBase:2*60000,failMax:30*60000,maxErrStop:8,pairMs:18*3600000,pre:'shoops.sched.v1.'};
 const ROUNDS=['First Round','Conference Semifinals','Conference Finals','NBA Finals'];
 const PLAYOFF_ROUND={'First Round':'First Round','Conference Semifinals':'Conference Semifinals','Conf. Semifinals':'Conference Semifinals','Conference Finals':'Conference Finals','Conf. Finals':'Conference Finals','NBA Finals':'NBA Finals','Finals':'NBA Finals'};
 const ST={opts:null,busy:false,done:false,err:false,errN:0,fetched:0,requests:0,inflight:0,maxInflight:0,cacheAt:null,okAt:null,cache:{},ids:[],started:false};

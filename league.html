@@ -972,7 +972,7 @@ html body .card.oc .chips.school-grid .chip .cr{grid-column:2!important;grid-row
 <body>
 <header>
   <div class="hero" role="button" tabindex="0" aria-expanded="false" aria-label="Stoopids Hoops banner. Tap to enlarge the photo."></div>
-  <div class="titlebar"><p class="s27-pres" id="lpres">Stoopids presents</p><div class="s12-hd"><h1 id="hoopsLg">STOOP<span>IDS</span></h1><!--<STEP12-HSHARE> whole-site Share beside the title (view-only link; Profile keeps the pick-a-tab share) --><button type="button" class="s12-share" id="s12Share" aria-label="Share STOOPIDS (view-only link to the whole site)" onclick="s12ShareSite(this)">🔗 Share</button><!--</STEP12-HSHARE>--></div>
+  <div class="titlebar"><p class="s27-pres" id="lpres">Stoopids presents</p><div class="s12-hd"><h1 id="hoopsLg">STOOPIDS <span>HOOPS</span></h1><!--<STEP12-HSHARE> whole-site Share beside the title (view-only link; Profile keeps the pick-a-tab share) --><button type="button" class="s12-share" id="s12Share" aria-label="Share STOOPIDS (view-only link to the whole site)" onclick="s12ShareSite(this)">🔗 Share</button><!--</STEP12-HSHARE>--></div>
 <!--<HDR-CENTER> Refresh Live Games moved to #gamesTop (top of Games) </HDR-CENTER>-->
   <p class="tag" id="tag"></p></div>
   <div class="sub" id="badges" style="margin:0"></div>
@@ -1041,7 +1041,7 @@ S25.tagline=function(now,list){list=list||S25.TAGLINES;return list[S25.tagIndex(
 S25.REACTIONS=['👍','👎','🤪','🔥','😂','🍆'];
 
 /* ===== Reading (parser) ===== */
-S25.ESPN='https://site.api.espn.com/apis/site/v2/sports/';
+S25.ESPN='https://site.web.api.espn.com/apis/site/v2/sports/';
 S25.SPORTS={
   mcbb:{path:'basketball/mens-college-basketball',q:'&groups=50&limit=400',lbl:'College hoops (M)'},
   wcbb:{path:'basketball/womens-college-basketball',q:'&groups=50&limit=400',lbl:'College hoops (W)'},
@@ -1332,7 +1332,7 @@ function markLiveTeams(){const ids=new Set();((D&&D.games)||[]).forEach(g=>{if(!
 /*<SYNC2-BOX>*/ // opened FINAL card: score by half (+OT), top PTS/REB/AST per team, spread + over/under result, ESPN box score link.
 // ESPN summary endpoint (public GET, same host as the live feed), fetched only when a final card is opened, cached per game for the session.
 const BOX={};
-const boxUrl=id=>'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event='+encodeURIComponent(id);
+const boxUrl=id=>'https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/summary?event='+encodeURIComponent(id);
 const boxLink=id=>'https://www.espn.com/nba/boxscore/_/gameId/'+encodeURIComponent(id);
 function boxParse(j){if(window.SHARED_UI&&SHARED_UI.espnBox)return SHARED_UI.espnBox(j);const c=((j.header||{}).competitions||[])[0]||{};const L={};(j.leaders||[]).forEach(t=>{const tid=String((t.team||{}).id||'');L[tid]={};(t.leaders||[]).forEach(k=>{const a=(k.leaders||[])[0];if(a)L[tid][k.name]={n:(a.athlete||{}).shortName||(a.athlete||{}).displayName||'',v:a.displayValue||''}})});
   return {teams:(c.competitors||[]).map(t=>({id:String((t.team||{}).id||t.id||''),ab:(t.team||{}).abbreviation||'',ha:t.homeAway,ls:(t.linescores||[]).map(x=>x.displayValue!=null?x.displayValue:x.value),sc:t.score,ld:L[String((t.team||{}).id||t.id||'')]||{}})).sort((a,b)=>a.ha==='away'?-1:1)}}
@@ -1453,7 +1453,7 @@ function freshStart(){   // (re)start the 30 s ticker; called from render(), so 
    and overlays live scores / status / finals on the games already in the published data, in memory only.
    - Standings, points, records and bonuses are NEVER recomputed here: they only change when the site data updates (score.py).
    - Safe by design: GET only (no custom headers = no CORS preflight), no cookies, no writes anywhere, every error is swallowed. */
-const LVC={url:'https://site.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard',
+const LVC={url:'https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/scoreboard',
   minGap:20000,     // never start two fetches less than 20 s apart (also debounces the Refresh button)
   fastMs:45000,     // poll interval while a game is live or tips off within 30 min (or ended recently and is not yet seen final)
   fastBigMs:60000,  // same, but on huge slates (>100 events = ~200 KB per answer) ask only once a minute
@@ -2113,7 +2113,7 @@ function applyShared(){
 function sbRerender(){if(D&&(tab==='bets'/*<BETS-TALLY>*/||(tab==='bets27'&&typeof OB_VIEW!=='undefined'&&OB_VIEW==='tally')/*</BETS-TALLY>*/)){sbSnap();render()}}
 async function sharedInit(){
   if(DEMO)return;
-  try{const r=await fetch('config.json',{cache:'no-store'});const c=await r.json();const sc=c.shared_bets;if(sc&&sc.enabled!==false&&sc.url)SH.cfg=sc}catch(e){}
+  /*<BUG-2>*/ /* Hoops has no config.json; bets use the league textdb keys, not a shared_bets ledger. */ /*</BUG-2>*/
   if(!SH.cfg){SH.state='off';sbRerender();return}
   SH.state='loading';sbRerender();
   await sharedReload(true);
@@ -4357,7 +4357,7 @@ async function rkLoad(){if(RK.started||DEMO)return;RK.started=true;let ss=null;t
   const useAp=j=>{const ap=(j.rankings||[]).find(r=>r.type==='ap');if(!ap)return;const m={},L=[];(ap.ranks||[]).forEach(r=>{const n=Number(r.current),id=r.team&&String(r.team.id);if(n>=1&&n<=25&&id){m[id]=n;L.push({n,tid:idByEspn[id]||null,name:String((r.team.location||r.team.nickname||r.team.name||'')).slice(0,40)})}});
     if(L.length){RK.ap=m;RK.apList=L.sort((a,b)=>a.n-b.n);RK.apDate=String(ap.date||'')}};
   try{let j=null;try{const c=ss&&JSON.parse(ss.getItem(KEY)||'null');if(c&&Date.now()-c.at<36e5)j=c.j}catch(e){}
-    if(!j){const r=await fetch('https://site.api.espn.com/apis/site/v2/sports/basketball/nba/rankings',{credentials:'omit'});if(r.ok){j=await r.json();try{ss&&ss.setItem(KEY,JSON.stringify({at:Date.now(),j:{rankings:(j.rankings||[]).filter(x=>x.type==='ap')}}))}catch(e){}}}
+    if(!j){const r=await fetch('https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/rankings',{credentials:'omit'});if(r.ok){j=await r.json();try{ss&&ss.setItem(KEY,JSON.stringify({at:Date.now(),j:{rankings:(j.rankings||[]).filter(x=>x.type==='ap')}}))}catch(e){}}}
     if(j)useAp(j)}catch(e){}
   /*<S29D-RANKS>*/try{if(!RK.ap&&D.ranks&&D.ranks.teams){const m={},L=[];Object.keys(D.ranks.teams).forEach(tid=>{const n=Number(D.ranks.teams[tid].ap),t=D.teams[tid]||{};if(n>=1&&n<=30){m[String(t.espn_id||tid)]=n;L.push({n,tid,name:String(t.name||t.short||'').slice(0,40)})}});if(L.length){RK.ap=m;RK.apList=L.sort((a,b)=>a.n-b.n);RK.apDate=String((D.meta&&D.meta.ranks_fetch&&(D.meta.ranks_fetch.at||D.meta.ranks_fetch.fetched_at))||'')}}}catch(e){}   // ESPN AP fetch failed: AP from data.json ranks/*</S29D-RANKS>*/
   try{const r=await fetch('data/hoops-net.json',{credentials:'omit'});if(r.ok){const n=await r.json();if(Array.isArray(n.rows)){RK.net=n.rows.filter(x=>Number.isInteger(x.net)&&typeof x.school==='string');RK.netAsOf=String(n.as_of||'');RK.netSeason=String(n.season||'')}}}catch(e){}

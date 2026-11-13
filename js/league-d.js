@@ -93,7 +93,7 @@ A.build=function(a){
   const fieldN=Object.keys(field).length;const haveNcaa=fieldN>0||games0.some(g=>g.kind==='playoff'||g.kind==='cup'||g.kind==='playin');
   const final_games=games0.filter(S.isFinal).length;
   const mode=a.demo?'demo':(final_games>0?'live':'preseason');
-  const gen=(SC&&SC.as_of)?Date.parse(SC.as_of+'T12:00:00Z'):null;
+  const gen=SC&&SC.generated_at_utc?Date.parse(SC.generated_at_utc):(SC&&SC.as_of)?Date.parse(/^\d{4}-\d{2}-\d{2}$/.test(SC.as_of)?SC.as_of+'T12:00:00Z':SC.as_of):null;   /*<BUG-3>*/
   const generated=isFinite(gen)&&gen?gen:(a.genAt||null);
   return{owners,teams:TEAMS,records,games,team_games,checklist,upsets,tournament:TOU,season:SEA,
     meta:{mode,season:(SC&&SC.season)||a.season||'2026-27',generated_at_utc:generated?new Date(generated).toISOString():null,points:Object.assign({win:1},S.POINTS,TN&&TN.points||{}),

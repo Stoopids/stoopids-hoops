@@ -2,9 +2,11 @@
 name: refresh-stoopids-hoops
 on:
   schedule:
-    # Every 10 min (~144 runs/day). One ESPN scoreboard read plus a commit only when data/ changed.
+    # GitHub delayed the previous */10 schedule on this public repo to ~40-75 min (median ~53).
+    # */5 is the tightest first-party cadence GitHub accepts (~288 proposed runs/day, still one
+    # ESPN read and a commit only when data/ changed). No external ping or Grok routine.
     # No new token: the repo GITHUB_TOKEN (contents: write) is enough.
-    - cron: "*/10 * * * *"
+    - cron: "*/5 * * * *"
   workflow_dispatch:
 permissions:
   contents: write

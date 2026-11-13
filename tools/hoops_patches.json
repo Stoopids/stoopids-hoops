@@ -179,6 +179,25 @@
    "why": "drop unused .b27-fine CSS so no empty box or leftover gap",
    "old": "html body .b27-fine{width:100%;max-width:100%;box-sizing:border-box;margin:12px 0 8px;padding:8px 12px;border:1px solid var(--line,#2d3548);border-radius:10px;background:var(--card,#1b2030);color:var(--mut,#9aa3b5);font-size:13px;line-height:1.35}\nhtml body .b27-fine b{color:var(--tx,#eee)}\n",
    "new": ""
+  },
+  {
+   "tag": "BUG-1",
+   "why": "browser live ESPN poll: site.api.espn.com fails in Chromium with net::ERR_FAILED; site.web.api.espn.com serves the same JSON with Access-Control-Allow-Origin: * and works in the browser (curl can use either). STOOPIDS still uses site.api, so it has the same Chrome failure.",
+   "old": "https://site.api.espn.com/apis/site/v2/sports",
+   "new": "https://site.web.api.espn.com/apis/site/v2/sports",
+   "n": 4
+  },
+  {
+   "tag": "BUG-2",
+   "why": "do not fetch config.json (Hoops has no such file; STOOPIDS does, so their request succeeds). Bets use textdb, not a shared_bets ledger.",
+   "old": "  try{const r=await fetch('config.json',{cache:'no-store'});const c=await r.json();const sc=c.shared_bets;if(sc&&sc.enabled!==false&&sc.url)SH.cfg=sc}catch(e){}\n",
+   "new": "  /*<BUG-2>*/ /* Hoops has no config.json; bets use the league textdb keys, not a shared_bets ledger. */ /*</BUG-2>*/\n"
+  },
+  {
+   "tag": "BUG-4",
+   "why": "static h1 is a Hoops default (STOOPIDS HOOPS) so the STOOPIDS mark never flashes before the league name loads",
+   "old": "<h1 id=\"hoopsLg\">STOOP<span>IDS</span></h1>",
+   "new": "<h1 id=\"hoopsLg\">STOOPIDS <span>HOOPS</span></h1>"
   }
  ],
  "ui": [
