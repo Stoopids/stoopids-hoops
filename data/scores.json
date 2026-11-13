@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-13",
-  "generated_at_utc": "2026-11-13T16:44:15Z",
+  "generated_at_utc": "2026-11-13T17:37:06Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -3964,7 +3964,7 @@
         "fav_name": "PHI",
         "aml": 226,
         "hml": -277,
-        "p": "DraftKings",
+        "p": "Draft Kings",
         "type": "close"
       }
     },
@@ -3996,7 +3996,7 @@
         "fav_name": "DET",
         "aml": -438,
         "hml": 341,
-        "p": "DraftKings",
+        "p": "Draft Kings",
         "type": "close"
       }
     },
@@ -4028,7 +4028,7 @@
         "fav_name": "MIN",
         "aml": 185,
         "hml": -223,
-        "p": "DraftKings",
+        "p": "Draft Kings",
         "type": "close"
       }
     },
@@ -4060,7 +4060,7 @@
         "fav_name": "PHX",
         "aml": 180,
         "hml": -217,
-        "p": "DraftKings",
+        "p": "Draft Kings",
         "type": "close"
       }
     },
@@ -4090,9 +4090,9 @@
         "sp": 8.5,
         "ou": 219.5,
         "fav_name": "NY",
-        "aml": -324,
-        "hml": 261,
-        "p": "DraftKings"
+        "aml": -337,
+        "hml": 271,
+        "p": "Draft Kings"
       }
     },
     {
@@ -4118,12 +4118,12 @@
       "line": {
         "fav": "19",
         "dog": "15",
-        "sp": 8.5,
-        "ou": 224.5,
+        "sp": 9.5,
+        "ou": 223.5,
         "fav_name": "ORL",
-        "aml": 286,
-        "hml": -359,
-        "p": "DraftKings"
+        "aml": 312,
+        "hml": -395,
+        "p": "Draft Kings"
       }
     },
     {
@@ -4154,7 +4154,7 @@
         "fav_name": "MIA",
         "aml": 114,
         "hml": -135,
-        "p": "DraftKings"
+        "p": "Draft Kings"
       }
     },
     {
@@ -4185,7 +4185,7 @@
         "fav_name": "ATL",
         "aml": -290,
         "hml": 236,
-        "p": "DraftKings"
+        "p": "Draft Kings"
       }
     },
     {
@@ -4216,7 +4216,7 @@
         "fav_name": "MEM",
         "aml": -135,
         "hml": 114,
-        "p": "DraftKings"
+        "p": "Draft Kings"
       }
     },
     {
@@ -4247,7 +4247,7 @@
         "fav_name": "HOU",
         "aml": 810,
         "hml": -1340,
-        "p": "DraftKings"
+        "p": "Draft Kings"
       }
     },
     {
@@ -4278,7 +4278,7 @@
         "fav_name": "SA",
         "aml": 487,
         "hml": -670,
-        "p": "DraftKings"
+        "p": "Draft Kings"
       }
     },
     {
@@ -4304,12 +4304,12 @@
       "line": {
         "fav": "22",
         "dog": "23",
-        "sp": 9.5,
+        "sp": 10.5,
         "ou": 228.5,
         "fav_name": "POR",
         "aml": -468,
         "hml": 361,
-        "p": "DraftKings"
+        "p": "Draft Kings"
       }
     },
     {
@@ -4336,11 +4336,11 @@
         "fav": "25",
         "dog": "12",
         "sp": 7.5,
-        "ou": 221.5,
+        "ou": 222.5,
         "fav_name": "OKC",
-        "aml": -269,
-        "hml": 220,
-        "p": "DraftKings"
+        "aml": -283,
+        "hml": 231,
+        "p": "Draft Kings"
       }
     },
     {
