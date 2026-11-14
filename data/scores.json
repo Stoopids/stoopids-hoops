@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-13",
-  "generated_at_utc": "2026-11-14T01:34:53Z",
+  "generated_at_utc": "2026-11-14T02:27:54Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -4074,13 +4074,13 @@
       "neutral": false,
       "home": {
         "id": "11",
-        "score": 61,
+        "score": 104,
         "seed": null,
         "short": "IND"
       },
       "away": {
         "id": "18",
-        "score": 49,
+        "score": 97,
         "seed": null,
         "short": "NY"
       },
@@ -4105,13 +4105,13 @@
       "neutral": false,
       "home": {
         "id": "19",
-        "score": 65,
+        "score": 104,
         "seed": null,
         "short": "ORL"
       },
       "away": {
         "id": "15",
-        "score": 55,
+        "score": 94,
         "seed": null,
         "short": "MIL"
       },
@@ -4136,13 +4136,13 @@
       "neutral": false,
       "home": {
         "id": "14",
-        "score": 20,
+        "score": 56,
         "seed": null,
         "short": "MIA"
       },
       "away": {
         "id": "5",
-        "score": 22,
+        "score": 57,
         "seed": null,
         "short": "CLE"
       },
@@ -4167,13 +4167,13 @@
       "neutral": false,
       "home": {
         "id": "4",
-        "score": 31,
+        "score": 68,
         "seed": null,
         "short": "CHI"
       },
       "away": {
         "id": "1",
-        "score": 23,
+        "score": 60,
         "seed": null,
         "short": "ATL"
       },
@@ -4198,13 +4198,13 @@
       "neutral": false,
       "home": {
         "id": "3",
-        "score": 23,
+        "score": 58,
         "seed": null,
         "short": "NO"
       },
       "away": {
         "id": "29",
-        "score": 33,
+        "score": 72,
         "seed": null,
         "short": "MEM"
       },
@@ -4223,19 +4223,19 @@
       "id": "401909301",
       "day": "2026-11-13",
       "start": "2026-11-14T01:30Z",
-      "status": "scheduled",
+      "status": "live",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "10",
-        "score": null,
+        "score": 46,
         "seed": null,
         "short": "HOU"
       },
       "away": {
         "id": "26",
-        "score": null,
+        "score": 43,
         "seed": null,
         "short": "UTAH"
       },
@@ -4245,8 +4245,8 @@
         "sp": 15.5,
         "ou": 221.5,
         "fav_name": "HOU",
-        "aml": 810,
-        "hml": -1340,
+        "aml": 740,
+        "hml": -1180,
         "p": "DraftKings"
       }
     },
@@ -4274,10 +4274,10 @@
         "fav": "24",
         "dog": "9",
         "sp": 12.5,
-        "ou": 215.5,
+        "ou": 216.5,
         "fav_name": "SA",
-        "aml": 473,
-        "hml": -650,
+        "aml": 501,
+        "hml": -700,
         "p": "DraftKings"
       }
     },
