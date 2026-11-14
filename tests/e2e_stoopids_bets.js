@@ -35,11 +35,12 @@ try{const {seed}=require(path.join(HROOT,'tests/seed_league.js'));const API=`htt
  await p.evaluate(()=>{U.places=['120','30'];render()});await p.waitForTimeout(200);await p.click('#b27Place');await p.waitForTimeout(300);
  const cf=await p.evaluate(()=>!!document.querySelector('.b27-confirm'));ok('confirm step shown',cf);
  await p.evaluate(()=>b27Confirm());await p.waitForFunction(()=>!U.busy,{timeout:20000});await p.waitForTimeout(800);
- const a=await p.evaluate(()=>({view:OB_VIEW,sub:S24.sub,hl:!!document.querySelector('.s24-hl,.dl-hl,[class*="hl"]'),msg:U.msg,pool:(U.doc.bets.find(b=>b.kind==='pool')||{}),clip:U.clip}));
+ const a=await p.evaluate(()=>({view:OB_VIEW,sub:S24.sub,hl:!!document.querySelector('.s24-hl,.dl-hl,[class*="hl"]'),msg:U.msg,toast:((document.getElementById('s24t')||{}).textContent||''),pool:(U.doc.bets.find(b=>b.kind==='pool')||{}),clip:U.clip}));
  let clip='';try{clip=await p.evaluate(()=>navigator.clipboard.readText())}catch(e){clip='(clipboard read failed) '+e.message}
  ok('pool saved',!!a.pool.id,JSON.stringify(a.pool.id));ok('pool saved with wk season',a.pool.wk==='season',a.pool.wk);
  ok('pool copy text auto-copied',/^Pool #\d+ · Unsettled/.test(clip),JSON.stringify(clip));console.log('msg:',a.msg);
- ok('pool save message is exactly "Pool #n posted 💥"',a.msg==='Pool #'+a.pool.n+' posted 💥',a.msg);
+ /* sh28 PAUL-k: success messages show in the STOOPIDS toast (#s24t) instead of a status card */
+ ok('pool save message is exactly "Pool #n posted 💥" (toast)',(a.msg||a.toast)==='Pool #'+a.pool.n+' posted 💥',{msg:a.msg,toast:a.toast});
  await p.screenshot({path:path.join(OUT,'hoops-after-write-it-up-pool.png')});
  // settle by places
  const pid=a.pool.id;await p.evaluate(()=>{OB_VIEW='all';render()});await p.waitForTimeout(400);await p.evaluate(id=>{U.placeWho=U.placeWho||{};const mem=U.doc.bets.find(b=>b.id===id).parts.filter(n=>n!=='Paul');U.placeWho[id]=mem.slice(0,2);window.__mem=mem;render()},pid);await p.waitForTimeout(200);

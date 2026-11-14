@@ -970,7 +970,7 @@ html body .card.oc .chips.school-grid .chip img,html body .card.oc .chips.school
 html body .card.oc .chips.school-grid .chip .cab{font-size:10.5px!important;letter-spacing:0!important}html body .card.oc .chips.school-grid .chip .cr{font-size:8px!important;letter-spacing:-.04em!important}
 html body .card.oc .chips.school-grid .chip>.aprk{position:static!important;grid-column:2!important;grid-row:2!important;justify-self:end!important;align-self:center!important;white-space:nowrap!important;font-size:7.5px!important;padding:0 1.5px!important;letter-spacing:-.02em!important;line-height:1.25!important;margin:0!important}
 html body .card.oc .chips.school-grid .chip .cr{grid-column:2!important;grid-row:2!important;justify-self:start!important}}
-/*</HOOPS-CHIPS-1LINE>*/</style>
+/*</HOOPS-CHIPS-1LINE>*//*<HOOPS-GFIT>*/html body .gside .sc2 .hsg{grid-auto-columns:auto!important;column-gap:3px!important}html body .gside .sc2 .hsq{width:1.3em!important}html body .gside .sc2 .hsq>i{font-size:.8em!important}html body .gside .sc2 .hst{width:1.75em!important}html body .gside .chip.gab{column-gap:3px!important}html body .gside .chip.gab .cn{display:none!important}html body .gside .chip.gab .cab{display:inline!important;font-weight:800;letter-spacing:0}html body .gside .chip.gab2 .ghome{display:none!important}/*</HOOPS-GFIT>*/</style>
 </head>
 <body>
 <header>
@@ -995,7 +995,7 @@ html body .card.oc .chips.school-grid .chip .cr{grid-column:2!important;grid-row
   </div>
 </section><!--</CHAT>-->
 <footer id="foot"></footer>
-<script src="shared/ui.js?v=1.80.0.sh27"></script>
+<script src="shared/ui.js?v=1.80.0.sh28"></script>
 <script src="js/version.js"></script><script src="js/core.js"></script><script src="js/scoring.js"></script><script src="js/league-d.js"></script><script src="js/league-sched.js"></script><script src="js/store.js"></script><script src="assets/teams.js"></script><script src="js/power-apply.js"></script><script src="js/league.js"></script><script src="js/hoops-archive.js"></script><script src="js/hoops-stoopids.js"></script><script>HOOPS.dataName="STOOPIDS_DATA";</script>
 <script>
 /*<S25-SHARED>*/
@@ -1732,7 +1732,7 @@ function lineTxt(ln,away,home,final){
   const ou=ln.ou!=null?` · O/U ${ln.ou}`:'';
   const src=lineSrc(ln.p);
   return `${final?(ln.type==='close'?'Closing line':'Last line'):'Line'}: ${fav}${ou}${src?` <span class="mut">· ${esc(src)}</span>`:''}`}
-function gWentOt(g){const n=a=>Array.isArray(a)?a.length:0,lv=g&&g._lv&&g._lv.ls;return Math.max(n(g&&g.away&&g.away.ls),n(g&&g.home&&g.home.ls),n(lv&&lv.a),n(lv&&lv.h))>2}
+function gWentOt(g){const n=a=>Array.isArray(a)?a.length:0,lv=g&&g._lv&&g._lv.ls;return Math.max(n(g&&g.away&&g.away.ls),n(g&&g.home&&g.home.ls),n(lv&&lv.a),n(lv&&lv.h))>4}
 function gameCard(g){
   const fin=g.status==='final',live=g.status==='live',stLab=fin?(gWentOt(g)?'FINAL/OT':'FINAL'):'';
   const dog=g.line&&g.line.dog;
@@ -3860,6 +3860,7 @@ function vB27(){
   const me=b27Who(),names=b27OwnerNames(),others=names.filter(n=>n!==me);
   /*<BETS-INTRO-BOTTOM>*/let h='';   // headline removed: New bet sits right under the season toggle + Share row
   /*</BETS-INTRO-BOTTOM>*/
+  /*<PAUL-k>*/if(U.msg&&!U.msgBad&&!U.clip&&!(U.undoG&&b27GroupUndoable(U.undoG).length>1)){const tm=U.msg;U.msg='';setTimeout(()=>s24Toast(tm),0)}/*</PAUL-k>*/
   if(U.msg)h+=`<div class="card ${U.msgBad?'b27-bad':'b27-ok'}" role="status">${esc(U.msg)}${U.clip?`<pre class="rq-fb">${esc(U.clip)}</pre><div class="b27-act"><button type="button" class="btn sec" onclick="b27ClipRetry()">Copy</button></div>`:''}${/*<MULTI-BET>*/U.undoG&&b27GroupUndoable(U.undoG).length>1?`<div class="b27-act"><button type="button" class="btn sec b27-b" onclick="b27UndoGroup('${U.undoG}','${b27GroupHash(U.undoG)}')"${U.busy?' disabled':''}>↩ Undo all ${b27GroupUndoable(U.undoG).length} bets (5 min)</button></div>`:''/*</MULTI-BET>*/}</div>`;
   /*<ALL-BETS>*/if(OB_VIEW==='all'){}/*list only: form lives on Write it Up*/else/*</ALL-BETS>*/ if(!me){h+=b27LockHtml('write')}
   /*<POOL>*/else if(U.kind==='pool'){h+=U.confirm?s26kModal(b27PoolConfirmHtml()):b27PoolForm(me)}/*</POOL>*/
@@ -3888,9 +3889,9 @@ function vB27(){
   /*<OWES-TABLE>*//*<S26F-WIU>*/// Write it Up: no Who Owes Who grid / Net per manager here; they live on Tally only (vTally, unchanged)/*</S26F-WIU>*//*</OWES-TABLE>*/
   /*<S26F-WIU> 'Still open' line removed from Write it Up (its closing </div> belonged to the removed owes card) </S26F-WIU>*/
   /*<S24-EDIT>*/{const FL=s24Filter(bets,me).filter(b=>!b27Done(b)||(S24.sub&&b.id===S24.sub));
-  const ready=b27SortSoon(FL.filter(b27Ready)),ids=new Set(ready.map(b=>b.id)),rest=FL.filter(b=>!ids.has(b.id));
-  if(ready.length)h+=`<section id="b27Ready"><h2>Ready to settle <span class="note">${ready.length}</span></h2><div class="b27-grid">${b27Cards(ready,me)}</div></section>`;
-  h+=`<h2>All bets (${rest.length}${rest.length!==bets.length?' of '+bets.length:''})${/*<S25>*/s25MuteBtn()/*</S25>*/}</h2><p class="note">Agreed bets awaiting settlement. Ready ones are marked above.</p>`+s24FilterBar(bets,me)+(rest.length?s24ChronoList(rest,me):bets.length?'<div class="card note s24fe">No unsettled bets match this filter.</div>':'<div class="card note">No bets yet. Be the first.</div>');}/*</S24-EDIT>*/
+  const R0=b27SortSoon(FL.filter(b27Ready))/*<PAUL-j>*/,ready=R0.filter(b=>b.kind==='pool'||b.backer===me),ready2=R0.filter(b=>b.kind!=='pool'&&b.backer!==me&&s24InBet(b,me))/*</PAUL-j>*/,ids=new Set(ready.concat(ready2).map(b=>b.id)),rest=FL.filter(b=>!ids.has(b.id));
+  if(ready.length)h+=`<section id="b27Ready"><h2>Ready For Me to Settle <span class="note">${ready.length}</span></h2><div class="b27-grid">${b27Cards(ready,me)}</div></section>`;/*<PAUL-j>*/if(ready2.length)h+=`<section id="b27Ready2"><h2>Ready For Someone Else to Settle <span class="note">${ready2.length}</span></h2><div class="b27-grid">${b27Cards(ready2,me)}</div></section>`;/*</PAUL-j>*/
+  h+=`<h2>All Bets (${rest.length}${rest.length!==bets.length?' of '+bets.length:''})${/*<S25>*/s25MuteBtn()/*</S25>*/}</h2><p class="note">Agreed bets awaiting settlement. Ready ones are marked above.</p>`+s24FilterBar(bets,me)+(rest.length?s24ChronoList(rest,me):bets.length?'<div class="card note s24fe">No unsettled bets match this filter.</div>':'<div class="card note">No bets yet. Be the first.</div>');}/*</S24-EDIT>*/
   return h;
 }
 /*<ONE-BETS>*/
@@ -3917,7 +3918,7 @@ function b27ReqBet(r){const raw=b27Clean(r&&(r.txt||r.lab))||'';let parsed=null;
 const RQ=(typeof SHARED_UI!=='undefined'&&SHARED_UI.Requests)?SHARED_UI.Requests({maxText:PULK.maxText,change:"presAsk();return false",
   e:esc,me:()=>b27Who(),lockHtml:()=>b27LockHtml('request'),others:()=>b27Others().map(n=>({id:n,emoji:ownerEmoji(n),nick:TN(n)})),nick:n=>TN(n),real:n=>PN(n),
   canWrite:()=>!DEMO&&!!b27Who()&&b27OwnerNames().includes(b27Who()),amounts:PULK.amounts,
-  seasonId:()=>b27Season(),games:()=>(D.games||[]).filter(g=>g&&g.home&&g.away).map(g=>({id:String(g.id),g,start:g.start,status:g.status,period:g.period||null,label:qbNm(g.away)+' vs '+qbNm(g.home)+' · '+qbDate(g)})),
+  seasonId:()=>b27Season(),games:()=>(D.games||[]).filter(g=>g&&g.home&&g.away).map(g=>({id:String(g.id),g,start:g.start,status:g.status,period:g.period||(g._lv&&g._lv.ls?Math.max((g._lv.ls.a||[]).length,(g._lv.ls.h||[]).length):0)||null,label:qbNm(g.away)+' vs '+qbNm(g.home)+' · '+qbDate(g)})),
   tname:s=>qbNm(s),dateET:g=>qbDate(g),link:()=>location.href.split('#')[0]+'#bets27',goRequest:()=>{tab='bets27';OB_VIEW='request'},waiting:()=>{try{const me=b27Who();return me&&U.doc&&U.doc.bets?U.doc.bets.filter(b=>s24Waiting(b,me)).length:0}catch(e){return 0}},navEl:()=>document.querySelector('a.nt[data-tab="bets27"]')||document.querySelector('a.nt[data-tab="bets"]'),
   get:async()=>{const r=await fetch(REQ_URL,{cache:'no-store'});if(!r.ok)throw 0;return r.text()},
   set:async txt=>{const w=await fetch(REQ_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:txt});if(!w.ok)throw 0},
@@ -4349,7 +4350,7 @@ async function s25Rx(id,e,on){const me=b27Who();if(!me||!b27OwnerNames().include
 function s25More(id){S25P.more[id]=!S25P.more[id];render()}
 function s25ClampCheck(){document.querySelectorAll('[data-s25-t]').forEach(t=>{const b=t.nextElementSibling;if(!b||!b.hasAttribute('data-s25-more'))return;
   if(t.classList.contains('open')){b.hidden=false;return}const h=t.clientHeight;t.classList.add('open');const full=t.scrollHeight;t.classList.remove('open');b.hidden=!(full>h+1)})}   // line-clamp keeps scrollHeight == clientHeight in Chrome, so measure the unclamped height directly
-(function(){const r0=render;render=function(){const x=r0.apply(this,arguments);try{s25ClampCheck()}catch(e){}return x};let rt=null;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{try{s25ClampCheck()}catch(e){}},120)})})();
+(function(){const r0=render;render=function(){const x=r0.apply(this,arguments);try{s25ClampCheck()}catch(e){}return x};let rt=null;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{try{s25ClampCheck()}catch(e){}},120)})})();/*<HOOPS-GFIT>*/(function(){function gFit(){document.querySelectorAll('.gside .chip.gab').forEach(c=>c.classList.remove('gab','gab2'));document.querySelectorAll('.gside').forEach(r=>{if(!r.querySelector('.hsg'))return;const c=r.querySelector('.chip'),n=c&&c.querySelector('.cn');if(n&&c.querySelector('.cab')&&n.scrollWidth>n.clientWidth+1){c.classList.add('gab');if(c.scrollWidth>c.clientWidth+1&&c.querySelector('.ghome'))c.classList.add('gab2')}})}window.gFit=gFit;const r0=render;render=function(){const x=r0.apply(this,arguments);try{gFit()}catch(e){}return x};let t=null;window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>{try{gFit()}catch(e){}},120)})})();/*</HOOPS-GFIT>*/
 /*</CARD-SIZE>*/
 
 /*<S25C-FX>*/

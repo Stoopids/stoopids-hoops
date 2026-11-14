@@ -155,13 +155,13 @@ U.halfLs=hsLs;U.halfScores=function(g,s,first,BOX){var tot=s.score!=null?esc(Str
   SHARED_UI.Requests=function(A){
     var e=A.e,S={f:null,list:[],at:0,busy:false,msg:'',bad:false,loading:false,arm:null};
       var nf=function(){return{gid:'',side:'',cov:'game',odds:[1,1],amt:null,amtTxt:'',to:[],mode:'start',n:3,at:'',est:'',wk:'game',whenPick:false,expPick:false,lineOn:false,lineKind:'',lineSide:0,linePts:'',lineBase:'',lineSideKey:'',parlay:false,legs:[],pyGid:''}};S.f=nf();
-    var HALF_MS=70*60000;
+    var HALF_MS=85*60000;
     function parse(t){try{var o=JSON.parse(t||'{}');if(typeof o==='string')o=JSON.parse(o);return Array.isArray(o.reqs)?o.reqs.filter(function(r){return r&&r.id}):[]}catch(x){return[]}}
     function rid(){return 'rq'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
     var GC=null,GT=0;function games(){var n=Date.now();if(!GC||n-GT>2000){GC=A.games()||[];GT=n}return GC}
     function game(id){return games().find(function(x){return String(x.id)===String(id)})}
     function winStart(r,g){var st=Date.parse(r.start||(g&&g.start));if(!st)return Infinity;return r.cov==='2h'?st+HALF_MS:st}
-    function started(r,now){var g=game(r.gid);if(r.cov==='2h'){if(g&&(g.status==='final'||(g.period&&+g.period>=2)))return true;return now>=winStart(r,g)}
+    function started(r,now){var g=game(r.gid);if(r.cov==='2h'){if(g&&(g.status==='final'||(g.period&&+g.period>=3)))return true;return now>=winStart(r,g)}
       if(g&&g.status&&g.status!=='scheduled')return true;return now>=winStart(r,g)}
     function tk(r){return (r.took||[]).map(function(x){return x.m})}
     function reqTerms(r){if(!r)return '';return [r.status,r.lab||'',r.txt||'',r.amt,(r.odds||[]).join('-'),(r.to||[]).slice().sort().join(','),tk(r).length,(r.dec||[]).length,r.exp,r.wk||'',r.est||'',r.slots==null?'':r.slots,r.by||''].join('\u001f')}
@@ -280,7 +280,7 @@ U.halfLs=hsLs;U.halfScores=function(g,s,first,BOX){var tot=s.score!=null?esc(Str
       return h+'</div></div>'}
     function rqChipOdds(){return [[1,1],[2,1],[3,1],[4,1]]}
     function rqAmts(){return (A.amounts||[]).filter(function(a){return +a!==50})}
-    function form(){var f=S.f,now0=Date.now(),G=games().filter(function(x){var st=Date.parse(x.start)||0,ws=f.cov==='2h'?st+HALF_MS:st;if(String(x.id)===String(f.gid))return true;if(x.status==='final'||st>=now0+7*86400000)return false;if(f.cov==='2h')return !(x.period&&+x.period>=2)&&now0<ws;return x.status==='scheduled'&&now0<ws}),g=tipOf(f),me=A.me(),nOth=A.others().length;
+    function form(){var f=S.f,now0=Date.now(),G=games().filter(function(x){var st=Date.parse(x.start)||0,ws=f.cov==='2h'?st+HALF_MS:st;if(String(x.id)===String(f.gid))return true;if(x.status==='final'||st>=now0+7*86400000)return false;if(f.cov==='2h')return !(x.period&&+x.period>=3)&&now0<ws;return x.status==='scheduled'&&now0<ws}),g=tipOf(f),me=A.me(),nOth=A.others().length;
       var timed=!!(g&&Date.parse(g.start));if(!f.expPick)f.mode='start';
       /* same template as Write it Up: header, Select all / Clear, numbered questions, Amount + Odds, summary, big button. Identity stays on Profile. */
       var h='<div class="card b27-form rq-form" id="rqForm">'+SHARED_UI.entryHead('rq')+(S.edit?'<div class="note">Editing this request. Nothing is posted until you save.</div>':'');
@@ -385,9 +385,9 @@ function oddsTxt(o){o=o||[1,1];return +o[0]===+o[1]?'even':o[0]+'-'+o[1]}
     function pinned(only,mark){dropArm();var now=Date.now(),L=S.list.filter(function(r){return shown(r,now)}).filter(function(r){return !A.reqMatch||A.reqMatch(r)}).sort(function(a,b){return a.exp-b.exp});
       if(mark){markOpenSeen();try{paint()}catch(e){}}
       armExpiry();
-      function noteCard(){return S.msg?'<div class="card '+(S.bad?'b27-bad':'b27-ok')+'" role="status">'+e(S.msg)+(S.fb?'<pre class="rq-fb">'+e(S.fb)+'</pre><div class="rq-act"><button type="button" class="btn" data-rq="wa">Copy</button></div>':'')+'</div>':''}
+      function noteCard(){/*<PAUL-k>*/if(S.msg&&!S.bad&&!S.fb&&typeof s24Toast==='function'){var tm=S.msg;S.msg='';setTimeout(function(){s24Toast(tm)},0)}/*</PAUL-k>*/return S.msg?'<div class="card '+(S.bad?'b27-bad':'b27-ok')+'" role="status">'+e(S.msg)+(S.fb?'<pre class="rq-fb">'+e(S.fb)+'</pre><div class="rq-act"><button type="button" class="btn" data-rq="wa">Copy</button></div>':'')+'</div>':''}
       if(!L.length)return noteCard()+(only?'<div class="card note rq-none">No pending requests right now.</div>':'');
-      return noteCard()+'<div class="rq-pin" id="rqPinned"><h2 class="rq-h">Awaiting acceptance</h2><p class="note">Nothing is agreed until someone accepts. Expired or filled requests leave this list.</p><div class="rq-grid">'+L.map(function(r){return card(r,now)}).join('')+'</div></div>'}
+      /*<PAUL-j>*/var me0=A.me(),Lo=L.filter(function(r){return r.by!==me0}),Lm=L.filter(function(r){return r.by===me0}),nt0=0;function sec(t,M){if(!M.length)return '';return '<h2 class="rq-h">'+t+' <span class="note">'+M.length+'</span></h2>'+(nt0++?'':'<p class="note">Nothing is agreed until someone accepts. Expired or filled requests leave this list.</p>')+'<div class="rq-grid">'+M.map(function(r){return card(r,now)}).join('')+'</div>'}return noteCard()+'<div class="rq-pin" id="rqPinned">'+sec('Requested By A Stoopid',Lo)+sec('Requested By Me',Lm)+'</div>'}/*</PAUL-j>*/
     /* STEP10: view('open') = the Open tab (open request cards only); view() = the Request tab (form only) */
     function seenKey(){return 'rq_open_seen:'+String(A.seenScope?A.seenScope():(A.me()||'guest'))}
     function seenIds(){try{var ls=typeof localStorage!=='undefined'?localStorage:null;if(!ls)return [];var a=JSON.parse(ls.getItem(seenKey())||'[]');return Array.isArray(a)?a:[]}catch(e){return []}}
@@ -397,7 +397,7 @@ function oddsTxt(o){o=o||[1,1];return +o[0]===+o[1]?'even':o[0]+'-'+o[1]}
       if(mode==='open'||mode==='all'){markOpenSeen();try{paint()}catch(e){}}
       armExpiry();
       var L=S.list.filter(function(r){return shown(r,now)}).sort(function(a,b){return a.exp-b.exp}),me=A.me();
-      var h='';if(S.msg&&!S.f.gid)h+='<div class="card '+(S.bad?'b27-bad':'b27-ok')+'" role="status">'+e(S.msg)+(S.fb?'<pre class="rq-fb">'+e(S.fb)+'</pre><div class="rq-act"><button type="button" class="btn" data-rq="wa">Copy</button></div>':'')+'</div>';
+      var h='';/*<PAUL-k>*/if(S.msg&&!S.bad&&!S.fb&&typeof s24Toast==='function'){var tm=S.msg;S.msg='';setTimeout(function(){s24Toast(tm)},0)}/*</PAUL-k>*/if(S.msg&&!S.f.gid)h+='<div class="card '+(S.bad?'b27-bad':'b27-ok')+'" role="status">'+e(S.msg)+(S.fb?'<pre class="rq-fb">'+e(S.fb)+'</pre><div class="rq-act"><button type="button" class="btn" data-rq="wa">Copy</button></div>':'')+'</div>';
       if(mode==='open')return h+(L.length?'<h2 class="rq-h">Pending requests</h2><div class="rq-grid">'+L.map(function(r){return card(r,now)}).join('')+'</div>':'<div class="card note rq-none">No pending requests right now.</div>');
       return h+(me&&A.canWrite()?form():(typeof A.lockHtml==='function'?A.lockHtml():'<div class="card note rq-none">Set who you are on Profile before you request a bet.</div>'))}
     async function act(k,v,st){var f=S.f,me=A.me(),now=Date.now();

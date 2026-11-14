@@ -98,9 +98,9 @@
   },
   {
    "tag": "HOOPS",
-   "why": "shared/ui.js cache-buster: Hoops copy of 1.80.0 with its patches (sh27)",
+   "why": "shared/ui.js cache-buster: Hoops copy of 1.80.0 with its patches (sh28)",
    "old": "<script src=\"shared/ui.js?v=1.80.0\"",
-   "new": "<script src=\"shared/ui.js?v=1.80.0.sh27\""
+   "new": "<script src=\"shared/ui.js?v=1.80.0.sh28\""
   },
   {
    "tag": "PAUL-e",
@@ -210,6 +210,48 @@
    "why": "NBA quarters in the box-score header (Q1-Q4, then OT)",
    "old": "hd=Array.from({length:n},(_,i)=>i<2?(i+1)+'H':(n>3?'OT'+(i-1):'OT'));",
    "new": "hd=Array.from({length:n},(_,i)=>i<4?'Q'+(i+1):(n>5?'OT'+(i-3):'OT'));"
+  },
+  {
+   "tag": "NBA-2H",
+   "why": "the Requests box gets the game's current period from the live ESPN linescore (one entry per period started), so the period-3 check above actually runs (nothing else sets g.period)",
+   "old": "period:g.period||null,label:qbNm",
+   "new": "period:g.period||(g._lv&&g._lv.ls?Math.max((g._lv.ls.a||[]).length,(g._lv.ls.h||[]).length):0)||null,label:qbNm"
+  },
+  {
+   "tag": "NBA-2H",
+   "why": "FINAL/OT only after more than 4 periods (STOOPIDS: more than 2 college halves); without this every live-polled NBA final read FINAL/OT",
+   "old": "n(lv&&lv.a),n(lv&&lv.h))>2}",
+   "new": "n(lv&&lv.a),n(lv&&lv.h))>4}"
+  },
+  {
+   "tag": "HOOPS-GFIT",
+   "why": "game cards with NBA Q1-Q4(+OT)+T columns (STOOPIDS has 1H/2H/T): tighter quarter columns (smaller quarter digits, the total stays full size) so team names keep their room; a name that still does not fit shows the team abbreviation instead of 'N…'. Phone and desktop: the 3-across desktop cards cut names too (e.g. 'C…', 'Golden St…'); if the abbreviation and record still overflow (overtime adds a 6th column), the 🏠 marker is dropped from that pill",
+   "old": "/*</HOOPS-CHIPS-1LINE>*/</style>",
+   "new": "/*</HOOPS-CHIPS-1LINE>*//*<HOOPS-GFIT>*/html body .gside .sc2 .hsg{grid-auto-columns:auto!important;column-gap:3px!important}html body .gside .sc2 .hsq{width:1.3em!important}html body .gside .sc2 .hsq>i{font-size:.8em!important}html body .gside .sc2 .hst{width:1.75em!important}html body .gside .chip.gab{column-gap:3px!important}html body .gside .chip.gab .cn{display:none!important}html body .gside .chip.gab .cab{display:inline!important;font-weight:800;letter-spacing:0}html body .gside .chip.gab2 .ghome{display:none!important}/*</HOOPS-GFIT>*/</style>"
+  },
+  {
+   "tag": "HOOPS-GFIT",
+   "why": "after each render (and on resize): a scored game row whose short team name is cut shows the abbreviation (the .cab span every chip already carries); still overflowing after that (overtime): drop the 🏠 marker on that pill (gab2)",
+   "old": "try{s25ClampCheck()}catch(e){}},120)})})();",
+   "new": "try{s25ClampCheck()}catch(e){}},120)})})();/*<HOOPS-GFIT>*/(function(){function gFit(){document.querySelectorAll('.gside .chip.gab').forEach(c=>c.classList.remove('gab','gab2'));document.querySelectorAll('.gside').forEach(r=>{if(!r.querySelector('.hsg'))return;const c=r.querySelector('.chip'),n=c&&c.querySelector('.cn');if(n&&c.querySelector('.cab')&&n.scrollWidth>n.clientWidth+1){c.classList.add('gab');if(c.scrollWidth>c.clientWidth+1&&c.querySelector('.ghome'))c.classList.add('gab2')}})}window.gFit=gFit;const r0=render;render=function(){const x=r0.apply(this,arguments);try{gFit()}catch(e){}return x};let t=null;window.addEventListener('resize',()=>{clearTimeout(t);t=setTimeout(()=>{try{gFit()}catch(e){}},120)})})();/*</HOOPS-GFIT>*/"
+  },
+  {
+   "tag": "PAUL-j",
+   "why": "Bets page order Paul set: 'Ready For Me to Settle' lists only the ready bets the viewer can settle (the backer enters the result); 'Ready For Someone Else to Settle' right below it holds ready bets the viewer is in but someone else must settle (same cards, same count). Ready bets the viewer is not in stay under All Bets. STOOPIDS lists every due bet under one 'Ready to settle' for every viewer.",
+   "old": "const ready=b27SortSoon(FL.filter(b27Ready)),ids=new Set(ready.map(b=>b.id)),rest=FL.filter(b=>!ids.has(b.id));\n  if(ready.length)h+=`<section id=\"b27Ready\"><h2>Ready to settle <span class=\"note\">${ready.length}</span></h2><div class=\"b27-grid\">${b27Cards(ready,me)}</div></section>`;",
+   "new": "const R0=b27SortSoon(FL.filter(b27Ready))/*<PAUL-j>*/,ready=R0.filter(b=>b.kind==='pool'||b.backer===me),ready2=R0.filter(b=>b.kind!=='pool'&&b.backer!==me&&s24InBet(b,me))/*</PAUL-j>*/,ids=new Set(ready.concat(ready2).map(b=>b.id)),rest=FL.filter(b=>!ids.has(b.id));\n  if(ready.length)h+=`<section id=\"b27Ready\"><h2>Ready For Me to Settle <span class=\"note\">${ready.length}</span></h2><div class=\"b27-grid\">${b27Cards(ready,me)}</div></section>`;/*<PAUL-j>*/if(ready2.length)h+=`<section id=\"b27Ready2\"><h2>Ready For Someone Else to Settle <span class=\"note\">${ready2.length}</span></h2><div class=\"b27-grid\">${b27Cards(ready2,me)}</div></section>`;/*</PAUL-j>*/"
+  },
+  {
+   "tag": "PAUL-j",
+   "why": "section title 'All Bets' (Paul's order and casing)",
+   "old": "<h2>All bets (${rest.length}",
+   "new": "<h2>All Bets (${rest.length}"
+  },
+  {
+   "tag": "PAUL-k",
+   "why": "Bets page: 'Saved.', 'Saving…', 'Placed! Bet #n…' and the other good-news status bars under the sub-tabs pop up as STOOPIDS' own toast (s24Toast, hides by itself) instead of a card above the sections. Errors, the copy-it-yourself fallback (U.clip) and the 'Undo all' card stay as they are.",
+   "old": "if(U.msg)h+=`<div class=\"card ${U.msgBad?'b27-bad':'b27-ok'}\" role=\"status\">",
+   "new": "/*<PAUL-k>*/if(U.msg&&!U.msgBad&&!U.clip&&!(U.undoG&&b27GroupUndoable(U.undoG).length>1)){const tm=U.msg;U.msg='';setTimeout(()=>s24Toast(tm),0)}/*</PAUL-k>*/\n  if(U.msg)h+=`<div class=\"card ${U.msgBad?'b27-bad':'b27-ok'}\" role=\"status\">"
   }
  ],
  "ui": [
@@ -236,6 +278,42 @@
    "why": "NBA plays four quarters: game-card linescore columns read Q1-Q4 then OT (STOOPIDS shows 1H/2H for college halves)",
    "old": "var n=Math.max(2,(A||[]).length,(H||[]).length),me=(s===g.away?A:H)||[],lab=function(i){return i<2?(i+1)+'H':(n>3?'OT'+(i-1):'OT')};",
    "new": "var n=Math.max(4,(A||[]).length,(H||[]).length),me=(s===g.away?A:H)||[],lab=function(i){return i<4?'Q'+(i+1):(n>5?'OT'+(i-3):'OT')};"
+  },
+  {
+   "tag": "NBA-2H",
+   "why": "NBA 2nd half starts at period 3 (after halftime), not period 2: a 2nd-half request counts as started only from Q3 (STOOPIDS: period 2 = college 2nd half)",
+   "old": "(g.period&&+g.period>=2)))return true;return now>=winStart(r,g)}",
+   "new": "(g.period&&+g.period>=3)))return true;return now>=winStart(r,g)}"
+  },
+  {
+   "tag": "NBA-2H",
+   "why": "same for the 2nd-half game list in the Request form: period 3+ is the 2nd half",
+   "old": "if(f.cov==='2h')return !(x.period&&+x.period>=2)&&now0<ws;",
+   "new": "if(f.cov==='2h')return !(x.period&&+x.period>=3)&&now0<ws;"
+  },
+  {
+   "tag": "NBA-2H",
+   "why": "time fallback for when the 2nd half starts: NBA Q3 tips about 85 min after the listed start (two 12-min quarters + 15-min halftime); STOOPIDS' 70 min is the college halftime",
+   "old": "var HALF_MS=70*60000;",
+   "new": "var HALF_MS=85*60000;"
+  },
+  {
+   "tag": "PAUL-j",
+   "why": "Bets page order Paul set: open requests split into 'Requested By A Stoopid' (from others) then 'Requested By Me', each with its count like Ready to settle (STOOPIDS: one 'Awaiting acceptance' list). Same request cards.",
+   "old": "return noteCard()+'<div class=\"rq-pin\" id=\"rqPinned\"><h2 class=\"rq-h\">Awaiting acceptance</h2><p class=\"note\">Nothing is agreed until someone accepts. Expired or filled requests leave this list.</p><div class=\"rq-grid\">'+L.map(function(r){return card(r,now)}).join('')+'</div></div>'}",
+   "new": "/*<PAUL-j>*/var me0=A.me(),Lo=L.filter(function(r){return r.by!==me0}),Lm=L.filter(function(r){return r.by===me0}),nt0=0;function sec(t,M){if(!M.length)return '';return '<h2 class=\"rq-h\">'+t+' <span class=\"note\">'+M.length+'</span></h2>'+(nt0++?'':'<p class=\"note\">Nothing is agreed until someone accepts. Expired or filled requests leave this list.</p>')+'<div class=\"rq-grid\">'+M.map(function(r){return card(r,now)}).join('')+'</div>'}return noteCard()+'<div class=\"rq-pin\" id=\"rqPinned\">'+sec('Requested By A Stoopid',Lo)+sec('Requested By Me',Lm)+'</div>'}/*</PAUL-j>*/"
+  },
+  {
+   "tag": "PAUL-k",
+   "why": "Bets page: a good-news status line (e.g. 'Request posted', 'Sending…') pops up as STOOPIDS' own toast (s24Toast, hides by itself) instead of a status bar card; errors and the copy-it-yourself fallback stay as cards",
+   "old": "function noteCard(){return S.msg?",
+   "new": "function noteCard(){/*<PAUL-k>*/if(S.msg&&!S.bad&&!S.fb&&typeof s24Toast==='function'){var tm=S.msg;S.msg='';setTimeout(function(){s24Toast(tm)},0)}/*</PAUL-k>*/return S.msg?"
+  },
+  {
+   "tag": "PAUL-k",
+   "why": "same for the status line above the Request form",
+   "old": "var h='';if(S.msg&&!S.f.gid)h+=",
+   "new": "var h='';/*<PAUL-k>*/if(S.msg&&!S.bad&&!S.fb&&typeof s24Toast==='function'){var tm=S.msg;S.msg='';setTimeout(function(){s24Toast(tm)},0)}/*</PAUL-k>*/if(S.msg&&!S.f.gid)h+="
   }
  ],
  "sb": [

@@ -1,3 +1,32 @@
+# sh28 (build 2026-11-14sh28): 2nd half, game-card names, Ready split, toasts (LOCAL, not pushed)
+
+Base unchanged: STOOPIDS 4c3c4d4. Rebuilt with tools/build_league_from_stoopids.py. Every change is a tagged patch in tools/hoops_patches.json.
+
+- [NBA-2H] In the NBA the 2nd half starts at period 3, not period 2.
+  - ui.js started() and the form filter use `period>=3`.
+  - HALF_MS is 85 min (it was 70).
+  - The page gives RQ games a period taken from the live ESPN linescore length. g.period was never set.
+- [NBA-2H] gWentOt checks for more than 4 periods (it was more than 2). Before this, every live-polled regulation final read FINAL/OT.
+- [HOOPS-GFIT] Scored game cards (Q1-Q4/OT/T):
+  - narrower quarter columns
+  - gFit() swaps a team name that doesn't fit for its abbreviation (and hides 🏠 if the card is still tight), so names are never cut to "N…"
+  - names that fit stay in full
+  - applies at all widths
+- [PAUL-j] Bets page sections, in order:
+  1. "Requested By A Stoopid" (others' open requests)
+  2. "Requested By Me" (my open requests). These two used to be STOOPIDS's single "Awaiting acceptance" list.
+  3. "Ready For Me to Settle" (ready bets I can enter the result for)
+  4. "Ready For Someone Else to Settle" (ready bets I'm in, where the other side enters the result)
+  5. "All Bets"
+  - Ready bets I'm not in stay under All Bets.
+  - Counts and card styles are the same as STOOPIDS.
+- [PAUL-k] "Saved."-style success status bars on the Bets page (bets and requests) now show in STOOPIDS's own s24Toast, which hides itself.
+  - Errors, the copy fallback and the multi-bet Undo card stay as cards.
+- js/version.js and sw.js are now 2026-11-14sh28. The ui.js cache-buster is ?v=1.80.0.sh28.
+- Tests:
+  - new: tests/e2e_sh28.js, tests/e2e_sh28_focus.js, tests/e2e_sh28_bets.js, tests/sh28_checks.js
+  - tests/e2e_stoopids_bets.js accepts the pool message from the toast
+
 # sh27 (build 2026-11-14sh27): caught up with STOOPIDS main 4c3c4d4 (Nov 14, 08:47 WIB)
 
 Base: STOOPIDS 4c3c4d4 ("Merge the tipoff and end-of-game defaults into main"). league.html, shared/ui.js (STOOPIDS 1.80.0), shared/ui.css (verbatim) and the new stoopid-bet.js (STOOPIDS v14) are rebuilt byte for byte by tools/build_league_from_stoopids.py and then get only the tagged patches in tools/hoops_patches.json. The build lists every swap and stops on any mismatch. HOOPS_TRY=1 lists every failing patch at once.
