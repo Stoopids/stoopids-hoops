@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-14",
-  "generated_at_utc": "2026-11-14T16:39:35Z",
+  "generated_at_utc": "2026-11-14T17:20:01Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -4378,8 +4378,8 @@
         "sp": 12.5,
         "ou": 234.5,
         "fav_name": "DEN",
-        "aml": -597,
-        "hml": 443,
+        "aml": -620,
+        "hml": 454,
         "p": "DraftKings"
       }
     },
@@ -4471,8 +4471,8 @@
         "sp": 3.5,
         "ou": 228.5,
         "fav_name": "MEM",
-        "aml": 140,
-        "hml": -167,
+        "aml": 131,
+        "hml": -155,
         "p": "DraftKings"
       }
     },
