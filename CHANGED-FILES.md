@@ -1,3 +1,49 @@
+# sh27 (build 2026-11-14sh27): caught up with STOOPIDS main 4c3c4d4 (Nov 14, 08:47 WIB)
+
+Base: STOOPIDS 4c3c4d4 ("Merge the tipoff and end-of-game defaults into main"). league.html, shared/ui.js (STOOPIDS 1.80.0), shared/ui.css (verbatim) and the new stoopid-bet.js (STOOPIDS v14) are rebuilt byte for byte by tools/build_league_from_stoopids.py and then get only the tagged patches in tools/hoops_patches.json. The build lists every swap and stops on any mismatch. HOOPS_TRY=1 lists every failing patch at once.
+
+What came over from STOOPIDS (all of it):
+- Bets: "Make A Bet" sub-tab name; equal-width sub-tabs; desktop nav and sub-tabs stay at the top on scroll.
+- Amounts 5/10/20/25/Custom (no 50); odds Even/2-1/3-1/4-1/Custom (no 5-1).
+- New "settle" dropdown, defaulting to End of game. Expires defaults to Tipoff.
+- The Write It Up toggle reads "Stoop v Stoop · Pool/Buy-In". The Write It Up parlay builder is new. STOOPIDS' own Pool/Buy-In form path is used.
+- Game-card Copy is plain score text with managers in brackets (💣 only on requests); toast confirmations; no disclaimer.
+- All Bets comes before Stoopid Bet. Stoopid Bet now has an ideas list, compact pills, an opponent picker and a Parlay category.
+- New Profile layout and Tally; Quick Bet; line control; parlay leg copy. Copy texts use ET dates with no weekday names.
+
+Patches dropped (STOOPIDS made them unnecessary):
+- [PAUL-i] x4: STOOPIDS removed the disclaimer.
+- [PAUL-3] "Message copied" tail: STOOPIDS uses a toast now.
+- The b27PoolShell override: STOOPIDS no longer calls it, and its vB27 pool path renders the form.
+
+Patches changed:
+- Commissioner name: one place now, in the locked Commissioner card.
+- b27Who/chatWho: the new STOOPIDS shape, still HOOPS.me only.
+- The commish new-link block now sits in the Commissioner card under Access.
+- ui.js cache-buster is ?v=1.80.0.sh27.
+
+Patches added:
+- [HOOPS-DRAFTNAV] call STOOPIDS' own draftNavLink(). The Draft item shows only in the phone More sheet, because a 9th item in the one-row desktop nav cut off Standings and All teams.
+- [HOOPS] stoopid-bet.js?v=14.sh27.
+- [BUG-5] skip ESPN nba/rankings, which returned 404 on every load. BPI comes from D.ranks.
+- [BUG-6] lvEtDay is declared at top level. It was nested in lvDays, so lvFromEvent threw and every live update was dropped, which meant no live scores in sh26.
+- [NBA] linescore Q1-Q4/OT instead of 1H/2H (game cards in ui.js plus the page fallback and box score).
+- stoopid-bet.js:
+  - [HOOPS] used-ideas key is shoops1.<league>.sb_used
+  - [NBA] NET becomes BPI (D.ranks ap) in text, eval and parser; the "Seeds" pill becomes "BPI"
+  - [NBA] halftime lead is read at the end of Q2
+  - [HOOPS] the console-only sbProve uses league managers, not hardcoded names
+
+Kept as STOOPIDS has them (same crew, "I want it the same"): STOOPIDS points, Stoop vs Stoop, the STOOPID Request header, the "Stoopid bet:" copy prefix and the toast wording.
+
+Tests:
+- tests/e2e_sh27.js (new) runs a synthetic league at 412x915 and 1280x900 in Asia/Jakarta, with the real ESPN NBA feed: 96 PASS, no console errors.
+- tests/e2e_stoopids_bets.js passes. It no longer depends on manager order.
+- test_nba_league_url now asserts STOOPIDS' pool path.
+- test_core's service-worker shell check skips JS string-built hrefs.
+- Other unit tests are unchanged from sh26.
+- sw.js SHELL adds stoopid-bet.js. The version is 2026-11-14sh27.
+
 # sh26 (build 2026-11-13sh26): live health-check fixes (BUG-1..4)
 
 Base: sh25, still pinned to STOOPIDS c3dd7d9. Latest STOOPIDS main still uses site.api.espn.com for the in-page live poll and still fetches config.json (they ship that file). STOOPIDS refresh.py already writes a full generated_at_utc ISO timestamp.

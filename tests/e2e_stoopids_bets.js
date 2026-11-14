@@ -23,10 +23,10 @@ try{const {seed}=require(path.join(HROOT,'tests/seed_league.js'));const API=`htt
  // pool form
  await p.evaluate(()=>{OB_VIEW='form';b27Kind('pool')});await p.waitForTimeout(300);
  const f=await p.evaluate(()=>({names:[...document.querySelectorAll('.pool-pick [data-b27-pp]')].map(b=>b.getAttribute('data-b27-name')+':'+b.getAttribute('aria-pressed')),util:!!document.querySelector('.pool-pick .b27-util'),when:[...document.querySelectorAll('[data-when]')].map(b=>b.textContent+':'+b.getAttribute('aria-pressed')),cols:getComputedStyle(document.querySelector('.pool-pick')).gridTemplateColumns.split(' ').length,btn:document.getElementById('b27Place').textContent}));
- ok('pool picker lists all 6 managers, creator ticked, others not',f.names.length===6&&f.names[0]==='Paul:true'&&f.names.slice(1).every(x=>/:false$/.test(x)),f.names.join(' '));
+ ok('pool picker lists all 6 managers, creator ticked, others not',f.names.length===6&&f.names.filter(x=>/:true$/.test(x)).join()==='Paul:true'/* sh27: order follows D.owners (standings), not creator-first */,f.names.join(' '));
  ok('pool picker Select all / Clear is a cell inside the grid',f.util);ok('pool picker 3 across (as STOOPIDS)',f.cols===3,f.cols);
  ok('settle-date step defaults to End Of Season',f.when.some(x=>x==='End Of Season:true'),f.when.join(' | '));ok('pool button says Write it up (as STOOPIDS)',/^\s*Write it up\s*$/.test(f.btn),f.btn);
- await p.fill('#b27Text','TEST end of season winner');await p.click('[data-b27-pp="1"]');await p.click('[data-b27-pp="2"]');await p.fill('#b27En','50');await p.waitForTimeout(200);
+ await p.fill('#b27Text','TEST end of season winner');const tick=f.names.map((x,i)=>[x,i]).filter(([x])=>!/^Paul:/.test(x)).slice(0,2).map(([,i])=>i);for(const i of tick)await p.click('[data-b27-pp="'+i+'"]');await p.fill('#b27En','50');await p.waitForTimeout(200);
  const pot=await p.evaluate(()=>(document.getElementById('s26Pot')||{}).textContent);ok('pot counts only ticked (3 x 50)',/150/.test(pot),pot);
  await p.screenshot({path:path.join(OUT,'hoops-pool-form.png'),fullPage:true});
  // payouts not summing to pot are refused
@@ -42,9 +42,9 @@ try{const {seed}=require(path.join(HROOT,'tests/seed_league.js'));const API=`htt
  ok('pool save message is exactly "Pool #n posted 💥"',a.msg==='Pool #'+a.pool.n+' posted 💥',a.msg);
  await p.screenshot({path:path.join(OUT,'hoops-after-write-it-up-pool.png')});
  // settle by places
- const pid=a.pool.id;await p.evaluate(()=>{OB_VIEW='all';render()});await p.waitForTimeout(400);await p.evaluate(id=>{U.placeWho=U.placeWho||{};U.placeWho[id]=['Kentut','Kurmoji'];render()},pid);await p.waitForTimeout(200);
+ const pid=a.pool.id;await p.evaluate(()=>{OB_VIEW='all';render()});await p.waitForTimeout(400);await p.evaluate(id=>{U.placeWho=U.placeWho||{};const mem=U.doc.bets.find(b=>b.id===id).parts.filter(n=>n!=='Paul');U.placeWho[id]=mem.slice(0,2);window.__mem=mem;render()},pid);await p.waitForTimeout(200);
  await p.evaluate(id=>s26fPlaceGo(id),pid);await p.waitForTimeout(900);await p.evaluate(id=>s26fPlaceGo(id),pid);await p.waitForTimeout(300);await p.waitForFunction(()=>!U.busy,{timeout:20000});await p.waitForTimeout(500);
- const s=await p.evaluate(id=>U.doc.bets.find(b=>b.id===id),pid);ok('settle by places pays planned payouts, unplaced get 0',s.back&&s.back.Kentut===120&&s.back.Kurmoji===30&&s.back.Paul===0,JSON.stringify(s.back));
+ const s=await p.evaluate(id=>U.doc.bets.find(b=>b.id===id),pid);ok('settle by places pays planned payouts, unplaced get 0',(()=>{const m=(s.parts||[]).filter(n=>n!=='Paul');return s.back&&s.back[m[0]]===120&&s.back[m[1]]===30&&s.back.Paul===0})(),JSON.stringify(s.back));
  // 1v1 write it up
  await p.evaluate(()=>{OB_VIEW='form';b27Kind('bet');S24.sub=null;render()});await p.waitForTimeout(300);
  const b1=await p.evaluate(()=>document.getElementById('b27Place').textContent);ok('1v1 button says Write it up (as STOOPIDS)',/^\s*Write it up\s*$/.test(b1),b1);

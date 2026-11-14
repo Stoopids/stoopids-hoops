@@ -5,7 +5,7 @@ the expected number of times, so a STOOPIDS update that moves code fails loudly 
 Base: STOOPIDS commit BASE (read with git show from the STOOPIDS checkout, so its working tree / later commits never leak in).
 Run: python3 tools/build_league_from_stoopids.py [stoopids_src_dir]"""
 import re, sys, os, json, shutil, subprocess
-BASE = 'c3dd7d9'   # sh24: current live STOOPIDS (shared/ui.js?v=1.66.6); sh23 was 5cbc626
+BASE = '4c3c4d4'   # sh27: latest [REDACTED] main (Nov 14); sh24-sh26 were c3dd7d9
 SRC = sys.argv[1] if len(sys.argv) > 1 else '/workspace/stoopids-src'
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 def src(rel):
@@ -13,15 +13,20 @@ def src(rel):
     return open(os.path.join(SRC, rel), encoding='utf-8').read()   # an exported copy of BASE
 s = src('index.html')
 LOG = []
+FAIL = []
 def rep(old, new, n=1, why=''):
     global s
     c = s.count(old)
-    if c != n: raise SystemExit(f'expected {n} x {old[:80]!r}, found {c}')
+    if c != n:
+        if os.environ.get('HOOPS_TRY'): FAIL.append(f'expected {n} x {old[:100]!r}, found {c}  [{why}]'); return
+        raise SystemExit(f'expected {n} x {old[:80]!r}, found {c}')
     s = s.replace(old, new); LOG.append((why or old[:60], c))
 def rerep(pat, new, n=1, why='', flags=0):
     global s
     s2, c = re.subn(pat, new if '\\1' in new else (lambda m: new), s, flags=flags)
-    if c != n: raise SystemExit(f'expected {n} x /{pat[:80]}/, found {c}')
+    if c != n:
+        if os.environ.get('HOOPS_TRY'): FAIL.append(f'expected {n} x /{pat[:100]}/, found {c}  [{why}]'); return
+        raise SystemExit(f'expected {n} x /{pat[:80]}/, found {c}')
     s = s2; LOG.append((why or pat[:60], c))
 def literal_end(start):
     k = start
@@ -64,9 +69,7 @@ rep("D=window."+dn+";{const R=window.HOOPS_DRAFT27_RESULTS.draft;D27_OWNERS=R.ma
 rep("function s24Url(h,share){const q=new URLSearchParams();if(DEMO)q.set('demo','1');if(!share&&ADMIN)q.set('admin','1');const s=q.toString();return location.pathname+(s?'?'+s:'')+(h?'#'+h:'')}",
     "function hoopsLeagueId(){try{const q=new URLSearchParams(location.search).get('l');if(q&&/^[A-Za-z0-9]{2,40}$/.test(q))return q}catch(e){}const id=window.HOOPS&&HOOPS.id;return (id&&/^[A-Za-z0-9]{2,40}$/.test(id))?id:''}\nfunction s24Url(h,share){const q=new URLSearchParams();const l=hoopsLeagueId();if(l)q.set('l',l);if(DEMO)q.set('demo','1');if(typeof VIEW_ONLY!=='undefined'&&VIEW_ONLY)q.set('view','1');if(!share&&ADMIN)q.set('admin','1');const s=q.toString();return location.pathname+(s?'?'+s:'')+(h?'#'+h:'')}",
     why='keep ?l= in the address bar so a refresh stays on this league')
-rep("function b27PoolShell(){return `<div class=\"card b27-form\">${typeof SHARED_UI!=='undefined'&&SHARED_UI.entryHead?SHARED_UI.entryHead('wiu'):''}${b27KindTabs('')}</div>`}",
-    "function b27PoolShell(){if(U.confirm){const cf=b27PoolConfirmHtml();if(!cf){U.confirm=false;return b27PoolForm(b27Who())}return typeof s26kModal==='function'?s26kModal(cf):cf}return b27PoolForm(b27Who())}",
-    why='Write it Up Pool / buy-in must expand the pool form, not just flip the toggle')
+# (sh27) dropped: the old b27PoolShell override. [REDACTED] 4c3c4d4 opens the pool form itself (vB27 U.kind==='pool') and b27PoolShell is no longer called.
 
 rep('<p class="d27sub">8 owners · snake draft', '<p class="d27sub">${D27_OWNERS} owners · ${esc((DRAFT27_RESULTS.draft||{}).type||\'snake\')} draft', why='draft results subtitle')
 # 2) textdb records -> this league's shoops1- keys
@@ -84,18 +87,18 @@ swap_literal('const LEGACY_OWNER=', 'window.HOOPS_LEGACY_OWNER', 'no legacy owne
 swap_literal('const DRAFT27=', 'window.HOOPS_DRAFT27', 'draft slots/order from the Hoops draft')
 swap_literal('const DRAFT27_RESULTS=', 'window.HOOPS_DRAFT27_RESULTS', 'draft picks from the Hoops draft')
 swap_literal('const RECAPS=', '[]', 'no weekly write-ups yet')
-rep('<p>Commissioner: Paul</p>', '<p>Commissioner: ${esc(HOOPS.cmName)}</p>', n=2, why='commissioner name from the league')
+rep('<p class="prof-note">Commissioner: Paul</p>', '<p class="prof-note">Commissioner: ${esc(HOOPS.cmName)}</p>', why='commissioner name from the league (sh27: one place now, the locked card)')
 rep("One small step for man, one giant brick for Murf.", "One small step for man, one giant brick for the bench.", why='tagline without a STOOPIDS name')
 # 5) identity: actions use this device's own manager link (Paul #11 = no act-as-anyone). The Who are you? picker only remembers on this device.
-rep("const b27Who=()=>{const w=PS.who||legacyOwner(lsGet((HK+'who')));", "const b27Who=()=>{const w=HOOPS.me;", why='bets: only the link-verified manager')
-rep("function chatWho(){const w=PS.who||legacyOwner(lsGet((HK+'who')));", "function chatWho(){const w=HOOPS.me;", why='chat: only the link-verified manager')
+rep("const b27Who=()=>{const w=whoKey(PS.who)||whoKey(lsGet((HK+'who')));", "const b27Who=()=>{const w=HOOPS.me;", why='bets: only the link-verified manager')
+rep("function chatWho(){const w=whoKey(PS.who)||whoKey(lsGet((HK+'who')));", "function chatWho(){const w=HOOPS.me;", why='chat: only the link-verified manager')
 # 6) commissioner: this league's passcode (meta.pass) + 'Make a new link for [manager]'
 rep("function profCmUnlocked(){return lsGet(PROF_CM_TOK)===PROF_CM_HASH}", "function profCmUnlocked(){return !!HOOPS.cmOk}", why='commish unlock = league passcode')
 rep("if(hash===PROF_CM_HASH){PROFCM.tries=0;PROFCM.msg='';lsSet(PROF_CM_TOK,PROF_CM_HASH);render();return}",
     "if(await HOOPS.cmUnlock(pass)){PROFCM.tries=0;PROFCM.msg='';render();return}", why='commish passcode check')
 rep("function profCmLock(){try{localStorage.removeItem(PROF_CM_TOK)}catch(e){}", "function profCmLock(){try{localStorage.removeItem(PROF_CM_TOK)}catch(e){}HOOPS.cmLock();", why='commish lock')
-rep("cmToolsHtml()}<button type=\"button\" class=\"btn sec\" style=\"margin-top:8px\" onclick=\"profCmLock()\">Lock</button>",
-    "cmToolsHtml()}${HOOPS.newLinkHtml()}<button type=\"button\" class=\"btn sec\" style=\"margin-top:8px\" onclick=\"profCmLock()\">Lock</button>", why="commish 'Make a new link for [manager]'")
+rep('<p class="prof-note">That manager has to pick their name again on each device.</p>${resets}',
+    '<p class="prof-note">That manager has to pick their name again on each device.</p>${resets}${HOOPS.newLinkHtml()}', why="commish 'Make a new link for [manager]' + 'Give commish to someone else' (sh27: in the Commissioner card under Access)")
 rerep(r"DRAFT_URL='https://stoopids\.github\.io/stoopids/draft2/'", "DRAFT_URL=HOOPS.draftUrl", why='Draft room link -> this league\'s Hoops draft room')
 rep('title="AP Top 25: #', 'title="ESPN BPI: #', why='chip rank badge: BPI')
 rep("<b>AP Top 25</b>", "<b>ESPN BPI Power Ranking</b>", why='rankings card title')
@@ -168,6 +171,7 @@ json.dump({'format': 1, 'season': 'Last season win rank (25-26)', 'as_of': T.get
 PATCHES = json.load(open(os.path.join(ROOT, 'tools', 'hoops_patches.json'), encoding='utf-8'))
 for x in PATCHES['page']:
     rep(x['old'], x['new'], n=x.get('n',1), why='[' + x['tag'] + '] ' + x['why'])
+if FAIL: print('\n'.join(FAIL)); raise SystemExit('FAILED %d' % len(FAIL))
 open(os.path.join(ROOT, 'league.html'), 'w', encoding='utf-8').write(s)
 # shared/ui.js + ui.css: STOOPIDS' own shared module, copied verbatim except the rankings footnote link (NBA BPI instead of the college AP poll)
 os.makedirs(os.path.join(ROOT, 'shared'), exist_ok=True)
@@ -180,4 +184,11 @@ for x in PATCHES['ui']:
     u = u.replace(x['old'], x['new']); LOG.append(('shared/ui.js [' + x['tag'] + '] ' + x['why'], 1))
 open(os.path.join(ROOT, 'shared', 'ui.js'), 'w', encoding='utf-8').write(u)
 open(os.path.join(ROOT, 'shared', 'ui.css'), 'w', encoding='utf-8').write(src('shared/ui.css')); LOG.append(('shared/ui.css: verbatim', 1))
+# stoopid-bet.js ([REDACTED] Stoopid Bet ideas, new in 4c3c4d4): verbatim except the tagged 'sb' patches (league key, NBA BPI rank instead of NET)
+b = src('stoopid-bet.js')
+for x in PATCHES.get('sb', []):
+    n = x.get('n', 1)
+    if b.count(x['old']) != n: raise SystemExit('stoopid-bet.js: expected ' + str(n) + ' x ' + repr(x['old'][:80]) + ', found ' + str(b.count(x['old'])))
+    b = b.replace(x['old'], x['new']); LOG.append(('stoopid-bet.js [' + x['tag'] + '] ' + x['why'], n))
+open(os.path.join(ROOT, 'stoopid-bet.js'), 'w', encoding='utf-8').write(b)
 print('league.html built from STOOPIDS index.html with', len(LOG), 'swaps:'); [print(' -', w, c) for w, c in LOG]

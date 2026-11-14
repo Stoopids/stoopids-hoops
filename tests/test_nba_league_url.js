@@ -10,9 +10,8 @@ assert.ok(/function s12PublicUrl\([\s\S]*?searchParams\.set\('l',l\)/.test(html)
 assert.ok(html.includes('function s24Put'), 's24Put writes the tab hash');
 assert.ok(html.includes('s24Read(location.hash)'), 'first load reads the tab from the hash');
 assert.ok(/function s24HashOf\(t\)\{return \(\{bets27:'bets'/.test(html), 'Bets tab hash is #bets');
-/* Pool / buy-in expands the form, not a toggle-only shell */
-assert.ok(/function b27PoolShell\(\)\{if\(U\.confirm\)/.test(html), 'b27PoolShell shows confirm or form');
-assert.ok(html.includes('return b27PoolForm(b27Who())'), 'b27PoolShell renders b27PoolForm');
+/* Pool / buy-in expands the form (sh27: [REDACTED]' own path in vB27; the old b27PoolShell override is dropped, [REDACTED] no longer calls b27PoolShell) */
+assert.ok(html.includes("else if(U.kind==='pool'){h+=U.confirm?s26kModal(b27PoolConfirmHtml()):b27PoolForm(me)}"), 'Pool/Buy-In renders the confirm step or the pool form');
 
 const hoops=fs.readFileSync(path.join(__dirname,'..','js/hoops-stoopids.js'),'utf8');
 assert.ok(hoops.includes('function lastOpenedLeague'), 'missing ?l= restores the last league on this device');

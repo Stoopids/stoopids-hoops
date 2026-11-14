@@ -97,16 +97,10 @@
    "new": "placed:'Pool #{n} posted 💥', placedDone:'Pool #{n} posted 💥'"
   },
   {
-   "tag": "PAUL-3",
-   "why": "pool save message: no 'Message copied' tail (the copy-failed warning stays)",
-   "old": "U.msg=PT(m&&m.back?'placedDone':'placed',{n:m?m.n:''})+(copied?' Message copied. Paste it in WhatsApp.':",
-   "new": "U.msg=PT(m&&m.back?'placedDone':'placed',{n:m?m.n:''})+(copied?'':"
-  },
-  {
    "tag": "HOOPS",
-   "why": "shared/ui.js cache-buster: Hoops copy of 1.66.6 with its patches (sh24)",
-   "old": "<script src=\"shared/ui.js?v=1.66.6\"",
-   "new": "<script src=\"shared/ui.js?v=1.66.6.sh24\""
+   "why": "shared/ui.js cache-buster: Hoops copy of 1.80.0 with its patches (sh27)",
+   "old": "<script src=\"shared/ui.js?v=1.80.0\"",
+   "new": "<script src=\"shared/ui.js?v=1.80.0.sh27\""
   },
   {
    "tag": "PAUL-e",
@@ -157,30 +151,6 @@
    "new": "Postponed or canceled games score nothing unless they are played."
   },
   {
-   "tag": "PAUL-i",
-   "why": "remove the Bets disclaimer const (BETS_DISCLAIMER)",
-   "old": "const BETS_DISCLAIMER=\"Bets here are just for fun and are settled in pullups, not money. Betting is Stoopid, and we don't endorse or facilitate gambling for money.\";   // the ONLY place the unit word appears in the tab; rendered once above the form\n",
-   "new": ""
-  },
-  {
-   "tag": "PAUL-i",
-   "why": "remove b27Fine() so the #b27Note / .b27-fine box is not built",
-   "old": "function b27Fine(){\n  const live=U.state==='ok'?' <span class=\"good\">\\u25cf live</span> \\u00b7 anyone with the link can add bets (no logins). Play nice.':U.state==='error'?' <span class=\"bad\">\\u25cf can\\u2019t reach the bets ledger right now</span>':'';\n  return `<div class=\"b27-fine\" id=\"b27Note\">${esc(BETS_DISCLAIMER)} This page just <b>records</b> who bet what and who owes whom.${live}</div>`}\n",
-   "new": ""
-  },
-  {
-   "tag": "PAUL-i",
-   "why": "stop appending the disclaimer box on Request, Write it Up, All Bets and Tally",
-   "old": "    if(OB_VIEW==='tally')return obToggle()+vTally()+b27Fine();\n    return obToggle()+(entry?entryPair():((typeof RQ!=='undefined'&&RQ?RQ.pinned(false,true):'')+vB27()))+b27Fine()};VIEWS.bets=()=>obToggle()+vBets();",
-   "new": "    if(OB_VIEW==='tally')return obToggle()+vTally();\n    return obToggle()+(entry?entryPair():((typeof RQ!=='undefined'&&RQ?RQ.pinned(false,true):'')+vB27()))};VIEWS.bets=()=>obToggle()+vBets();"
-  },
-  {
-   "tag": "PAUL-i",
-   "why": "drop unused .b27-fine CSS so no empty box or leftover gap",
-   "old": "html body .b27-fine{width:100%;max-width:100%;box-sizing:border-box;margin:12px 0 8px;padding:8px 12px;border:1px solid var(--line,#2d3548);border-radius:10px;background:var(--card,#1b2030);color:var(--mut,#9aa3b5);font-size:13px;line-height:1.35}\nhtml body .b27-fine b{color:var(--tx,#eee)}\n",
-   "new": ""
-  },
-  {
    "tag": "BUG-1",
    "why": "browser live ESPN poll: site.api.espn.com fails in Chromium with net::ERR_FAILED; site.web.api.espn.com serves the same JSON with Access-Control-Allow-Origin: * and works in the browser (curl can use either). STOOPIDS still uses site.api, so it has the same Chrome failure.",
    "old": "https://site.api.espn.com/apis/site/v2/sports",
@@ -198,6 +168,48 @@
    "why": "static h1 is a Hoops default (STOOPIDS HOOPS) so the STOOPIDS mark never flashes before the league name loads",
    "old": "<h1 id=\"hoopsLg\">STOOP<span>IDS</span></h1>",
    "new": "<h1 id=\"hoopsLg\">STOOPIDS <span>HOOPS</span></h1>"
+  },
+  {
+   "tag": "HOOPS-DRAFTNAV",
+   "why": "Draft room item in the nav (phone: under More): call [REDACTED]' own draftNavLink() after the nav is rebuilt ([REDACTED] defines it but never calls it). DRAFT_URL is this league's Hoops draft room.",
+   "old": "  /*</NAV-ONE-ROW>*/\n  setTimeout(liveSync,0);",
+   "new": "  /*</NAV-ONE-ROW>*/\n  /*<HOOPS-DRAFTNAV>*/try{draftNavLink()}catch(_){}/*</HOOPS-DRAFTNAV>*/\n  setTimeout(liveSync,0);"
+  },
+  {
+   "tag": "HOOPS",
+   "why": "stoopid-bet.js cache-buster: Hoops copy of v14 with its patches (sh27)",
+   "old": "<script src=\"stoopid-bet.js?v=14\"></script>",
+   "new": "<script src=\"stoopid-bet.js?v=14.sh27\"></script>"
+  },
+  {
+   "tag": "BUG-5",
+   "why": "ESPN has no NBA rankings feed (404 on every page load, a console error); the BPI ranks already come from D.ranks (S29D-RANKS fallback right after), so do not ask",
+   "old": "if(!j){const r=await fetch('https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/rankings'",
+   "new": "if(!j&&false/*<BUG-5> no NBA rankings feed at ESPN; BPI from D.ranks </BUG-5>*/){const r=await fetch('https://site.web.api.espn.com/apis/site/v2/sports/basketball/nba/rankings'"
+  },
+  {
+   "tag": "HOOPS-DRAFTNAV",
+   "why": "the Draft item lives in the phone More sheet only (under 700px, where shared/ui.js NAV-MORE moves it); in the wider one-row nav a 9th item would cut 'Standings' and 'All teams' at laptop widths",
+   "old": "nav a.nd:focus-visible{outline:2px solid var(--acc);outline-offset:1px}",
+   "new": "nav a.nd:focus-visible{outline:2px solid var(--acc);outline-offset:1px}\n/*<HOOPS-DRAFTNAV>*/@media (min-width:701px){nav#nav>a.nd{display:none!important}}/*</HOOPS-DRAFTNAV>*/"
+  },
+  {
+   "tag": "BUG-6",
+   "why": "lvEtDay was declared inside lvDays (NBA live-poll patch), so lvFromEvent (adds ESPN games missing from the baked schedule) threw ReferenceError and the whole live update was dropped: no live scores on the page whenever ESPN had a game not in the schedule. Declare it once at top level.",
+   "old": "function lvDays(now){\nfunction lvEtDay(x){try{const d=x instanceof Date?x:new Date(x);return isNaN(d)? '':ETK.format(d)}catch(e){return ''}}\n",
+   "new": "/*<BUG-6>*/function lvEtDay(x){try{const d=x instanceof Date?x:new Date(x);return isNaN(d)? '':ETK.format(d)}catch(e){return ''}}/*</BUG-6>*/\nfunction lvDays(now){\n"
+  },
+  {
+   "tag": "NBA",
+   "why": "NBA quarters in the page's fallback linescore cells (Q1-Q4, then OT)",
+   "old": "const n=Math.max(2,(A||[]).length,(H||[]).length),me=(s===g.away?A:H)||[],lab=i=>i<2?(i+1)+'H':(n>3?'OT'+(i-1):'OT');",
+   "new": "const n=Math.max(4,(A||[]).length,(H||[]).length),me=(s===g.away?A:H)||[],lab=i=>i<4?'Q'+(i+1):(n>5?'OT'+(i-3):'OT');"
+  },
+  {
+   "tag": "NBA",
+   "why": "NBA quarters in the box-score header (Q1-Q4, then OT)",
+   "old": "hd=Array.from({length:n},(_,i)=>i<2?(i+1)+'H':(n>3?'OT'+(i-1):'OT'));",
+   "new": "hd=Array.from({length:n},(_,i)=>i<4?'Q'+(i+1):(n>5?'OT'+(i-3):'OT'));"
   }
  ],
  "ui": [
@@ -218,6 +230,64 @@
    "why": "copy text: teams on one line, then \"Nov 12, 2-1\" (just the date when odds are even), no \"at\"",
    "old": "    function descLine(r){var t=sl(String(r.txt||r.lab||'').replace(/\\s+/g,' ').trim()),o=r.odds||[1,1];\n      if(+o[0]===+o[1])return t;\n      var od=o[0]+'-'+o[1];if(t.toLowerCase().indexOf(od.toLowerCase())>=0)return t;return (t?t+' ':'')+'at '+od}",
    "new": "    function descLine(r){var t=sl(String(r.txt||r.lab||'').replace(/\\s+/g,' ').trim()),o=r.odds||[1,1];\n      var d=String(r.date||'').replace(/^(Sun|Mon|Tue|Wed|Thu|Fri|Sat)\\w*,?\\s+/,'').trim(),od=+o[0]===+o[1]?'':o[0]+'-'+o[1];if(d){var q=', '+String(r.date);if(t.slice(-q.length)===q)t=t.slice(0,-q.length).trim()}else{var dm=/,\\s+(?:(?:Sun|Mon|Tue|Wed|Thu|Fri|Sat)\\w*,?\\s+)?((?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\\w*\\s+\\d{1,2})$/.exec(t);if(dm){d=dm[1];t=t.slice(0,dm.index).trim()}}\n      if(od&&t.toLowerCase().indexOf(od.toLowerCase())>=0)od='';return [t,d&&od?d+', '+od:(d||od)].filter(Boolean).join('\\n')}"
+  },
+  {
+   "tag": "NBA",
+   "why": "NBA plays four quarters: game-card linescore columns read Q1-Q4 then OT (STOOPIDS shows 1H/2H for college halves)",
+   "old": "var n=Math.max(2,(A||[]).length,(H||[]).length),me=(s===g.away?A:H)||[],lab=function(i){return i<2?(i+1)+'H':(n>3?'OT'+(i-1):'OT')};",
+   "new": "var n=Math.max(4,(A||[]).length,(H||[]).length),me=(s===g.away?A:H)||[],lab=function(i){return i<4?'Q'+(i+1):(n>5?'OT'+(i-3):'OT')};"
+  }
+ ],
+ "sb": [
+  {
+   "tag": "HOOPS",
+   "n": 2,
+   "why": "used-idea list is per Hoops league on this device (shoops1.<league>.sb_used), like every other localStorage key",
+   "old": "'stoopids_sb_used'",
+   "new": "(HK+'sb_used')"
+  },
+  {
+   "tag": "NBA",
+   "why": "team rank = ESPN BPI Power Ranking (D.ranks ap, 1-30); the NBA has no NET",
+   "old": "const r=D.ranks&&D.ranks.teams&&D.ranks.teams[String(side.id)];if(r&&r.net!=null)hit=+r.net}",
+   "new": "const r=D.ranks&&D.ranks.teams&&D.ranks.teams[String(side.id)];if(r&&r.ap!=null)hit=+r.ap}"
+  },
+  {
+   "tag": "NBA",
+   "why": "team rank = ESPN BPI Power Ranking (D.ranks ap)",
+   "old": "function sbNetTid(tid){const r=D.ranks&&D.ranks.teams&&D.ranks.teams[String(tid)];return r&&r.net!=null?+r.net:null}",
+   "new": "function sbNetTid(tid){const r=D.ranks&&D.ranks.teams&&D.ranks.teams[String(tid)];return r&&r.ap!=null?+r.ap:null}"
+  },
+  {
+   "tag": "NBA",
+   "n": 14,
+   "why": "idea text, settle check and parser say BPI instead of NET",
+   "old": "NET",
+   "new": "BPI"
+  },
+  {
+   "tag": "NBA",
+   "why": "rank idea pill: BPI (NBA has no tournament seeds during the season)",
+   "old": "['seed','Seeds']",
+   "new": "['seed','BPI']"
+  },
+  {
+   "tag": "HOOPS",
+   "why": "sbProve (console-only self-check, never shown) uses this league's first two managers instead of hardcoded [REDACTED] names",
+   "old": "function sbProve(){const a='Paul',b='Nasty',",
+   "new": "function sbProve(){const a=((D&&D.owners||[])[0]||{}).name||'',b=((D&&D.owners||[])[1]||{}).name||'',"
+  },
+  {
+   "tag": "HOOPS",
+   "why": "sbProve player check: league managers, no hardcoded names",
+   "old": "sbTextPlayer('Jim','Paul',p.name,",
+   "new": "sbTextPlayer(b,a,p.name,"
+  },
+  {
+   "tag": "NBA",
+   "why": "'leads at halftime' settles at the end of the 2nd quarter in the NBA (STOOPIDS reads the end of the 1st college half)",
+   "old": "if(per===1&&((p.clock||{}).displayValue==='0:00'||/end of 1st half/i.test(p.text||'')))",
+   "new": "if(per===2&&((p.clock||{}).displayValue==='0:00'||/end of (the )?2nd quarter/i.test(p.text||'')))"
   }
  ]
 }
