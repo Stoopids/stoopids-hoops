@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-14",
-  "generated_at_utc": "2026-11-14T08:17:21Z",
+  "generated_at_utc": "2026-11-14T09:10:22Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -4406,7 +4406,7 @@
       "line": {
         "fav": "5",
         "dog": "6",
-        "sp": 3.5,
+        "sp": 2.5,
         "ou": 231.5,
         "fav_name": "CLE",
         "aml": 110,
@@ -4438,7 +4438,7 @@
         "fav": "8",
         "dog": "14",
         "sp": 4.5,
-        "ou": 228.5,
+        "ou": 229.5,
         "fav_name": "DET",
         "aml": -191,
         "hml": 160,
@@ -4468,8 +4468,8 @@
       "line": {
         "fav": "29",
         "dog": "17",
-        "sp": 5.5,
-        "ou": 227.5,
+        "sp": 4.5,
+        "ou": 226.5,
         "fav_name": "MEM",
         "aml": 180,
         "hml": -217,
