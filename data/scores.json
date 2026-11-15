@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-15",
-  "generated_at_utc": "2026-11-15T18:45:57Z",
+  "generated_at_utc": "2026-11-15T19:30:11Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -4522,13 +4522,13 @@
       "neutral": false,
       "home": {
         "id": "20",
-        "score": 37,
+        "score": 73,
         "seed": null,
         "short": "PHI"
       },
       "away": {
         "id": "11",
-        "score": 39,
+        "score": 68,
         "seed": null,
         "short": "IND"
       },
