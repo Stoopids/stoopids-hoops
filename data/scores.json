@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-15",
-  "generated_at_utc": "2026-11-15T05:54:40Z",
+  "generated_at_utc": "2026-11-15T06:54:44Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -4567,7 +4567,7 @@
         "fav": "13",
         "dog": "21",
         "sp": 2.5,
-        "ou": 225.5,
+        "ou": 226.5,
         "fav_name": "LAL",
         "aml": -148,
         "hml": 124,
@@ -4724,8 +4724,8 @@
         "sp": 9.5,
         "ou": 222.5,
         "fav_name": "HOU",
-        "aml": -438,
-        "hml": 341,
+        "aml": -420,
+        "hml": 329,
         "p": "DraftKings"
       }
     },
