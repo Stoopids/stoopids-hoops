@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-14",
-  "generated_at_utc": "2026-11-15T01:13:30Z",
+  "generated_at_utc": "2026-11-15T02:18:33Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -4362,13 +4362,13 @@
       "neutral": false,
       "home": {
         "id": "3",
-        "score": 51,
+        "score": 93,
         "seed": null,
         "short": "NO"
       },
       "away": {
         "id": "7",
-        "score": 56,
+        "score": 106,
         "seed": null,
         "short": "DEN"
       },
@@ -4393,13 +4393,13 @@
       "neutral": false,
       "home": {
         "id": "5",
-        "score": 39,
+        "score": 95,
         "seed": null,
         "short": "CLE"
       },
       "away": {
         "id": "6",
-        "score": 35,
+        "score": 83,
         "seed": null,
         "short": "DAL"
       },
@@ -4424,13 +4424,13 @@
       "neutral": false,
       "home": {
         "id": "14",
-        "score": 4,
+        "score": 63,
         "seed": null,
         "short": "MIA"
       },
       "away": {
         "id": "8",
-        "score": 5,
+        "score": 57,
         "seed": null,
         "short": "DET"
       },
@@ -4455,13 +4455,13 @@
       "neutral": false,
       "home": {
         "id": "29",
-        "score": 5,
+        "score": 71,
         "seed": null,
         "short": "MEM"
       },
       "away": {
         "id": "17",
-        "score": 7,
+        "score": 54,
         "seed": null,
         "short": "BKN"
       },
@@ -4486,13 +4486,13 @@
       "neutral": false,
       "home": {
         "id": "16",
-        "score": 4,
+        "score": 45,
         "seed": null,
         "short": "MIN"
       },
       "away": {
         "id": "4",
-        "score": 2,
+        "score": 58,
         "seed": null,
         "short": "CHI"
       },
@@ -4526,6 +4526,16 @@
         "score": null,
         "seed": null,
         "short": "IND"
+      },
+      "line": {
+        "fav": "20",
+        "dog": "11",
+        "sp": 6.5,
+        "ou": 222.5,
+        "fav_name": "PHI",
+        "aml": 208,
+        "hml": -253,
+        "p": "DraftKings"
       }
     },
     {
@@ -4589,6 +4599,16 @@
         "score": null,
         "seed": null,
         "short": "SA"
+      },
+      "line": {
+        "fav": "24",
+        "dog": "26",
+        "sp": 17.5,
+        "ou": 224.5,
+        "fav_name": "SA",
+        "aml": -1640,
+        "hml": 920,
+        "p": "DraftKings"
       }
     },
     {
@@ -4631,6 +4651,16 @@
         "score": null,
         "seed": null,
         "short": "NY"
+      },
+      "line": {
+        "fav": "18",
+        "dog": "28",
+        "sp": 4.5,
+        "ou": 217.5,
+        "fav_name": "NY",
+        "aml": -169,
+        "hml": 142,
+        "p": "DraftKings"
       }
     },
     {
@@ -4652,6 +4682,16 @@
         "score": null,
         "seed": null,
         "short": "HOU"
+      },
+      "line": {
+        "fav": "10",
+        "dog": "27",
+        "sp": 8.5,
+        "ou": 222.5,
+        "fav_name": "HOU",
+        "aml": -356,
+        "hml": 284,
+        "p": "DraftKings"
       }
     },
     {
