@@ -1,3 +1,13 @@
+# sh29 (build 2026-11-15sh29): Request names the game (BUG-7) (LOCAL, not pushed)
+
+Base unchanged: STOOPIDS 4c3c4d4. Rebuilt with tools/build_league_from_stoopids.py. Every change is a tagged patch in tools/hoops_patches.json.
+
+- [BUG-7] Root cause of Paul's Nov 15 report: Bulls at Timberwolves tipped at 8:00 pm ET Nov 14 (08:00 WIB Nov 15). SHARED_UI.tipGame only looks at games that have not started, so after tip the text matched no game and the form said "Name the game so it expires at tipoff…". Same code and same message in STOOPIDS.
+  - Request and Write It Up now say "That game has already started." when the text names a game that already tipped (tipGame {live:true}). Nothing is posted, as before.
+  - Second gap found on the way: game sides carry one name (the city on the page, the ESPN code in scores.json), so "Bulls", "Timberwolves", "T-Wolves", "CHI" alone never matched. SHARED_UI.teamAliases adds full name, city, nickname, both abbreviations (teams.js + ESPN) and common short names for all 30 teams, from assets/teams.js. "Los Angeles" alone is left out (it starts "Los Angeles Clippers").
+- js/version.js and sw.js are 2026-11-15sh29. The ui.js cache-buster is ?v=1.80.0.sh29.
+- Tests: new tests/bug7_teams.js (node, all 30 teams) and tests/e2e_sh29.js (synthetic league, mock store, clock before and after tip).
+
 # sh28 (build 2026-11-14sh28): 2nd half, game-card names, Ready split, toasts (LOCAL, not pushed)
 
 Base unchanged: STOOPIDS 4c3c4d4. Rebuilt with tools/build_league_from_stoopids.py. Every change is a tagged patch in tools/hoops_patches.json.

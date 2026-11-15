@@ -98,9 +98,9 @@
   },
   {
    "tag": "HOOPS",
-   "why": "shared/ui.js cache-buster: Hoops copy of 1.80.0 with its patches (sh28)",
+   "why": "shared/ui.js cache-buster: Hoops copy of 1.80.0 with its patches (sh29)",
    "old": "<script src=\"shared/ui.js?v=1.80.0\"",
-   "new": "<script src=\"shared/ui.js?v=1.80.0.sh28\""
+   "new": "<script src=\"shared/ui.js?v=1.80.0.sh29\""
   },
   {
    "tag": "PAUL-e",
@@ -252,6 +252,12 @@
    "why": "Bets page: 'Saved.', 'Saving…', 'Placed! Bet #n…' and the other good-news status bars under the sub-tabs pop up as STOOPIDS' own toast (s24Toast, hides by itself) instead of a card above the sections. Errors, the copy-it-yourself fallback (U.clip) and the 'Undo all' card stay as they are.",
    "old": "if(U.msg)h+=`<div class=\"card ${U.msgBad?'b27-bad':'b27-ok'}\" role=\"status\">",
    "new": "/*<PAUL-k>*/if(U.msg&&!U.msgBad&&!U.clip&&!(U.undoG&&b27GroupUndoable(U.undoG).length>1)){const tm=U.msg;U.msg='';setTimeout(()=>s24Toast(tm),0)}/*</PAUL-k>*/\n  if(U.msg)h+=`<div class=\"card ${U.msgBad?'b27-bad':'b27-ok'}\" role=\"status\">"
+  },
+  {
+   "tag": "BUG-7",
+   "why": "Write It Up: a bet naming a game that already tipped says so (it used to say 'Name the game')",
+   "old": "else{if(!U.whenPick||U.wk==='game')return 'Name the game so this settles at the end of the game.';",
+   "new": "else{if(!U.whenPick||U.wk==='game'){try{const lg=!U.gid&&SHARED_UI.tipGame({games:D.games||[],text:U.text||'',now:Date.now(),live:true,today:S25.etDay(new Date()),dateFrom:S25.dateFrom,day:S25.etDay});if(lg&&Date.parse(lg.start)<=Date.now())return 'That game has already started.'}catch(e){}   /* BUG-7 */\n    return 'Name the game so this settles at the end of the game.'}"
   }
  ],
  "ui": [
@@ -314,6 +320,30 @@
    "why": "same for the status line above the Request form",
    "old": "var h='';if(S.msg&&!S.f.gid)h+=",
    "new": "var h='';/*<PAUL-k>*/if(S.msg&&!S.bad&&!S.fb&&typeof s24Toast==='function'){var tm=S.msg;S.msg='';setTimeout(function(){s24Toast(tm)},0)}/*</PAUL-k>*/if(S.msg&&!S.f.gid)h+="
+  },
+  {
+   "tag": "BUG-7",
+   "why": "tipGame: a bet that names an NBA team by full name, city, nickname or abbreviation finds its game (game sides only carry the city / ESPN code)",
+   "old": "  /* One upcoming game whose tipoff we can read from an attached game or from the bet text. A date span that matches several games is not one tipoff. */",
+   "new": "  /* BUG-7 (Hoops): NBA game sides carry one name only (the city on the page, the ESPN code in scores.json), so tipGame missed bets that name a team by nickname or code (\"Bulls\", \"Timberwolves\", \"T-Wolves\", \"CHI\"). Every NBA team answers to its full name, city, nickname, both abbreviations and common short names, from assets/teams.js. */\n  SHARED_UI.teamAliases=function(side){var T=window.TEAMS_DATA,id=side&&String(side.id||'');if(!T||!T.teams||!id)return [];var C=SHARED_UI._tal;if(!C){C=SHARED_UI._tal={};var X={'2':['Celts'],'3':['Pels','New Orleans Pels'],'5':['Cavs'],'6':['Mavs'],'9':['Dubs','Golden St','Golden St.'],'12':['Los Angeles Clippers','L.A. Clippers'],'13':['LA Lakers','L.A. Lakers'],'16':['Wolves','T-Wolves','Twolves','Timberwolves'],'18':['NY Knicks'],'20':['Sixers','Philly'],'22':['Blazers'],'23':['Sac Kings'],'25':['OKC Thunder'],'26':['UTAH'],'27':['WSH','Wiz'],'28':['Raps']};\n    T.teams.forEach(function(t){var k=String(t[0]),city=t[2];C[k]=[t[1],k==='13'?'':city,t[3],t[7]].concat(X[k]||[]).filter(Boolean)})}   /* 'Los Angeles' alone is left out: it is also the start of \"Los Angeles Clippers\" */\n    return C[id]||[]};\n  /* One upcoming game whose tipoff we can read from an attached game or from the bet text. A date span that matches several games is not one tipoff. */"
+  },
+  {
+   "tag": "BUG-7",
+   "why": "tipGame names(): add the Hoops team aliases",
+   "old": "function names(side){if(!side)return [];return [side.short,side.name,side.nickname,side.displayName,side.shortDisplayName].filter(Boolean)}",
+   "new": "function names(side){if(!side)return [];return [side.short,side.name,side.nickname,side.displayName,side.shortDisplayName].concat(SHARED_UI.teamAliases?SHARED_UI.teamAliases(side):[]).filter(Boolean)}   /* BUG-7 */"
+  },
+  {
+   "tag": "BUG-7",
+   "why": "tipGame {live:true}: also look at games that already tipped (not finals), so the form can say the game has started instead of 'Name the game'",
+   "old": "if(!st||st<=now||g.status==='final')continue;",
+   "new": "if(!st||(st<=now&&!o.live)||g.status==='final')continue;   /* BUG-7: o.live keeps started games */"
+  },
+  {
+   "tag": "BUG-7",
+   "why": "Request: a bet naming a game that already tipped says so (it used to say 'Name the game')",
+   "old": "if(!err&&f.mode==='start'&&!hasGame)err=wk==='game'?'Name the game so it expires at tipoff and settles at the end of the game.':'Name the game so it expires at tipoff.';",
+   "new": "var lvG=!hasGame&&!f.gid?SHARED_UI.tipGame({games:games(),text:f.text,now:Date.now(),live:true,today:(typeof S25!=='undefined'&&S25.etDay)?S25.etDay(new Date()):'',dateFrom:(typeof S25!=='undefined'&&S25.dateFrom)?S25.dateFrom:null,day:(typeof S25!=='undefined'&&S25.etDay)?S25.etDay:null}):null;if(!err&&lvG&&Date.parse(lvG.start)<=now&&(f.mode==='start'||wk==='game'))err='That game has already started.';   /* BUG-7 */\n        if(!err&&f.mode==='start'&&!hasGame)err=wk==='game'?'Name the game so it expires at tipoff and settles at the end of the game.':'Name the game so it expires at tipoff.';"
   }
  ],
  "sb": [

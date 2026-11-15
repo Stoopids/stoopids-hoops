@@ -995,7 +995,7 @@ html body .card.oc .chips.school-grid .chip .cr{grid-column:2!important;grid-row
   </div>
 </section><!--</CHAT>-->
 <footer id="foot"></footer>
-<script src="shared/ui.js?v=1.80.0.sh28"></script>
+<script src="shared/ui.js?v=1.80.0.sh29"></script>
 <script src="js/version.js"></script><script src="js/core.js"></script><script src="js/scoring.js"></script><script src="js/league-d.js"></script><script src="js/league-sched.js"></script><script src="js/store.js"></script><script src="assets/teams.js"></script><script src="js/power-apply.js"></script><script src="js/league.js"></script><script src="js/hoops-archive.js"></script><script src="js/hoops-stoopids.js"></script><script>HOOPS.dataName="STOOPIDS_DATA";</script>
 <script>
 /*<S25-SHARED>*/
@@ -3346,7 +3346,8 @@ function b27FormOK(){
   if(!Number.isInteger(U.amt)||U.amt<PULK.minAmt||U.amt>PULK.maxAmt)return U.amtCustom?b27ParseAmt(U.amtTxt).err||'Pick an amount.':'Tap an amount or type your own (minimum '+PULK.minAmt+').';
   if(!(U.odds&&U.odds[0]>=1&&U.odds[1]>=1))return 'Pick the odds.';
   if(b27FormHasGame()){if(U.whenPick&&U.wk==='date'&&!SHARED_UI.estOk(U.est))return 'Use a real date, or pick End Of Game, End Of Season, or Not Sure Yet.'}
-  else{if(!U.whenPick||U.wk==='game')return 'Name the game so this settles at the end of the game.';if(U.wk==='date'&&!SHARED_UI.estOk(U.est))return 'Use a real date, or pick End Of Game, End Of Season, or Not Sure Yet.'}
+  else{if(!U.whenPick||U.wk==='game'){try{const lg=!U.gid&&SHARED_UI.tipGame({games:D.games||[],text:U.text||'',now:Date.now(),live:true,today:S25.etDay(new Date()),dateFrom:S25.dateFrom,day:S25.etDay});if(lg&&Date.parse(lg.start)<=Date.now())return 'That game has already started.'}catch(e){}   /* BUG-7 */
+    return 'Name the game so this settles at the end of the game.'}if(U.wk==='date'&&!SHARED_UI.estOk(U.est))return 'Use a real date, or pick End Of Game, End Of Season, or Not Sure Yet.'}
   return '';
 }
 function b27FormHasGame(){try{if(!window.SHARED_UI||!SHARED_UI.tipGame)return false;const g=SHARED_UI.tipGame({games:D.games||[],gid:U.gid||'',text:U.text||'',now:Date.now(),today:S25.etDay(new Date()),dateFrom:S25.dateFrom,day:S25.etDay});return !!(g&&Date.parse(g.start))}catch(e){return false}}
