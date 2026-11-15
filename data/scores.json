@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-15",
-  "generated_at_utc": "2026-11-15T16:42:42Z",
+  "generated_at_utc": "2026-11-15T17:22:43Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -4535,11 +4535,11 @@
       "line": {
         "fav": "20",
         "dog": "11",
-        "sp": 7.5,
+        "sp": 8.5,
         "ou": 225.5,
         "fav_name": "PHI",
-        "aml": 226,
-        "hml": -277,
+        "aml": 248,
+        "hml": -305,
         "p": "DraftKings"
       }
     },
@@ -4566,7 +4566,7 @@
       "line": {
         "fav": "13",
         "dog": "21",
-        "sp": 3.5,
+        "sp": 2.5,
         "ou": 226.5,
         "fav_name": "LAL",
         "aml": -154,
@@ -4595,13 +4595,13 @@
         "short": "CHA"
       },
       "line": {
-        "fav": "12",
-        "dog": "30",
+        "fav": "30",
+        "dog": "12",
         "sp": 1.5,
-        "ou": 214.5,
-        "fav_name": "LAC",
-        "aml": -108,
-        "hml": -110,
+        "ou": 213.5,
+        "fav_name": "CHA",
+        "aml": -111,
+        "hml": -106,
         "p": "DraftKings"
       }
     },
@@ -4722,10 +4722,10 @@
         "fav": "10",
         "dog": "27",
         "sp": 8.5,
-        "ou": 223.5,
+        "ou": 224.5,
         "fav_name": "HOU",
-        "aml": -359,
-        "hml": 286,
+        "aml": -344,
+        "hml": 276,
         "p": "DraftKings"
       }
     },
@@ -4753,7 +4753,7 @@
         "fav": "1",
         "dog": "15",
         "sp": 8.5,
-        "ou": 234.5,
+        "ou": 233.5,
         "fav_name": "ATL",
         "aml": -324,
         "hml": 261,
