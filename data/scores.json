@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-15",
-  "generated_at_utc": "2026-11-15T19:30:11Z",
+  "generated_at_utc": "2026-11-15T20:14:17Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -4522,13 +4522,13 @@
       "neutral": false,
       "home": {
         "id": "20",
-        "score": 73,
+        "score": 117,
         "seed": null,
         "short": "PHI"
       },
       "away": {
         "id": "11",
-        "score": 68,
+        "score": 111,
         "seed": null,
         "short": "IND"
       },
@@ -4693,8 +4693,8 @@
         "sp": 5.5,
         "ou": 217.5,
         "fav_name": "NY",
-        "aml": -204,
-        "hml": 170,
+        "aml": -216,
+        "hml": 179,
         "p": "Draft Kings"
       }
     },
@@ -4722,10 +4722,10 @@
         "fav": "10",
         "dog": "27",
         "sp": 8.5,
-        "ou": 224.5,
+        "ou": 223.5,
         "fav_name": "HOU",
-        "aml": -344,
-        "hml": 276,
+        "aml": -326,
+        "hml": 262,
         "p": "Draft Kings"
       }
     },
@@ -4755,8 +4755,8 @@
         "sp": 8.5,
         "ou": 233.5,
         "fav_name": "ATL",
-        "aml": -308,
-        "hml": 249,
+        "aml": -324,
+        "hml": 261,
         "p": "Draft Kings"
       }
     },
@@ -4784,7 +4784,7 @@
         "fav": "25",
         "dog": "23",
         "sp": 10.5,
-        "ou": 222.5,
+        "ou": 223.5,
         "fav_name": "OKC",
         "aml": -468,
         "hml": 361,
