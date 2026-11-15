@@ -3,8 +3,8 @@
   "sample": false,
   "label": "",
   "season": "2026-27",
-  "as_of": "2026-11-14",
-  "generated_at_utc": "2026-11-15T04:06:56Z",
+  "as_of": "2026-11-15",
+  "generated_at_utc": "2026-11-15T05:00:26Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -4380,7 +4380,7 @@
         "fav_name": "DEN",
         "aml": -650,
         "hml": 470,
-        "p": "Draft Kings",
+        "p": "DraftKings",
         "type": "close"
       }
     },
@@ -4412,7 +4412,7 @@
         "fav_name": "DAL",
         "aml": -344,
         "hml": 276,
-        "p": "Draft Kings",
+        "p": "DraftKings",
         "type": "close"
       }
     },
@@ -4444,7 +4444,7 @@
         "fav_name": "DET",
         "aml": -173,
         "hml": 146,
-        "p": "Draft Kings",
+        "p": "DraftKings",
         "type": "close"
       }
     },
@@ -4476,7 +4476,7 @@
         "fav_name": "MEM",
         "aml": 160,
         "hml": -191,
-        "p": "Draft Kings",
+        "p": "DraftKings",
         "type": "close"
       }
     },
@@ -4508,7 +4508,7 @@
         "fav_name": "MIN",
         "aml": 690,
         "hml": -1080,
-        "p": "Draft Kings",
+        "p": "DraftKings",
         "type": "close"
       }
     },
@@ -4535,12 +4535,12 @@
       "line": {
         "fav": "20",
         "dog": "11",
-        "sp": 7.5,
+        "sp": 6.5,
         "ou": 224.5,
         "fav_name": "PHI",
-        "aml": 237,
-        "hml": -291,
-        "p": "Draft Kings"
+        "aml": 227,
+        "hml": -277,
+        "p": "DraftKings"
       }
     },
     {
@@ -4562,6 +4562,16 @@
         "score": null,
         "seed": null,
         "short": "LAL"
+      },
+      "line": {
+        "fav": "13",
+        "dog": "21",
+        "sp": 2.5,
+        "ou": 228.5,
+        "fav_name": "LAL",
+        "aml": -148,
+        "hml": 124,
+        "p": "DraftKings"
       }
     },
     {
@@ -4583,6 +4593,16 @@
         "score": null,
         "seed": null,
         "short": "CHA"
+      },
+      "line": {
+        "fav": "12",
+        "dog": "30",
+        "sp": 1.5,
+        "ou": 215.5,
+        "fav_name": "LAC",
+        "aml": 100,
+        "hml": -118,
+        "p": "DraftKings"
       }
     },
     {
@@ -4609,11 +4629,11 @@
         "fav": "24",
         "dog": "26",
         "sp": 17.5,
-        "ou": 224.5,
+        "ou": 223.5,
         "fav_name": "SA",
-        "aml": -1640,
-        "hml": 920,
-        "p": "Draft Kings"
+        "aml": -1460,
+        "hml": 850,
+        "p": "DraftKings"
       }
     },
     {
@@ -4635,6 +4655,16 @@
         "score": null,
         "seed": null,
         "short": "DAL"
+      },
+      "line": {
+        "fav": "2",
+        "dog": "6",
+        "sp": 13.5,
+        "ou": 217.5,
+        "fav_name": "BOS",
+        "aml": 558,
+        "hml": -800,
+        "p": "DraftKings"
       }
     },
     {
@@ -4663,9 +4693,9 @@
         "sp": 4.5,
         "ou": 217.5,
         "fav_name": "NY",
-        "aml": -169,
-        "hml": 142,
-        "p": "Draft Kings"
+        "aml": -192,
+        "hml": 160,
+        "p": "DraftKings"
       }
     },
     {
@@ -4691,12 +4721,12 @@
       "line": {
         "fav": "10",
         "dog": "27",
-        "sp": 8.5,
+        "sp": 9.5,
         "ou": 222.5,
         "fav_name": "HOU",
-        "aml": -400,
-        "hml": 315,
-        "p": "Draft Kings"
+        "aml": -438,
+        "hml": 341,
+        "p": "DraftKings"
       }
     },
     {
@@ -4722,12 +4752,12 @@
       "line": {
         "fav": "1",
         "dog": "15",
-        "sp": 6.5,
-        "ou": 232.5,
+        "sp": 7.5,
+        "ou": 234.5,
         "fav_name": "ATL",
-        "aml": -287,
-        "hml": 234,
-        "p": "Draft Kings"
+        "aml": -324,
+        "hml": 261,
+        "p": "DraftKings"
       }
     },
     {
@@ -4749,6 +4779,16 @@
         "score": null,
         "seed": null,
         "short": "OKC"
+      },
+      "line": {
+        "fav": "25",
+        "dog": "23",
+        "sp": 10.5,
+        "ou": 221.5,
+        "fav_name": "OKC",
+        "aml": -467,
+        "hml": 360,
+        "p": "DraftKings"
       }
     },
     {
