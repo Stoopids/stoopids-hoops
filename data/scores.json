@@ -3,8 +3,8 @@
   "sample": false,
   "label": "",
   "season": "2026-27",
-  "as_of": "2026-11-15",
-  "generated_at_utc": "2026-11-16T04:20:42Z",
+  "as_of": "2026-11-16",
+  "generated_at_utc": "2026-11-16T05:46:51Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -106,7 +106,7 @@
     },
     "23": {
       "w": 1,
-      "l": 11,
+      "l": 12,
       "playoffSeed": 14,
       "conference": "West"
     },
@@ -137,19 +137,19 @@
     "7": {
       "w": 7,
       "l": 4,
-      "playoffSeed": 7,
+      "playoffSeed": 8,
       "conference": "West"
     },
     "9": {
       "w": 8,
       "l": 5,
-      "playoffSeed": 8,
+      "playoffSeed": 9,
       "conference": "West"
     },
     "25": {
-      "w": 8,
+      "w": 9,
       "l": 5,
-      "playoffSeed": 9,
+      "playoffSeed": 7,
       "conference": "West"
     },
     "16": {
@@ -4772,13 +4772,13 @@
       "id": "401909993",
       "day": "2026-11-15",
       "start": "2026-11-16T02:00Z",
-      "status": "live",
+      "status": "final",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "23",
-        "score": 101,
+        "score": 103,
         "seed": null,
         "short": "SAC"
       },
@@ -4796,7 +4796,8 @@
         "fav_name": "OKC",
         "aml": -620,
         "hml": 458,
-        "p": "DraftKings"
+        "p": "DraftKings",
+        "type": "close"
       }
     },
     {
@@ -4854,7 +4855,7 @@
         "fav": "5",
         "dog": "4",
         "sp": 9.5,
-        "ou": 241.5,
+        "ou": 243.5,
         "fav_name": "CLE",
         "aml": 312,
         "hml": -395,
@@ -4884,11 +4885,11 @@
       "line": {
         "fav": "29",
         "dog": "27",
-        "sp": 4.5,
-        "ou": 230.5,
+        "sp": 3.5,
+        "ou": 229.5,
         "fav_name": "MEM",
-        "aml": -194,
-        "hml": 162,
+        "aml": -173,
+        "hml": 146,
         "p": "DraftKings"
       }
     },
@@ -4946,11 +4947,11 @@
       "line": {
         "fav": "10",
         "dog": "14",
-        "sp": 3.5,
-        "ou": 229.5,
+        "sp": 2.5,
+        "ou": 230.5,
         "fav_name": "HOU",
-        "aml": -155,
-        "hml": 130,
+        "aml": -142,
+        "hml": 120,
         "p": "DraftKings"
       }
     },
