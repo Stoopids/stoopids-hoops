@@ -995,7 +995,7 @@ html body .card.oc .chips.school-grid .chip .cr{grid-column:2!important;grid-row
   </div>
 </section><!--</CHAT>-->
 <footer id="foot"></footer>
-<script src="shared/ui.js?v=1.84.0.sh30"></script>
+<script src="shared/ui.js?v=1.85.0.sh31"></script>
 <script src="js/version.js"></script><script src="js/core.js"></script><script src="js/scoring.js"></script><script src="js/league-d.js"></script><script src="js/league-sched.js"></script><script src="js/store.js"></script><script src="assets/teams.js"></script><script src="js/power-apply.js"></script><script src="js/league.js"></script><script src="js/hoops-archive.js"></script><script src="js/hoops-stoopids.js"></script><script>HOOPS.dataName="STOOPIDS_DATA";</script>
 <script>
 /*<S25-SHARED>*/
@@ -5121,7 +5121,7 @@ function s29eOpenCopy(b){if(!b)return '';try{if(typeof RQ!=='undefined'&&RQ&&RQ.
   const tail=(when?when+' \u00b7 ':'')+'Exp: '+exp;if(b.legs&&b.legs.length>=2){const pod=aa===1&&bb===1?'':' \u00b7 '+aa+'\u2013'+bb;const first=b.legs.slice().sort((a,c)=>String(a.start||a.d||'').localeCompare(String(c.start||c.d||'')))[0];const pWhen=first&&first.d&&/^\d{4}-\d{2}-\d{2}$/.test(first.d)?etLabel(first.d):when;const named=b27Opps(b).map(PN).filter(Boolean);const pWho=named.length===1?named[0]:named.length?named.join(', '):(b.slots===1||!b.slots?'1 Stoop':b.slots+' Stoops');const pLegs=b.legs.map(L=>{if(L&&L.kind==='spread'&&L.t&&L.o&&L.l!=null){const n=+L.l;return L.t+' '+(n===0?'PK':(n>0?'+':'')+n)+' v '+L.o}return L&&L.t&&L.o?L.t+' v '+L.o:(L&&L.lab||'')});const pLines=['\uD83D\uDCA3 $'+b.amt+' '+PN(b.backer)+' v '+pWho+pod+' \uD83D\uDCA3',b.legs.length+' Legs'+(pWhen?' '+pWhen+' \u00b7':'')].concat(pLegs);pLines.push('Exp: '+exp);return pLines.join('\n')}let stoop=/Stoopid bet:/i.test(b.text||'');try{if(!stoop&&typeof sbParse==='function')stoop=!!sbParse(b27Clean(b.text||''))}catch(e){}
   if(stoop){let n=0,bet=String(line2||'').replace(/Stoopid bet:\s*/gi,function(){n++;return n===1?'Stoopid bet: ':''});return ['$'+b.amt+' '+PN(b.backer)+' v '+who+od,bet,tail].join('\n')}
   return ['\uD83D\uDCA5 $'+b.amt+' '+PN(b.backer)+' v '+who+od+' \uD83D\uDCA5',line2,tail].join('\n')}
-function s29eCopyText(b){if(!b)return '';if(b.status==='open'&&b.kind!=='pool')return s29eOpenCopy(b);const day=b27Day(Date.parse(b.created_at)),posted='Posted '+day+(b.postedBy?' by '+PN(b.postedBy):'')+' · STOOPIDS',L=[];
+function s29eCopyText(b){if(!b)return '';if(b.status==='open'&&b.kind!=='pool'){/*<PAUL-l>*/try{const me=b27Who();if(me&&b27Ready(b)&&b27NeedsOther(b,me)&&s24InBet(b,me)){const who=[b.backer].filter(Boolean).map(PN),L=String(s29eOpenCopy(b)||'').split('\n').slice(1).filter(Boolean);if(who.length&&L.length)return ['Hey '+who.join(' and ')+', settle this bet!'].concat(L).join('\n')}}catch(e){}/*</PAUL-l>*/return s29eOpenCopy(b)}const day=b27Day(Date.parse(b.created_at)),posted='Posted '+day+(b.postedBy?' by '+PN(b.postedBy):'')+' · STOOPIDS',L=[];
   const money=n=>'$'+b27Num(n);
   if(b.kind==='pool')return b27PoolClip(b);
   const OP=b27Opps(b),BU=OP.length>1,Bk=PN(b.backer),OPd=OP.map(PN),st=b.status,P=b27Pay(b);

@@ -1,3 +1,14 @@
+# sh31 (build 2026-11-16sh31): PAUL-l settle-nudge copy + STOOPIDS 59c9dc1 'Not sure yet' pick fix (LOCAL, not pushed)
+
+Base moved: STOOPIDS afeffc8 -> 59c9dc1 (merge of 24ba90e, shared/ui.js 1.85.0). The only code change in afeffc8..59c9dc1 is 24ba90e; the rest are data refreshes. Rebuilt with tools/build_league_from_stoopids.py.
+
+- [PAUL-l] new page patch in s29eCopyText: Copy on a bet in "Ready For Someone Else to Settle" (same test as PAUL-j: b27Ready && b27NeedsOther && s24InBet) is
+  "Hey <settler>, settle this bet!" / the game-team line / the date + expiry line. Settler = the person who placed it (the only one with Who won?, as the card's "Only X can enter result." says); names would join with " and " but there is only ever one. Every other copy text is unchanged.
+- [STOOPIDS 24ba90e / 59c9dc1, verbatim] unmatched Request text: the shown 3-day expiry and "Not sure yet" count as the pick; re-picking the shown option (blur, no change event) counts too.
+- [BUG-7] Request block re-based on 1.85.0 (the "Pick when it expires." line no longer checks expPick). Started games are still blocked.
+- [HOOPS] ui.js cache-buster ?v=1.85.0.sh31. js/version.js and sw.js are 2026-11-16sh31.
+- Tests: new tests/e2e_sh31.js (27 checks). e2e_sh29 / e2e_sh30 use game 401909984 (Nov 14), now final in the baked schedule, so their tipGame checks fail on unchanged sh30 too; e2e_sh31 uses a still-scheduled game for the BUG-7 checks. e2e_sh28 needs RQ_BLANK_WHEN=unknown (as in sh30).
+
 # sh30 (build 2026-11-16sh30): STOOPIDS free-written requests (PR #72) + everything since 4c3c4d4 (LOCAL, not pushed)
 
 Base moved: STOOPIDS 4c3c4d4 -> afeffc8 (merge of PR #72, shared/ui.js 1.84.0). Rebuilt with tools/build_league_from_stoopids.py. Every Hoops change is a tagged patch in tools/hoops_patches.json or a swap in the build script.

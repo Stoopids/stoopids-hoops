@@ -98,9 +98,9 @@
   },
   {
    "tag": "HOOPS",
-   "why": "shared/ui.js cache-buster: Hoops copy of 1.84.0 with its patches (sh30)",
-   "old": "<script src=\"shared/ui.js?v=1.84.0\"",
-   "new": "<script src=\"shared/ui.js?v=1.84.0.sh30\""
+   "why": "shared/ui.js cache-buster: Hoops copy of 1.85.0 with its patches (sh31)",
+   "old": "<script src=\"shared/ui.js?v=1.85.0\"",
+   "new": "<script src=\"shared/ui.js?v=1.85.0.sh31\""
   },
   {
    "tag": "PAUL-e",
@@ -258,6 +258,12 @@
    "why": "Write It Up: a bet naming a game that already tipped says so (it used to say 'Name the game')",
    "old": "else{if(!U.whenPick||U.wk==='game')return 'Name the game so this settles at the end of the game.';",
    "new": "else{if(!U.whenPick||U.wk==='game'){try{const lg=!U.gid&&SHARED_UI.tipGame({games:D.games||[],text:U.text||'',now:Date.now(),live:true,today:S25.etDay(new Date()),dateFrom:S25.dateFrom,day:S25.etDay});if(lg&&Date.parse(lg.start)<=Date.now())return 'That game has already started.'}catch(e){}   /* BUG-7 */\n    return 'Name the game so this settles at the end of the game.'}"
+  },
+  {
+   "tag": "PAUL-l",
+   "why": "Copy on a bet in 'Ready For Someone Else to Settle' (same test as PAUL-j: ready, viewer is in it, someone else enters the result) is 'Hey <settler>, settle this bet!' + the game/team line + the date/expiry line; the money line is dropped. The settler is the person who placed it (the only one with the Who won? buttons, as the card's 'Only X can enter result.' says). Every other copy text is unchanged.",
+   "old": "function s29eCopyText(b){if(!b)return '';if(b.status==='open'&&b.kind!=='pool')return s29eOpenCopy(b);",
+   "new": "function s29eCopyText(b){if(!b)return '';if(b.status==='open'&&b.kind!=='pool'){/*<PAUL-l>*/try{const me=b27Who();if(me&&b27Ready(b)&&b27NeedsOther(b,me)&&s24InBet(b,me)){const who=[b.backer].filter(Boolean).map(PN),L=String(s29eOpenCopy(b)||'').split('\\n').slice(1).filter(Boolean);if(who.length&&L.length)return ['Hey '+who.join(' and ')+', settle this bet!'].concat(L).join('\\n')}}catch(e){}/*</PAUL-l>*/return s29eOpenCopy(b)}"
   }
  ],
  "ui": [
@@ -341,9 +347,9 @@
   },
   {
    "tag": "BUG-7",
-   "why": "Request: a game that already tipped says 'That game has already started.' (2nd half: 'That half has already started.') and nothing posts. Two ways in: (1) typed words that name a started game; since STOOPIDS 1.84.0 (PR #72) unmatched words post as free text once expiry and settle are picked by hand, and STOOPIDS treats a started game as unmatched (it asks 'Pick when it expires.' and then posts it as free text); Hoops keeps the block even with a hand-picked expiry, unless settle is End Of Season or a date (a season / date bet that only mentions the teams). (2) a game picked from a card or Quick bet before tip and sent after it; STOOPIDS says 'Choose when it expires (up to a year).' there because the tipoff expiry is already past; Hoops checks the start first.",
-   "old": "if(!err&&!hasGame&&(f.mode==='start'||!f.expPick))err='Pick when it expires.';",
-   "new": "var lvG=!hasGame&&!f.gid?SHARED_UI.tipGame({games:games(),text:f.text,now:Date.now(),live:true,today:(typeof S25!=='undefined'&&S25.etDay)?S25.etDay(new Date()):'',dateFrom:(typeof S25!=='undefined'&&S25.dateFrom)?S25.dateFrom:null,day:(typeof S25!=='undefined'&&S25.etDay)?S25.etDay:null}):null,stG=hasGame?g:lvG&&!(f.whenPick&&(f.wk==='season'||f.wk==='date'))?lvG:null;if(!err&&stG&&started({cov:f.cov,gid:String(stG.id),start:stG.start},now))err='That '+(f.cov==='2h'?'half':'game')+' has already started.';   /* BUG-7 */\n        if(!err&&!hasGame&&(f.mode==='start'||!f.expPick))err='Pick when it expires.';"
+   "why": "Request: a game that already tipped says 'That game has already started.' (2nd half: 'That half has already started.') and nothing posts. Two ways in: (1) typed words that name a started game; since STOOPIDS 1.84.0 (PR #72) unmatched words post as free text once expiry and settle are picked by hand, and STOOPIDS treats a started game as unmatched (it asks 'Pick when it expires.' and then posts it as free text); Hoops keeps the block even with a hand-picked expiry, unless settle is End Of Season or a date (a season / date bet that only mentions the teams). (2) a game picked from a card or Quick bet before tip and sent after it; STOOPIDS says 'Choose when it expires (up to a year).' there because the tipoff expiry is already past; Hoops checks the start first. (sh31: re-based on STOOPIDS 59c9dc1 / ui.js 1.85.0, whose \"Pick when it expires.\" line no longer checks expPick)",
+   "old": "if(!err&&!hasGame&&f.mode==='start')err='Pick when it expires.';",
+   "new": "var lvG=!hasGame&&!f.gid?SHARED_UI.tipGame({games:games(),text:f.text,now:Date.now(),live:true,today:(typeof S25!=='undefined'&&S25.etDay)?S25.etDay(new Date()):'',dateFrom:(typeof S25!=='undefined'&&S25.dateFrom)?S25.dateFrom:null,day:(typeof S25!=='undefined'&&S25.etDay)?S25.etDay:null}):null,stG=hasGame?g:lvG&&!(f.whenPick&&(f.wk==='season'||f.wk==='date'))?lvG:null;if(!err&&stG&&started({cov:f.cov,gid:String(stG.id),start:stG.start},now))err='That '+(f.cov==='2h'?'half':'game')+' has already started.';   /* BUG-7 */\n        if(!err&&!hasGame&&f.mode==='start')err='Pick when it expires.';"
   },
   {
    "tag": "PAUL-1",
