@@ -2,8 +2,8 @@
   "format": 1,
   "source": "ESPN BPI",
   "season": "2026-27",
-  "fetched": "2026-11-16T02:08:00Z",
-  "updated": "2026-11-15T20:07Z",
+  "fetched": "2026-11-16T03:06:12Z",
+  "updated": "2026-11-16T00:59Z",
   "url": "https://site.web.api.espn.com/apis/fitt/v3/sports/basketball/nba/powerindex?region=us&lang=en&contentorigin=espn&limit=30",
   "ranks": {
     "24": 1,
@@ -14,17 +14,17 @@
     "16": 6,
     "13": 7,
     "22": 8,
-    "20": 9,
-    "8": 10,
+    "8": 9,
+    "20": 10,
     "7": 11,
-    "5": 12,
-    "14": 13,
-    "1": 14,
-    "6": 15,
-    "29": 16,
+    "6": 12,
+    "5": 13,
+    "14": 14,
+    "1": 15,
+    "28": 16,
     "19": 17,
-    "21": 18,
-    "28": 19,
+    "29": 18,
+    "21": 19,
     "11": 20,
     "9": 21,
     "27": 22,
@@ -32,42 +32,42 @@
     "30": 24,
     "4": 25,
     "17": 26,
-    "3": 27,
-    "26": 28,
+    "26": 27,
+    "3": 28,
     "15": 29,
     "23": 30
   },
   "bpi": {
-    "24": 10.233,
-    "2": 7.309,
-    "25": 7.082,
-    "10": 6.163,
-    "18": 5.958,
-    "16": 5.433,
-    "13": 4.868,
-    "22": 4.215,
-    "20": 4.152,
-    "8": 3.84,
-    "7": 3.074,
-    "5": 1.895,
-    "14": 1.34,
-    "1": 1.226,
-    "6": 0.058,
-    "29": -0.04,
-    "19": -0.397,
-    "21": -1.056,
-    "28": -1.589,
-    "11": -1.78,
-    "9": -2.705,
-    "27": -4.357,
-    "12": -5.023,
-    "30": -5.292,
-    "4": -5.429,
-    "17": -6.434,
-    "3": -6.998,
-    "26": -7.595,
-    "15": -8.37,
-    "23": -9.781
+    "24": 9.943,
+    "2": 9.191,
+    "25": 6.916,
+    "10": 6.885,
+    "18": 5.656,
+    "16": 5.166,
+    "13": 4.998,
+    "22": 3.912,
+    "8": 3.629,
+    "20": 3.055,
+    "7": 2.968,
+    "6": 1.94,
+    "5": 1.509,
+    "14": 1.152,
+    "1": 0.853,
+    "28": -0.38,
+    "19": -0.479,
+    "29": -0.632,
+    "21": -1.373,
+    "11": -1.931,
+    "9": -3.084,
+    "27": -3.628,
+    "12": -4.971,
+    "30": -5.366,
+    "4": -5.613,
+    "17": -6.691,
+    "26": -7.522,
+    "3": -7.736,
+    "15": -8.471,
+    "23": -9.898
   },
   "teams": [
     {
@@ -75,215 +75,215 @@
       "abbr": "SA",
       "name": "San Antonio Spurs",
       "rank": 1,
-      "bpi": 10.233,
-      "bpi_off": 5.023,
-      "bpi_def": 5.21
+      "bpi": 9.943,
+      "bpi_off": 4.787,
+      "bpi_def": 5.156
     },
     {
       "id": "2",
       "abbr": "BOS",
       "name": "Boston Celtics",
       "rank": 2,
-      "bpi": 7.309,
-      "bpi_off": 3.753,
-      "bpi_def": 3.556
+      "bpi": 9.191,
+      "bpi_off": 5.182,
+      "bpi_def": 4.009
     },
     {
       "id": "25",
       "abbr": "OKC",
       "name": "Oklahoma City Thunder",
       "rank": 3,
-      "bpi": 7.082,
-      "bpi_off": 1.261,
-      "bpi_def": 5.822
+      "bpi": 6.916,
+      "bpi_off": 1.194,
+      "bpi_def": 5.722
     },
     {
       "id": "10",
       "abbr": "HOU",
       "name": "Houston Rockets",
       "rank": 4,
-      "bpi": 6.163,
-      "bpi_off": 3.624,
-      "bpi_def": 2.539
+      "bpi": 6.885,
+      "bpi_off": 4.142,
+      "bpi_def": 2.743
     },
     {
       "id": "18",
       "abbr": "NY",
       "name": "New York Knicks",
       "rank": 5,
-      "bpi": 5.958,
-      "bpi_off": 2.681,
-      "bpi_def": 3.277
+      "bpi": 5.656,
+      "bpi_off": 2.321,
+      "bpi_def": 3.335
     },
     {
       "id": "16",
       "abbr": "MIN",
       "name": "Minnesota Timberwolves",
       "rank": 6,
-      "bpi": 5.433,
-      "bpi_off": 1.22,
-      "bpi_def": 4.214
+      "bpi": 5.166,
+      "bpi_off": 0.941,
+      "bpi_def": 4.225
     },
     {
       "id": "13",
       "abbr": "LAL",
       "name": "Los Angeles Lakers",
       "rank": 7,
-      "bpi": 4.868,
-      "bpi_off": 4.759,
-      "bpi_def": 0.108
+      "bpi": 4.998,
+      "bpi_off": 4.871,
+      "bpi_def": 0.128
     },
     {
       "id": "22",
       "abbr": "POR",
       "name": "Portland Trail Blazers",
       "rank": 8,
-      "bpi": 4.215,
-      "bpi_off": 2.247,
-      "bpi_def": 1.968
-    },
-    {
-      "id": "20",
-      "abbr": "PHI",
-      "name": "Philadelphia 76ers",
-      "rank": 9,
-      "bpi": 4.152,
-      "bpi_off": 1.424,
-      "bpi_def": 2.729
+      "bpi": 3.912,
+      "bpi_off": 1.948,
+      "bpi_def": 1.964
     },
     {
       "id": "8",
       "abbr": "DET",
       "name": "Detroit Pistons",
+      "rank": 9,
+      "bpi": 3.629,
+      "bpi_off": 0.205,
+      "bpi_def": 3.424
+    },
+    {
+      "id": "20",
+      "abbr": "PHI",
+      "name": "Philadelphia 76ers",
       "rank": 10,
-      "bpi": 3.84,
-      "bpi_off": 0.46,
-      "bpi_def": 3.38
+      "bpi": 3.055,
+      "bpi_off": 0.891,
+      "bpi_def": 2.164
     },
     {
       "id": "7",
       "abbr": "DEN",
       "name": "Denver Nuggets",
       "rank": 11,
-      "bpi": 3.074,
-      "bpi_off": 4.067,
-      "bpi_def": -0.994
-    },
-    {
-      "id": "5",
-      "abbr": "CLE",
-      "name": "Cleveland Cavaliers",
-      "rank": 12,
-      "bpi": 1.895,
-      "bpi_off": 2.819,
-      "bpi_def": -0.923
-    },
-    {
-      "id": "14",
-      "abbr": "MIA",
-      "name": "Miami Heat",
-      "rank": 13,
-      "bpi": 1.34,
-      "bpi_off": 1.731,
-      "bpi_def": -0.391
-    },
-    {
-      "id": "1",
-      "abbr": "ATL",
-      "name": "Atlanta Hawks",
-      "rank": 14,
-      "bpi": 1.226,
-      "bpi_off": -0.165,
-      "bpi_def": 1.392
+      "bpi": 2.968,
+      "bpi_off": 3.913,
+      "bpi_def": -0.945
     },
     {
       "id": "6",
       "abbr": "DAL",
       "name": "Dallas Mavericks",
-      "rank": 15,
-      "bpi": 0.058,
-      "bpi_off": -0.521,
-      "bpi_def": 0.58
+      "rank": 12,
+      "bpi": 1.94,
+      "bpi_off": 0.907,
+      "bpi_def": 1.033
     },
     {
-      "id": "29",
-      "abbr": "MEM",
-      "name": "Memphis Grizzlies",
+      "id": "5",
+      "abbr": "CLE",
+      "name": "Cleveland Cavaliers",
+      "rank": 13,
+      "bpi": 1.509,
+      "bpi_off": 2.596,
+      "bpi_def": -1.086
+    },
+    {
+      "id": "14",
+      "abbr": "MIA",
+      "name": "Miami Heat",
+      "rank": 14,
+      "bpi": 1.152,
+      "bpi_off": 1.62,
+      "bpi_def": -0.468
+    },
+    {
+      "id": "1",
+      "abbr": "ATL",
+      "name": "Atlanta Hawks",
+      "rank": 15,
+      "bpi": 0.853,
+      "bpi_off": -0.402,
+      "bpi_def": 1.254
+    },
+    {
+      "id": "28",
+      "abbr": "TOR",
+      "name": "Toronto Raptors",
       "rank": 16,
-      "bpi": -0.04,
-      "bpi_off": 1.064,
-      "bpi_def": -1.104
+      "bpi": -0.38,
+      "bpi_off": -0.867,
+      "bpi_def": 0.487
     },
     {
       "id": "19",
       "abbr": "ORL",
       "name": "Orlando Magic",
       "rank": 17,
-      "bpi": -0.397,
-      "bpi_off": -1.392,
-      "bpi_def": 0.996
+      "bpi": -0.479,
+      "bpi_off": -1.45,
+      "bpi_def": 0.971
+    },
+    {
+      "id": "29",
+      "abbr": "MEM",
+      "name": "Memphis Grizzlies",
+      "rank": 18,
+      "bpi": -0.632,
+      "bpi_off": 0.555,
+      "bpi_def": -1.187
     },
     {
       "id": "21",
       "abbr": "PHX",
       "name": "Phoenix Suns",
-      "rank": 18,
-      "bpi": -1.056,
-      "bpi_off": 0.021,
-      "bpi_def": -1.077
-    },
-    {
-      "id": "28",
-      "abbr": "TOR",
-      "name": "Toronto Raptors",
       "rank": 19,
-      "bpi": -1.589,
-      "bpi_off": -1.544,
-      "bpi_def": -0.045
+      "bpi": -1.373,
+      "bpi_off": -0.189,
+      "bpi_def": -1.185
     },
     {
       "id": "11",
       "abbr": "IND",
       "name": "Indiana Pacers",
       "rank": 20,
-      "bpi": -1.78,
-      "bpi_off": -1.791,
-      "bpi_def": 0.011
+      "bpi": -1.931,
+      "bpi_off": -1.69,
+      "bpi_def": -0.241
     },
     {
       "id": "9",
       "abbr": "GS",
       "name": "Golden State Warriors",
       "rank": 21,
-      "bpi": -2.705,
-      "bpi_off": -1.816,
-      "bpi_def": -0.89
+      "bpi": -3.084,
+      "bpi_off": -2.121,
+      "bpi_def": -0.963
     },
     {
       "id": "27",
       "abbr": "WSH",
       "name": "Washington Wizards",
       "rank": 22,
-      "bpi": -4.357,
-      "bpi_off": -1.728,
-      "bpi_def": -2.63
+      "bpi": -3.628,
+      "bpi_off": -1.176,
+      "bpi_def": -2.452
     },
     {
       "id": "12",
       "abbr": "LAC",
       "name": "LA Clippers",
       "rank": 23,
-      "bpi": -5.023,
+      "bpi": -4.971,
       "bpi_off": -2.17,
-      "bpi_def": -2.853
+      "bpi_def": -2.801
     },
     {
       "id": "30",
       "abbr": "CHA",
       "name": "Charlotte Hornets",
       "rank": 24,
-      "bpi": -5.292,
-      "bpi_off": -4.586,
+      "bpi": -5.366,
+      "bpi_off": -4.66,
       "bpi_def": -0.706
     },
     {
@@ -291,54 +291,54 @@
       "abbr": "CHI",
       "name": "Chicago Bulls",
       "rank": 25,
-      "bpi": -5.429,
-      "bpi_off": -1.866,
-      "bpi_def": -3.563
+      "bpi": -5.613,
+      "bpi_off": -2.066,
+      "bpi_def": -3.547
     },
     {
       "id": "17",
       "abbr": "BKN",
       "name": "Brooklyn Nets",
       "rank": 26,
-      "bpi": -6.434,
-      "bpi_off": -3.576,
-      "bpi_def": -2.858
-    },
-    {
-      "id": "3",
-      "abbr": "NO",
-      "name": "New Orleans Pelicans",
-      "rank": 27,
-      "bpi": -6.998,
-      "bpi_off": -2.39,
-      "bpi_def": -4.608
+      "bpi": -6.691,
+      "bpi_off": -3.706,
+      "bpi_def": -2.985
     },
     {
       "id": "26",
       "abbr": "UTAH",
       "name": "Utah Jazz",
+      "rank": 27,
+      "bpi": -7.522,
+      "bpi_off": -3.855,
+      "bpi_def": -3.667
+    },
+    {
+      "id": "3",
+      "abbr": "NO",
+      "name": "New Orleans Pelicans",
       "rank": 28,
-      "bpi": -7.595,
-      "bpi_off": -3.957,
-      "bpi_def": -3.638
+      "bpi": -7.736,
+      "bpi_off": -2.828,
+      "bpi_def": -4.908
     },
     {
       "id": "15",
       "abbr": "MIL",
       "name": "Milwaukee Bucks",
       "rank": 29,
-      "bpi": -8.37,
-      "bpi_off": -4.095,
-      "bpi_def": -4.276
+      "bpi": -8.471,
+      "bpi_off": -4.204,
+      "bpi_def": -4.267
     },
     {
       "id": "23",
       "abbr": "SAC",
       "name": "Sacramento Kings",
       "rank": 30,
-      "bpi": -9.781,
-      "bpi_off": -4.557,
-      "bpi_def": -5.224
+      "bpi": -9.898,
+      "bpi_off": -4.692,
+      "bpi_def": -5.206
     }
   ]
 }
