@@ -1,3 +1,15 @@
+# sh32 (build 2026-11-17sh32): PAUL-l copy gets 🎉 (LOCAL, not pushed)
+
+Base unchanged: [REDACTED] 59c9dc1. Rebuilt with tools/build_league_from_stoopids.py. Every Hoops change is a tagged patch in tools/hoops_patches.json.
+
+- [PAUL-l] Copy on a bet in "Ready For Someone Else to Settle" is now
+  "🎉 Hey <settler>, settle this bet! 🎉" / the game-team line / the date + expiry line.
+  🎉 is Paul's emoji for a bet that is finished or waiting to be settled (💣 requested, 💥 accepted or written up).
+  Settler = the person who placed it (the only one with Who won?, as the card's "Only X can enter result." says). Every other copy text is unchanged.
+- The empty gap under the red "Ready to settle" line on that same card is also in [REDACTED] (identical b27Card HTML and card CSS, including min-height 220px, .b27-foot margin-top 8px, and the 😀+ reaction button in the footer). No Hoops patch: if [REDACTED] has the gap, we do not patch it.
+- [HOOPS] ui.js cache-buster ?v=1.85.0.sh32. js/version.js and sw.js are 2026-11-17sh32.
+- Tests: new tests/e2e_sh32.js (same checks as e2e_sh31, with the 🎉 first line).
+
 # sh31 (build 2026-11-16sh31): PAUL-l settle-nudge copy + STOOPIDS 59c9dc1 'Not sure yet' pick fix (LOCAL, not pushed)
 
 Base moved: STOOPIDS afeffc8 -> 59c9dc1 (merge of 24ba90e, shared/ui.js 1.85.0). The only code change in afeffc8..59c9dc1 is 24ba90e; the rest are data refreshes. Rebuilt with tools/build_league_from_stoopids.py.
