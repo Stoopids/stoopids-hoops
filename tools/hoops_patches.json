@@ -50,9 +50,9 @@
   },
   {
    "tag": "HOOPS",
-   "why": "remember last league/tab for the Hoops home page",
-   "old": "function s24Put(push){try{s26wMan(s24HashOf(tab));const want=s24Url(s24RouteHash());try{sessionStorage.setItem((HK+'tab'),s24HashOf(tab))}catch(_){}if(location.pathname+location.search+location.hash===want)return;history[push?'pushState':'replaceState'](null,'',want)}catch(e){}}",
-   "new": "function s24Put(push){try{s26wMan(s24HashOf(tab));const want=s24Url(s24RouteHash());try{sessionStorage.setItem((HK+'tab'),s24HashOf(tab))}catch(_){}try{sessionStorage.setItem('shoops.launched','1')}catch(_){}try{const lid=hoopsLeagueId(),t=s24HashOf(tab);if(lid&&!DEMO&&/^[a-z]{3,12}$/.test(t))localStorage.setItem('shoops.lastsite',JSON.stringify({id:lid,t:t,at:Date.now()}));if(window.HOOPS&&HOOPS.saveLastSite)HOOPS.saveLastSite(t)}catch(_){}if(location.pathname+location.search+location.hash===want)return;history[push?'pushState':'replaceState'](null,'',want)}catch(e){}}"
+   "why": "remember last league/tab for the Hoops home page (sh30: STOOPIDS 31f8d2d now saves the Bets sub-tab in the tab key; kept)",
+   "old": "function s24Put(push){try{s26wMan(s24HashOf(tab));const want=s24Url(s24RouteHash());try{sessionStorage.setItem((HK+'tab'),s24RouteHash())}catch(_){}if(location.pathname+location.search+location.hash===want)return;history[push?'pushState':'replaceState'](null,'',want)}catch(e){}}",
+   "new": "function s24Put(push){try{s26wMan(s24HashOf(tab));const want=s24Url(s24RouteHash());try{sessionStorage.setItem((HK+'tab'),s24RouteHash())}catch(_){}try{sessionStorage.setItem('shoops.launched','1')}catch(_){}try{const lid=hoopsLeagueId(),t=s24HashOf(tab);if(lid&&!DEMO&&/^[a-z]{3,12}$/.test(t))localStorage.setItem('shoops.lastsite',JSON.stringify({id:lid,t:t,at:Date.now()}));if(window.HOOPS&&HOOPS.saveLastSite)HOOPS.saveLastSite(t)}catch(_){}if(location.pathname+location.search+location.hash===want)return;history[push?'pushState':'replaceState'](null,'',want)}catch(e){}}"
   },
   {
    "tag": "NBA",
@@ -98,9 +98,9 @@
   },
   {
    "tag": "HOOPS",
-   "why": "shared/ui.js cache-buster: Hoops copy of 1.80.0 with its patches (sh29)",
-   "old": "<script src=\"shared/ui.js?v=1.80.0\"",
-   "new": "<script src=\"shared/ui.js?v=1.80.0.sh29\""
+   "why": "shared/ui.js cache-buster: Hoops copy of 1.84.0 with its patches (sh30)",
+   "old": "<script src=\"shared/ui.js?v=1.84.0\"",
+   "new": "<script src=\"shared/ui.js?v=1.84.0.sh30\""
   },
   {
    "tag": "PAUL-e",
@@ -171,15 +171,15 @@
   },
   {
    "tag": "HOOPS-DRAFTNAV",
-   "why": "Draft room item in the nav (phone: under More): call [REDACTED]' own draftNavLink() after the nav is rebuilt ([REDACTED] defines it but never calls it). DRAFT_URL is this league's Hoops draft room.",
+   "why": "Draft room item in the nav (phone: under More): call STOOPIDS' own draftNavLink() after the nav is rebuilt (STOOPIDS defines it but never calls it). DRAFT_URL is this league's Hoops draft room.",
    "old": "  /*</NAV-ONE-ROW>*/\n  setTimeout(liveSync,0);",
    "new": "  /*</NAV-ONE-ROW>*/\n  /*<HOOPS-DRAFTNAV>*/try{draftNavLink()}catch(_){}/*</HOOPS-DRAFTNAV>*/\n  setTimeout(liveSync,0);"
   },
   {
    "tag": "HOOPS",
-   "why": "stoopid-bet.js cache-buster: Hoops copy of v14 with its patches (sh27)",
+   "why": "stoopid-bet.js cache-buster: Hoops copy of v14 with its patches (sh30: STOOPIDS changed the file in bfecc41/5a174ad without a version bump)",
    "old": "<script src=\"stoopid-bet.js?v=14\"></script>",
-   "new": "<script src=\"stoopid-bet.js?v=14.sh27\"></script>"
+   "new": "<script src=\"stoopid-bet.js?v=14.sh30\"></script>"
   },
   {
    "tag": "BUG-5",
@@ -237,9 +237,9 @@
   },
   {
    "tag": "PAUL-j",
-   "why": "Bets page order Paul set: 'Ready For Me to Settle' lists only the ready bets the viewer can settle (the backer enters the result); 'Ready For Someone Else to Settle' right below it holds ready bets the viewer is in but someone else must settle (same cards, same count). Ready bets the viewer is not in stay under All Bets. STOOPIDS lists every due bet under one 'Ready to settle' for every viewer.",
-   "old": "const ready=b27SortSoon(FL.filter(b27Ready)),ids=new Set(ready.map(b=>b.id)),rest=FL.filter(b=>!ids.has(b.id));\n  if(ready.length)h+=`<section id=\"b27Ready\"><h2>Ready to settle <span class=\"note\">${ready.length}</span></h2><div class=\"b27-grid\">${b27Cards(ready,me)}</div></section>`;",
-   "new": "const R0=b27SortSoon(FL.filter(b27Ready))/*<PAUL-j>*/,ready=R0.filter(b=>b.kind==='pool'||b.backer===me),ready2=R0.filter(b=>b.kind!=='pool'&&b.backer!==me&&s24InBet(b,me))/*</PAUL-j>*/,ids=new Set(ready.concat(ready2).map(b=>b.id)),rest=FL.filter(b=>!ids.has(b.id));\n  if(ready.length)h+=`<section id=\"b27Ready\"><h2>Ready For Me to Settle <span class=\"note\">${ready.length}</span></h2><div class=\"b27-grid\">${b27Cards(ready,me)}</div></section>`;/*<PAUL-j>*/if(ready2.length)h+=`<section id=\"b27Ready2\"><h2>Ready For Someone Else to Settle <span class=\"note\">${ready2.length}</span></h2><div class=\"b27-grid\">${b27Cards(ready2,me)}</div></section>`;/*</PAUL-j>*/"
+   "why": "Bets page order Paul set. STOOPIDS 61a1f4b now has its own 'Ready For Someone Else to Settle' section (b27ReadyElse); Hoops keeps Paul's two differences: the first section is titled 'Ready For Me to Settle', and 'Ready For Someone Else to Settle' holds only ready bets the viewer is in (someone else enters the result). Ready bets the viewer is not in stay under All Bets (STOOPIDS moves every bet the viewer cannot settle into that section).",
+   "old": "const ready=b27SortSoon(FL.filter(b27Ready)),mine=ready.filter(b=>!b27NeedsOther(b,me)),other=ready.filter(b=>b27NeedsOther(b,me)),ids=new Set(ready.map(b=>b.id)),rest=FL.filter(b=>!ids.has(b.id));\n  if(mine.length)h+=`<section id=\"b27Ready\"><h2>Ready to settle <span class=\"note\">${mine.length}</span></h2>",
+   "new": "const ready=b27SortSoon(FL.filter(b27Ready)),mine=ready.filter(b=>!b27NeedsOther(b,me)),other=ready.filter(b=>b27NeedsOther(b,me)/*<PAUL-j>*/&&s24InBet(b,me)/*</PAUL-j>*/),ids=new Set(/*<PAUL-j>*/mine.concat(other)/*</PAUL-j>*/.map(b=>b.id)),rest=FL.filter(b=>!ids.has(b.id));\n  if(mine.length)h+=`<section id=\"b27Ready\"><h2>Ready For Me to Settle <span class=\"note\">${mine.length}</span></h2>"
   },
   {
    "tag": "PAUL-j",
@@ -341,9 +341,15 @@
   },
   {
    "tag": "BUG-7",
-   "why": "Request: a bet naming a game that already tipped says so (it used to say 'Name the game')",
-   "old": "if(!err&&f.mode==='start'&&!hasGame)err=wk==='game'?'Name the game so it expires at tipoff and settles at the end of the game.':'Name the game so it expires at tipoff.';",
-   "new": "var lvG=!hasGame&&!f.gid?SHARED_UI.tipGame({games:games(),text:f.text,now:Date.now(),live:true,today:(typeof S25!=='undefined'&&S25.etDay)?S25.etDay(new Date()):'',dateFrom:(typeof S25!=='undefined'&&S25.dateFrom)?S25.dateFrom:null,day:(typeof S25!=='undefined'&&S25.etDay)?S25.etDay:null}):null;if(!err&&lvG&&Date.parse(lvG.start)<=now&&(f.mode==='start'||wk==='game'))err='That game has already started.';   /* BUG-7 */\n        if(!err&&f.mode==='start'&&!hasGame)err=wk==='game'?'Name the game so it expires at tipoff and settles at the end of the game.':'Name the game so it expires at tipoff.';"
+   "why": "Request: a game that already tipped says 'That game has already started.' (2nd half: 'That half has already started.') and nothing posts. Two ways in: (1) typed words that name a started game; since STOOPIDS 1.84.0 (PR #72) unmatched words post as free text once expiry and settle are picked by hand, and STOOPIDS treats a started game as unmatched (it asks 'Pick when it expires.' and then posts it as free text); Hoops keeps the block even with a hand-picked expiry, unless settle is End Of Season or a date (a season / date bet that only mentions the teams). (2) a game picked from a card or Quick bet before tip and sent after it; STOOPIDS says 'Choose when it expires (up to a year).' there because the tipoff expiry is already past; Hoops checks the start first.",
+   "old": "if(!err&&!hasGame&&(f.mode==='start'||!f.expPick))err='Pick when it expires.';",
+   "new": "var lvG=!hasGame&&!f.gid?SHARED_UI.tipGame({games:games(),text:f.text,now:Date.now(),live:true,today:(typeof S25!=='undefined'&&S25.etDay)?S25.etDay(new Date()):'',dateFrom:(typeof S25!=='undefined'&&S25.dateFrom)?S25.dateFrom:null,day:(typeof S25!=='undefined'&&S25.etDay)?S25.etDay:null}):null,stG=hasGame?g:lvG&&!(f.whenPick&&(f.wk==='season'||f.wk==='date'))?lvG:null;if(!err&&stG&&started({cov:f.cov,gid:String(stG.id),start:stG.start},now))err='That '+(f.cov==='2h'?'half':'game')+' has already started.';   /* BUG-7 */\n        if(!err&&!hasGame&&(f.mode==='start'||!f.expPick))err='Pick when it expires.';"
+  },
+  {
+   "tag": "PAUL-1",
+   "why": "copy text of a written-up / agreed bet (Write It Up auto-copy, the agreed card Copy, an accepted request) keeps 💥 at both ends; 💣 stays only on requests awaiting acceptance. STOOPIDS 18ff919 (1.81.0) moved every copy path to one builder (copyText) that puts 💣 on all of them.",
+   "old": "bomb='\\uD83D\\uDCA3 $'+r.amt+' '+left+' v '+right+od+' \\uD83D\\uDCA3'",
+   "new": "bomb=(kind==='bet'||kind==='acc'?'\\uD83D\\uDCA5':'\\uD83D\\uDCA3')+' $'+r.amt+' '+left+' v '+right+od+' '+(kind==='bet'||kind==='acc'?'\\uD83D\\uDCA5':'\\uD83D\\uDCA3')/*PAUL-1*/"
   }
  ],
  "sb": [
@@ -381,7 +387,7 @@
   },
   {
    "tag": "HOOPS",
-   "why": "sbProve (console-only self-check, never shown) uses this league's first two managers instead of hardcoded [REDACTED] names",
+   "why": "sbProve (console-only self-check, never shown) uses this league's first two managers instead of hardcoded STOOPIDS names",
    "old": "function sbProve(){const a='Paul',b='Nasty',",
    "new": "function sbProve(){const a=((D&&D.owners||[])[0]||{}).name||'',b=((D&&D.owners||[])[1]||{}).name||'',"
   },

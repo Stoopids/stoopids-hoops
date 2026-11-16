@@ -5,7 +5,7 @@ the expected number of times, so a STOOPIDS update that moves code fails loudly 
 Base: STOOPIDS commit BASE (read with git show from the STOOPIDS checkout, so its working tree / later commits never leak in).
 Run: python3 tools/build_league_from_stoopids.py [stoopids_src_dir]"""
 import re, sys, os, json, shutil, subprocess
-BASE = '4c3c4d4'   # sh27: latest [REDACTED] main (Nov 14); sh24-sh26 were c3dd7d9
+BASE = 'afeffc8'   # sh30: STOOPIDS main with PR #72 free-written requests (Nov 16); sh27-sh29 were 4c3c4d4
 SRC = sys.argv[1] if len(sys.argv) > 1 else '/workspace/stoopids-src'
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 def src(rel):
@@ -69,7 +69,7 @@ rep("D=window."+dn+";{const R=window.HOOPS_DRAFT27_RESULTS.draft;D27_OWNERS=R.ma
 rep("function s24Url(h,share){const q=new URLSearchParams();if(DEMO)q.set('demo','1');if(!share&&ADMIN)q.set('admin','1');const s=q.toString();return location.pathname+(s?'?'+s:'')+(h?'#'+h:'')}",
     "function hoopsLeagueId(){try{const q=new URLSearchParams(location.search).get('l');if(q&&/^[A-Za-z0-9]{2,40}$/.test(q))return q}catch(e){}const id=window.HOOPS&&HOOPS.id;return (id&&/^[A-Za-z0-9]{2,40}$/.test(id))?id:''}\nfunction s24Url(h,share){const q=new URLSearchParams();const l=hoopsLeagueId();if(l)q.set('l',l);if(DEMO)q.set('demo','1');if(typeof VIEW_ONLY!=='undefined'&&VIEW_ONLY)q.set('view','1');if(!share&&ADMIN)q.set('admin','1');const s=q.toString();return location.pathname+(s?'?'+s:'')+(h?'#'+h:'')}",
     why='keep ?l= in the address bar so a refresh stays on this league')
-# (sh27) dropped: the old b27PoolShell override. [REDACTED] 4c3c4d4 opens the pool form itself (vB27 U.kind==='pool') and b27PoolShell is no longer called.
+# (sh27) dropped: the old b27PoolShell override. STOOPIDS 4c3c4d4 opens the pool form itself (vB27 U.kind==='pool') and b27PoolShell is no longer called.
 
 rep('<p class="d27sub">8 owners · snake draft', '<p class="d27sub">${D27_OWNERS} owners · ${esc((DRAFT27_RESULTS.draft||{}).type||\'snake\')} draft', why='draft results subtitle')
 # 2) textdb records -> this league's shoops1- keys
@@ -131,14 +131,18 @@ rep("sports/basketball/mens-college-basketball/rankings", "sports/basketball/nba
 rerep(r"if\(n>=1&&n<=25\)\{m\[String\(t\.espn_id\|\|tid\)\]=n;", "if(n>=1&&n<=30){m[String(t.espn_id||tid)]=n;", why='BPI ranks all 30 teams')
 rep("['ap','AP','AP Top 25']", "['ap','BPI','ESPN BPI Power Ranking (26-27)']", why='rank column: BPI')
 rep("['net','NET','NCAA NET']", "['net','<span class=\"s27-lf\">Win rank</span><span class=\"s27-ls\">WR</span>','Last season win rank (25-26)']", why='rank column: last-season win rank')
-rep("'STOOPID rank (Draft Room)'", "'Stoopids Rank (Draft Room)'", n=2, why='rank column title')
+# (sh30) dropped: the 'STOOPID rank (Draft Room)' column title swap. STOOPIDS 39c21df removed that column from the Teams table.
 for a,b in [("'ap','AP','AP Top 25'","'ap','BPI','ESPN BPI Power Ranking (26-27)'"),("'net','NET','NCAA NET'","'net','<span class=\"s27-lf\">Win rank</span><span class=\"s27-ls\">WR</span>','Last season win rank (25-26)'"),
              ("'kp','<span class=\"s27-lf\">KenPom</span><span class=\"s27-ls\">KP</span>','KenPom rank'","'kp','<span class=\"s27-lf\">Proj pts</span><span class=\"s27-ls\">PJ</span>','Projected Stoopids points (BPI)'")]:
     rep(a, b, n=s.count(a), why='All teams column: '+b.split(',')[1])
 swap_literal('const S27_RANKS=', '{}', 'Stoopids Rank / projection come from D.ranks (assets/teams.js)')
-rep("ap:'AP',net:'NET',sr:'STOOPID',kp:'KenPom'", "ap:'BPI',net:'Win rank',sr:'Stoopids Rank',kp:'Proj pts'", why='sort label')
-rerep(r" STOOPID = STOOPID rank from the Draft Room preseason team list\. KenPom = KenPom \$\{esc\(S27_KP_SEASON\)\} ratings rank\. Rec = full season record \(regular season \+ conference tournaments \+ postseason as ESPN counts it\)\. AP = .*?\\u2014 = unranked\.",
-      " STOOPID = Stoopids Rank from the Draft Room (expected fantasy points from ESPN BPI projections). Proj pts = those projected points. Rec = season record as ESPN counts it. BPI = ESPN BPI Power Ranking 26-27. Pts = Stoopids Hoops points this season (team totals from Standings > Points). Conf = conference · division. Win rank = rank by last season's wins (25-26). \\u2014 = unranked.", why='All teams note: NBA sources')
+# (sh30) STOOPIDS 39c21df replaced the sort sentence + source note under the Teams table with s27TeamsNote() (source dates) and opens the table on KenPom, best first.
+# In Hoops the KenPom column is Proj pts (bigger is better), so it opens on Proj pts highest first, and the note names the NBA sources.
+rep("const S27T={k:'kp',d:1};   // opens on KenPom, best rank first", "const S27T={k:'kp',d:-1};   // opens on Proj pts (STOOPIDS: KenPom), highest first", why='Teams table opens on Proj pts, highest first')
+rep("function s27Sort(f){if(S27T.k!==f){S27T.k=f;S27T.d=(f==='rec'||f==='pts')?-1:1}", "function s27Sort(f){if(S27T.k!==f){S27T.k=f;S27T.d=(f==='rec'||f==='pts'||f==='kp')?-1:1}", why='Proj pts starts highest first, like Rec / Pts')
+rep("  return [kp?('KenPom updated '+kp):'KenPom has no date on file',ap?('AP Top 25 '+ap):'AP Top 25 (no poll date loaded)',net?('NET fetched '+net):'NET has no date on file'].join(' · ')}",
+    "  return ['Proj pts = projected Stoopids points from ESPN BPI','BPI = ESPN BPI Power Ranking 26-27','Win rank = rank by last season\u2019s wins (25-26)',net?('Team data updated '+net):''].filter(Boolean).join(' · ')}",
+    why='Teams note: NBA sources (Proj pts, BPI, Win rank) and the team data date')
 rep("fetch('data/net.json',", "fetch('data/hoops-net.json',", why='rank file: NBA win rank + divisions (built below from assets/teams.js)')
 rep("return d>='2027-01-06'&&d<='2027-01-20'}", "return false}", why='no redraft in Stoopids Hoops')
 rep("const end=tvNext(M.title_game)||'2027-04-06';return d>='2027-03-01'&&d<=end}", "const end=tvNext(M.title_game)||'2027-06-30';return d>='2027-04-14'&&d<=end}", why='Postseason tab: NBA play-in to Finals')
@@ -184,7 +188,7 @@ for x in PATCHES['ui']:
     u = u.replace(x['old'], x['new']); LOG.append(('shared/ui.js [' + x['tag'] + '] ' + x['why'], 1))
 open(os.path.join(ROOT, 'shared', 'ui.js'), 'w', encoding='utf-8').write(u)
 open(os.path.join(ROOT, 'shared', 'ui.css'), 'w', encoding='utf-8').write(src('shared/ui.css')); LOG.append(('shared/ui.css: verbatim', 1))
-# stoopid-bet.js ([REDACTED] Stoopid Bet ideas, new in 4c3c4d4): verbatim except the tagged 'sb' patches (league key, NBA BPI rank instead of NET)
+# stoopid-bet.js (STOOPIDS Stoopid Bet ideas, new in 4c3c4d4): verbatim except the tagged 'sb' patches (league key, NBA BPI rank instead of NET)
 b = src('stoopid-bet.js')
 for x in PATCHES.get('sb', []):
     n = x.get('n', 1)

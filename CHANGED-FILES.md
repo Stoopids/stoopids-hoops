@@ -1,3 +1,30 @@
+# sh30 (build 2026-11-16sh30): STOOPIDS free-written requests (PR #72) + everything since 4c3c4d4 (LOCAL, not pushed)
+
+Base moved: STOOPIDS 4c3c4d4 -> afeffc8 (merge of PR #72, shared/ui.js 1.84.0). Rebuilt with tools/build_league_from_stoopids.py. Every Hoops change is a tagged patch in tools/hoops_patches.json or a swap in the build script.
+
+STOOPIDS code commits brought in (all of them; the rest of 4c3c4d4..afeffc8 are data refreshes):
+- bfecc41 bet lines name both teams ("X (no points) v Y", custom spreads, parlay legs).
+- 5a174ad compact "Change the line" request copy; posted-line mode.
+- 9e1d46d open request card shows each fact once.
+- 91c3f1e Quick bet requests keep their game link; parser reads "X (no points) v Y".
+- 18ff919 one copy builder (copyText) for the form, open request, accepted bet and parlay (ui.js 1.81.0).
+- 61a1f4b Ready to settle split: own "Ready For Someone Else to Settle" section (b27NeedsOther).
+- 31f8d2d slim Request / Write It Up headers; a reload keeps the Bets sub-tab (#bets/request, /write, /all).
+- baf8314 copy text drops the "STOOPID Request" line.
+- 83cbb2c / fda34c0 St = Saint = State in request matching; a card-picked game always sticks (ui.js 1.83.0).
+- 39c21df Teams table: preseason STOOPID rank column dropped, opens on the KenPom column, note shows source dates.
+- 4de38c2 Nov 16 weekly recap (NCAA text; Hoops still swaps RECAPS to [] so nothing shows).
+- d3f0525 / afeffc8 (PR #72) unmatched Request text posts as free text (r.free=1) once expiry and settle are picked by hand.
+
+Hoops patch changes:
+- [HOOPS] s24Put patch re-based on 31f8d2d (tab key now saves the Bets sub-tab). ui.js cache-buster ?v=1.84.0.sh30, stoopid-bet.js ?v=14.sh30 (STOOPIDS changed it without a bump).
+- [PAUL-j] re-based on 61a1f4b: first section still "Ready For Me to Settle"; "Ready For Someone Else to Settle" (now STOOPIDS' id b27ReadyElse) keeps only bets the viewer is in; bets the viewer is not in stay under All Bets.
+- [PAUL-1] new ui patch: copyText keeps 💥 on written-up / accepted bet copy (STOOPIDS now puts 💣 on every copy).
+- [BUG-7] Request block re-based on 1.84.0: a recognized started game (typed, or card-picked before tip and sent after) says "That game has already started." and does not post, even with a hand-picked expiry, unless settle is End Of Season or a date. STOOPIDS treats a typed started game as unmatched and lets it post as free text; for a card-picked started game STOOPIDS says "Choose when it expires (up to a year)."
+- [NBA] Teams table: dropped the Stoopids Rank title swap and the old sort/source note swaps (gone upstream); opens on Proj pts highest first; note names Proj pts / BPI / Win rank and the team data date.
+- js/version.js and sw.js are 2026-11-16sh30.
+- Tests: new tests/e2e_sh30.js. e2e_sh27/28/29 take BUILD and RQ_BLANK_WHEN env; e2e_sh28_bets uses b27ReadyElse; e2e_stoopids_bets accepts the new copy header (with odds).
+
 # sh29 (build 2026-11-15sh29): Request names the game (BUG-7) (LOCAL, not pushed)
 
 Base unchanged: STOOPIDS 4c3c4d4. Rebuilt with tools/build_league_from_stoopids.py. Every change is a tagged patch in tools/hoops_patches.json.

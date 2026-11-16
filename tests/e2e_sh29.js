@@ -20,7 +20,7 @@ const TEXT='Minnesota Timberwolves and Chicago Bulls game: over 234.5 pts tonigh
    await p.goto(`http://127.0.0.1:${HP}/league.html?l=${id}#bets27`);
    await p.waitForFunction(()=>typeof U!=='undefined'&&U.state==='ok'&&typeof b27Who==='function'&&b27Who()&&typeof RQ!=='undefined'&&D&&D.games&&D.games.length,{timeout:40000});await sleep(1500);
    await p.evaluate(()=>{tab='bets27';OB_VIEW=innerWidth<1000?'request':'form';render()});await sleep(1000);
-   const ver=await p.evaluate(()=>window.FBN_BUILD);ok('build is sh29',ver==='2026-11-15sh29',ver);
+   const ver=await p.evaluate(()=>window.FBN_BUILD);ok('build is sh29',ver===(process.env.BUILD||'2026-11-15sh29'),ver);
    const g=await p.evaluate(()=>{const g=(D.games||[]).find(x=>String(x.id)==='401909984');return g&&{st:g.status,start:g.start,a:g.away.short,h:g.home.short}});ok('Bulls at Timberwolves is in the schedule',!!g&&g.a==='Chicago'&&g.h==='Minnesota',g);
    // type the bet the way Paul did: free text only, no game picked
    await p.evaluate(()=>{RQ.S.f.gid='';});await p.fill('#rqForm [data-rq-in="text"]',TEXT);await sleep(400);

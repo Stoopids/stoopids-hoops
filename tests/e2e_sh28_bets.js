@@ -38,12 +38,12 @@ const ORDER=['Requested By A Stoopid','Requested By Me','Ready For Me to Settle'
     const r=await p.evaluate(()=>{const hs=[...document.querySelectorAll('#main h2')].map(x=>({t:x.textContent.replace(/\s+/g,' ').trim(),y:x.getBoundingClientRect().top}));
       const sec=id=>{const s=document.getElementById(id);return s?[...s.querySelectorAll('.b27-c .s24hd b')].map(b=>b.textContent.trim()):null};
       const pin=document.getElementById('rqPinned');const rq=pin?[...pin.querySelectorAll('.rq-h')].map(h=>({t:h.textContent.trim(),n:h.nextElementSibling&&h.nextElementSibling.matches('.rq-grid')?h.nextElementSibling.children.length:(h.nextElementSibling.nextElementSibling||{children:[]}).children.length})):[];
-      return {me:b27Who(),heads:hs.map(x=>x.t),rq,mine:sec('b27Ready'),other:sec('b27Ready2'),okCard:!!document.querySelector('#main .card.b27-ok'),cardStyle:[...document.querySelectorAll('#b27Ready .b27-c, #b27Ready2 .b27-c')].map(c=>c.className)}});
+      return {me:b27Who(),heads:hs.map(x=>x.t),rq,mine:sec('b27Ready'),other:sec('b27ReadyElse'),okCard:!!document.querySelector('#main .card.b27-ok'),cardStyle:[...document.querySelectorAll('#b27Ready .b27-c, #b27ReadyElse .b27-c')].map(c=>c.className)}});
     console.log('  ',T,who,JSON.stringify(r));
     const order=ORDER.map(t=>r.heads.findIndex(x=>x.startsWith(t)));
     ok(`${T} ${who}: five sections in Paul's order with counts`,order.every(i=>i>=0)&&order.every((v,i)=>!i||v>order[i-1])&&/Requested By A Stoopid 1/.test(r.heads.join('|'))&&/Requested By Me 1/.test(r.heads.join('|'))&&/Ready For Me to Settle 1/.test(r.heads.join('|'))&&/Ready For Someone Else to Settle 1/.test(r.heads.join('|')),r.heads);
     const mineN=who==='settler'?'TEST Minnesota':'TEST Boston',othN=who==='settler'?'TEST Boston':'TEST Minnesota';
-    const txt=await p.evaluate(()=>({m:(document.getElementById('b27Ready')||{}).innerText||'',o:(document.getElementById('b27Ready2')||{}).innerText||''}));
+    const txt=await p.evaluate(()=>({m:(document.getElementById('b27Ready')||{}).innerText||'',o:(document.getElementById('b27ReadyElse')||{}).innerText||''}));
     ok(`${T} ${who}: Ready For Me to Settle has only the bet I settle (with the Who won? buttons)`,txt.m.includes(mineN)&&!txt.m.includes(othN)&&/Who won\?/.test(txt.m),txt.m.slice(0,160));
     ok(`${T} ${who}: Ready For Someone Else to Settle has the bet the other side settles ("Only X can enter result.")`,txt.o.includes(othN)&&!txt.o.includes(mineN)&&/Only .+ can enter result/.test(txt.o)&&!/Who won\?/.test(txt.o),txt.o.slice(0,160));
     const allTxt=await p.evaluate(()=>document.body.innerText);ok(`${T} ${who}: a ready bet I am not in (Cy v Dee) is under All Bets, not in either Ready list`,/TEST Denver/.test(allTxt)&&!txt.m.includes('Denver')&&!txt.o.includes('Denver'));

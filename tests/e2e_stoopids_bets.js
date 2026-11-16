@@ -52,10 +52,10 @@ try{const {seed}=require(path.join(HROOT,'tests/seed_league.js'));const API=`htt
  await p.evaluate(()=>{U.opps=['Kurmoji'];U.text='Knicks -4 beats Celtics';U.amt=5;U.odds=[2,1];U.wk='season';U.whenPick=true;render()});await p.waitForTimeout(200);
  await p.evaluate(()=>b27Place());await p.waitForTimeout(200);const fe=await p.evaluate(()=>b27FormOK());await p.evaluate(()=>b27Confirm());await p.waitForFunction(()=>!U.busy,{timeout:20000});await p.waitForTimeout(800);
  const c=await p.evaluate(()=>({view:OB_VIEW,sub:S24.sub,b:U.doc.bets.filter(b=>b.kind!=='pool').pop(),msg:U.msg}));let clip2='';try{clip2=await p.evaluate(()=>navigator.clipboard.readText())}catch(e){clip2='ERR '+e.message}
- ok('1v1 bet saved',!!(c.b&&c.b.id),'formErr='+fe);ok('1v1 copy text auto-copied',/💥 \$5 Paul v Kurmoji 💥/.test(clip2),JSON.stringify(clip2));
+ ok('1v1 bet saved',!!(c.b&&c.b.id),'formErr='+fe);ok('1v1 copy text auto-copied',/^💥 \$5 Paul v Kurmoji( · 2[-–]1)? 💥\n/.test(clip2)&&!/💣/.test(clip2),JSON.stringify(clip2));
  ok('request copy (awaiting acceptance) uses 💣',/^💣 .* 💣\n/.test(cp[0]),cp[0].split('\n')[0]);
  const cc=await p.evaluate(b=>({open:s29eCopyText(b),bk:s29eCopyText(Object.assign({},b,{status:'backer'})),ot:s29eCopyText(Object.assign({},b,{status:'other'})),pu:s29eCopyText(Object.assign({},b,{status:'push'}))}),c.b);
- ok('agreed/unsettled card Copy: 💥 at both ends, no 💣',/^💥 \$5 Paul v Kurmoji · 2–1 💥\n/.test(cc.open)&&!/💣/.test(cc.open),JSON.stringify(cc.open));
+ ok('agreed/unsettled card Copy: 💥 at both ends, no 💣',/^💥 \$5 Paul v Kurmoji · 2[-–]1 💥\n/.test(cc.open)&&!/💣/.test(cc.open),JSON.stringify(cc.open));
  ok('settled Copy: 🎉 at both ends, no bombs (backer wins)',cc.bk.split('\n')[0]==='🎉 Bet #'+c.b.n+' · Settled · Paul won 🎉'&&!/💣|💥/.test(cc.bk),JSON.stringify(cc.bk));
  ok('settled Copy: 🎉 at both ends, no bombs (other side wins)',cc.ot.split('\n')[0]==='🎉 Bet #'+c.b.n+' · Settled · Kurmoji won 🎉'&&!/💣|💥/.test(cc.ot),JSON.stringify(cc.ot));
  ok('wash Copy unchanged (💦, no bombs)',/^💦 Bet #\d+ · Wash\n/.test(cc.pu)&&!/💣|💥/.test(cc.pu),cc.pu.split('\n')[0]);

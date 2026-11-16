@@ -25,7 +25,7 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));let nf=0;const ok=(n,c,x)=>{if(
    const raw=await (await fetch(`http://127.0.0.1:${HP}/league.html`)).text();ok(T+' static h1 in the page source is the Hoops default (no bare [REDACTED] flash)',/<h1 id="hoopsLg">STOOPIDS <span>HOOPS<\/span><\/h1>/.test(raw)&&!/STOOP<span>IDS<\/span><\/h1>/.test(raw));let h0=null;for(let k=0;k<5&&h0==null;k++){try{h0=await p.evaluate(()=>document.getElementById('hoopsLg')&&document.getElementById('hoopsLg').textContent)}catch(e){await sleep(800)}}/* first visit: the service worker takes control and the page reloads once */ok(T+' title element present',!!h0,h0);
    await sleep(2500);await p.waitForFunction(()=>typeof U!=='undefined'&&U.state==='ok'&&typeof b27Who==='function'&&b27Who(),{timeout:40000});await sleep(2500);
    const h1=await p.evaluate(()=>document.getElementById('hoopsLg').textContent);ok(T+' title shows the league name',/TEST SYNTHETIC sh27/i.test(h1),h1);
-   const ver=await p.evaluate(()=>window.FBN_BUILD);ok(T+' build',ver==='2026-11-14sh27',ver);
+   const ver=await p.evaluate(()=>window.FBN_BUILD);ok(T+' build',ver===(process.env.BUILD||'2026-11-14sh27'),ver);
    await p.screenshot({path:`${OUT}/sh27-standings-${T}.png`});
    // draft room nav item
    const dn=await p.evaluate(()=>{const a=document.querySelector('#nav a.nd');return a?{href:a.getAttribute('href'),more:a.classList.contains('nm-x'),txt:a.textContent}:null});
@@ -50,12 +50,12 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));let nf=0;const ok=(n,c,x)=>{if(
      const all=document.getElementById('main').innerText;return {desk,chips,mode:mode&&mode.value,when:when&&when.value,whenSel:!!when,wiuToggle:q('#main .entry-hd button, #main .entry-hd [role=tab], #main .entry-hd .b27-kind').map(b=>b.textContent.trim()).join(' | '),parlay:q('#main [data-rq="parlay"], #main [data-wiu="parlay"]').length,
        disclaimer:/settled in pullups|just for fun/i.test(all),hasRq:!!rq}});
    ok(T+' Request form present',mb.hasRq);ok(T+' Request chips: 5 10 20 25 Custom, Even 2-1 3-1 4-1 Custom (no 50, no 5-1)',mb.chips.join(',')==='5,10,20,25,Custom,Even,2-1,3-1,4-1,Custom',mb.chips);
-   ok(T+' Request defaults: Expires Tipoff',mb.mode==='start',mb.mode);ok(T+' Request settle is a dropdown, default End of game',mb.whenSel&&mb.when==='game',mb.when);
+   ok(T+' Request defaults: Expires Tipoff',mb.mode==='start',mb.mode);ok(T+' Request settle is a dropdown, default '+(process.env.RQ_BLANK_WHEN||'game'),mb.whenSel&&mb.when===(process.env.RQ_BLANK_WHEN||'game'),mb.when);   /* sh30: STOOPIDS 1.84.0 shows Not sure yet (unknown) on a blank Request form until a game matches */
    ok(T+' Write It Up toggle says Stoop v Stoop · Pool/Buy-In',/Stoop v Stoop/.test(mb.wiuToggle)&&/Pool\/Buy-In/.test(mb.wiuToggle),mb.wiuToggle);
    ok(T+' Parlay builder on Request and Write It Up',mb.parlay>=2,mb.parlay);ok(T+' no bets disclaimer',!mb.disclaimer);
    if(T==='desktop'){ok('desktop sub-tabs Make A Bet, All Bets, Stoopid Bet, Tally',mb.desk.map(x=>x.t).join(',')==='Make A Bet,All Bets,Stoopid Bet,Tally',mb.desk);ok('desktop sub-tabs equal width',new Set(mb.desk.map(x=>x.w)).size===1,mb.desk.map(x=>x.w))}
    await p.screenshot({path:`${OUT}/sh27-bets-makeabet-${T}.png`,fullPage:T==='desktop'});
-   const wiuWhen=await p.evaluate(()=>{const s=[...document.querySelectorAll('#main select.rq-when, #main select[aria-label="When can this be settled?"]')].map(x=>x.value);return s});ok(T+' Write It Up settle default End of game',wiuWhen.length>=2&&wiuWhen.every(x=>x==='game'),wiuWhen);
+   const wiuWhen=await p.evaluate(()=>{const s=[...document.querySelectorAll('#main select.rq-when, #main select[aria-label="When can this be settled?"]')].filter(x=>!x.closest('#rqForm')).map(x=>x.value);return s});ok(T+' Write It Up settle default End of game',wiuWhen.length>=1&&wiuWhen.every(x=>x==='game'),wiuWhen);
    if(T==='desktop'){await p.evaluate(()=>window.scrollTo(0,1400));await sleep(600);const st=await p.evaluate(()=>{const n=document.getElementById('nav').getBoundingClientRect(),o=document.querySelector('.ob-desk').getBoundingClientRect();return {nav:Math.round(n.top),sub:Math.round(o.top)}});
     ok('desktop main tabs + sub-tabs freeze on scroll',st.nav>=-2&&st.nav<80&&st.sub>=0&&st.sub<160,st);await p.screenshot({path:`${OUT}/sh27-bets-sticky-desktop.png`});await p.evaluate(()=>window.scrollTo(0,0))}
    // parlay builder opens
