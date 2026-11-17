@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-17",
-  "generated_at_utc": "2026-11-17T11:17:45Z",
+  "generated_at_utc": "2026-11-17T12:10:44Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -5110,8 +5110,8 @@
       "line": {
         "fav": "16",
         "dog": "22",
-        "sp": 2.5,
-        "ou": 227.5,
+        "sp": 1.5,
+        "ou": 228.5,
         "fav_name": "MIN",
         "aml": 114,
         "hml": -135,
@@ -5144,8 +5144,8 @@
         "sp": 9.5,
         "ou": 222.5,
         "fav_name": "SA",
-        "aml": 312,
-        "hml": -395,
+        "aml": 303,
+        "hml": -382,
         "p": "DraftKings"
       }
     },
