@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-17",
-  "generated_at_utc": "2026-11-17T08:03:46Z",
+  "generated_at_utc": "2026-11-17T09:06:07Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -5142,7 +5142,7 @@
         "fav": "24",
         "dog": "8",
         "sp": 9.5,
-        "ou": 221.5,
+        "ou": 222.5,
         "fav_name": "SA",
         "aml": 295,
         "hml": -371,
