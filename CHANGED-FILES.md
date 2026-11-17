@@ -1,3 +1,14 @@
+# sh33 (build 2026-11-17sh33): PAUL-l settle copy gets Bet #, winner, and date only (LOCAL, not pushed)
+
+Base unchanged: [REDACTED] 59c9dc1. Rebuilt with tools/build_league_from_stoopids.py. Every Hoops change is a tagged patch in tools/hoops_patches.json.
+
+- [PAUL-l] Copy on a bet in "Ready For Someone Else to Settle" is now
+  "🎉 Bet #<n> · <winner> Won 🎉" / "Hey <settler>, settle this bet!" / the game-team line / the date only (no "Exp: Tip").
+  The winner is the manager name STOOPIDS already works out from the final score (S25.proposal / s25FromGames, same path as the Confirm "Suggested winner").
+  If that is a push or there is no score, the top line is just "🎉 Bet #<n> 🎉". The Hey line has no emoji. Every other copy text is unchanged.
+- [HOOPS] ui.js cache-buster ?v=1.85.0.sh33. js/version.js and sw.js are 2026-11-17sh33.
+- Tests: new tests/e2e_sh33.js.
+
 # sh32 (build 2026-11-17sh32): PAUL-l copy gets 🎉 (LOCAL, not pushed)
 
 Base unchanged: [REDACTED] 59c9dc1. Rebuilt with tools/build_league_from_stoopids.py. Every Hoops change is a tagged patch in tools/hoops_patches.json.

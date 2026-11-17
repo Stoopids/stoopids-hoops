@@ -98,9 +98,9 @@
   },
   {
    "tag": "HOOPS",
-   "why": "shared/ui.js cache-buster: Hoops copy of 1.85.0 with its patches (sh32)",
+   "why": "shared/ui.js cache-buster: Hoops copy of 1.85.0 with its patches (sh33)",
    "old": "<script src=\"shared/ui.js?v=1.85.0\"",
-   "new": "<script src=\"shared/ui.js?v=1.85.0.sh32\""
+   "new": "<script src=\"shared/ui.js?v=1.85.0.sh33\""
   },
   {
    "tag": "PAUL-e",
@@ -261,9 +261,9 @@
   },
   {
    "tag": "PAUL-l",
-   "why": "Copy on a bet in 'Ready For Someone Else to Settle' (same test as PAUL-j: ready, viewer is in it, someone else enters the result) is '🎉 Hey <settler>, settle this bet! 🎉' + the game/team line + the date/expiry line; the money line is dropped. 🎉 is Paul's emoji for a bet that is finished or waiting to be settled (💣 requested, 💥 accepted or written up). The settler is the person who placed it (the only one with the Who won? buttons, as the card's 'Only X can enter result.' says). Every other copy text is unchanged.",
+   "why": "Copy on a bet in 'Ready For Someone Else to Settle' (same test as PAUL-j: ready, viewer is in it, someone else enters the result) is '🎉 Bet #<n> · <winner> Won 🎉' / 'Hey <settler>, settle this bet!' / the game/team line / the date only (the Exp: line is dropped). The winner is the manager name STOOPIDS already works out from the final score (S25.proposal / s25FromGames, the same suggested-winner path as Confirm); if that is a push or there is no score, the top line is just '🎉 Bet #<n> 🎉'. 🎉 is Paul's emoji for a bet that is finished or waiting to be settled (💣 requested, 💥 accepted or written up). The settler is the person who placed it (the only one with the Who won? buttons, as the card's 'Only X can enter result.' says). Every other copy text is unchanged.",
    "old": "function s29eCopyText(b){if(!b)return '';if(b.status==='open'&&b.kind!=='pool')return s29eOpenCopy(b);",
-   "new": "function s29eCopyText(b){if(!b)return '';if(b.status==='open'&&b.kind!=='pool'){/*<PAUL-l>*/try{const me=b27Who();if(me&&b27Ready(b)&&b27NeedsOther(b,me)&&s24InBet(b,me)){const who=[b.backer].filter(Boolean).map(PN),L=String(s29eOpenCopy(b)||'').split('\\n').slice(1).filter(Boolean);if(who.length&&L.length)return ['🎉 Hey '+who.join(' and ')+', settle this bet! 🎉'].concat(L).join('\\n')}}catch(e){}/*</PAUL-l>*/return s29eOpenCopy(b)}"
+   "new": "function s29eCopyText(b){if(!b)return '';if(b.status==='open'&&b.kind!=='pool'){/*<PAUL-l>*/try{const me=b27Who();if(me&&b27Ready(b)&&b27NeedsOther(b,me)&&s24InBet(b,me)){const who=[b.backer].filter(Boolean).map(PN),L=String(s29eOpenCopy(b)||'').split('\\n').slice(1).filter(Boolean).map((s,i,a)=>i===a.length-1?s.replace(/\\s*·\\s*Exp:.*$/,'').replace(/^Exp:.*$/,'').trim():s).filter(Boolean);let win='';try{const rd=s25BetRd(b);let p=null;if(rd&&rd.k&&rd.k!=='manual'){const loc=s25FromGames(rd);if(loc&&loc.p)p=loc.p;else{const c=S25P.games[s25Key(rd)];if(c&&c.st==='ok'&&c.sb){const g=S25.match(c.sb,rd);if(g&&g.final)p=S25.proposal(rd,g)}}}if(p&&(p.r==='backer'||p.r==='other')){const nm=s25SuggestName(b,p.r);if(nm&&nm!=='Wash')win=nm}}catch(e){}if(who.length&&L.length)return ['🎉 Bet #'+b.n+(win?' · '+win+' Won':'')+' 🎉','Hey '+who.join(' and ')+', settle this bet!'].concat(L).join('\\n')}}catch(e){}/*</PAUL-l>*/return s29eOpenCopy(b)}"
   }
  ],
  "ui": [
