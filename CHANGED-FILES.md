@@ -1,3 +1,26 @@
+# sh34 (build 2026-11-19sh34): re-pin to STOOPIDS fbd9dc5 — default stake 5, End of season buttons, request-read race, pinned Bets row (LOCAL, not pushed)
+
+Base moved: STOOPIDS 59c9dc1 -> fbd9dc5 (ui.js 1.86.0). Rebuilt with tools/build_league_from_stoopids.py from a read-only copy of Stoopids/stoopids. Every Hoops change is a tagged patch in tools/hoops_patches.json or a swap in the build script.
+
+STOOPIDS code commits brought in (all of them; the rest of 59c9dc1..fbd9dc5 are data/ranks refreshes):
+- a9210f2 / 88eb28d: scheduled KenPom/AP/NET rank refresh (NCAA workflow and scripts; Hoops does not ship those). index.html keeps a stored AP poll date fallback; the Hoops Teams note still names Proj pts / BPI / Win rank.
+- 62fffb6 / a25671b: settle-waiting copy when someone else must enter the result. Same text Hoops already shipped as [PAUL-l] in sh31–sh33 ("🎉 Bet #<n> · <winner> Won 🎉" / "Hey <settler>, settle this bet!" / game line / date only). Now upstream (even tagged /*<PAUL-l>*/), so the Hoops-only page patch was dropped. Behavior is unchanged.
+- d714d40 / 27d0a27 (PR #76): tighter All Bets list, smaller heading on phones, helper line under the heading dropped. [PAUL-j] "All Bets" casing re-based onto h2.b27-allh.
+- 72aa3ea / 44294e6 (PR #77): desktop Make A Bet bars get a taller, centered header.
+- 359dd4f: a just-saved bet request stays on screen when an older list read comes back after the save.
+- 6e9bd2d / f36dc5c (PR #78): the pinned Bets sub-tab row no longer covers the first card while scrolling (--subh measured from the visible secondary row; pane scrolls below it).
+- 5c71e68: default stake 5 on every bet form (Request, Write it Up, Quick Bet, Stoopid Bet, parlays), prefilled and editable.
+- 9cfbe51 / fbd9dc5: written-in bets get End of season next to End of game (buttons, not a dropdown). Saves wk=season. Request also always shows the End of game choice.
+
+Hoops patch changes:
+- [PAUL-l] page patch removed: identical settle copy is now in STOOPIDS 62fffb6.
+- [PAUL-j] All Bets heading re-based on d714d40 (class="b27-allh").
+- [HOOPS] ui.js cache-buster ?v=1.86.0.sh34. stoopid-bet.js ?v=14.sh34.
+- js/version.js and sw.js are 2026-11-19sh34.
+- Tests: new tests/e2e_sh34.js (default 5, End of season, settle copy regression, screenshots).
+
+End of season / NBA calendar: b27Season() still reads D.meta.season ("2026-27"). Picking End of season saves wk=season and sid=2026-27. The form note is still "End of 2026-27. No calendar end date is set, so this only groups the bet." Same as STOOPIDS: it does not auto-due when the season ends. Hoops' Postseason tab window is 2027-04-14 to 2027-06-30 (play-in through the Finals). If a calendar end date is added later, it should be the NBA Finals (around mid-June 2027), not the NCAA championship (~April). "End of season" in NBA betting can also mean the regular-season close (~mid-April), so leaving it as a label-only group is the conservative match to STOOPIDS.
+
 # sh33 (build 2026-11-17sh33): PAUL-l settle copy gets Bet #, winner, and date only (LOCAL, not pushed)
 
 Base unchanged: [REDACTED] 59c9dc1. Rebuilt with tools/build_league_from_stoopids.py. Every Hoops change is a tagged patch in tools/hoops_patches.json.

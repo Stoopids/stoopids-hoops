@@ -98,9 +98,9 @@
   },
   {
    "tag": "HOOPS",
-   "why": "shared/ui.js cache-buster: Hoops copy of 1.85.0 with its patches (sh33)",
-   "old": "<script src=\"shared/ui.js?v=1.85.0\"",
-   "new": "<script src=\"shared/ui.js?v=1.85.0.sh33\""
+   "why": "shared/ui.js cache-buster: Hoops copy of 1.86.0 with its patches (sh34)",
+   "old": "<script src=\"shared/ui.js?v=1.86.0\"",
+   "new": "<script src=\"shared/ui.js?v=1.86.0.sh34\""
   },
   {
    "tag": "PAUL-e",
@@ -177,9 +177,9 @@
   },
   {
    "tag": "HOOPS",
-   "why": "stoopid-bet.js cache-buster: Hoops copy of v14 with its patches (sh30: STOOPIDS changed the file in bfecc41/5a174ad without a version bump)",
+   "why": "stoopid-bet.js cache-buster: Hoops copy of v14 with its patches (sh34: [REDACTED] still at v14; stake default 5 is upstream)",
    "old": "<script src=\"stoopid-bet.js?v=14\"></script>",
-   "new": "<script src=\"stoopid-bet.js?v=14.sh30\"></script>"
+   "new": "<script src=\"stoopid-bet.js?v=14.sh34\"></script>"
   },
   {
    "tag": "BUG-5",
@@ -244,8 +244,8 @@
   {
    "tag": "PAUL-j",
    "why": "section title 'All Bets' (Paul's order and casing)",
-   "old": "<h2>All bets (${rest.length}",
-   "new": "<h2>All Bets (${rest.length}"
+   "old": "<h2 class=\"b27-allh\">All bets (${rest.length}",
+   "new": "<h2 class=\"b27-allh\">All Bets (${rest.length}"
   },
   {
    "tag": "PAUL-k",
@@ -258,12 +258,6 @@
    "why": "Write It Up: a bet naming a game that already tipped says so (it used to say 'Name the game')",
    "old": "else{if(!U.whenPick||U.wk==='game')return 'Name the game so this settles at the end of the game.';",
    "new": "else{if(!U.whenPick||U.wk==='game'){try{const lg=!U.gid&&SHARED_UI.tipGame({games:D.games||[],text:U.text||'',now:Date.now(),live:true,today:S25.etDay(new Date()),dateFrom:S25.dateFrom,day:S25.etDay});if(lg&&Date.parse(lg.start)<=Date.now())return 'That game has already started.'}catch(e){}   /* BUG-7 */\n    return 'Name the game so this settles at the end of the game.'}"
-  },
-  {
-   "tag": "PAUL-l",
-   "why": "Copy on a bet in 'Ready For Someone Else to Settle' (same test as PAUL-j: ready, viewer is in it, someone else enters the result) is '🎉 Bet #<n> · <winner> Won 🎉' / 'Hey <settler>, settle this bet!' / the game/team line / the date only (the Exp: line is dropped). The winner is the manager name STOOPIDS already works out from the final score (S25.proposal / s25FromGames, the same suggested-winner path as Confirm); if that is a push or there is no score, the top line is just '🎉 Bet #<n> 🎉'. 🎉 is Paul's emoji for a bet that is finished or waiting to be settled (💣 requested, 💥 accepted or written up). The settler is the person who placed it (the only one with the Who won? buttons, as the card's 'Only X can enter result.' says). Every other copy text is unchanged.",
-   "old": "function s29eCopyText(b){if(!b)return '';if(b.status==='open'&&b.kind!=='pool')return s29eOpenCopy(b);",
-   "new": "function s29eCopyText(b){if(!b)return '';if(b.status==='open'&&b.kind!=='pool'){/*<PAUL-l>*/try{const me=b27Who();if(me&&b27Ready(b)&&b27NeedsOther(b,me)&&s24InBet(b,me)){const who=[b.backer].filter(Boolean).map(PN),L=String(s29eOpenCopy(b)||'').split('\\n').slice(1).filter(Boolean).map((s,i,a)=>i===a.length-1?s.replace(/\\s*·\\s*Exp:.*$/,'').replace(/^Exp:.*$/,'').trim():s).filter(Boolean);let win='';try{const rd=s25BetRd(b);let p=null;if(rd&&rd.k&&rd.k!=='manual'){const loc=s25FromGames(rd);if(loc&&loc.p)p=loc.p;else{const c=S25P.games[s25Key(rd)];if(c&&c.st==='ok'&&c.sb){const g=S25.match(c.sb,rd);if(g&&g.final)p=S25.proposal(rd,g)}}}if(p&&(p.r==='backer'||p.r==='other')){const nm=s25SuggestName(b,p.r);if(nm&&nm!=='Wash')win=nm}}catch(e){}if(who.length&&L.length)return ['🎉 Bet #'+b.n+(win?' · '+win+' Won':'')+' 🎉','Hey '+who.join(' and ')+', settle this bet!'].concat(L).join('\\n')}}catch(e){}/*</PAUL-l>*/return s29eOpenCopy(b)}"
   }
  ],
  "ui": [
