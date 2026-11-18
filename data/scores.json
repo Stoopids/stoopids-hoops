@@ -3,8 +3,8 @@
   "sample": false,
   "label": "",
   "season": "2026-27",
-  "as_of": "2026-11-17",
-  "generated_at_utc": "2026-11-18T04:42:26Z",
+  "as_of": "2026-11-18",
+  "generated_at_utc": "2026-11-18T05:47:12Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -5162,13 +5162,13 @@
       "neutral": false,
       "home": {
         "id": "13",
-        "score": 30,
+        "score": 72,
         "seed": null,
         "short": "LAL"
       },
       "away": {
         "id": "30",
-        "score": 34,
+        "score": 82,
         "seed": null,
         "short": "CHA"
       },
@@ -5193,13 +5193,13 @@
       "neutral": false,
       "home": {
         "id": "12",
-        "score": 62,
+        "score": 107,
         "seed": null,
         "short": "LAC"
       },
       "away": {
         "id": "26",
-        "score": 58,
+        "score": 132,
         "seed": null,
         "short": "UTAH"
       },
@@ -5393,7 +5393,7 @@
         "fav": "28",
         "dog": "27",
         "sp": 7.5,
-        "ou": 227.5,
+        "ou": 226.5,
         "fav_name": "TOR",
         "aml": 226,
         "hml": -276,
@@ -5419,6 +5419,16 @@
         "score": null,
         "seed": null,
         "short": "DET"
+      },
+      "line": {
+        "fav": "8",
+        "dog": "3",
+        "sp": 7.5,
+        "ou": 229.5,
+        "fav_name": "DET",
+        "aml": -277,
+        "hml": 227,
+        "p": "DraftKings"
       }
     },
     {
