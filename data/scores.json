@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-17",
-  "generated_at_utc": "2026-11-17T23:25:34Z",
+  "generated_at_utc": "2026-11-18T00:18:05Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -5082,8 +5082,8 @@
         "sp": 2.5,
         "ou": 215.5,
         "fav_name": "NY",
-        "aml": -135,
-        "hml": 114,
+        "aml": -142,
+        "hml": 120,
         "p": "Draft Kings"
       }
     },
@@ -5111,10 +5111,10 @@
         "fav": "16",
         "dog": "22",
         "sp": 2.5,
-        "ou": 225.5,
+        "ou": 227.5,
         "fav_name": "MIN",
-        "aml": 123,
-        "hml": -146,
+        "aml": 114,
+        "hml": -135,
         "p": "Draft Kings"
       }
     },
@@ -5204,10 +5204,10 @@
         "fav": "12",
         "dog": "26",
         "sp": 6.5,
-        "ou": 225.5,
+        "ou": 226.5,
         "fav_name": "LAC",
-        "aml": 197,
-        "hml": -238,
+        "aml": 190,
+        "hml": -229,
         "p": "Draft Kings"
       }
     },
@@ -5272,6 +5272,16 @@
         "score": null,
         "seed": null,
         "short": "MIL"
+      },
+      "line": {
+        "fav": "14",
+        "dog": "15",
+        "sp": 12.5,
+        "ou": 236.5,
+        "fav_name": "MIA",
+        "aml": 539,
+        "hml": -770,
+        "p": "Draft Kings"
       }
     },
     {
@@ -5293,6 +5303,16 @@
         "score": null,
         "seed": null,
         "short": "PHI"
+      },
+      "line": {
+        "fav": "20",
+        "dog": "19",
+        "sp": 1.5,
+        "ou": 223.5,
+        "fav_name": "PHI",
+        "aml": -122,
+        "hml": 103,
+        "p": "Draft Kings"
       }
     },
     {
@@ -5314,6 +5334,16 @@
         "score": null,
         "seed": null,
         "short": "CHI"
+      },
+      "line": {
+        "fav": "17",
+        "dog": "4",
+        "sp": 2.5,
+        "ou": 237.5,
+        "fav_name": "BKN",
+        "aml": 128,
+        "hml": -152,
+        "p": "Draft Kings"
       }
     },
     {
