@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-17",
-  "generated_at_utc": "2026-11-18T03:38:18Z",
+  "generated_at_utc": "2026-11-18T04:42:26Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -146,22 +146,16 @@
       "playoffSeed": 9,
       "conference": "West"
     },
+    "22": {
+      "w": 9,
+      "l": 5,
+      "playoffSeed": 6,
+      "conference": "West"
+    },
     "25": {
       "w": 9,
       "l": 5,
       "playoffSeed": 7,
-      "conference": "West"
-    },
-    "22": {
-      "w": 9,
-      "l": 4,
-      "playoffSeed": 6,
-      "conference": "West"
-    },
-    "16": {
-      "w": 10,
-      "l": 4,
-      "playoffSeed": 4,
       "conference": "West"
     },
     "29": {
@@ -170,10 +164,16 @@
       "playoffSeed": 5,
       "conference": "West"
     },
-    "10": {
+    "16": {
       "w": 11,
       "l": 4,
       "playoffSeed": 3,
+      "conference": "West"
+    },
+    "10": {
+      "w": 11,
+      "l": 4,
+      "playoffSeed": 4,
       "conference": "West"
     },
     "24": {
@@ -5156,19 +5156,19 @@
       "id": "401910005",
       "day": "2026-11-17",
       "start": "2026-11-18T04:00Z",
-      "status": "scheduled",
+      "status": "live",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "13",
-        "score": null,
+        "score": 30,
         "seed": null,
         "short": "LAL"
       },
       "away": {
         "id": "30",
-        "score": null,
+        "score": 34,
         "seed": null,
         "short": "CHA"
       },
@@ -5187,26 +5187,26 @@
       "id": "401910006",
       "day": "2026-11-17",
       "start": "2026-11-18T03:30Z",
-      "status": "scheduled",
+      "status": "live",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "12",
-        "score": null,
+        "score": 62,
         "seed": null,
         "short": "LAC"
       },
       "away": {
         "id": "26",
-        "score": null,
+        "score": 58,
         "seed": null,
         "short": "UTAH"
       },
       "line": {
         "fav": "12",
         "dog": "26",
-        "sp": 6.5,
+        "sp": 5.5,
         "ou": 227.5,
         "fav_name": "LAC",
         "aml": 190,
@@ -5388,6 +5388,16 @@
         "score": null,
         "seed": null,
         "short": "WSH"
+      },
+      "line": {
+        "fav": "28",
+        "dog": "27",
+        "sp": 7.5,
+        "ou": 227.5,
+        "fav_name": "TOR",
+        "aml": 226,
+        "hml": -276,
+        "p": "DraftKings"
       }
     },
     {
