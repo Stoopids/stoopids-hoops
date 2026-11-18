@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-18",
-  "generated_at_utc": "2026-11-18T12:24:59Z",
+  "generated_at_utc": "2026-11-18T13:46:48Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -5242,8 +5242,8 @@
         "sp": 4.5,
         "ou": 234.5,
         "fav_name": "CLE",
-        "aml": 171,
-        "hml": -205,
+        "aml": 164,
+        "hml": -197,
         "p": "Draft Kings"
       }
     },
@@ -5301,11 +5301,11 @@
       "line": {
         "fav": "14",
         "dog": "15",
-        "sp": 12.5,
+        "sp": 11.5,
         "ou": 234.5,
         "fav_name": "MIA",
-        "aml": 558,
-        "hml": -800,
+        "aml": 505,
+        "hml": -700,
         "p": "Draft Kings"
       }
     },
@@ -5332,11 +5332,11 @@
       "line": {
         "fav": "20",
         "dog": "19",
-        "sp": 2.5,
-        "ou": 222.5,
+        "sp": 1.5,
+        "ou": 221.5,
         "fav_name": "PHI",
-        "aml": -135,
-        "hml": 114,
+        "aml": -125,
+        "hml": 105,
         "p": "Draft Kings"
       }
     },
@@ -5364,7 +5364,7 @@
         "fav": "17",
         "dog": "4",
         "sp": 2.5,
-        "ou": 238.5,
+        "ou": 239.5,
         "fav_name": "BKN",
         "aml": 128,
         "hml": -152,
@@ -5426,7 +5426,7 @@
         "fav": "8",
         "dog": "3",
         "sp": 7.5,
-        "ou": 229.5,
+        "ou": 227.5,
         "fav_name": "DET",
         "aml": -277,
         "hml": 227,
@@ -5459,8 +5459,8 @@
         "sp": 6.5,
         "ou": 227.5,
         "fav_name": "OKC",
-        "aml": 231,
-        "hml": -283,
+        "aml": 221,
+        "hml": -270,
         "p": "Draft Kings"
       }
     },
@@ -5490,8 +5490,8 @@
         "sp": 2.5,
         "ou": 222.5,
         "fav_name": "BOS",
-        "aml": -135,
-        "hml": 114,
+        "aml": -142,
+        "hml": 120,
         "p": "Draft Kings"
       }
     },
@@ -5518,11 +5518,11 @@
       "line": {
         "fav": "6",
         "dog": "9",
-        "sp": 6.5,
-        "ou": 221.5,
+        "sp": 4.5,
+        "ou": 222.5,
         "fav_name": "DAL",
-        "aml": 184,
-        "hml": -222,
+        "aml": 164,
+        "hml": -197,
         "p": "Draft Kings"
       }
     },
@@ -5550,7 +5550,7 @@
         "fav": "13",
         "dog": "26",
         "sp": 10.5,
-        "ou": 228.5,
+        "ou": 227.5,
         "fav_name": "LAL",
         "aml": 359,
         "hml": -464,
