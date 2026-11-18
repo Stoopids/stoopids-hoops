@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-17",
-  "generated_at_utc": "2026-11-18T00:18:05Z",
+  "generated_at_utc": "2026-11-18T01:45:07Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -5060,19 +5060,19 @@
       "id": "401910002",
       "day": "2026-11-17",
       "start": "2026-11-18T00:30Z",
-      "status": "scheduled",
+      "status": "live",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "28",
-        "score": null,
+        "score": 50,
         "seed": null,
         "short": "TOR"
       },
       "away": {
         "id": "18",
-        "score": null,
+        "score": 54,
         "seed": null,
         "short": "NY"
       },
@@ -5082,8 +5082,8 @@
         "sp": 2.5,
         "ou": 215.5,
         "fav_name": "NY",
-        "aml": -142,
-        "hml": 120,
+        "aml": -135,
+        "hml": 114,
         "p": "Draft Kings"
       }
     },
@@ -5091,30 +5091,30 @@
       "id": "401910003",
       "day": "2026-11-17",
       "start": "2026-11-18T01:00Z",
-      "status": "scheduled",
+      "status": "live",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "16",
-        "score": null,
+        "score": 29,
         "seed": null,
         "short": "MIN"
       },
       "away": {
         "id": "22",
-        "score": null,
+        "score": 22,
         "seed": null,
         "short": "POR"
       },
       "line": {
         "fav": "16",
         "dog": "22",
-        "sp": 2.5,
-        "ou": 227.5,
+        "sp": 4.5,
+        "ou": 225.5,
         "fav_name": "MIN",
-        "aml": 114,
-        "hml": -135,
+        "aml": 150,
+        "hml": -179,
         "p": "Draft Kings"
       }
     },
@@ -5122,19 +5122,19 @@
       "id": "401910004",
       "day": "2026-11-17",
       "start": "2026-11-18T01:00Z",
-      "status": "scheduled",
+      "status": "live",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "24",
-        "score": null,
+        "score": 33,
         "seed": null,
         "short": "SA"
       },
       "away": {
         "id": "8",
-        "score": null,
+        "score": 26,
         "seed": null,
         "short": "DET"
       },
@@ -5175,8 +5175,8 @@
         "sp": 6.5,
         "ou": 223.5,
         "fav_name": "LAL",
-        "aml": 243,
-        "hml": -299,
+        "aml": 235,
+        "hml": -288,
         "p": "Draft Kings"
       }
     },
@@ -5203,7 +5203,7 @@
       "line": {
         "fav": "12",
         "dog": "26",
-        "sp": 6.5,
+        "sp": 5.5,
         "ou": 226.5,
         "fav_name": "LAC",
         "aml": 190,
@@ -5230,6 +5230,16 @@
         "score": null,
         "seed": null,
         "short": "MEM"
+      },
+      "line": {
+        "fav": "5",
+        "dog": "29",
+        "sp": 5.5,
+        "ou": 236.5,
+        "fav_name": "CLE",
+        "aml": 164,
+        "hml": -196,
+        "p": "Draft Kings"
       }
     },
     {
@@ -5251,6 +5261,16 @@
         "score": null,
         "seed": null,
         "short": "HOU"
+      },
+      "line": {
+        "fav": "10",
+        "dog": "11",
+        "sp": 7.5,
+        "ou": 224.5,
+        "fav_name": "HOU",
+        "aml": -264,
+        "hml": 217,
+        "p": "Draft Kings"
       }
     },
     {
@@ -5407,6 +5427,16 @@
         "score": null,
         "seed": null,
         "short": "ATL"
+      },
+      "line": {
+        "fav": "25",
+        "dog": "1",
+        "sp": 7.5,
+        "ou": 226.5,
+        "fav_name": "OKC",
+        "aml": 221,
+        "hml": -270,
+        "p": "Draft Kings"
       }
     },
     {
@@ -5428,6 +5458,16 @@
         "score": null,
         "seed": null,
         "short": "BOS"
+      },
+      "line": {
+        "fav": "2",
+        "dog": "7",
+        "sp": 2.5,
+        "ou": 219.5,
+        "fav_name": "BOS",
+        "aml": -141,
+        "hml": 119,
+        "p": "Draft Kings"
       }
     },
     {
@@ -5491,6 +5531,16 @@
         "score": null,
         "seed": null,
         "short": "PHX"
+      },
+      "line": {
+        "fav": "21",
+        "dog": "23",
+        "sp": 6.5,
+        "ou": 229.5,
+        "fav_name": "PHX",
+        "aml": -219,
+        "hml": 182,
+        "p": "Draft Kings"
       }
     },
     {
