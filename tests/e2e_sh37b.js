@@ -5,7 +5,7 @@
    SYNTHETIC league, mock store, shoops1- keys only, TEST names. ESPN/textdb blocked. Mobile 412x915, desktop 1280x800.
    NODE_PATH=/tmp/node_modules node tests/e2e_sh37b.js */
 const { chromium } = require('playwright-core');const path=require('path'),fs=require('fs');const { spawn } = require('child_process');
-const HROOT=path.join(__dirname,'..'),OUT=process.env.OUT||'/workspace/screens-sh37b',HP=+(process.env.HP||9801),PRE=process.env.PRE||'sh37b',BUILD=process.env.BUILD||'2026-11-19sh37b';
+const HROOT=path.join(__dirname,'..'),OUT=process.env.OUT||'/workspace/screens-sh37b',HP=+(process.env.HP||9801),PRE=process.env.PRE||'sh37b',BUILD=process.env.BUILD||'2026-11-19sh37c';
 fs.mkdirSync(OUT,{recursive:true});
 function srv(a,re){return new Promise((res,rej)=>{const c=spawn(a[0],a.slice(1));let b='';const on=d=>{b+=d;if(re.test(b))res(c)};c.stdout.on('data',on);c.stderr.on('data',on);setTimeout(()=>rej(new Error(b)),9000)})}
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));let nf=0;const ok=(n,c,x)=>{if(!c)nf++;console.log((c?'PASS ':'FAIL ')+n+(x!==undefined?' :: '+JSON.stringify(x):''))};
