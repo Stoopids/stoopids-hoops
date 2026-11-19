@@ -98,9 +98,9 @@
   },
   {
    "tag": "HOOPS",
-   "why": "shared/ui.js cache-buster: Hoops copy of 1.86.0 with its patches (sh34)",
+   "why": "shared/ui.js cache-buster: Hoops copy of 1.86.0 with its patches (sh35)",
    "old": "<script src=\"shared/ui.js?v=1.86.0\"",
-   "new": "<script src=\"shared/ui.js?v=1.86.0.sh34\""
+   "new": "<script src=\"shared/ui.js?v=1.86.0.sh35\""
   },
   {
    "tag": "PAUL-e",
@@ -177,9 +177,9 @@
   },
   {
    "tag": "HOOPS",
-   "why": "stoopid-bet.js cache-buster: Hoops copy of v14 with its patches (sh34: [REDACTED] still at v14; stake default 5 is upstream)",
+   "why": "stoopid-bet.js cache-buster: Hoops copy of v14 with its patches (sh35: [REDACTED] still at v14; stake default 5 is upstream)",
    "old": "<script src=\"stoopid-bet.js?v=14\"></script>",
-   "new": "<script src=\"stoopid-bet.js?v=14.sh34\"></script>"
+   "new": "<script src=\"stoopid-bet.js?v=14.sh35\"></script>"
   },
   {
    "tag": "BUG-5",

@@ -1,3 +1,24 @@
+# sh35 (build 2026-11-19sh35): re-pin to STOOPIDS 725d622 — copy starts during the tap so Accept / place / settle keep the click (LOCAL, not pushed)
+
+Base moved: STOOPIDS fbd9dc5 -> 725d622 (ui.js still 1.86.0). Rebuilt with tools/build_league_from_stoopids.py from a read-only copy of Stoopids/stoopids (git show of 725d622). Every Hoops change is a tagged patch in tools/hoops_patches.json or a swap in the build script. No Hoops patch had to be re-based; all 135 swaps applied.
+
+STOOPIDS code commits brought in (725d622 is the merge of 164564b; the two refresh commits in between are data/ranks only):
+- 164564b / 725d622: Accept and accept-counter called navigator.clipboard.writeText after awaiting the save, so the browser had already dropped the click and showed "Could not copy." with a fallback box and a Copy button. Placing a Write it Up bet, placing a pool, and settling a bet had the same problem (copy started after b27Write). The fix starts the clipboard write during the click (copyP = b27CopyNow(text) / say() before the await) and awaits that promise after the save only to update the message. A picked spread with no saved reading now goes through the shared copy builder (spreadFromLab), so it reads like "Arizona -4 v UConn". Written sentences stay as written.
+
+Hoops had the same bug in both sh33 (a88a2b4, live) and sh34 (bc8f577, local):
+- Accept: shared/ui.js act('acc') awaited write + placeBet, then say()/copy()/writeText. Counter-accept (caccept) was the same.
+- Write it Up / place: league.html b27Confirm awaited b27Write, then b27CopyNow.
+- Pool place: b27PoolConfirm, same pattern.
+- Settle: b27SetStatus awaited b27Write, then b27CopyNow (no "Could not copy." card; the copy just failed silently).
+Request post, Close, and Delete already started say() inside the tap, before the save.
+
+Hoops patch changes:
+- [HOOPS] ui.js cache-buster ?v=1.86.0.sh35. stoopid-bet.js ?v=14.sh35.
+- js/version.js and sw.js are 2026-11-19sh35.
+- Tests: new tests/e2e_sh35.js (Accept, Write it Up/place, and settle copy without "Could not copy." when writeText is gated to the user gesture; mobile 390 and desktop 1280 screenshots of the copied confirmation). tests/e2e_sh34.js is unchanged and should still pass.
+
+Nothing is pushed; nothing goes live until Paul says so.
+
 # sh34 (build 2026-11-19sh34): re-pin to STOOPIDS fbd9dc5 — default stake 5, End of season buttons, request-read race, pinned Bets row (LOCAL, not pushed)
 
 Base moved: STOOPIDS 59c9dc1 -> fbd9dc5 (ui.js 1.86.0). Rebuilt with tools/build_league_from_stoopids.py from a read-only copy of Stoopids/stoopids. Every Hoops change is a tagged patch in tools/hoops_patches.json or a swap in the build script.
