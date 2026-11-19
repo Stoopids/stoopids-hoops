@@ -1,3 +1,19 @@
+# sh36 (build 2026-11-19sh36): settled-bet copy uses 🎉 at both ends (LOCAL, not pushed)
+
+Base stays STOOPIDS 725d622 (ui.js 1.86.0). No re-pin. Three Hoops-only [PAUL-m] patches in tools/hoops_patches.json, applied in league.html:
+
+- Settled pool Copy (b27PoolClip, used by the card Copy button via s29eCopyText) was "Pool #n · Settled" with no emoji. It is now "🎉 Pool #n · Settled 🎉". Open and cancelled pool copy is unchanged.
+- Settling a pool (b27PoolSettle) did not copy anything. It now starts b27PoolClip during the tap, the same way settling a 1v1 starts s29eCopyText.
+- A wash heading was "💦 Bet #n · Wash" with no closing 💦. It is now "💦 Bet #n · Wash 💦", matching 🎉 at both ends on a settled bet.
+
+Already correct, left alone: 1v1 / bundle / parlay / accepted-then-settled copy and the Confirm settle-tap (s29eCopyText already used 🎉 from [PAUL-4]); the waiting-to-be-settled nudge ("🎉 Bet #n · X Won 🎉" / "Hey Y, settle this bet!" / game / date only); open, requested, and accepted copies (💥 / 💣); b27ClipText, which is only the Write it Up place-time copy.
+
+js/version.js and sw.js are 2026-11-19sh36. Cache-busters: shared/ui.js?v=1.86.0.sh36, stoopid-bet.js?v=14.sh36.
+
+Tests: tests/e2e_sh36.js reruns the sh35 copy-during-tap checks and asserts every settled/finished copy path (mobile 390 and desktop 1280). Screenshots of a settled card's Copied state: /workspace/screens-sh36/sh36-settled-copied-mobile.png and sh36-settled-copied-desktop.png (not in the commit).
+
+Nothing is pushed; nothing goes live until Paul says so.
+
 # sh35 (build 2026-11-19sh35): re-pin to STOOPIDS 725d622 — copy starts during the tap so Accept / place / settle keep the click (LOCAL, not pushed)
 
 Base moved: STOOPIDS fbd9dc5 -> 725d622 (ui.js still 1.86.0). Rebuilt with tools/build_league_from_stoopids.py from a read-only copy of Stoopids/stoopids (git show of 725d622). Every Hoops change is a tagged patch in tools/hoops_patches.json or a swap in the build script. No Hoops patch had to be re-based; all 135 swaps applied.

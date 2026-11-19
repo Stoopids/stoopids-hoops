@@ -995,7 +995,7 @@ html body .card.oc .chips.school-grid .chip .cr{grid-column:2!important;grid-row
   </div>
 </section><!--</CHAT>-->
 <footer id="foot"></footer>
-<script src="shared/ui.js?v=1.86.0.sh35"></script>
+<script src="shared/ui.js?v=1.86.0.sh36"></script>
 <script src="js/version.js"></script><script src="js/core.js"></script><script src="js/scoring.js"></script><script src="js/league-d.js"></script><script src="js/league-sched.js"></script><script src="js/store.js"></script><script src="assets/teams.js"></script><script src="js/power-apply.js"></script><script src="js/league.js"></script><script src="js/hoops-archive.js"></script><script src="js/hoops-stoopids.js"></script><script>HOOPS.dataName="STOOPIDS_DATA";</script>
 <script>
 /*<S25-SHARED>*/
@@ -3589,7 +3589,7 @@ function b27PoolSettleWord(b){const k=window.SHARED_UI?SHARED_UI.whenKind(b):'un
 function b27PoolClip(b){if(!b)return '';const money=n=>'$'+b27Num(n),st=b.status==='void'?'Cancelled':b.back?'Settled':'Unsettled';
   const pay=b.places&&b.places.length?'Payouts: '+b.places.map((a,i)=>s26fPlaceName(i)+' '+money(a)).join(' · '):'Payouts not entered yet.';
   const when=b27PoolPostedDay(Date.parse(b.postedAt||b.created_at));
-  return ['Pool #'+(b.n||'')+' · '+st,b27Clean(b.text),'Buy-in '+money(b.amt)+' · '+(b.parts||[]).length+' managers · Total '+money(b.amt*(b.parts||[]).length),pay,'Members: '+(b.parts||[]).map(PN).join(', '),'Posted '+(when||'')+' by '+PN(b.postedBy||b.backer)+' · '+b27PoolSettleWord(b)].join('\n')}
+  return [/*<PAUL-m>*/st==='Settled'?'🎉 Pool #'+(b.n||'')+' · Settled 🎉'/*</PAUL-m>*/:'Pool #'+(b.n||'')+' · '+st,b27Clean(b.text),'Buy-in '+money(b.amt)+' · '+(b.parts||[]).length+' managers · Total '+money(b.amt*(b.parts||[]).length),pay,'Members: '+(b.parts||[]).map(PN).join(', '),'Posted '+(when||'')+' by '+PN(b.postedBy||b.backer)+' · '+b27PoolSettleWord(b)].join('\n')}
 function b27PoolForm(me){b27PoolSeed();const people=b27PoolPeople();/*<S26F-POOL>*/setTimeout(()=>{try{s26fPaint()}catch(e){}},0);/*</S26F-POOL>*/
   return `<div class="card b27-form">${typeof SHARED_UI!=='undefined'&&SHARED_UI.entryHead?SHARED_UI.entryHead('wiu',b27KindOnly()):''}
    <div class="s26st"><div class="b27-lb"><span class="s26n">1</span><button type="button" class="s27-tipk" data-tip="pterms" aria-expanded="false" onclick="s27Tip(this)">${esc(PT('s1'))}</button><label for="b27Text" class="sr">${esc(PT('s1'))}</label></div><textarea id="b27Text" class="sb-in b27-in" rows="2" maxlength="${PULK.maxText}" placeholder="${esc(PT('termsPh'))}" aria-describedby="s26eTerms" oninput="U.text=this.value;b27PSync()">${esc(U.text)}</textarea><div id="s26eTerms" class="s26err" role="alert"></div></div>
@@ -3633,6 +3633,7 @@ async function b27PoolSettle(id){
   if(U.busy)return;if(!b27PoolSettle.skip&&b27TapLock())return;b27PoolSettle.skip=false;const b=U.doc.bets.find(x=>x.id===id);if(!b)return;const terms=b27PoolTerms(b);if(!U.askSettle||U.askSettle.id!==id||U.askSettle.what!=='pool'||U.askSettle.terms!==terms){b27Stale();return}const r=b27PoolParse(b.parts,String(b.amt),U.poolTxt[id]||'');if(!r.ok||!r.back){U.askSettle=null;render();return}
   U.busy=true;U.askSettle=null;render();
   /*<CREATOR-SETTLE>*/const me0=b27Who();if(b.backer!==me0){U.busy=false;U.msg=B27_ONLY;U.msgBad=true;render();return}/*</CREATOR-SETTLE>*/
+  /*<PAUL-m>*/let copyP=null;try{const t=b27PoolClip(Object.assign({},b,{back:r.back}));if(t)copyP=b27CopyNow(t)}catch(e){}/*</PAUL-m>*/
   try{const back=await b27Write(cur=>/*<CREATOR-SETTLE>*/{const y=cur.find(x=>x.id===id);if(y&&y.status==='open'&&!y.back&&y.backer!==me0)throw new Error('notcreator');return /*</CREATOR-SETTLE>*/cur.map(x=>x.id!==id||x.status!=='open'||x.back?x:Object.assign({},x,{back:r.back,settled_at:/*<V25>*/s25At()/*</V25>*/}))/*<CREATOR-SETTLE>*/}/*</CREATOR-SETTLE>*/,cur=>{const x=cur.find(y=>y.id===id);return !x||x.status!=='open'||!!x.back});
     b27Apply(back,'force');const x=back.find(y=>y.id===id);U.msg=x&&x.back&&JSON.stringify(x.back)===JSON.stringify(r.back)?PT('saved'):PT('already');U.msgBad=false;U.poolTxt[id]='';
   }catch(e){U.msg=/*<CREATOR-SETTLE>*/e&&e.message==='notcreator'?B27_ONLY:/*</CREATOR-SETTLE>*/'Couldn’t save that. Try again.';U.msgBad=true}
@@ -5145,7 +5146,7 @@ function s29eCopyText(b){if(!b)return '';if(b.status==='open'&&b.kind!=='pool'){
   const OP=b27Opps(b),BU=OP.length>1,Bk=PN(b.backer),OPd=OP.map(PN),st=b.status,P=b27Pay(b);
   const stTxt={open:'Unsettled',backer:'Settled',other:'Settled',push:'Wash',void:'Cancelled'}[st]||'Unsettled';
   const win=st==='backer'?' · '+Bk+' won':st==='other'?' · '+(BU?'Managers':OPd[0])+' won':'';
-  if(st==='backer'||st==='other'||st==='push'){const mark=st==='push'?'💦':'🎉',head=st==='push'?'💦 Bet #'+b.n+' · Wash':mark+' Bet #'+b.n+' · Settled'+win+' '+mark,lines=[head,b27Clean(b.text),Bk+' vs '+OPd.join(', ')+' · '+money(b.amt)+(BU?' each':'')+b27OddsTail(b.odds&&b.odds.a,b.odds&&b.odds.b)];if(st==='push')lines.push('Result: 💦: nobody owes anything');return lines.join('\n')}
+  if(st==='backer'||st==='other'||st==='push'){const mark=st==='push'?'💦':'🎉',head=mark+' Bet #'+b.n+' · '+(st==='push'?'Wash':'Settled'+win)+' '+mark/*<PAUL-m>*/,lines=[head,b27Clean(b.text),Bk+' vs '+OPd.join(', ')+' · '+money(b.amt)+(BU?' each':'')+b27OddsTail(b.odds&&b.odds.a,b.odds&&b.odds.b)];if(st==='push')lines.push('Result: 💦: nobody owes anything');return lines.join('\n')}
   L.push('Bet #'+b.n+' · '+stTxt+win,b27Clean(b.text),Bk+' vs '+OPd.join(', ')+' · '+money(b.amt)+(BU?' each':'')+b27OddsTail(b.odds&&b.odds.a,b.odds&&b.odds.b));
   L.push('If '+Bk+' is right: '+OPd.join(', ')+(BU?' each owe ':' owes ')+Bk+' '+money(P.ifBackerRight));
   L.push('If '+OPd.join(', ')+(BU?' are':' is')+' right: '+Bk+' owes '+(BU?'each of them ':OPd[0]+' ')+money(P.ifOtherRight));
@@ -5192,6 +5193,6 @@ html body #main h2.b27-allh+.card.s24fb+.b27-grid{margin-top:0}
  html body #main h2.b27-allh+.card.s24fb>input.s24q{flex:0 1 auto!important;width:auto!important;max-width:100%!important;min-width:9em;margin-top:4px!important}
 }
 </style>
-<script src="stoopid-bet.js?v=14.sh35"></script>
+<script src="stoopid-bet.js?v=14.sh36"></script>
 </body>
 </html>

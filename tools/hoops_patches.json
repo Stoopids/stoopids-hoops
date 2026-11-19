@@ -85,6 +85,24 @@
    "new": "const mark=st==='push'?'💦':'🎉',"
   },
   {
+   "tag": "PAUL-m",
+   "why": "settled Copy heading for a wash also closes with 💦, matching 🎉 at both ends on a settled bet",
+   "old": "head=st==='push'?'💦 Bet #'+b.n+' · Wash':mark+' Bet #'+b.n+' · Settled'+win+' '+mark",
+   "new": "head=mark+' Bet #'+b.n+' · '+(st==='push'?'Wash':'Settled'+win)+' '+mark/*<PAUL-m>*/"
+  },
+  {
+   "tag": "PAUL-m",
+   "why": "settled pool Copy is '🎉 Pool #n · Settled 🎉' (open and cancelled pool copy stay as they are)",
+   "old": "return ['Pool #'+(b.n||'')+' · '+st,",
+   "new": "return [/*<PAUL-m>*/st==='Settled'?'🎉 Pool #'+(b.n||'')+' · Settled 🎉'/*</PAUL-m>*/:'Pool #'+(b.n||'')+' · '+st,"
+  },
+  {
+   "tag": "PAUL-m",
+   "why": "settling a pool starts the same settled-pool copy during the tap, like settling a 1v1 bet",
+   "old": "  /*<CREATOR-SETTLE>*/const me0=b27Who();if(b.backer!==me0){U.busy=false;U.msg=B27_ONLY;U.msgBad=true;render();return}/*</CREATOR-SETTLE>*/\n  try{const back=await b27Write(cur=>/*<CREATOR-SETTLE>*/{const y=cur.find(x=>x.id===id);",
+   "new": "  /*<CREATOR-SETTLE>*/const me0=b27Who();if(b.backer!==me0){U.busy=false;U.msg=B27_ONLY;U.msgBad=true;render();return}/*</CREATOR-SETTLE>*/\n  /*<PAUL-m>*/let copyP=null;try{const t=b27PoolClip(Object.assign({},b,{back:r.back}));if(t)copyP=b27CopyNow(t)}catch(e){}/*</PAUL-m>*/\n  try{const back=await b27Write(cur=>/*<CREATOR-SETTLE>*/{const y=cur.find(x=>x.id===id);"
+  },
+  {
    "tag": "NBA",
    "why": "pool intro: NBA example (the button label stays as STOOPIDS has it)",
    "old": "  intro:'Fill in the terms, hit \"Build\". Leave the result blank for an open bet; settle it later below.',\n  terms:'Terms, in words (e.g. Kurmoji bets Ken 100K that Duke covers -4.5)',",
@@ -98,9 +116,9 @@
   },
   {
    "tag": "HOOPS",
-   "why": "shared/ui.js cache-buster: Hoops copy of 1.86.0 with its patches (sh35)",
+   "why": "shared/ui.js cache-buster: Hoops copy of 1.86.0 with its patches (sh36)",
    "old": "<script src=\"shared/ui.js?v=1.86.0\"",
-   "new": "<script src=\"shared/ui.js?v=1.86.0.sh35\""
+   "new": "<script src=\"shared/ui.js?v=1.86.0.sh36\""
   },
   {
    "tag": "PAUL-e",
@@ -177,9 +195,9 @@
   },
   {
    "tag": "HOOPS",
-   "why": "stoopid-bet.js cache-buster: Hoops copy of v14 with its patches (sh35: [REDACTED] still at v14; stake default 5 is upstream)",
+   "why": "stoopid-bet.js cache-buster: Hoops copy of v14 with its patches (sh36: [REDACTED] still at v14; stake default 5 is upstream)",
    "old": "<script src=\"stoopid-bet.js?v=14\"></script>",
-   "new": "<script src=\"stoopid-bet.js?v=14.sh35\"></script>"
+   "new": "<script src=\"stoopid-bet.js?v=14.sh36\"></script>"
   },
   {
    "tag": "BUG-5",
