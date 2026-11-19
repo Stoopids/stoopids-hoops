@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-19",
-  "generated_at_utc": "2026-11-19T05:45:05Z",
+  "generated_at_utc": "2026-11-19T06:47:32Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -5655,10 +5655,10 @@
         "fav": "22",
         "dog": "15",
         "sp": 9.5,
-        "ou": 225.5,
+        "ou": 226.5,
         "fav_name": "POR",
-        "aml": -369,
-        "hml": 293,
+        "aml": -352,
+        "hml": 282,
         "p": "DraftKings"
       }
     },
@@ -5686,10 +5686,10 @@
         "fav": "18",
         "dog": "16",
         "sp": 1.5,
-        "ou": 217.5,
+        "ou": 216.5,
         "fav_name": "NY",
-        "aml": -123,
-        "hml": 104,
+        "aml": -124,
+        "hml": 105,
         "p": "DraftKings"
       }
     },
@@ -5716,11 +5716,11 @@
       "line": {
         "fav": "24",
         "dog": "12",
-        "sp": 16.5,
-        "ou": 225.5,
+        "sp": 15.5,
+        "ou": 226.5,
         "fav_name": "SA",
-        "aml": 720,
-        "hml": -1140,
+        "aml": 800,
+        "hml": -1320,
         "p": "DraftKings"
       }
     },
