@@ -276,6 +276,12 @@
    "why": "Write It Up: a bet naming a game that already tipped says so (it used to say 'Name the game')",
    "old": "else{if(!U.whenPick||U.wk==='game')return 'Name the game so this settles at the end of the game.';",
    "new": "else{if(!U.whenPick||U.wk==='game'){try{const lg=!U.gid&&SHARED_UI.tipGame({games:D.games||[],text:U.text||'',now:Date.now(),live:true,today:S25.etDay(new Date()),dateFrom:S25.dateFrom,day:S25.etDay});if(lg&&Date.parse(lg.start)<=Date.now())return 'That game has already started.'}catch(e){}   /* BUG-7 */\n    return 'Name the game so this settles at the end of the game.'}"
+  },
+  {
+   "tag": "UP-60a3280",
+   "why": "shared/ui.css cache-buster for the mirrored request Copy fix (sh36b)",
+   "old": "<link rel=\"stylesheet\" href=\"shared/ui.css?v=1.44.0\">",
+   "new": "<link rel=\"stylesheet\" href=\"shared/ui.css?v=1.44.0.sh36b\">"
   }
  ],
  "ui": [
@@ -420,6 +426,14 @@
    "why": "'leads at halftime' settles at the end of the 2nd quarter in the NBA (STOOPIDS reads the end of the 1st college half)",
    "old": "if(per===1&&((p.clock||{}).displayValue==='0:00'||/end of 1st half/i.test(p.text||'')))",
    "new": "if(per===2&&((p.clock||{}).displayValue==='0:00'||/end of (the )?2nd quarter/i.test(p.text||'')))"
+  }
+ ],
+ "css": [
+  {
+   "tag": "UP-60a3280",
+   "why": "upstream mirror (STOOPIDS 6457e61 + 6d30c54, merged 60a3280): Copy on every open request card is a compact 59x36 button (own request, someone else's Accept/Decline/Counter card, Spots / Close row) instead of full width. Drop when the pin reaches 60a3280.",
+   "old": ".rq-act.rq-own{justify-content:flex-end;gap:6px}.rq-act.rq-own .btn{flex:0 0 auto;width:auto;min-height:30px;padding:3px 12px;font-size:13px}",
+   "new": ".rq-act.rq-own{justify-content:flex-end;gap:6px}.rq-act.rq-own .btn{flex:0 0 auto;width:auto;min-height:30px;padding:3px 12px;font-size:13px}\nhtml body .rq-card .rq-act.rq-copy{justify-content:flex-end;align-items:center;gap:6px}html body .rq-card .rq-act.rq-copy .rq-cp{flex:0 0 auto!important;width:auto!important;min-width:0;height:36px!important;min-height:36px!important;max-height:36px!important;padding:0 12px!important;font-size:13px;line-height:34px}"
   }
  ]
 }

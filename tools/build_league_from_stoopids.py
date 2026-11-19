@@ -5,7 +5,7 @@ the expected number of times, so a STOOPIDS update that moves code fails loudly 
 Base: STOOPIDS commit BASE (read with git show from the STOOPIDS checkout, so its working tree / later commits never leak in).
 Run: python3 tools/build_league_from_stoopids.py [stoopids_src_dir]"""
 import re, sys, os, json, shutil, subprocess
-BASE = '725d622'   # sh35 pin (ui.js 1.86.0). sh36 keeps this pin and adds PAUL-m settled-copy patches (🎉 on settled pools, 💦 at both ends of a wash, pool settle copies during the tap)
+BASE = '725d622'   # sh36b keeps this pin and mirrors only the request Copy fix (upstream 6457e61 + 6d30c54, merged 60a3280) as a css patch. sh35 pin (ui.js 1.86.0). sh36 keeps this pin and adds PAUL-m settled-copy patches (🎉 on settled pools, 💦 at both ends of a wash, pool settle copies during the tap)
 SRC = sys.argv[1] if len(sys.argv) > 1 else '/workspace/stoopids-src'
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 def src(rel):
@@ -187,7 +187,11 @@ for x in PATCHES['ui']:
     if u.count(x['old']) != 1: raise SystemExit('shared/ui.js: expected 1 x ' + repr(x['old'][:80]) + ', found ' + str(u.count(x['old'])))
     u = u.replace(x['old'], x['new']); LOG.append(('shared/ui.js [' + x['tag'] + '] ' + x['why'], 1))
 open(os.path.join(ROOT, 'shared', 'ui.js'), 'w', encoding='utf-8').write(u)
-open(os.path.join(ROOT, 'shared', 'ui.css'), 'w', encoding='utf-8').write(src('shared/ui.css')); LOG.append(('shared/ui.css: verbatim', 1))
+c = src('shared/ui.css')
+for x in PATCHES.get('css', []):   # sh36b: tagged upstream mirrors only (no Hoops design changes in ui.css)
+    if c.count(x['old']) != 1: raise SystemExit('shared/ui.css: expected 1 x ' + repr(x['old'][:80]) + ', found ' + str(c.count(x['old'])))
+    c = c.replace(x['old'], x['new']); LOG.append(('shared/ui.css [' + x['tag'] + '] ' + x['why'], 1))
+open(os.path.join(ROOT, 'shared', 'ui.css'), 'w', encoding='utf-8').write(c); LOG.append(('shared/ui.css: verbatim + css patches', 1))
 # stoopid-bet.js (STOOPIDS Stoopid Bet ideas, new in 4c3c4d4): verbatim except the tagged 'sb' patches (league key, NBA BPI rank instead of NET)
 b = src('stoopid-bet.js')
 for x in PATCHES.get('sb', []):
