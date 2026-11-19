@@ -6,7 +6,7 @@
    SYNTHETIC league, mock store, shoops1- keys only, TEST names. ESPN/textdb blocked. Mobile 412x915, desktop 1280x800.
    NODE_PATH=/tmp/node_modules node tests/e2e_sh37.js */
 const { chromium } = require('playwright-core');const path=require('path'),fs=require('fs');const { spawn } = require('child_process');
-const HROOT=path.join(__dirname,'..'),OUT=process.env.OUT||'/workspace/screens-sh37',HP=+(process.env.HP||9701),PRE=process.env.PRE||'sh37',BUILD=process.env.BUILD||'2026-11-19sh37',UIV='shared/ui.js?v=1.86.4.sh37';
+const HROOT=path.join(__dirname,'..'),OUT=process.env.OUT||'/workspace/screens-sh37',HP=+(process.env.HP||9701),PRE=process.env.PRE||'sh37',BUILD=process.env.BUILD||'2026-11-19sh37',UIV=process.env.UIV||'shared/ui.js?v=1.86.4.sh37',STAKE=process.env.STAKE||'5K';
 fs.mkdirSync(OUT,{recursive:true});
 function srv(a,re){return new Promise((res,rej)=>{const c=spawn(a[0],a.slice(1));let b='';const on=d=>{b+=d;if(re.test(b))res(c)};c.stdout.on('data',on);c.stderr.on('data',on);setTimeout(()=>rej(new Error(b)),9000)})}
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));let nf=0;const ok=(n,c,x)=>{if(!c)nf++;console.log((c?'PASS ':'FAIL ')+n+(x!==undefined?' :: '+JSON.stringify(x):''))};
@@ -26,7 +26,7 @@ const WASH='💦 Bet #702 · Wash 💦\nMinnesota -5.5 v Dallas\nNov 12\n$5 Ana 
   // seed as Ana: settled + wash + open spread bets, and requests (multi-spot with one spot taken, single from Ben)
   let V=await open(0,{w:412,h:915});let p=V.p;
   const ver=await p.evaluate(()=>window.FBN_BUILD);ok('build is '+BUILD,ver===BUILD,ver);
-  const uiv=await p.evaluate(()=>[...document.scripts].map(s=>s.getAttribute('src')||'').find(s=>/shared\/ui\.js/.test(s)));ok('shared/ui.js is the Hoops copy of 1.86.4',uiv===UIV,uiv);
+  const uiv=await p.evaluate(()=>[...document.scripts].map(s=>s.getAttribute('src')||'').find(s=>/shared\/ui\.js/.test(s)));ok('shared/ui.js is '+UIV,uiv===UIV,uiv);
   const sbv=await p.evaluate(()=>[...document.scripts].map(s=>s.getAttribute('src')||'').find(s=>/stoopid-bet\.js/.test(s)));ok('no Stoopid Bet redesign (stoopid-bet.js still v14)',/stoopid-bet\.js\?v=14\./.test(sbv||''),sbv);
   await p.evaluate(async o=>{const now='2026-11-12T20:00:00.000Z',settled='2026-11-13T12:00:00.000Z',g=(D.games||[]).find(x=>String(x.id)===o.gid),q=(D.games||[]).find(x=>String(x.id)===o.qgid);
    const rdSp={k:'spread',t:'Minnesota',o:'Dallas',l:-5.5,sp:'mcbb',d:'2026-11-12'};
@@ -57,7 +57,7 @@ const WASH='💦 Bet #702 · Wash 💦\nMinnesota -5.5 v Dallas\nNov 12\n$5 Ana 
    const rq=await p.evaluate(()=>[...document.querySelectorAll('.rq-card')].map((c,i)=>{c.id='sh37rqc'+i;const cp=[...c.querySelectorAll('button')].find(b=>b.textContent.trim()==='Copy');const r=cp&&cp.getBoundingClientRect();return {id:c.id,t:c.innerText.replace(/\s+/g,' ').trim(),spots:!!c.querySelector('[data-rq="close"]'),copy:r?Math.round(r.width)+'x'+Math.round(r.height):''}}));
    const multi=rq.find(x=>x.spots),other=rq.find(x=>/Memphis -4\.5/.test(x.t));
    ok(tag+' f9077b2: multi-spot request with a spot taken still says Awaiting acceptance',multi&&/Awaiting acceptance/.test(multi.t)&&!/Awaiting settlement/.test(multi.t),multi&&multi.t.slice(0,120));
-   ok(tag+' f9077b2: request stakes read 5K',multi&&/\b5K Golden State \+6\.5/.test(multi.t)&&other&&/\b5K Memphis -4\.5/.test(other.t),[multi&&multi.t.slice(0,90),other&&other.t.slice(0,90)]);
+   ok(tag+' request stakes read '+STAKE,multi&&multi.t.indexOf(STAKE+' Golden State +6.5')>=0&&other&&other.t.indexOf(STAKE+' Memphis -4.5')>=0,[multi&&multi.t.slice(0,90),other&&other.t.slice(0,90)]);
    ok(tag+' Copy is a compact 59x36 button on the Spots / Close card and on someone else\'s card',multi&&multi.copy==='59x36'&&other&&other.copy==='59x36',[multi&&multi.copy,other&&other.copy]);
    if(multi){const l=p.locator('#'+multi.id);await l.scrollIntoViewIfNeeded();await l.screenshot({path:`${OUT}/${PRE}-multispot-taken-${tag}.png`});console.log('shot',`${OUT}/${PRE}-multispot-taken-${tag}.png`)}
    const open1=await p.evaluate(()=>{const c=[...document.querySelectorAll('.b27-c, .card')].find(x=>/#703\b/.test(x.innerText||''));return c?c.innerText.replace(/\s+/g,' '):''});

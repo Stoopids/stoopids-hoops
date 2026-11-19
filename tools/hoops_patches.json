@@ -110,9 +110,9 @@
   },
   {
    "tag": "HOOPS",
-   "why": "shared/ui.js cache-buster: Hoops copy of 1.86.4 with its patches (sh37)",
+   "why": "shared/ui.js cache-buster: Hoops copy of 1.86.4 with its patches (sh37b)",
    "old": "<script src=\"shared/ui.js?v=1.86.4\"",
-   "new": "<script src=\"shared/ui.js?v=1.86.4.sh37\""
+   "new": "<script src=\"shared/ui.js?v=1.86.4.sh37b\""
   },
   {
    "tag": "PAUL-e",
@@ -362,6 +362,12 @@
    "why": "copy text of a written-up / agreed bet (Write It Up auto-copy, the agreed card Copy, an accepted request) keeps 💥 at both ends; 💣 stays only on requests awaiting acceptance. STOOPIDS 18ff919 (1.81.0) moved every copy path to one builder (copyText) that puts 💣 on all of them.",
    "old": "bomb='\\uD83D\\uDCA3 $'+r.amt+' '+left+' v '+right+od+' \\uD83D\\uDCA3'",
    "new": "bomb=(kind==='bet'||kind==='acc'?'\\uD83D\\uDCA5':'\\uD83D\\uDCA3')+' $'+r.amt+' '+left+' v '+right+od+' '+(kind==='bet'||kind==='acc'?'\\uD83D\\uDCA5':'\\uD83D\\uDCA3')/*PAUL-1*/"
+  },
+  {
+   "tag": "PAUL-n",
+   "why": "request card stakes and payouts read '$5' like before (Paul did not ask for '5K'; STOOPIDS f9077b2 switched rqMoney to K). The rest of f9077b2 (Awaiting acceptance while open) stays.",
+   "old": "return (Math.abs(x-Math.round(x))<0.001?String(Math.round(x)):x.toFixed(2))+'K'}",
+   "new": "return /*<PAUL-n>*/'$'+(Math.abs(x-Math.round(x))<0.001?String(Math.round(x)):x.toFixed(2))/*</PAUL-n>*/}"
   }
  ],
  "sb": [
