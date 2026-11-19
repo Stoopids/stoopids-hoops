@@ -1,3 +1,3 @@
-window.FBN_BUILD='2026-11-19sh36b';window.FBN_NAME='Stoopids Hoops';
+window.FBN_BUILD='2026-11-19sh37';window.FBN_NAME='Stoopids Hoops';
 /* League header title. */
 window.FBN_TITLE={pre:'',main:'Stoopids Hoops',sub:'NBA Fantasy League'};

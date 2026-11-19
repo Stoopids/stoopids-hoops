@@ -230,14 +230,15 @@ const GATE=()=>{
       }
       return out;
     });
+    /* sh37: STOOPIDS d630bd1 (in the 60a3280 pin) copies settled bets with a one-sided spread, the date on its own line and '$5 A v B'. Emojis unchanged. */
     const expect={
-      sh36b01:'🎉 Bet #601 · Settled · Ana won 🎉\nMinnesota -5.5 vs Dallas +5.5, Nov 12\nAna vs Ben · $5',
-      sh36b02:'🎉 Bet #602 · Settled · Ben won 🎉\nDallas +5.5 vs Minnesota -5.5, Nov 12\nAna vs Ben · $5',
-      sh36b03:'🎉 Bet #603 · Settled · Ana won 🎉\nMinnesota -5.5 vs Dallas +5.5, Nov 12\nAna vs Ben, Cy · $5 each',
-      sh36b04:'🎉 Bet #604 · Settled · Ana won 🎉\nParlay · 2 legs\nAna vs Ben · $5',
-      sh36b05:'🎉 Bet #605 · Settled · Ana won 🎉\nMinnesota -5.5 vs Dallas +5.5, Nov 12\nAna vs Ben · $5',
+      sh36b01:'🎉 Bet #601 · Settled · Ana won 🎉\nMinnesota -5.5 v Dallas\nNov 12\n$5 Ana v Ben',
+      sh36b02:'🎉 Bet #602 · Settled · Ben won 🎉\nDallas +5.5 v Minnesota\nNov 12\n$5 Ana v Ben',
+      sh36b03:'🎉 Bet #603 · Settled · Ana won 🎉\nMinnesota -5.5 v Dallas\nNov 12\n$5 Ana v Ben, Cy each',
+      sh36b04:'🎉 Bet #604 · Settled · Ana won 🎉\nParlay · 2 legs\n$5 Ana v Ben',
+      sh36b05:'🎉 Bet #605 · Settled · Ana won 🎉\nMinnesota -5.5 v Dallas\nNov 12\n$5 Ana v Ben',
       sh36p01:'🎉 Pool #606 · Settled 🎉\nTEST NBA Cup pool\nBuy-in $5 · 3 managers · Total $15\nPayouts: Winner $10 · 2nd $5\nMembers: Ana, Ben, Cy\nPosted Nov 13 by Ana · End Of Season',
-      sh36b06:'💦 Bet #607 · Wash 💦\nMinnesota vs Dallas, Nov 12\nAna vs Ben · $5\nResult: 💦: nobody owes anything'
+      sh36b06:'💦 Bet #607 · Wash 💦\nMinnesota -5.5 v Dallas\nNov 12\n$5 Ana v Ben\nResult: 💦: nobody owes anything'
     };
     const labels={sh36b01:'1v1 backer wins',sh36b02:'1v1 other wins',sh36b03:'multi-opponent bundle',sh36b04:'parlay',sh36b05:'accepted request later settled',sh36p01:'settled pool',sh36b06:'wash'};
     for(const [id,want] of Object.entries(expect)){
