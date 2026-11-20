@@ -975,7 +975,7 @@ html body .card.oc .chips.school-grid .chip .cr{grid-column:2!important;grid-row
 <body>
 <header>
   <div class="hero" role="button" tabindex="0" aria-expanded="false" aria-label="Stoopids Hoops banner. Tap to enlarge the photo."></div>
-  <div class="titlebar"><p class="s27-pres" id="lpres">Stoopids presents</p><div class="s12-hd"><h1 id="hoopsLg">STOOPIDS <span>HOOPS</span></h1><!--<STEP12-HSHARE> whole-site Share beside the title (view-only link; Profile keeps the pick-a-tab share) --><button type="button" class="s12-share" id="s12Share" aria-label="Share STOOPIDS (view-only link to the whole site)" onclick="s12ShareSite(this)">🔗 Share</button><!--</STEP12-HSHARE>--></div>
+  <div class="titlebar"><p class="s27-pres" id="lpres">Stoopids presents</p><div class="s12-hd"><h1 id="hoopsLg">STOOPIDS <span>HOOPS</span></h1><script>/*<BUG-9> league title: paint this league's cached name (shoops.lname.<id>) before first paint; never flash the default when a league link has no cached name yet. Fit leaves room for the Share button. */window.hoopsTitle=function(name,show){var h=document.getElementById('hoopsLg');if(!h)return;var n=String(name||'').trim().toUpperCase().replace(/\s+/g,' ');if(n){var i=n.lastIndexOf(' ');h.textContent='';if(i>0){h.appendChild(document.createTextNode(n.slice(0,i+1)));var sp=document.createElement('span');sp.textContent=n.slice(i+1);h.appendChild(sp)}else h.textContent=n;h.style.whiteSpace='nowrap';h.style.fontSize='';var fs=parseFloat(getComputedStyle(h).fontSize),k=0;while(h.clientWidth>0&&h.scrollWidth>h.clientWidth+1&&fs>14&&k++<40){fs-=1;h.style.setProperty('font-size',fs+'px','important')}}if(n||show)h.style.visibility=''};(function(){var h=document.getElementById('hoopsLg');try{var id=String(new URLSearchParams(location.search).get('l')||'').trim().replace(/[^A-Za-z0-9]/g,'').slice(0,40);if(!id)return;var c=localStorage.getItem('shoops.lname.'+id.toLowerCase());h.style.visibility='hidden';if(c)hoopsTitle(c)}catch(e){if(h)h.style.visibility=''}})();/*</BUG-9>*/</script><!--<STEP12-HSHARE> whole-site Share beside the title (view-only link; Profile keeps the pick-a-tab share) --><button type="button" class="s12-share" id="s12Share" aria-label="Share STOOPIDS (view-only link to the whole site)" onclick="s12ShareSite(this)">🔗 Share</button><!--</STEP12-HSHARE>--></div>
 <!--<HDR-CENTER> Refresh Live Games moved to #gamesTop (top of Games) </HDR-CENTER>-->
   <p class="tag" id="tag"></p></div>
   <div class="sub" id="badges" style="margin:0"></div>
@@ -4096,11 +4096,11 @@ function s24LinkBtn(kind,id,what){id=String(id==null?'':id);if(!s24IdOK(id))retu
 /* ---- render hook: hash in step with the tab, link bar, deep link ---- */
 const s24Render0=render;
 /*<NO-JUMP>*/ // background re-renders (5-min data reload, bets polls, live scores, presence) keep what the reader is looking at in place: anchor + offset restore (ported from League s25j leaguehome.js). Not for the first render, a tab change or a deep link (those move on purpose).
-let NJ_SELF=0;const njScroll=y=>{NJ_SELF=Date.now();window.scrollTo(0,Math.max(0,y))};
+let NJ_SELF=0;/*<BUG-8>*/const njPin=()=>{const m=document.getElementById('main');return m&&document.body.classList.contains('hdr-away')&&getComputedStyle(m).position==='fixed'?m:null};/*</BUG-8>*/const njScroll=y=>{NJ_SELF=Date.now();/*<BUG-8>*/const pm=njPin();if(pm){pm.scrollTop+=y-(window.scrollY||0);return}/*</BUG-8>*/window.scrollTo(0,Math.max(0,y))};
 const NJ_KEYS=['data-bid','data-gid','data-pid','data-n','id'];
 function njSel(e){for(const k of NJ_KEYS){const v=e.getAttribute(k);if(v)return k==='id'?'#'+CSS.escape(v):'['+k+'="'+CSS.escape(v)+'"]'}return e.matches('#main .card')?'#main .card':null}
 let NJ_TAP={e:null,t:0};document.addEventListener('click',ev=>{const m=document.getElementById('main'),k=ev.target&&ev.target.closest&&ev.target.closest('[data-bid],[data-gid],[data-pid],[data-n],[id],#main .card');NJ_TAP={e:k&&m&&m.contains(k)?k:null,t:Date.now()}},true);
-function njTake(){if(window.scrollY<1)return null;const m=document.getElementById('main');
+function njTake(){if(window.scrollY<1&&!njPin())return null;/*BUG-8*/const m=document.getElementById('main');
   if(NJ_TAP.e&&NJ_TAP.e.isConnected&&Date.now()-NJ_TAP.t<1500&&m){const sel=njSel(NJ_TAP.e),r=NJ_TAP.e.getBoundingClientRect();if(sel&&r.height)return {y:window.scrollY,a:[{sel,i:[...document.querySelectorAll(sel)].indexOf(NJ_TAP.e),top:r.top}]}}
   const out=[],cnt={};for(const e of document.querySelectorAll('[data-bid],[data-gid],[data-pid],[data-n],[id],#main .card')){if(e.closest('#chat,#nbtoast,#s24t,#betc'))continue;const sel=njSel(e);if(!sel)continue;cnt[sel]=(cnt[sel]||0)+1;const r=e.getBoundingClientRect();if(!r.height||r.bottom<=0||r.top>=innerHeight)continue;out.push({sel,i:cnt[sel]-1,top:r.top});if(out.length>=12)break}
   return {y:window.scrollY,a:out}}
@@ -4140,12 +4140,12 @@ addEventListener('resize',()=>{try{pinNavH()}catch(e){}});
     var n=navEl(),line=pinLine();if(!n||line<8)return;
     if(y>=line-2)passed=true;
     if(!passed||y<1)return;
-    var nh=Math.ceil(n.getBoundingClientRect().height),next=Math.max(0,Math.round(y-line));
+    var nh=Math.ceil(n.getBoundingClientRect().height),next=Math.max(0,Math.round(y-line));/*<BUG-8>*/var bm=document.getElementById('main'),bsub=function(){return bm&&[...bm.querySelectorAll(':scope>.tabs.ob-seg')].find(function(e){return e.getClientRects().length})},bref=bm&&bm.querySelector(':scope>.card,:scope .b27-grid>.card'),gap0=(bsub()&&bref)?bref.getBoundingClientRect().top-bsub().getBoundingClientRect().bottom:null;/*</BUG-8>*/
     away=true;
     document.body.classList.add('hdr-away');
     hold(true,nh);
     try{pinNavH()}catch(e){}
-    if(deskBets()){var m=document.getElementById('main');if(m)m.scrollTop=0;next=0}
+    if(deskBets()){var m=document.getElementById('main');/*<BUG-8>*/if(m){m.scrollTop=0;var sb=bsub(),gap1=(sb&&bref&&gap0!==null)?bref.getBoundingClientRect().top-sb.getBoundingClientRect().bottom:0;m.scrollTop=Math.max(0,gap0===null?next:Math.round(gap1-gap0))}/*</BUG-8>*/next=0}
     if(Math.abs((window.scrollY||0)-next)>1)window.scrollTo(0,next);
     lastY=window.scrollY||0;
   }
@@ -4870,7 +4870,7 @@ html body .s24fb .note{margin-top:4px!important;font-size:12px}
 html body header{position:static!important}
 html body nav#nav{position:sticky!important;top:0!important;z-index:40!important;background:var(--bg,#0e121b)!important}
 #navHold{height:0;margin:0;padding:0;border:0;overflow:hidden;pointer-events:none;line-height:0}
-body.hdr-away{overflow-anchor:none}
+body.hdr-away,body.hdr-away #main{overflow-anchor:none}/*BUG-8*/
 body.hdr-away header{display:none!important}
 body.hdr-away nav#nav{position:fixed!important;top:0!important;left:0!important;right:0!important;margin:0 auto!important;width:100%!important;max-width:var(--nav-max,1080px)!important;z-index:40!important;background:var(--bg,#0e121b)!important}
 html body #main .s24fb .row2>select,html body #main .s24fb .row2>input,html body #main .b27-fr>select,html body #main .b27-fr>input{height:32px!important;min-height:32px!important;font-size:13px!important;padding:0 10px!important}
@@ -5010,7 +5010,7 @@ html body .gfin.open>.gsum>span:not(.gst):not(.gch){display:none!important}
 /* Bets sub-tabs stay frozen under the main tab row. The open section's heading is scrolled to sit just below them. */
 html body #main>.tabs.ob-seg{position:sticky!important;top:var(--navh,56px)!important;z-index:35!important;background:var(--bg,#0e121b)!important;margin-bottom:8px!important}
 html body #main>.b27-allh,html body #main .b27-grid>.card,html body #main>.entry-hd{scroll-margin-top:calc(var(--navh,56px) + var(--subh,44px) + 8px)}
-body.hdr-away #main>.tabs.ob-seg.ob-phone{position:fixed!important;top:var(--navh,56px)!important;left:0!important;right:0!important;width:100%!important;max-width:none!important;margin:0!important;z-index:37!important;box-sizing:border-box!important;background:var(--bg,#0e121b)!important;padding:4px 12px 8px!important}
+body.hdr-away #main>.tabs.ob-seg.ob-phone{position:fixed!important;top:var(--navh,56px)!important;left:0!important;right:0!important;width:100%!important;max-width:none!important;margin:0!important;z-index:37!important;box-sizing:border-box!important;background:var(--bg,#0e121b)!important;padding:4px 12px 6px!important/*BUG-8: same height as the unpinned bar*/}
 body.hdr-away:has(#main>.tabs.ob-seg.ob-phone){overflow:hidden}
 body.hdr-away:has(#main>.tabs.ob-seg.ob-phone) #main{position:fixed!important;top:calc(var(--navh,56px) + var(--subh,44px))!important;left:0;right:0;bottom:0;width:100%;margin:0!important;overflow:auto;z-index:36;box-sizing:border-box;padding-top:8px!important;padding-bottom:88px!important;background:var(--bg,#0e121b);scroll-padding-top:8px}
 body.hdr-away:has(#main>.tabs.ob-seg) #main>h2,body.hdr-away:has(#main>.tabs.ob-seg) #main>.card,body.hdr-away:has(#main>.tabs.ob-seg) #main .b27-grid>.card,body.hdr-away:has(#main>.tabs.ob-seg) #main>.entry-hd,body.hdr-away:has(#main>.tabs.ob-seg) #main>.entry-pair{scroll-margin-top:8px}

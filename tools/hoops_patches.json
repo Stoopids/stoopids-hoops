@@ -1,6 +1,42 @@
 {
  "page": [
   {
+   "tag": "BUG-8",
+   "why": "Bets pin: overflow-anchor:none was set on body only (it does not inherit), so the pinned #main scroller still let Chrome re-anchor mid-render and nudge the list on a background refresh; NO-JUMP (njPin) keeps the place instead",
+   "old": "body.hdr-away{overflow-anchor:none}",
+   "new": "body.hdr-away,body.hdr-away #main{overflow-anchor:none}/*BUG-8*/"
+  },
+  {
+   "tag": "BUG-8",
+   "why": "Bets pin: background re-renders (bets polls, live scores, data reload) keep the pinned list in place too. NO-JUMP only restored the page scroll, but while the Bets bars are pinned the list scrolls inside #main, so a refresh could nudge it (20px on mobile)",
+   "old": "let NJ_SELF=0;const njScroll=y=>{NJ_SELF=Date.now();window.scrollTo(0,Math.max(0,y))};",
+   "new": "let NJ_SELF=0;/*<BUG-8>*/const njPin=()=>{const m=document.getElementById('main');return m&&document.body.classList.contains('hdr-away')&&getComputedStyle(m).position==='fixed'?m:null};/*</BUG-8>*/const njScroll=y=>{NJ_SELF=Date.now();/*<BUG-8>*/const pm=njPin();if(pm){pm.scrollTop+=y-(window.scrollY||0);return}/*</BUG-8>*/window.scrollTo(0,Math.max(0,y))};"
+  },
+  {
+   "tag": "BUG-8",
+   "why": "Bets pin: take the NO-JUMP anchor while the list scrolls inside the pinned #main (page scroll is 0 then)",
+   "old": "function njTake(){if(window.scrollY<1)return null;",
+   "new": "function njTake(){if(window.scrollY<1&&!njPin())return null;/*BUG-8*/"
+  },
+  {
+   "tag": "BUG-8",
+   "why": "Bets pin on mobile: the pinned Bets bar kept 8px bottom padding (6px unpinned), so it grew 2px and nudged the list at the pin",
+   "old": "background:var(--bg,#0e121b)!important;padding:4px 12px 8px!important}",
+   "new": "background:var(--bg,#0e121b)!important;padding:4px 12px 6px!important/*BUG-8: same height as the unpinned bar*/}"
+  },
+  {
+   "tag": "BUG-8",
+   "why": "Bets pin (part 1): measure the list's gap under the Bets bar just before the header leaves",
+   "old": "var nh=Math.ceil(n.getBoundingClientRect().height),next=Math.max(0,Math.round(y-line));",
+   "new": "var nh=Math.ceil(n.getBoundingClientRect().height),next=Math.max(0,Math.round(y-line));/*<BUG-8>*/var bm=document.getElementById('main'),bsub=function(){return bm&&[...bm.querySelectorAll(':scope>.tabs.ob-seg')].find(function(e){return e.getClientRects().length})},bref=bm&&bm.querySelector(':scope>.card,:scope .b27-grid>.card'),gap0=(bsub()&&bref)?bref.getBoundingClientRect().top-bsub().getBoundingClientRect().bottom:null;/*</BUG-8>*/"
+  },
+  {
+   "tag": "BUG-8",
+   "why": "Bets pin: when the header leaves, the pinned Bets list continues from where it was, as if the bars had stuck at the pin line: it keeps the distance already scrolled past the line and the list's gap under the Bets bar (was reset to 0, so each crossing threw away up to a whole wheel/flick and the list jumped back)",
+   "old": "if(deskBets()){var m=document.getElementById('main');if(m)m.scrollTop=0;next=0}",
+   "new": "if(deskBets()){var m=document.getElementById('main');/*<BUG-8>*/if(m){m.scrollTop=0;var sb=bsub(),gap1=(sb&&bref&&gap0!==null)?bref.getBoundingClientRect().top-sb.getBoundingClientRect().bottom:0;m.scrollTop=Math.max(0,gap0===null?next:Math.round(gap1-gap0))}/*</BUG-8>*/next=0}"
+  },
+  {
    "tag": "HOOPS",
    "why": "PWA: register the Hoops service worker (STOOPIDS unregisters)",
    "old": "  if('serviceWorker' in navigator&&navigator.serviceWorker.getRegistrations)navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(x){x.unregister()})}).catch(function(){});",
@@ -177,9 +213,9 @@
   },
   {
    "tag": "BUG-4",
-   "why": "static h1 is a Hoops default (STOOPIDS HOOPS) so the STOOPIDS mark never flashes before the league name loads",
+   "why": "static h1 is a Hoops default (STOOPIDS HOOPS) so the STOOPIDS mark never flashes before the league name loads; BUG-9: on a league link the h1 paints the cached league name (or stays hidden until meta loads) so the default never flashes, and the fit leaves room for Share",
    "old": "<h1 id=\"hoopsLg\">STOOP<span>IDS</span></h1>",
-   "new": "<h1 id=\"hoopsLg\">STOOPIDS <span>HOOPS</span></h1>"
+   "new": "<h1 id=\"hoopsLg\">STOOPIDS <span>HOOPS</span></h1><script>/*<BUG-9> league title: paint this league's cached name (shoops.lname.<id>) before first paint; never flash the default when a league link has no cached name yet. Fit leaves room for the Share button. */window.hoopsTitle=function(name,show){var h=document.getElementById('hoopsLg');if(!h)return;var n=String(name||'').trim().toUpperCase().replace(/\\s+/g,' ');if(n){var i=n.lastIndexOf(' ');h.textContent='';if(i>0){h.appendChild(document.createTextNode(n.slice(0,i+1)));var sp=document.createElement('span');sp.textContent=n.slice(i+1);h.appendChild(sp)}else h.textContent=n;h.style.whiteSpace='nowrap';h.style.fontSize='';var fs=parseFloat(getComputedStyle(h).fontSize),k=0;while(h.clientWidth>0&&h.scrollWidth>h.clientWidth+1&&fs>14&&k++<40){fs-=1;h.style.setProperty('font-size',fs+'px','important')}}if(n||show)h.style.visibility=''};(function(){var h=document.getElementById('hoopsLg');try{var id=String(new URLSearchParams(location.search).get('l')||'').trim().replace(/[^A-Za-z0-9]/g,'').slice(0,40);if(!id)return;var c=localStorage.getItem('shoops.lname.'+id.toLowerCase());h.style.visibility='hidden';if(c)hoopsTitle(c)}catch(e){if(h)h.style.visibility=''}})();/*</BUG-9>*/</script>"
   },
   {
    "tag": "HOOPS-DRAFTNAV",

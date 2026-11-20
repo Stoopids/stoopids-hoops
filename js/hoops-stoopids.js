@@ -73,7 +73,7 @@ H.load=async function(){
   try{const t=(location.hash||'').replace(/^#/,'').split('/')[0];localStorage.setItem('shoops.lastsite',JSON.stringify({id,t:/^[a-z]{3,12}$/.test(t)?t:'standings',at:Date.now()}))}catch(e){}
   H.L=L;H.meta=L.meta;
   /* heading: STOOPIDS PRESENTS <league name the commish set at league setup> (shoops1- league record) */
-  H.setTitle(L.meta.name);const MG=L.managers.filter(m=>m&&m.mid);const keys=uniqNames(MG);const keyOf={},mOf={};MG.forEach((m,i)=>{keyOf[m.mid]=keys[i];mOf[keys[i]]=m});H.keyOf=keyOf;H.mOf=mOf;
+  H.setTitle(L.meta.name);/*<BUG-9>*/try{if(L.meta.name)localStorage.setItem('shoops.lname.'+id.toLowerCase(),String(L.meta.name))}catch(e){}/*</BUG-9>*/const MG=L.managers.filter(m=>m&&m.mid);const keys=uniqNames(MG);const keyOf={},mOf={};MG.forEach((m,i)=>{keyOf[m.mid]=keys[i];mOf[keys[i]]=m});H.keyOf=keyOf;H.mOf=mOf;
   /* who am I: only this device's own manager link (shoops.me.<league> = {mid,k}, set by the draft room / a private link), checked against the seat's claim hash */
   H.mid=null;H.me=null;try{const me=lsJ('shoops.me.'+id);if(me&&me.mid&&me.k){const c=FBN.joinedList(L.meta,L.claims).find(x=>x.mid===me.mid);if(c&&await FBN.checkMgrSecret(c,me.k)){H.mid=me.mid;H.me=keyOf[me.mid]||null}}}catch(e){}
   /* presence ('Who are you?') remembers this device's own manager, so a manager opening their own link is not asked */
@@ -124,9 +124,8 @@ H.publish=function(SC){const C=H._ctx;if(!C)return null;SC=SC||C.SC;C.SC=SC;cons
 H.applySched=function(){if(!window.LSCHED||!H._ctx)return H.D;H.publish(LSCHED.merge(H._ctx.SC));if(typeof H.onSched==='function')try{H.onSched(H.D)}catch(e){}return H.D};
 /* commissioner passcode (this league's meta.pass; same check as the draft room) */
 /* h1 = league name in the STOOPIDS two-tone title style (last word in the accent span, like STOOP<span>IDS</span>); shrinks to fit one line */
-H.setTitle=function(name){const h=document.getElementById('hoopsLg');if(!h)return;const n=String(name||'Stoopids Hoops').trim().toUpperCase().replace(/\s+/g,' ');const i=n.lastIndexOf(' ');
-  h.textContent='';if(i>0){h.appendChild(document.createTextNode(n.slice(0,i+1)));const sp=document.createElement('span');sp.textContent=n.slice(i+1);h.appendChild(sp)}else h.textContent=n;
-  h.style.whiteSpace='nowrap';h.style.fontSize='';const fit=()=>{h.style.fontSize='';const w=h.parentNode?h.parentNode.clientWidth-(document.getElementById('s12Share')||{offsetWidth:0}).offsetWidth*0:0;let fs=parseFloat(getComputedStyle(h).fontSize);let k=0;while(w&&h.scrollWidth>w&&fs>16&&k++<40){fs-=2;h.style.fontSize=fs+'px'}};fit();if(!H._fit){H._fit=1;addEventListener('resize',fit)}};
+/*<BUG-9> one renderer (league.html hoopsTitle): two-tone, fit leaves room for Share, then shown */
+H.setTitle=function(name){const nm=String(name||'Stoopids Hoops');const fit=()=>{if(window.hoopsTitle)window.hoopsTitle(nm,true)};fit();if(!H._fit){H._fit=1;addEventListener('resize',()=>{if(H._nm)window.hoopsTitle&&window.hoopsTitle(H._nm,true)})}H._nm=nm};/*</BUG-9>*/
 H.cmUnlock=async function(pass){if(!H.meta||!pass)return false;const ok=await FBN.checkPass(H.meta,pass);if(ok){try{localStorage.setItem('shoops.cm.'+id,pass)}catch(e){}H.cmOk=true}return ok};
 H.cmLock=function(){try{localStorage.removeItem('shoops.cm.'+id)}catch(e){}H.cmOk=false;H.nl.url=''};
 /* commissioner 'Make a new link for [manager]': only with a valid commissioner passcode (re-checked right before writing). New secret -> FBN.reissueSeat (new claim hash) -> that seat's key,
