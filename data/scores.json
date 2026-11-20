@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-20",
-  "generated_at_utc": "2026-11-20T18:53:40Z",
+  "generated_at_utc": "2026-11-20T19:53:47Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -5751,7 +5751,7 @@
       "line": {
         "fav": "1",
         "dog": "30",
-        "sp": 6.5,
+        "sp": 7.5,
         "ou": 219.5,
         "fav_name": "ATL",
         "aml": 205,
@@ -5785,8 +5785,8 @@
         "sp": 6.5,
         "ou": 224.5,
         "fav_name": "ORL",
-        "aml": -257,
-        "hml": 211,
+        "aml": -264,
+        "hml": 217,
         "p": "DraftKings"
       }
     },
@@ -5845,7 +5845,7 @@
         "fav": "8",
         "dog": "28",
         "sp": 6.5,
-        "ou": 216.5,
+        "ou": 215.5,
         "fav_name": "DET",
         "aml": 217,
         "hml": -264,
@@ -6000,7 +6000,7 @@
         "fav": "13",
         "dog": "23",
         "sp": 14.5,
-        "ou": 228.5,
+        "ou": 229.5,
         "fav_name": "LAL",
         "aml": 600,
         "hml": -890,
@@ -7564,7 +7564,7 @@
     {
       "id": "401910074",
       "day": "2026-12-01",
-      "start": "2026-12-02T03:00Z",
+      "start": "2026-12-02T04:00Z",
       "status": "scheduled",
       "kind": "reg",
       "round": "",
@@ -7585,7 +7585,7 @@
     {
       "id": "401910075",
       "day": "2026-12-01",
-      "start": "2026-12-02T04:00Z",
+      "start": "2026-12-02T03:00Z",
       "status": "scheduled",
       "kind": "reg",
       "round": "",
