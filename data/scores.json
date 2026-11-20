@@ -4,13 +4,13 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-19",
-  "generated_at_utc": "2026-11-20T03:14:32Z",
+  "generated_at_utc": "2026-11-20T04:17:07Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
     "15": {
       "w": 1,
-      "l": 14,
+      "l": 15,
       "playoffSeed": 15,
       "conference": "East"
     },
@@ -62,12 +62,6 @@
       "playoffSeed": 7,
       "conference": "East"
     },
-    "18": {
-      "w": 8,
-      "l": 6,
-      "playoffSeed": 6,
-      "conference": "East"
-    },
     "14": {
       "w": 9,
       "l": 6,
@@ -78,6 +72,12 @@
       "w": 9,
       "l": 6,
       "playoffSeed": 5,
+      "conference": "East"
+    },
+    "18": {
+      "w": 9,
+      "l": 6,
+      "playoffSeed": 6,
       "conference": "East"
     },
     "8": {
@@ -118,8 +118,14 @@
     },
     "12": {
       "w": 4,
-      "l": 9,
+      "l": 10,
       "playoffSeed": 13,
+      "conference": "West"
+    },
+    "9": {
+      "w": 8,
+      "l": 8,
+      "playoffSeed": 10,
       "conference": "West"
     },
     "21": {
@@ -132,12 +138,6 @@
       "w": 8,
       "l": 7,
       "playoffSeed": 9,
-      "conference": "West"
-    },
-    "9": {
-      "w": 8,
-      "l": 7,
-      "playoffSeed": 10,
       "conference": "West"
     },
     "7": {
@@ -153,20 +153,14 @@
       "conference": "West"
     },
     "22": {
-      "w": 9,
+      "w": 10,
       "l": 5,
       "playoffSeed": 6,
       "conference": "West"
     },
     "16": {
       "w": 11,
-      "l": 4,
-      "playoffSeed": 4,
-      "conference": "West"
-    },
-    "29": {
-      "w": 11,
-      "l": 4,
+      "l": 5,
       "playoffSeed": 5,
       "conference": "West"
     },
@@ -176,16 +170,22 @@
       "playoffSeed": 3,
       "conference": "West"
     },
-    "24": {
+    "29": {
       "w": 12,
+      "l": 4,
+      "playoffSeed": 4,
+      "conference": "West"
+    },
+    "24": {
+      "w": 13,
       "l": 3,
-      "playoffSeed": 2,
+      "playoffSeed": 1,
       "conference": "West"
     },
     "13": {
       "w": 13,
       "l": 3,
-      "playoffSeed": 1,
+      "playoffSeed": 2,
       "conference": "West"
     }
   },
@@ -5604,19 +5604,19 @@
       "id": "401910019",
       "day": "2026-11-19",
       "start": "2026-11-20T01:00Z",
-      "status": "live",
+      "status": "final",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "29",
-        "score": 115,
+        "score": 126,
         "seed": null,
         "short": "MEM"
       },
       "away": {
         "id": "9",
-        "score": 85,
+        "score": 98,
         "seed": null,
         "short": "GS"
       },
@@ -5628,26 +5628,27 @@
         "fav_name": "MEM",
         "aml": 171,
         "hml": -205,
-        "p": "DraftKings"
+        "p": "DraftKings",
+        "type": "close"
       }
     },
     {
       "id": "401910020",
       "day": "2026-11-19",
       "start": "2026-11-20T01:00Z",
-      "status": "live",
+      "status": "final",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "15",
-        "score": 103,
+        "score": 114,
         "seed": null,
         "short": "MIL"
       },
       "away": {
         "id": "22",
-        "score": 106,
+        "score": 124,
         "seed": null,
         "short": "POR"
       },
@@ -5659,20 +5660,21 @@
         "fav_name": "POR",
         "aml": -380,
         "hml": 301,
-        "p": "DraftKings"
+        "p": "DraftKings",
+        "type": "close"
       }
     },
     {
       "id": "401910021",
       "day": "2026-11-19",
       "start": "2026-11-20T01:00Z",
-      "status": "live",
+      "status": "final",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "16",
-        "score": 93,
+        "score": 99,
         "seed": null,
         "short": "MIN"
       },
@@ -5690,26 +5692,27 @@
         "fav_name": "NY",
         "aml": -113,
         "hml": -104,
-        "p": "DraftKings"
+        "p": "DraftKings",
+        "type": "close"
       }
     },
     {
       "id": "401910022",
       "day": "2026-11-19",
       "start": "2026-11-20T01:00Z",
-      "status": "live",
+      "status": "final",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "24",
-        "score": 111,
+        "score": 124,
         "seed": null,
         "short": "SA"
       },
       "away": {
         "id": "12",
-        "score": 103,
+        "score": 112,
         "seed": null,
         "short": "LAC"
       },
@@ -5721,7 +5724,8 @@
         "fav_name": "SA",
         "aml": 660,
         "hml": -1020,
-        "p": "DraftKings"
+        "p": "DraftKings",
+        "type": "close"
       }
     },
     {
@@ -5781,8 +5785,8 @@
         "sp": 5.5,
         "ou": 222.5,
         "fav_name": "ORL",
-        "aml": -201,
-        "hml": 168,
+        "aml": -198,
+        "hml": 166,
         "p": "DraftKings"
       }
     },
@@ -5874,8 +5878,8 @@
         "sp": 3.5,
         "ou": 240.5,
         "fav_name": "CHI",
-        "aml": 120,
-        "hml": -143,
+        "aml": 123,
+        "hml": -146,
         "p": "DraftKings"
       }
     },
