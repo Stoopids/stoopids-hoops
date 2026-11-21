@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-21",
-  "generated_at_utc": "2026-11-21T21:48:23Z",
+  "generated_at_utc": "2026-11-21T22:25:45Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -6071,11 +6071,11 @@
       "line": {
         "fav": "18",
         "dog": "22",
-        "sp": 2.5,
-        "ou": 215.5,
+        "sp": 1.5,
+        "ou": 214.5,
         "fav_name": "NY",
-        "aml": 131,
-        "hml": -156,
+        "aml": 101,
+        "hml": -119,
         "p": "DraftKings"
       }
     },
@@ -6133,7 +6133,7 @@
       "line": {
         "fav": "16",
         "dog": "29",
-        "sp": 6.5,
+        "sp": 5.5,
         "ou": 228.5,
         "fav_name": "MIN",
         "aml": 185,
@@ -6195,8 +6195,8 @@
       "line": {
         "fav": "2",
         "dog": "23",
-        "sp": 12.5,
-        "ou": 216.5,
+        "sp": 11.5,
+        "ou": 215.5,
         "fav_name": "BOS",
         "aml": -597,
         "hml": 443,
