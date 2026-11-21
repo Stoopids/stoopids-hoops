@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-20",
-  "generated_at_utc": "2026-11-21T02:25:54Z",
+  "generated_at_utc": "2026-11-21T03:19:55Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -16,7 +16,7 @@
     },
     "17": {
       "w": 3,
-      "l": 11,
+      "l": 12,
       "playoffSeed": 14,
       "conference": "East"
     },
@@ -24,6 +24,12 @@
       "w": 4,
       "l": 11,
       "playoffSeed": 13,
+      "conference": "East"
+    },
+    "11": {
+      "w": 5,
+      "l": 11,
+      "playoffSeed": 10,
       "conference": "East"
     },
     "27": {
@@ -39,25 +45,19 @@
       "conference": "East"
     },
     "28": {
-      "w": 5,
+      "w": 6,
       "l": 10,
       "playoffSeed": 9,
       "conference": "East"
     },
-    "11": {
-      "w": 5,
-      "l": 10,
-      "playoffSeed": 10,
-      "conference": "East"
-    },
     "19": {
-      "w": 6,
+      "w": 7,
       "l": 8,
       "playoffSeed": 8,
       "conference": "East"
     },
     "5": {
-      "w": 8,
+      "w": 9,
       "l": 8,
       "playoffSeed": 7,
       "conference": "East"
@@ -82,7 +82,7 @@
     },
     "8": {
       "w": 10,
-      "l": 4,
+      "l": 5,
       "playoffSeed": 3,
       "conference": "East"
     },
@@ -5628,7 +5628,7 @@
         "fav_name": "MEM",
         "aml": 171,
         "hml": -205,
-        "p": "DraftKings",
+        "p": "Draft Kings",
         "type": "close"
       }
     },
@@ -5660,7 +5660,7 @@
         "fav_name": "POR",
         "aml": -380,
         "hml": 301,
-        "p": "DraftKings",
+        "p": "Draft Kings",
         "type": "close"
       }
     },
@@ -5692,7 +5692,7 @@
         "fav_name": "NY",
         "aml": -113,
         "hml": -104,
-        "p": "DraftKings",
+        "p": "Draft Kings",
         "type": "close"
       }
     },
@@ -5724,7 +5724,7 @@
         "fav_name": "SA",
         "aml": 660,
         "hml": -1020,
-        "p": "DraftKings",
+        "p": "Draft Kings",
         "type": "close"
       }
     },
@@ -5756,7 +5756,7 @@
         "fav_name": "ATL",
         "aml": 217,
         "hml": -264,
-        "p": "DraftKings",
+        "p": "Draft Kings",
         "type": "close"
       }
     },
@@ -5764,19 +5764,19 @@
       "id": "401909306",
       "day": "2026-11-20",
       "start": "2026-11-21T00:30Z",
-      "status": "live",
+      "status": "final",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "17",
-        "score": 81,
+        "score": 111,
         "seed": null,
         "short": "BKN"
       },
       "away": {
         "id": "19",
-        "score": 84,
+        "score": 113,
         "seed": null,
         "short": "ORL"
       },
@@ -5788,26 +5788,27 @@
         "fav_name": "ORL",
         "aml": -249,
         "hml": 206,
-        "p": "DraftKings"
+        "p": "Draft Kings",
+        "type": "close"
       }
     },
     {
       "id": "401909307",
       "day": "2026-11-20",
       "start": "2026-11-21T00:30Z",
-      "status": "live",
+      "status": "final",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "5",
-        "score": 107,
+        "score": 128,
         "seed": null,
         "short": "CLE"
       },
       "away": {
         "id": "11",
-        "score": 85,
+        "score": 119,
         "seed": null,
         "short": "IND"
       },
@@ -5819,26 +5820,27 @@
         "fav_name": "CLE",
         "aml": 201,
         "hml": -244,
-        "p": "DraftKings"
+        "p": "Draft Kings",
+        "type": "close"
       }
     },
     {
       "id": "401909308",
       "day": "2026-11-20",
       "start": "2026-11-21T00:30Z",
-      "status": "live",
+      "status": "final",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "8",
-        "score": 72,
+        "score": 102,
         "seed": null,
         "short": "DET"
       },
       "away": {
         "id": "28",
-        "score": 77,
+        "score": 105,
         "seed": null,
         "short": "TOR"
       },
@@ -5850,7 +5852,8 @@
         "fav_name": "DET",
         "aml": 227,
         "hml": -277,
-        "p": "DraftKings"
+        "p": "Draft Kings",
+        "type": "close"
       }
     },
     {
@@ -5863,13 +5866,13 @@
       "neutral": false,
       "home": {
         "id": "4",
-        "score": 60,
+        "score": 92,
         "seed": null,
         "short": "CHI"
       },
       "away": {
         "id": "27",
-        "score": 56,
+        "score": 96,
         "seed": null,
         "short": "WSH"
       },
@@ -5881,7 +5884,7 @@
         "fav_name": "CHI",
         "aml": 114,
         "hml": -135,
-        "p": "DraftKings"
+        "p": "Draft Kings"
       }
     },
     {
@@ -5894,13 +5897,13 @@
       "neutral": false,
       "home": {
         "id": "25",
-        "score": 65,
+        "score": 124,
         "seed": null,
         "short": "OKC"
       },
       "away": {
         "id": "3",
-        "score": 72,
+        "score": 116,
         "seed": null,
         "short": "NO"
       },
@@ -5912,26 +5915,26 @@
         "fav_name": "OKC",
         "aml": 368,
         "hml": -479,
-        "p": "DraftKings"
+        "p": "Draft Kings"
       }
     },
     {
       "id": "401909311",
       "day": "2026-11-20",
       "start": "2026-11-21T02:30Z",
-      "status": "scheduled",
+      "status": "live",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "26",
-        "score": null,
+        "score": 30,
         "seed": null,
         "short": "UTAH"
       },
       "away": {
         "id": "21",
-        "score": null,
+        "score": 41,
         "seed": null,
         "short": "PHX"
       },
@@ -5943,26 +5946,26 @@
         "fav_name": "PHX",
         "aml": -192,
         "hml": 160,
-        "p": "DraftKings"
+        "p": "Draft Kings"
       }
     },
     {
       "id": "401909312",
       "day": "2026-11-20",
       "start": "2026-11-21T03:00Z",
-      "status": "scheduled",
+      "status": "live",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "7",
-        "score": null,
+        "score": 15,
         "seed": null,
         "short": "DEN"
       },
       "away": {
         "id": "10",
-        "score": null,
+        "score": 14,
         "seed": null,
         "short": "HOU"
       },
@@ -5972,28 +5975,28 @@
         "sp": 1.5,
         "ou": 227.5,
         "fav_name": "HOU",
-        "aml": -120,
-        "hml": 101,
-        "p": "DraftKings"
+        "aml": -121,
+        "hml": 102,
+        "p": "Draft Kings"
       }
     },
     {
       "id": "401909313",
       "day": "2026-11-20",
       "start": "2026-11-21T03:00Z",
-      "status": "scheduled",
+      "status": "live",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "13",
-        "score": null,
+        "score": 12,
         "seed": null,
         "short": "LAL"
       },
       "away": {
         "id": "23",
-        "score": null,
+        "score": 12,
         "seed": null,
         "short": "SAC"
       },
@@ -6003,9 +6006,9 @@
         "sp": 14.5,
         "ou": 229.5,
         "fav_name": "LAL",
-        "aml": 600,
-        "hml": -890,
-        "p": "DraftKings"
+        "aml": 580,
+        "hml": -840,
+        "p": "Draft Kings"
       }
     },
     {
@@ -6036,7 +6039,7 @@
         "fav_name": "PHI",
         "aml": 492,
         "hml": -680,
-        "p": "DraftKings"
+        "p": "Draft Kings"
       }
     },
     {
@@ -6067,7 +6070,7 @@
         "fav_name": "NY",
         "aml": 168,
         "hml": -201,
-        "p": "DraftKings"
+        "p": "Draft Kings"
       }
     },
     {
@@ -6098,7 +6101,7 @@
         "fav_name": "DAL",
         "aml": 168,
         "hml": -201,
-        "p": "DraftKings"
+        "p": "Draft Kings"
       }
     },
     {
@@ -6127,9 +6130,9 @@
         "sp": 5.5,
         "ou": 227.5,
         "fav_name": "MIN",
-        "aml": 164,
-        "hml": -196,
-        "p": "DraftKings"
+        "aml": 168,
+        "hml": -201,
+        "p": "Draft Kings"
       }
     },
     {
@@ -6160,7 +6163,7 @@
         "fav_name": "SA",
         "aml": 850,
         "hml": -1440,
-        "p": "DraftKings"
+        "p": "Draft Kings"
       }
     },
     {
