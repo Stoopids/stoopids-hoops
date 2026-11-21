@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-21",
-  "generated_at_utc": "2026-11-21T22:25:45Z",
+  "generated_at_utc": "2026-11-21T23:12:16Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -6069,13 +6069,13 @@
         "short": "POR"
       },
       "line": {
-        "fav": "18",
-        "dog": "22",
+        "fav": "22",
+        "dog": "18",
         "sp": 1.5,
-        "ou": 214.5,
-        "fav_name": "NY",
-        "aml": 101,
-        "hml": -119,
+        "ou": 213.5,
+        "fav_name": "POR",
+        "aml": -112,
+        "hml": -105,
         "p": "DraftKings"
       }
     },
@@ -6105,8 +6105,8 @@
         "sp": 4.5,
         "ou": 230.5,
         "fav_name": "DAL",
-        "aml": 164,
-        "hml": -196,
+        "aml": 160,
+        "hml": -191,
         "p": "DraftKings"
       }
     },
@@ -6136,8 +6136,8 @@
         "sp": 5.5,
         "ou": 228.5,
         "fav_name": "MIN",
-        "aml": 185,
-        "hml": -223,
+        "aml": 184,
+        "hml": -222,
         "p": "DraftKings"
       }
     },
@@ -6167,8 +6167,8 @@
         "sp": 18.5,
         "ou": 228.5,
         "fav_name": "SA",
-        "aml": 950,
-        "hml": -1740,
+        "aml": 940,
+        "hml": -1700,
         "p": "DraftKings"
       }
     },
@@ -6195,11 +6195,11 @@
       "line": {
         "fav": "2",
         "dog": "23",
-        "sp": 11.5,
+        "sp": 12.5,
         "ou": 215.5,
         "fav_name": "BOS",
-        "aml": -597,
-        "hml": 443,
+        "aml": -600,
+        "hml": 446,
         "p": "DraftKings"
       }
     },
@@ -6222,6 +6222,16 @@
         "score": null,
         "seed": null,
         "short": "DET"
+      },
+      "line": {
+        "fav": "8",
+        "dog": "1",
+        "sp": 2.5,
+        "ou": 227.5,
+        "fav_name": "DET",
+        "aml": -130,
+        "hml": 110,
+        "p": "DraftKings"
       }
     },
     {
