@@ -2,8 +2,8 @@
   "format": 1,
   "source": "ESPN BPI",
   "season": "2026-27",
-  "fetched": "2026-11-20T23:18:04Z",
-  "updated": "2026-11-20T20:04Z",
+  "fetched": "2026-11-21T00:08:07Z",
+  "updated": "2026-11-20T15:34Z",
   "url": "https://site.web.api.espn.com/apis/fitt/v3/sports/basketball/nba/powerindex?region=us&lang=en&contentorigin=espn&limit=30",
   "ranks": {
     "24": 1,
@@ -41,7 +41,7 @@
     "24": 8.518,
     "2": 7.2,
     "25": 6.864,
-    "10": 6.174,
+    "10": 6.175,
     "18": 6.062,
     "8": 5.498,
     "16": 5.052,
@@ -102,7 +102,7 @@
       "abbr": "HOU",
       "name": "Houston Rockets",
       "rank": 4,
-      "bpi": 6.174,
+      "bpi": 6.175,
       "bpi_off": 4.381,
       "bpi_def": 1.793
     },
