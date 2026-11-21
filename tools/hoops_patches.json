@@ -146,9 +146,9 @@
   },
   {
    "tag": "HOOPS",
-   "why": "shared/ui.js cache-buster: Hoops copy of 1.86.10 with its patches (sh41)",
-   "old": "<script src=\"shared/ui.js?v=1.86.10\"",
-   "new": "<script src=\"shared/ui.js?v=1.86.10.sh41\""
+   "why": "shared/ui.js cache-buster: Hoops copy of 1.86.11 with its patches (sh41b)",
+   "old": "<script src=\"shared/ui.js?v=1.86.11\"",
+   "new": "<script src=\"shared/ui.js?v=1.86.11.sh41b\""
   },
   {
    "tag": "PAUL-e",
@@ -310,12 +310,6 @@
  ],
  "ui": [
   {
-   "tag": "PAUL-1",
-   "why": "moneyline copy (a883641) builds its own first line: keep 💥 at both ends for a written-up / accepted bet, 💣 only on requests awaiting acceptance (same rule as the PAUL-1 patch above)",
-   "old": "mlBomb='\\uD83D\\uDCA3 $'+r.amt+' '+mlL+' v '+mlR+md+' \\uD83D\\uDCA3'",
-   "new": "mlBomb=(kind==='bet'||kind==='acc'?'\\uD83D\\uDCA5':'\\uD83D\\uDCA3')+' $'+r.amt+' '+mlL+' v '+mlR+md+' '+(kind==='bet'||kind==='acc'?'\\uD83D\\uDCA5':'\\uD83D\\uDCA3')/*PAUL-1*/"
-  },
-  {
    "tag": "NBA",
    "why": "tip example with NBA teams",
    "old": "text:'Write it as you say it: \"Kansas -4 beats Duke\".'",
@@ -398,12 +392,6 @@
    "why": "Request: a game that already tipped says 'That game has already started.' (2nd half: 'That half has already started.') and nothing posts. Two ways in: (1) typed words that name a started game; since STOOPIDS 1.84.0 (PR #72) unmatched words post as free text once expiry and settle are picked by hand, and STOOPIDS treats a started game as unmatched (it asks 'Pick when it expires.' and then posts it as free text); Hoops keeps the block even with a hand-picked expiry, unless settle is End Of Season or a date (a season / date bet that only mentions the teams). (2) a game picked from a card or Quick bet before tip and sent after it; STOOPIDS says 'Choose when it expires (up to a year).' there because the tipoff expiry is already past; Hoops checks the start first. (sh31: re-based on STOOPIDS 59c9dc1 / ui.js 1.85.0, whose \"Pick when it expires.\" line no longer checks expPick)",
    "old": "if(!err&&!hasGame&&f.mode==='start')err='Pick when it expires.';",
    "new": "var lvG=!hasGame&&!f.gid?SHARED_UI.tipGame({games:games(),text:f.text,now:Date.now(),live:true,today:(typeof S25!=='undefined'&&S25.etDay)?S25.etDay(new Date()):'',dateFrom:(typeof S25!=='undefined'&&S25.dateFrom)?S25.dateFrom:null,day:(typeof S25!=='undefined'&&S25.etDay)?S25.etDay:null}):null,stG=hasGame?g:lvG&&!(f.whenPick&&(f.wk==='season'||f.wk==='date'))?lvG:null;if(!err&&stG&&started({cov:f.cov,gid:String(stG.id),start:stG.start},now))err='That '+(f.cov==='2h'?'half':'game')+' has already started.';   /* BUG-7 */\n        if(!err&&!hasGame&&f.mode==='start')err='Pick when it expires.';"
-  },
-  {
-   "tag": "PAUL-1",
-   "why": "copy text of a written-up / agreed bet (Write It Up auto-copy, the agreed card Copy, an accepted request) keeps 💥 at both ends; 💣 stays only on requests awaiting acceptance. STOOPIDS 18ff919 (1.81.0) moved every copy path to one builder (copyText) that puts 💣 on all of them.",
-   "old": "bomb='\\uD83D\\uDCA3 $'+r.amt+' '+left+' v '+right+od+' \\uD83D\\uDCA3'",
-   "new": "bomb=(kind==='bet'||kind==='acc'?'\\uD83D\\uDCA5':'\\uD83D\\uDCA3')+' $'+r.amt+' '+left+' v '+right+od+' '+(kind==='bet'||kind==='acc'?'\\uD83D\\uDCA5':'\\uD83D\\uDCA3')/*PAUL-1*/"
   }
  ],
  "sb": [

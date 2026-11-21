@@ -5,7 +5,7 @@ the expected number of times, so a STOOPIDS update that moves code fails loudly 
 Base: STOOPIDS commit BASE (read with git show from the STOOPIDS checkout, so its working tree / later commits never leak in).
 Run: python3 tools/build_league_from_stoopids.py [stoopids_src_dir]"""
 import re, sys, os, json, shutil, subprocess
-BASE = 'f5adf52'   # sh40b pin: main f5adf52 (a883641 moneyline request Copy, 4 lines) on top of 531503a; ui.js 1.86.10, ui.css 1.44.5. No PR #81.
+BASE = '0686c3b'   # sh41b pin: main 0686c3b (48dbad2 accepted-bet Copy uses 💥, ui.js 1.86.11) on top of f5adf52; ui.css 1.44.5.
 SRC = sys.argv[1] if len(sys.argv) > 1 else '/workspace/stoopids-src'
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 def src(rel):
