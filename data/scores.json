@@ -4,13 +4,13 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-21",
-  "generated_at_utc": "2026-11-21T20:19:53Z",
+  "generated_at_utc": "2026-11-21T21:06:03Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
     "15": {
       "w": 1,
-      "l": 15,
+      "l": 16,
       "playoffSeed": 15,
       "conference": "East"
     },
@@ -93,7 +93,7 @@
       "conference": "East"
     },
     "20": {
-      "w": 13,
+      "w": 14,
       "l": 3,
       "playoffSeed": 1,
       "conference": "East"
@@ -6020,19 +6020,19 @@
       "id": "401910023",
       "day": "2026-11-21",
       "start": "2026-11-21T18:00Z",
-      "status": "live",
+      "status": "final",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "20",
-        "score": 125,
+        "score": 132,
         "seed": null,
         "short": "PHI"
       },
       "away": {
         "id": "15",
-        "score": 116,
+        "score": 129,
         "seed": null,
         "short": "MIL"
       },
@@ -6044,7 +6044,8 @@
         "fav_name": "PHI",
         "aml": 455,
         "hml": -620,
-        "p": "DraftKings"
+        "p": "DraftKings",
+        "type": "close"
       }
     },
     {
@@ -6135,8 +6136,8 @@
         "sp": 6.5,
         "ou": 228.5,
         "fav_name": "MIN",
-        "aml": 196,
-        "hml": -237,
+        "aml": 185,
+        "hml": -223,
         "p": "DraftKings"
       }
     },
@@ -6194,11 +6195,11 @@
       "line": {
         "fav": "2",
         "dog": "23",
-        "sp": 13.5,
-        "ou": 217.5,
+        "sp": 12.5,
+        "ou": 216.5,
         "fav_name": "BOS",
-        "aml": -790,
-        "hml": 554,
+        "aml": -597,
+        "hml": 443,
         "p": "DraftKings"
       }
     },
