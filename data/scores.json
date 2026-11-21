@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-21",
-  "generated_at_utc": "2026-11-21T07:41:15Z",
+  "generated_at_utc": "2026-11-21T08:33:36Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -6039,7 +6039,7 @@
       "line": {
         "fav": "20",
         "dog": "15",
-        "sp": 12.5,
+        "sp": 11.5,
         "ou": 229.5,
         "fav_name": "PHI",
         "aml": 474,
@@ -6104,8 +6104,8 @@
         "sp": 5.5,
         "ou": 228.5,
         "fav_name": "DAL",
-        "aml": 179,
-        "hml": -216,
+        "aml": 171,
+        "hml": -205,
         "p": "DraftKings"
       }
     },
@@ -6163,7 +6163,7 @@
       "line": {
         "fav": "24",
         "dog": "3",
-        "sp": 16.5,
+        "sp": 17.5,
         "ou": 227.5,
         "fav_name": "SA",
         "aml": 810,
