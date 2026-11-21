@@ -40,7 +40,7 @@
    "tag": "HOOPS",
    "why": "PWA: register the Hoops service worker (STOOPIDS unregisters)",
    "old": "  if('serviceWorker' in navigator&&navigator.serviceWorker.getRegistrations)navigator.serviceWorker.getRegistrations().then(function(r){r.forEach(function(x){x.unregister()})}).catch(function(){});",
-   "new": "  if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').then(function(reg){if(reg.waiting)reg.waiting.postMessage('skip');if(reg.installing)reg.installing.addEventListener('statechange',function(){if(this.state==='installed')this.postMessage('skip')})}).catch(function(){});\n    var reloaded=false;navigator.serviceWorker.addEventListener('controllerchange',function(){if(reloaded)return;reloaded=true;location.reload()})}"
+   "new": "  if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').then(function(reg){if(reg.waiting)reg.waiting.postMessage('skip');if(reg.installing)reg.installing.addEventListener('statechange',function(){if(this.state==='installed')this.postMessage('skip')})}).catch(function(){});/*<BUG-10> no reload when the worker takes control: it is network-first, so this page is already fresh, and the reload made every first visit and every new build load twice (loader, page, loader again) </BUG-10>*/}"
   },
   {
    "tag": "NBA",
@@ -146,9 +146,9 @@
   },
   {
    "tag": "HOOPS",
-   "why": "shared/ui.js cache-buster: Hoops copy of 1.86.10 with its patches (sh40b)",
+   "why": "shared/ui.js cache-buster: Hoops copy of 1.86.10 with its patches (sh41)",
    "old": "<script src=\"shared/ui.js?v=1.86.10\"",
-   "new": "<script src=\"shared/ui.js?v=1.86.10.sh40b\""
+   "new": "<script src=\"shared/ui.js?v=1.86.10.sh41\""
   },
   {
    "tag": "PAUL-e",

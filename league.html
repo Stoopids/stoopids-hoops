@@ -24,8 +24,7 @@
   document.addEventListener('DOMContentLoaded',function(){W.top()});addEventListener('load',function(){W.top()});
   addEventListener('pageshow',function(e){if(e.persisted){W.t0=Date.now();W.deep=false;W.user=false}W.top()});
   var iv=setInterval(function(){if(Date.now()-W.t0>3500){clearInterval(iv);return}W.top()},100);
-  if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').then(function(reg){if(reg.waiting)reg.waiting.postMessage('skip');if(reg.installing)reg.installing.addEventListener('statechange',function(){if(this.state==='installed')this.postMessage('skip')})}).catch(function(){});
-    var reloaded=false;navigator.serviceWorker.addEventListener('controllerchange',function(){if(reloaded)return;reloaded=true;location.reload()})}
+  if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').then(function(reg){if(reg.waiting)reg.waiting.postMessage('skip');if(reg.installing)reg.installing.addEventListener('statechange',function(){if(this.state==='installed')this.postMessage('skip')})}).catch(function(){});/*<BUG-10> no reload when the worker takes control: it is network-first, so this page is already fresh, and the reload made every first visit and every new build load twice (loader, page, loader again) </BUG-10>*/}
 })();
 </script><!--</S26W-TOP>-->
 <!--<VIEW-ONLY>--><script>
@@ -995,7 +994,7 @@ html body .card.oc .chips.school-grid .chip .cr{grid-column:2!important;grid-row
   </div>
 </section><!--</CHAT>-->
 <footer id="foot"></footer>
-<script src="shared/ui.js?v=1.86.10.sh40b"></script>
+<script src="shared/ui.js?v=1.86.10.sh41"></script>
 <script src="js/version.js"></script><script src="js/core.js"></script><script src="js/scoring.js"></script><script src="js/league-d.js"></script><script src="js/league-sched.js"></script><script src="js/store.js"></script><script src="assets/teams.js"></script><script src="js/power-apply.js"></script><script src="js/league.js"></script><script src="js/hoops-archive.js"></script><script src="js/hoops-stoopids.js"></script><script>HOOPS.dataName="STOOPIDS_DATA";</script>
 <script>
 /*<S25-SHARED>*/
