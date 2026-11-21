@@ -146,9 +146,9 @@
   },
   {
    "tag": "HOOPS",
-   "why": "shared/ui.js cache-buster: Hoops copy of 1.86.9 with its patches (sh40)",
-   "old": "<script src=\"shared/ui.js?v=1.86.9\"",
-   "new": "<script src=\"shared/ui.js?v=1.86.9.sh40\""
+   "why": "shared/ui.js cache-buster: Hoops copy of 1.86.10 with its patches (sh40b)",
+   "old": "<script src=\"shared/ui.js?v=1.86.10\"",
+   "new": "<script src=\"shared/ui.js?v=1.86.10.sh40b\""
   },
   {
    "tag": "PAUL-e",
@@ -309,6 +309,12 @@
   }
  ],
  "ui": [
+  {
+   "tag": "PAUL-1",
+   "why": "moneyline copy (a883641) builds its own first line: keep 💥 at both ends for a written-up / accepted bet, 💣 only on requests awaiting acceptance (same rule as the PAUL-1 patch above)",
+   "old": "mlBomb='\\uD83D\\uDCA3 $'+r.amt+' '+mlL+' v '+mlR+md+' \\uD83D\\uDCA3'",
+   "new": "mlBomb=(kind==='bet'||kind==='acc'?'\\uD83D\\uDCA5':'\\uD83D\\uDCA3')+' $'+r.amt+' '+mlL+' v '+mlR+md+' '+(kind==='bet'||kind==='acc'?'\\uD83D\\uDCA5':'\\uD83D\\uDCA3')/*PAUL-1*/"
+  },
   {
    "tag": "NBA",
    "why": "tip example with NBA teams",

@@ -1,7 +1,7 @@
 /* sh40: mirror STOOPIDS 531503a (PR #83). Moneyline in Quick bet and Request on NBA data (ESPN aml/hml), half-step odds, $5 minimum, one-row Request tools.
    SYNTHETIC league, mock store, shoops1- keys only, TEST names. NODE_PATH=/tmp/node_modules node tests/e2e_sh40.js */
 const { chromium } = require('playwright-core');const path=require('path'),fs=require('fs');const { spawn } = require('child_process');
-const HROOT=path.join(__dirname,'..'),OUT='/workspace/screens-sh40',HP=+(process.env.HP||9961),BUILD='2026-11-21sh40',NOW='2026-11-20T12:00:00Z',GID='401909305';
+const HROOT=path.join(__dirname,'..'),OUT='/workspace/screens-sh40',HP=+(process.env.HP||9961),BUILD=process.env.BUILD||'2026-11-21sh40b',NOW='2026-11-20T12:00:00Z',GID='401909305';
 fs.mkdirSync(OUT,{recursive:true});
 function srv(a,re){return new Promise((res,rej)=>{const c=spawn(a[0],a.slice(1));let b='';const on=d=>{b+=d;if(re.test(b))res(c)};c.stdout.on('data',on);c.stderr.on('data',on);setTimeout(()=>rej(new Error(b)),9000)})}
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));let nf=0;const ok=(n,c,x)=>{if(!c)nf++;console.log((c?'PASS ':'FAIL ')+n+(x!==undefined?' :: '+JSON.stringify(x):''))};
@@ -17,7 +17,7 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));let nf=0;const ok=(n,c,x)=>{if(
   await p.goto(`http://127.0.0.1:${HP}/league.html?l=${id}#games`);
   await p.waitForFunction(()=>typeof U!=='undefined'&&U.state==='ok'&&typeof b27Who==='function'&&b27Who()&&typeof RQ!=='undefined'&&D&&D.games&&D.games.length,{timeout:40000});await sleep(800);
   ok('build is '+BUILD,(await p.evaluate(()=>window.FBN_BUILD))===BUILD);
-  const q=await p.evaluate(g=>{const x=D.games.find(x=>String(x.id)===g);return {line:x&&x.line,q:x&&SHARED_UI.mlQuote(x),qbOk:x&&qbOk(x)}},GID);
+  const q=await p.evaluate(g=>{const x=D.games.find(x=>String(x.id)===g);if(x&&x.status!=='final'){x.status='scheduled';delete x.period;delete x.clock;if(x.home)delete x.home.score;if(x.away)delete x.away.score}/* the baked game went live after sh40; test copy reads it as upcoming at NOW */return {line:x&&x.line,q:x&&SHARED_UI.mlQuote(x),qbOk:x&&qbOk(x)}},GID);
   ok('NBA game has ESPN moneyline and quotes 2-1 (Charlotte +217)',!!q.q&&q.q.label==='2-1'&&q.qbOk,q);
   // Quick bet sheet
   await p.evaluate(g=>{tab='games';render();qbToggle(g)},GID);await sleep(700);
@@ -39,6 +39,9 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));let nf=0;const ok=(n,c,x)=>{if(
   ok('Moneyline open: Charlotte $5 to win $10 and Atlanta $10 to win $5',/Charlotte \$5 to win \$10/.test(body)&&/Atlanta \$10 to win \$5/.test(body),body);
   await p.locator('.rq-tool-body').scrollIntoViewIfNeeded();await p.evaluate(()=>scrollBy?0:0);await sleep(200);
   await p.screenshot({path:`${OUT}/sh40-3-moneyline-selected-mobile.png`});console.log('shot',`${OUT}/sh40-3-moneyline-selected-mobile.png`);
+  const cp=await p.evaluate(g=>{const f=RQ.S.f,x=D.games.find(x=>String(x.id)===g);const r={id:'sh40bcp',by:b27Who(),to:(f.to&&f.to.length?f.to:['Ben']),slots:1,amt:f.amt||5,odds:f.odds,txt:f.text,rd:f.rd,gid:g,start:x.start,exp:Date.parse(x.start),status:'open',dec:[],took:[],wk:'game',cov:'game'};return RQ.copyText(r,'request')},GID);
+  console.log('COPY>>>\n'+cp+'\n<<<COPY');
+  ok('ML request copy: 4 lines (💣 $5 Ana v Ben · 2–1 💣 / Charlotte v Atlanta / ML · Ana wins $10 · Ben wins $5 / Nov 20 · Exp: Tip)',/^\uD83D\uDCA3 \$5 Ana v Ben · 2\u20131 \uD83D\uDCA3\nCharlotte v Atlanta\nML · Ana wins \$10 · Ben wins \$5\nNov 20 · Exp: Tip$/.test(cp),cp);
   ok('no page errors',!errs.length,errs);await c.close();
  }catch(e){nf++;console.log('FAIL exception',e&&e.stack||e)}finally{await br.close();mock.kill()}
  console.log(nf?nf+' FAILED':'ALL PASS');process.exit(nf?1:0)})();
