@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-21",
-  "generated_at_utc": "2026-11-21T05:21:26Z",
+  "generated_at_utc": "2026-11-21T06:21:10Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -100,7 +100,7 @@
     },
     "23": {
       "w": 1,
-      "l": 13,
+      "l": 14,
       "playoffSeed": 15,
       "conference": "West"
     },
@@ -141,15 +141,15 @@
       "conference": "West"
     },
     "7": {
-      "w": 8,
+      "w": 9,
       "l": 5,
-      "playoffSeed": 8,
+      "playoffSeed": 7,
       "conference": "West"
     },
     "25": {
       "w": 10,
       "l": 6,
-      "playoffSeed": 7,
+      "playoffSeed": 8,
       "conference": "West"
     },
     "22": {
@@ -166,26 +166,26 @@
     },
     "10": {
       "w": 12,
-      "l": 4,
-      "playoffSeed": 3,
+      "l": 5,
+      "playoffSeed": 4,
       "conference": "West"
     },
     "29": {
       "w": 12,
       "l": 4,
-      "playoffSeed": 4,
+      "playoffSeed": 3,
       "conference": "West"
     },
     "24": {
       "w": 13,
       "l": 3,
-      "playoffSeed": 1,
+      "playoffSeed": 2,
       "conference": "West"
     },
     "13": {
-      "w": 13,
+      "w": 14,
       "l": 3,
-      "playoffSeed": 2,
+      "playoffSeed": 1,
       "conference": "West"
     }
   },
@@ -5956,19 +5956,19 @@
       "id": "401909312",
       "day": "2026-11-20",
       "start": "2026-11-21T03:00Z",
-      "status": "live",
+      "status": "final",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "7",
-        "score": 114,
+        "score": 133,
         "seed": null,
         "short": "DEN"
       },
       "away": {
         "id": "10",
-        "score": 115,
+        "score": 124,
         "seed": null,
         "short": "HOU"
       },
@@ -5980,14 +5980,15 @@
         "fav_name": "HOU",
         "aml": -121,
         "hml": 102,
-        "p": "DraftKings"
+        "p": "DraftKings",
+        "type": "close"
       }
     },
     {
       "id": "401909313",
       "day": "2026-11-20",
       "start": "2026-11-21T03:00Z",
-      "status": "live",
+      "status": "final",
       "kind": "reg",
       "round": "",
       "neutral": false,
@@ -5999,7 +6000,7 @@
       },
       "away": {
         "id": "23",
-        "score": 103,
+        "score": 104,
         "seed": null,
         "short": "SAC"
       },
@@ -6011,7 +6012,8 @@
         "fav_name": "LAL",
         "aml": 580,
         "hml": -840,
-        "p": "DraftKings"
+        "p": "DraftKings",
+        "type": "close"
       }
     },
     {
@@ -6133,8 +6135,8 @@
         "sp": 5.5,
         "ou": 227.5,
         "fav_name": "MIN",
-        "aml": 180,
-        "hml": -217,
+        "aml": 181,
+        "hml": -218,
         "p": "DraftKings"
       }
     },
