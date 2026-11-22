@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-22",
-  "generated_at_utc": "2026-11-22T09:36:53Z",
+  "generated_at_utc": "2026-11-22T10:29:11Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -6262,11 +6262,11 @@
       "line": {
         "fav": "14",
         "dog": "25",
-        "sp": 2.5,
+        "sp": 3.5,
         "ou": 231.5,
         "fav_name": "MIA",
-        "aml": 117,
-        "hml": -139,
+        "aml": 124,
+        "hml": -148,
         "p": "DraftKings"
       }
     },
@@ -6296,8 +6296,8 @@
         "sp": 5.5,
         "ou": 222.5,
         "fav_name": "ORL",
-        "aml": -206,
-        "hml": 172,
+        "aml": -222,
+        "hml": 185,
         "p": "DraftKings"
       }
     },
