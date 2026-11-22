@@ -3,8 +3,8 @@
   "sample": false,
   "label": "",
   "season": "2026-27",
-  "as_of": "2026-11-21",
-  "generated_at_utc": "2026-11-22T04:42:29Z",
+  "as_of": "2026-11-22",
+  "generated_at_utc": "2026-11-22T05:41:10Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -6180,19 +6180,19 @@
       "id": "401910028",
       "day": "2026-11-21",
       "start": "2026-11-22T03:00Z",
-      "status": "live",
+      "status": "final",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "23",
-        "score": 58,
+        "score": 97,
         "seed": null,
         "short": "SAC"
       },
       "away": {
         "id": "2",
-        "score": 60,
+        "score": 96,
         "seed": null,
         "short": "BOS"
       },
@@ -6204,7 +6204,8 @@
         "fav_name": "BOS",
         "aml": -620,
         "hml": 453,
-        "p": "DraftKings"
+        "p": "DraftKings",
+        "type": "close"
       }
     },
     {
@@ -6357,7 +6358,7 @@
         "sp": 1.5,
         "ou": 225.5,
         "fav_name": "DAL",
-        "aml": -119,
+        "aml": -120,
         "hml": 101,
         "p": "DraftKings"
       }
@@ -6388,8 +6389,8 @@
         "sp": 10.5,
         "ou": 218.5,
         "fav_name": "NY",
-        "aml": 329,
-        "hml": -420,
+        "aml": 312,
+        "hml": -396,
         "p": "DraftKings"
       }
     },
@@ -6416,11 +6417,11 @@
       "line": {
         "fav": "2",
         "dog": "9",
-        "sp": 8.5,
+        "sp": 9.5,
         "ou": 212.5,
         "fav_name": "BOS",
-        "aml": -378,
-        "hml": 299,
+        "aml": -410,
+        "hml": 322,
         "p": "DraftKings"
       }
     },
