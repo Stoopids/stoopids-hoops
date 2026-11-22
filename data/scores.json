@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-21",
-  "generated_at_utc": "2026-11-22T01:54:56Z",
+  "generated_at_utc": "2026-11-22T02:49:28Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -6058,13 +6058,13 @@
       "neutral": false,
       "home": {
         "id": "18",
-        "score": 66,
+        "score": 94,
         "seed": null,
         "short": "NY"
       },
       "away": {
         "id": "22",
-        "score": 47,
+        "score": 94,
         "seed": null,
         "short": "POR"
       },
@@ -6089,13 +6089,13 @@
       "neutral": false,
       "home": {
         "id": "6",
-        "score": 41,
+        "score": 72,
         "seed": null,
         "short": "DAL"
       },
       "away": {
         "id": "12",
-        "score": 37,
+        "score": 69,
         "seed": null,
         "short": "LAC"
       },
@@ -6120,13 +6120,13 @@
       "neutral": false,
       "home": {
         "id": "16",
-        "score": 41,
+        "score": 83,
         "seed": null,
         "short": "MIN"
       },
       "away": {
         "id": "29",
-        "score": 41,
+        "score": 62,
         "seed": null,
         "short": "MEM"
       },
@@ -6151,13 +6151,13 @@
       "neutral": false,
       "home": {
         "id": "24",
-        "score": 49,
+        "score": 78,
         "seed": null,
         "short": "SA"
       },
       "away": {
         "id": "3",
-        "score": 40,
+        "score": 60,
         "seed": null,
         "short": "NO"
       },
@@ -6227,10 +6227,10 @@
         "fav": "8",
         "dog": "1",
         "sp": 2.5,
-        "ou": 227.5,
+        "ou": 225.5,
         "fav_name": "DET",
-        "aml": -130,
-        "hml": 110,
+        "aml": -135,
+        "hml": 114,
         "p": "DraftKings"
       }
     },
@@ -6322,8 +6322,8 @@
         "sp": 8.5,
         "ou": 237.5,
         "fav_name": "DEN",
-        "aml": -348,
-        "hml": 279,
+        "aml": -375,
+        "hml": 298,
         "p": "DraftKings"
       }
     },
