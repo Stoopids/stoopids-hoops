@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-22",
-  "generated_at_utc": "2026-11-22T16:23:48Z",
+  "generated_at_utc": "2026-11-22T17:14:13Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -6234,8 +6234,8 @@
         "sp": 1.5,
         "ou": 223.5,
         "fav_name": "DET",
-        "aml": -130,
-        "hml": 110,
+        "aml": -124,
+        "hml": 105,
         "p": "DraftKings"
       }
     },
@@ -6265,8 +6265,8 @@
         "sp": 4.5,
         "ou": 231.5,
         "fav_name": "MIA",
-        "aml": 139,
-        "hml": -165,
+        "aml": 146,
+        "hml": -173,
         "p": "DraftKings"
       }
     },
@@ -6294,7 +6294,7 @@
         "fav": "19",
         "dog": "27",
         "sp": 4.5,
-        "ou": 219.5,
+        "ou": 220.5,
         "fav_name": "ORL",
         "aml": -204,
         "hml": 170,
@@ -6325,7 +6325,7 @@
         "fav": "7",
         "dog": "4",
         "sp": 9.5,
-        "ou": 235.5,
+        "ou": 234.5,
         "fav_name": "DEN",
         "aml": -423,
         "hml": 331,
@@ -6353,13 +6353,13 @@
         "short": "DAL"
       },
       "line": {
-        "fav": "6",
-        "dog": "26",
+        "fav": "26",
+        "dog": "6",
         "sp": 1.5,
         "ou": 224.5,
-        "fav_name": "DAL",
-        "aml": -110,
-        "hml": -108,
+        "fav_name": "UTAH",
+        "aml": -108,
+        "hml": -110,
         "p": "DraftKings"
       }
     },
