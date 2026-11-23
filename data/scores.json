@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-23",
-  "generated_at_utc": "2026-11-23T21:55:49Z",
+  "generated_at_utc": "2026-11-23T22:50:43Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -6486,11 +6486,11 @@
       "line": {
         "fav": "20",
         "dog": "22",
-        "sp": 2.5,
-        "ou": 231.5,
+        "sp": 1.5,
+        "ou": 230.5,
         "fav_name": "PHI",
-        "aml": 120,
-        "hml": -142,
+        "aml": -103,
+        "hml": -115,
         "p": "DraftKings"
       }
     },
@@ -6551,8 +6551,8 @@
         "sp": 10.5,
         "ou": 222.5,
         "fav_name": "TOR",
-        "aml": 360,
-        "hml": -467,
+        "aml": 348,
+        "hml": -449,
         "p": "DraftKings"
       }
     },
@@ -6579,8 +6579,8 @@
       "line": {
         "fav": "16",
         "dog": "17",
-        "sp": 11.5,
-        "ou": 223.5,
+        "sp": 10.5,
+        "ou": 222.5,
         "fav_name": "MIN",
         "aml": 413,
         "hml": -549,
