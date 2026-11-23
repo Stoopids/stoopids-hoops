@@ -1,7 +1,7 @@
 /* sh45: mirror STOOPIDS c297fe1 (3640a5c): accepted/open bet Copy uses 💥 both ends, no Exp. SYNTHETIC league, mock store, shoops1- keys only, TEST names.
    NODE_PATH=/tmp/node_modules node tests/e2e_sh42.js */
 const { chromium } = require('playwright-core');const path=require('path'),fs=require('fs');const { spawn } = require('child_process');
-const HROOT=path.join(__dirname,'..'),OUT='/workspace/screens-sh45',HP=+(process.env.HP||9891),BUILD=process.env.BUILD||'2026-11-23sh45',NOW='2026-11-23T05:00:00Z';
+const HROOT=path.join(__dirname,'..'),OUT='/workspace/screens-sh45',HP=+(process.env.HP||9891),BUILD=process.env.BUILD||'2026-11-23sh45b',NOW='2026-11-23T05:00:00Z';
 fs.mkdirSync(OUT,{recursive:true});
 function srv(a,re){return new Promise((res,rej)=>{const c=spawn(a[0],a.slice(1));let b='';const on=d=>{b+=d;if(re.test(b))res(c)};c.stdout.on('data',on);c.stderr.on('data',on);setTimeout(()=>rej(new Error(b)),9000)})}
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));let nf=0;const ok=(n,c,x)=>{if(!c)nf++;console.log((c?'PASS ':'FAIL ')+n+(x!==undefined?' :: '+JSON.stringify(x):''))};
@@ -21,17 +21,17 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));let nf=0;const ok=(n,c,x)=>{if(
   await p.goto(`http://127.0.0.1:${HP}/league.html?l=${id}#bets`);
   await p.waitForFunction(()=>typeof U!=='undefined'&&U.state==='ok'&&b27Who()&&U.doc&&U.doc.bets&&U.doc.bets.length,{timeout:40000});await p.evaluate(()=>obView('all'));await sleep(900);
   ok('build is '+BUILD,(await p.evaluate(()=>window.FBN_BUILD))===BUILD);
-  await p.screenshot({path:`${OUT}/sh45-bets-mobile.png`});console.log('shot',`${OUT}/sh45-bets-mobile.png`);
+  await p.screenshot({path:`${OUT}/sh45b-bets-mobile.png`});console.log('shot',`${OUT}/sh45b-bets-mobile.png`);
   const t=await p.evaluate(()=>{const g=n=>s29eCopyText(U.doc.bets.find(x=>x.n===n));return {sp:g(1),ml:g(2)}});
   const btn=p.locator('.b27-c',{hasText:'Bet #1 '}).locator('button',{hasText:'Copy'}).first();if(await btn.count()){await btn.click();await sleep(600)}
   const clip=await p.evaluate(()=>window.__cp.slice());
   console.log('SPREAD>>>\n'+t.sp+'\n<<<\nML>>>\n'+t.ml+'\n<<<\nCLIP '+JSON.stringify(clip));
   const E=/^\uD83D\uDCA5 [^\n]*\uD83D\uDCA5\n/;
   ok('open written-up spread Copy: 💥 both ends, no Exp, ET date last',E.test(t.sp)&&!/Exp/.test(t.sp)&&/Nov 24$/.test(t.sp)&&/\$5/.test(t.sp),t.sp);
-  ok('open written-up ML Copy: 💥 both ends, no Exp, ET date last',E.test(t.ml)&&!/Exp/.test(t.ml)&&/Nov 24$/.test(t.ml),t.ml);
-  console.log('NOTE ML line present: '+/\nML · /.test(t.ml)+' (stored rd loses ml/fav on read in s25ValidExtra, upstream code)');
+  ok('open written-up ML Copy: 💥 both ends, no Exp, ML line, ET date last',/\nML · /.test(t.ml)&&E.test(t.ml)&&!/Exp/.test(t.ml)&&/Nov 24$/.test(t.ml),t.ml);
+  console.log('NOTE ML line present: '+/\nML · /.test(t.ml)+' (fixed upstream 39e8053)');
   ok('card Copy button copies the same text',clip.length&&clip[clip.length-1]===t.sp,clip);
   await p.evaluate(x=>{const d=document.createElement('pre');d.id='cpshow';d.style.cssText='position:fixed;left:8px;right:8px;top:90px;z-index:99999;background:#111;color:#fff;border:2px solid #ffd400;border-radius:10px;padding:12px;font:15px/1.4 system-ui;white-space:pre-wrap';d.textContent='Copied (Bet #1, spread):\n'+x.sp+'\n\nCopied (Bet #2, ML):\n'+x.ml;document.body.appendChild(d)},t);
-  await p.screenshot({path:`${OUT}/sh45-copy-mobile.png`});console.log('shot',`${OUT}/sh45-copy-mobile.png`);
+  await p.screenshot({path:`${OUT}/sh45b-copy-mobile.png`});console.log('shot',`${OUT}/sh45b-copy-mobile.png`);
   ok('no page errors',!errs.length,errs);await c.close();
  }catch(e){nf++;console.log('ERR',e.message)}finally{await br.close();mock.kill()}console.log(nf?'FAILED '+nf:'ALL PASS');process.exit(nf?1:0)})();
