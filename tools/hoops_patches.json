@@ -146,9 +146,9 @@
   },
   {
    "tag": "HOOPS",
-   "why": "shared/ui.js cache-buster: Hoops copy of 1.86.14 with its patches (sh44)",
-   "old": "<script src=\"shared/ui.js?v=1.86.14\"",
-   "new": "<script src=\"shared/ui.js?v=1.86.14.sh44\""
+   "why": "shared/ui.js cache-buster: Hoops copy of 1.86.15 with its patches (sh45)",
+   "old": "<script src=\"shared/ui.js?v=1.86.15\"",
+   "new": "<script src=\"shared/ui.js?v=1.86.15.sh45\""
   },
   {
    "tag": "PAUL-e",
@@ -285,9 +285,9 @@
   },
   {
    "tag": "PAUL-j",
-   "why": "Bets page order Paul set. STOOPIDS 61a1f4b now has its own 'Ready For Someone Else to Settle' section (b27ReadyElse); Hoops keeps Paul's two differences: the first section is titled 'Ready For Me to Settle', and 'Ready For Someone Else to Settle' holds only ready bets the viewer is in (someone else enters the result). Ready bets the viewer is not in stay under All Bets (STOOPIDS moves every bet the viewer cannot settle into that section).",
-   "old": "const ready=b27SortSoon(FL.filter(b27Ready)),mine=ready.filter(b=>!b27NeedsOther(b,me)),other=ready.filter(b=>b27NeedsOther(b,me)),ids=new Set(ready.map(b=>b.id)),rest=FL.filter(b=>!ids.has(b.id));\n  if(mine.length)h+=`<section id=\"b27Ready\"><h2>Ready to settle <span class=\"note\">${mine.length}</span></h2>",
-   "new": "const ready=b27SortSoon(FL.filter(b27Ready)),mine=ready.filter(b=>!b27NeedsOther(b,me)),other=ready.filter(b=>b27NeedsOther(b,me)/*<PAUL-j>*/&&s24InBet(b,me)/*</PAUL-j>*/),ids=new Set(/*<PAUL-j>*/mine.concat(other)/*</PAUL-j>*/.map(b=>b.id)),rest=FL.filter(b=>!ids.has(b.id));\n  if(mine.length)h+=`<section id=\"b27Ready\"><h2>Ready For Me to Settle <span class=\"note\">${mine.length}</span></h2>"
+   "why": "Bets page: Hoops keeps Paul's title 'Ready For Me to Settle' for the first section. (sh45: [REDACTED] 3640a5c now limits 'Ready For Someone Else to Settle' to bets the viewer is in, so the old PAUL-j s24InBet filter is dropped.)",
+   "old": "const ready=b27SortSoon(FL.filter(b27Ready)),mine=ready.filter(b=>b27CanSettle(b,me)),other=ready.filter(b=>b27InBet(b,me)&&!b27CanSettle(b,me)),ids=new Set(mine.concat(other).map(b=>b.id)),rest=FL.filter(b=>!ids.has(b.id));\n  if(mine.length)h+=`<section id=\"b27Ready\"><h2>Ready to settle <span class=\"note\">${mine.length}</span></h2>",
+   "new": "const ready=b27SortSoon(FL.filter(b27Ready)),mine=ready.filter(b=>b27CanSettle(b,me)),other=ready.filter(b=>b27InBet(b,me)&&!b27CanSettle(b,me)),ids=new Set(mine.concat(other).map(b=>b.id)),rest=FL.filter(b=>!ids.has(b.id));\n  if(mine.length)h+=`<section id=\"b27Ready\"><h2>Ready For Me to Settle <span class=\"note\">${mine.length}</span></h2>"
   },
   {
    "tag": "PAUL-j",
