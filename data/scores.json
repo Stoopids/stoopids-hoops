@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-23",
-  "generated_at_utc": "2026-11-23T10:16:33Z",
+  "generated_at_utc": "2026-11-23T11:22:18Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -6236,7 +6236,7 @@
         "fav_name": "DET",
         "aml": -135,
         "hml": 114,
-        "p": "Draft Kings",
+        "p": "DraftKings",
         "type": "close"
       }
     },
@@ -6268,7 +6268,7 @@
         "fav_name": "MIA",
         "aml": 154,
         "hml": -184,
-        "p": "Draft Kings",
+        "p": "DraftKings",
         "type": "close"
       }
     },
@@ -6300,7 +6300,7 @@
         "fav_name": "ORL",
         "aml": -196,
         "hml": 164,
-        "p": "Draft Kings",
+        "p": "DraftKings",
         "type": "close"
       }
     },
@@ -6332,7 +6332,7 @@
         "fav_name": "DEN",
         "aml": -419,
         "hml": 328,
-        "p": "Draft Kings",
+        "p": "DraftKings",
         "type": "close"
       }
     },
@@ -6364,7 +6364,7 @@
         "fav_name": "DAL",
         "aml": -135,
         "hml": 114,
-        "p": "Draft Kings",
+        "p": "DraftKings",
         "type": "close"
       }
     },
@@ -6396,7 +6396,7 @@
         "fav_name": "NY",
         "aml": 196,
         "hml": -237,
-        "p": "Draft Kings",
+        "p": "DraftKings",
         "type": "close"
       }
     },
@@ -6428,7 +6428,7 @@
         "fav_name": "BOS",
         "aml": -336,
         "hml": 270,
-        "p": "Draft Kings",
+        "p": "DraftKings",
         "type": "close"
       }
     },
@@ -6460,7 +6460,7 @@
         "fav_name": "MEM",
         "aml": -162,
         "hml": 136,
-        "p": "Draft Kings"
+        "p": "DraftKings"
       }
     },
     {
@@ -6487,11 +6487,11 @@
         "fav": "20",
         "dog": "22",
         "sp": 4.5,
-        "ou": 230.5,
+        "ou": 229.5,
         "fav_name": "PHI",
-        "aml": 142,
-        "hml": -169,
-        "p": "Draft Kings"
+        "aml": 150,
+        "hml": -179,
+        "p": "DraftKings"
       }
     },
     {
@@ -6517,12 +6517,12 @@
       "line": {
         "fav": "25",
         "dog": "11",
-        "sp": 4.5,
+        "sp": 5.5,
         "ou": 222.5,
         "fav_name": "OKC",
         "aml": -191,
         "hml": 160,
-        "p": "Draft Kings"
+        "p": "DraftKings"
       }
     },
     {
@@ -6553,7 +6553,7 @@
         "fav_name": "TOR",
         "aml": 378,
         "hml": -494,
-        "p": "Draft Kings"
+        "p": "DraftKings"
       }
     },
     {
@@ -6580,11 +6580,11 @@
         "fav": "16",
         "dog": "17",
         "sp": 11.5,
-        "ou": 223.5,
+        "ou": 224.5,
         "fav_name": "MIN",
         "aml": 455,
         "hml": -620,
-        "p": "Draft Kings"
+        "p": "DraftKings"
       }
     },
     {
@@ -6611,11 +6611,11 @@
         "fav": "5",
         "dog": "4",
         "sp": 8.5,
-        "ou": 238.5,
+        "ou": 240.5,
         "fav_name": "CLE",
-        "aml": -337,
-        "hml": 271,
-        "p": "Draft Kings"
+        "aml": -336,
+        "hml": 270,
+        "p": "DraftKings"
       }
     },
     {
@@ -6646,7 +6646,7 @@
         "fav_name": "PHX",
         "aml": -155,
         "hml": 131,
-        "p": "Draft Kings"
+        "p": "DraftKings"
       }
     },
     {
@@ -6675,9 +6675,9 @@
         "sp": 12.5,
         "ou": 224.5,
         "fav_name": "HOU",
-        "aml": 471,
+        "aml": 470,
         "hml": -650,
-        "p": "Draft Kings"
+        "p": "DraftKings"
       }
     },
     {
@@ -6704,11 +6704,11 @@
         "fav": "13",
         "dog": "26",
         "sp": 13.5,
-        "ou": 226.5,
+        "ou": 227.5,
         "fav_name": "LAL",
         "aml": 554,
         "hml": -790,
-        "p": "Draft Kings"
+        "p": "DraftKings"
       }
     },
     {
@@ -6735,11 +6735,11 @@
         "fav": "24",
         "dog": "23",
         "sp": 10.5,
-        "ou": 224.5,
+        "ou": 223.5,
         "fav_name": "SA",
         "aml": -484,
         "hml": 371,
-        "p": "Draft Kings"
+        "p": "DraftKings"
       }
     },
     {
