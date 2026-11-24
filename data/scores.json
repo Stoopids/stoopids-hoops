@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-24",
-  "generated_at_utc": "2026-11-24T17:27:08Z",
+  "generated_at_utc": "2026-11-24T18:20:59Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -6778,8 +6778,8 @@
         "sp": 2.5,
         "ou": 213.5,
         "fav_name": "DET",
-        "aml": -142,
-        "hml": 120,
+        "aml": -135,
+        "hml": 114,
         "p": "DraftKings"
       }
     },
