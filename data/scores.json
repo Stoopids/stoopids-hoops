@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-24",
-  "generated_at_utc": "2026-11-24T11:41:22Z",
+  "generated_at_utc": "2026-11-24T12:48:35Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -6776,7 +6776,7 @@
         "fav": "8",
         "dog": "19",
         "sp": 2.5,
-        "ou": 212.5,
+        "ou": 213.5,
         "fav_name": "DET",
         "aml": -135,
         "hml": 114,
