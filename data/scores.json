@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-24",
-  "generated_at_utc": "2026-11-24T20:24:47Z",
+  "generated_at_utc": "2026-11-24T21:26:03Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -6775,7 +6775,7 @@
       "line": {
         "fav": "8",
         "dog": "19",
-        "sp": 2.5,
+        "sp": 1.5,
         "ou": 212.5,
         "fav_name": "DET",
         "aml": -130,
@@ -6806,11 +6806,11 @@
       "line": {
         "fav": "2",
         "dog": "27",
-        "sp": 11.5,
+        "sp": 10.5,
         "ou": 218.5,
         "fav_name": "BOS",
-        "aml": -453,
-        "hml": 351,
+        "aml": -424,
+        "hml": 331,
         "p": "Draft Kings"
       }
     },
@@ -6840,8 +6840,8 @@
         "sp": 8.5,
         "ou": 234.5,
         "fav_name": "DEN",
-        "aml": 251,
-        "hml": -310,
+        "aml": 241,
+        "hml": -297,
         "p": "Draft Kings"
       }
     },
@@ -6869,7 +6869,7 @@
         "fav": "20",
         "dog": "14",
         "sp": 2.5,
-        "ou": 239.5,
+        "ou": 240.5,
         "fav_name": "PHI",
         "aml": 124,
         "hml": -148,
@@ -6920,11 +6920,11 @@
       "line": {
         "fav": "18",
         "dog": "5",
-        "sp": 5.5,
+        "sp": 4.5,
         "ou": 220.5,
         "fav_name": "NY",
-        "aml": 186,
-        "hml": -224,
+        "aml": 165,
+        "hml": -197,
         "p": "Draft Kings"
       }
     },
@@ -6954,8 +6954,8 @@
         "sp": 1.5,
         "ou": 224.5,
         "fav_name": "OKC",
-        "aml": 114,
-        "hml": -135,
+        "aml": 105,
+        "hml": -125,
         "p": "Draft Kings"
       }
     },
@@ -7024,7 +7024,7 @@
       "line": {
         "fav": "10",
         "dog": "21",
-        "sp": 9.5,
+        "sp": 8.5,
         "ou": 224.5,
         "fav_name": "HOU",
         "aml": 319,
