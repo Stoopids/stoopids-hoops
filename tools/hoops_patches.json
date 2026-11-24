@@ -109,12 +109,6 @@
    "new": "placeholder=\"e.g. Knicks -4 beats Celtics\""
   },
   {
-   "tag": "PAUL-1",
-   "why": "agreed/unsettled card Copy is a written-up bet, so it uses 💥 like the Write It Up copy (💣 stays only on requests awaiting acceptance)",
-   "old": "return ['\\uD83D\\uDCA3 $'+b.amt+' '+PN(b.backer)+' v '+who+od+' \\uD83D\\uDCA3'",
-   "new": "return ['\\uD83D\\uDCA5 $'+b.amt+' '+PN(b.backer)+' v '+who+od+' \\uD83D\\uDCA5'"
-  },
-  {
    "tag": "PAUL-m",
    "why": "settled Copy heading for a wash also closes with 💦, matching 🎉 at both ends on a settled bet",
    "old": "head=st==='push'?'💦 Bet #'+b.n+' · Wash':mark+' Bet #'+b.n+' · Settled'+win+' '+mark",
@@ -146,9 +140,9 @@
   },
   {
    "tag": "HOOPS",
-   "why": "shared/ui.js cache-buster: Hoops copy of 1.86.20 with its patches (sh47)",
-   "old": "<script src=\"shared/ui.js?v=1.86.20\"",
-   "new": "<script src=\"shared/ui.js?v=1.86.20.sh47\""
+   "why": "shared/ui.js cache-buster: Hoops copy of 1.86.21 with its patches (sh48)",
+   "old": "<script src=\"shared/ui.js?v=1.86.21\"",
+   "new": "<script src=\"shared/ui.js?v=1.86.21.sh48\""
   },
   {
    "tag": "PAUL-e",
