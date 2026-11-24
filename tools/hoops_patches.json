@@ -146,9 +146,9 @@
   },
   {
    "tag": "HOOPS",
-   "why": "shared/ui.js cache-buster: Hoops copy of 1.86.16 with its patches (sh46)",
-   "old": "<script src=\"shared/ui.js?v=1.86.16\"",
-   "new": "<script src=\"shared/ui.js?v=1.86.16.sh46\""
+   "why": "shared/ui.js cache-buster: Hoops copy of 1.86.20 with its patches (sh47)",
+   "old": "<script src=\"shared/ui.js?v=1.86.20\"",
+   "new": "<script src=\"shared/ui.js?v=1.86.20.sh47\""
   },
   {
    "tag": "PAUL-e",
