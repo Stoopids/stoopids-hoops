@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-24",
-  "generated_at_utc": "2026-11-24T15:10:41Z",
+  "generated_at_utc": "2026-11-24T16:26:16Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -6776,7 +6776,7 @@
         "fav": "8",
         "dog": "19",
         "sp": 2.5,
-        "ou": 214.5,
+        "ou": 213.5,
         "fav_name": "DET",
         "aml": -142,
         "hml": 120,
@@ -6806,7 +6806,7 @@
       "line": {
         "fav": "2",
         "dog": "27",
-        "sp": 10.5,
+        "sp": 11.5,
         "ou": 217.5,
         "fav_name": "BOS",
         "aml": -453,
@@ -6837,7 +6837,7 @@
       "line": {
         "fav": "7",
         "dog": "6",
-        "sp": 7.5,
+        "sp": 8.5,
         "ou": 233.5,
         "fav_name": "DEN",
         "aml": 251,
@@ -6954,8 +6954,8 @@
         "sp": 2.5,
         "ou": 223.5,
         "fav_name": "OKC",
-        "aml": 125,
-        "hml": -148,
+        "aml": 120,
+        "hml": -142,
         "p": "DraftKings"
       }
     },
