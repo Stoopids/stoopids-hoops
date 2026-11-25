@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-24",
-  "generated_at_utc": "2026-11-24T23:24:43Z",
+  "generated_at_utc": "2026-11-25T00:16:56Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -6756,30 +6756,30 @@
       "id": "401909314",
       "day": "2026-11-24",
       "start": "2026-11-25T00:00Z",
-      "status": "scheduled",
+      "status": "live",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "19",
-        "score": null,
+        "score": 0,
         "seed": null,
         "short": "ORL"
       },
       "away": {
         "id": "8",
-        "score": null,
+        "score": 8,
         "seed": null,
         "short": "DET"
       },
       "line": {
-        "fav": "8",
-        "dog": "19",
-        "sp": 2.5,
-        "ou": 212.5,
-        "fav_name": "DET",
-        "aml": -130,
-        "hml": 110,
+        "fav": "19",
+        "dog": "8",
+        "sp": 3.5,
+        "ou": 210.5,
+        "fav_name": "ORL",
+        "aml": 126,
+        "hml": -150,
         "p": "DraftKings"
       }
     },
@@ -6806,7 +6806,7 @@
       "line": {
         "fav": "2",
         "dog": "27",
-        "sp": 11.5,
+        "sp": 10.5,
         "ou": 218.5,
         "fav_name": "BOS",
         "aml": -452,
@@ -6951,8 +6951,8 @@
       "line": {
         "fav": "25",
         "dog": "16",
-        "sp": 2.5,
-        "ou": 223.5,
+        "sp": 1.5,
+        "ou": 224.5,
         "fav_name": "OKC",
         "aml": 105,
         "hml": -125,
