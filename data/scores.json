@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-25",
-  "generated_at_utc": "2026-11-25T07:13:04Z",
+  "generated_at_utc": "2026-11-25T08:42:29Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -6780,7 +6780,7 @@
         "fav_name": "ORL",
         "aml": 126,
         "hml": -150,
-        "p": "DraftKings",
+        "p": "Draft Kings",
         "type": "close"
       }
     },
@@ -6812,7 +6812,7 @@
         "fav_name": "BOS",
         "aml": -452,
         "hml": 351,
-        "p": "DraftKings",
+        "p": "Draft Kings",
         "type": "close"
       }
     },
@@ -6844,7 +6844,7 @@
         "fav_name": "DEN",
         "aml": 227,
         "hml": -277,
-        "p": "DraftKings",
+        "p": "Draft Kings",
         "type": "close"
       }
     },
@@ -6876,7 +6876,7 @@
         "fav_name": "PHI",
         "aml": -102,
         "hml": -116,
-        "p": "DraftKings"
+        "p": "Draft Kings"
       }
     },
     {
@@ -6907,7 +6907,7 @@
         "fav_name": "CHA",
         "aml": 130,
         "hml": -155,
-        "p": "DraftKings"
+        "p": "Draft Kings"
       }
     },
     {
@@ -6938,7 +6938,7 @@
         "fav_name": "NY",
         "aml": 130,
         "hml": -155,
-        "p": "DraftKings"
+        "p": "Draft Kings"
       }
     },
     {
@@ -6969,7 +6969,7 @@
         "fav_name": "OKC",
         "aml": 101,
         "hml": -119,
-        "p": "DraftKings"
+        "p": "Draft Kings"
       }
     },
     {
@@ -7000,7 +7000,7 @@
         "fav_name": "MEM",
         "aml": 205,
         "hml": -249,
-        "p": "DraftKings"
+        "p": "Draft Kings"
       }
     },
     {
@@ -7031,7 +7031,7 @@
         "fav_name": "MIL",
         "aml": -106,
         "hml": -111,
-        "p": "DraftKings"
+        "p": "Draft Kings"
       }
     },
     {
@@ -7057,12 +7057,12 @@
       "line": {
         "fav": "10",
         "dog": "21",
-        "sp": 8.5,
-        "ou": 223.5,
+        "sp": 9.5,
+        "ou": 224.5,
         "fav_name": "HOU",
         "aml": 319,
         "hml": -406,
-        "p": "DraftKings"
+        "p": "Draft Kings"
       }
     },
     {
@@ -7093,7 +7093,7 @@
         "fav_name": "GS",
         "aml": 199,
         "hml": -241,
-        "p": "DraftKings"
+        "p": "Draft Kings"
       }
     },
     {
@@ -7122,9 +7122,9 @@
         "sp": 2.5,
         "ou": 226.5,
         "fav_name": "SA",
-        "aml": -155,
-        "hml": 130,
-        "p": "DraftKings"
+        "aml": -148,
+        "hml": 124,
+        "p": "Draft Kings"
       }
     },
     {
