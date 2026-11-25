@@ -4,7 +4,7 @@
   "label": "",
   "season": "2026-27",
   "as_of": "2026-11-24",
-  "generated_at_utc": "2026-11-25T00:16:56Z",
+  "generated_at_utc": "2026-11-25T01:46:58Z",
   "source": "espn",
   "seed_lock": false,
   "standings": {
@@ -6762,13 +6762,13 @@
       "neutral": false,
       "home": {
         "id": "19",
-        "score": 0,
+        "score": 59,
         "seed": null,
         "short": "ORL"
       },
       "away": {
         "id": "8",
-        "score": 8,
+        "score": 70,
         "seed": null,
         "short": "DET"
       },
@@ -6787,19 +6787,19 @@
       "id": "401909315",
       "day": "2026-11-24",
       "start": "2026-11-25T01:00Z",
-      "status": "scheduled",
+      "status": "live",
       "kind": "reg",
       "round": "",
       "neutral": false,
       "home": {
         "id": "27",
-        "score": null,
+        "score": 28,
         "seed": null,
         "short": "WSH"
       },
       "away": {
         "id": "2",
-        "score": null,
+        "score": 42,
         "seed": null,
         "short": "BOS"
       },
@@ -6840,8 +6840,8 @@
         "sp": 8.5,
         "ou": 234.5,
         "fav_name": "DEN",
-        "aml": 251,
-        "hml": -310,
+        "aml": 241,
+        "hml": -297,
         "p": "DraftKings"
       }
     },
@@ -6954,8 +6954,8 @@
         "sp": 1.5,
         "ou": 224.5,
         "fav_name": "OKC",
-        "aml": 105,
-        "hml": -125,
+        "aml": 101,
+        "hml": -119,
         "p": "DraftKings"
       }
     },
